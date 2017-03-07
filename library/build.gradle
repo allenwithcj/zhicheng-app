@@ -1,0 +1,66 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    testCompile 'junit:junit:4.12'
+    //Roboguice
+    compile 'org.roboguice:roboguice:3.0.1'
+    //RxJava & RxAndroid
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'io.reactivex:rxjava:1.1.6'
+    //okhttp3 & okio
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.squareup.okio:okio:1.9.0'
+    //retrofit2
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    //gson
+    compile 'com.google.code.gson:gson:2.7'
+    //other part of this work
+    //align-text-view
+    compile 'me.codeboy.android:align-text-view:2.3.0'
+    //MultiType
+    compile 'me.drakeet.multitype:multitype:2.3.2'
+    //Glide
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
+    //ExpandTextView
+    compile 'com.hymane.expandtextview:library:1.0.1'
+    //TagFlowLayout
+    compile 'com.github.hymanme.tagflowlayout:tagflowlayout:0.2.2'
+    //FlycoLabelView
+    compile 'com.flyco.labelview:FlycoLabelView_Lib:1.0.2@aar'
+    //ParticleView
+    compile 'me.wangyuwei:ParticleView:1.0.3'
+    //BottomNavigationBar底部标准Tab栏
+    compile 'com.ashokvarma.android:bottom-navigation-bar:1.3.0'
+    //BannerTop
+    compile 'com.lzp.looppager:looppager:1.0.0'
+    //PhotoPicker
+    compile 'cc.dagger:photopicker:1.0'
+}

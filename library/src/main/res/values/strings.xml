@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Library</string>
+    <string name="welcome">欢迎来到雉城</string>
+    <string name="today">请留意今日最新消息</string>
+</resources>

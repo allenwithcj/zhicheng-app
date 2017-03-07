@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="8dp">
+    <com.hymane.expandtextview.ExpandTextView
+        android:id="@+id/firstContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:orientation="vertical"
+        app:expandHint="点击展开"
+        app:foldHint="点击收回"
+        app:indicateImage="@drawable/ic_arrow_down_light_round"
+        app:textContentColor="@color/text_color"
+        app:textHintColor="@color/bao_location_bg"
+        app:textTitleColor="?android:attr/textColorSecondary"
+        app:titleText="详情" />
+</android.support.v7.widget.CardView>

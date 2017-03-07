@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_padding">
+
+    <include
+        android:id="@+id/line"
+        layout="@layout/z_line" />
+
+    <ImageView
+        android:id="@+id/title_img"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:scaleType="centerCrop"
+        android:background="@color/albumback"
+        android:layout_below="@+id/line"/>
+    <me.codeboy.android.aligntextview.CBAlignTextView
+        android:id="@+id/Desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_toRightOf="@+id/title_img"
+        android:layout_below="@+id/line"/>
+    <TextView
+        android:id="@+id/Origin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/title_img"
+        android:layout_below="@+id/Desc"/>
+    <TextView
+        android:id="@+id/upTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/Desc"/>
+</RelativeLayout>

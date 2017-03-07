@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+    <link rel="stylesheet" href="css" type="text/css" />
+    <!--[toolbar]-->
+    <!--[bottomNavigationBar]-->
+    <!--[jsBridge]-->
+</head>
+<body>
+
+    <div id="" style="text-align:center;background:red;">
+        <p>Hello World</p>
+        <button onclick="toastMessage('ceshi')">submit</button>
+    </div>
+<script type="text/javascript">
+    function toastMessage(message){
+        window.JsBridge.toastMessage(message);
+    }
+</script>
+</body>
+</html>

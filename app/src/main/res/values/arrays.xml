@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sex">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="political_status">
+        <item>群众</item>
+        <item>团员</item>
+        <item>党员</item>
+    </string-array>
+
+    <string-array name="degree_of_educatio">
+        <item>小学</item>
+        <item>初中</item>
+        <item>高中</item>
+        <item>中专</item>
+        <item>大专</item>
+        <item>本科</item>
+        <item>研究生</item>
+        <item>其他</item>
+    </string-array>
+
+    <string-array name="married">
+        <item>未婚</item>
+        <item>已婚</item>
+        <item>离婚</item>
+        <item>丧偶</item>
+    </string-array>
+
+    <string-array name="grid_add">
+        <item>网格编号:</item>
+        <item>居住地:</item>
+        <item>出租人:</item>
+        <item>电话:</item>
+        <item>备注:</item>
+        <item>姓名:</item>
+        <item>与户主关系:</item>
+        <item>性别:</item>
+        <item>身份证号:</item>
+        <item>政治面貌:</item>
+        <item>文化程度:</item>
+        <item>婚否:</item>
+        <item>户籍地址:</item>
+        <item>联系电话:</item>
+        <item>工作单位:</item>
+        <item>兴趣爱好:</item>
+        <item>备注:</item>
+        <item>流出地:</item>
+    </string-array>
+
+</resources>

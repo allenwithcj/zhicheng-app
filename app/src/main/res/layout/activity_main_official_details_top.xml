@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/activity_padding">
+    <TextView
+        android:id="@+id/NumberId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/title_text_size"
+        android:layout_marginBottom="@dimen/activity_vertical_margin" />
+    <TextView
+        android:id="@+id/BaoName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NumberId" />
+    <TextView
+        android:id="@+id/Origin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NumberId"
+        android:layout_toRightOf="@+id/BaoName"
+        android:layout_alignParentRight="true"
+        android:gravity="right"
+        android:paddingRight="@dimen/textView_padding" />
+    <TextView
+        android:id="@+id/BaoTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Origin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin" />
+    <me.codeboy.android.aligntextview.CBAlignTextView
+        android:id="@+id/mContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/textView_padding"
+        android:layout_below="@+id/BaoTime"/>
+</RelativeLayout>

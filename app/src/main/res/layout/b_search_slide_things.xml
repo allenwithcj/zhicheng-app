@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/allThings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/textView_padding"
+        android:layout_margin="@dimen/photo_margin"
+        android:background="@drawable/bg_edittext_normal"
+        android:layout_gravity="start|center_vertical"
+        android:gravity="center"
+        android:textSize="@dimen/content_size"
+        android:textStyle="normal"
+        android:textColor="@color/white"
+        android:text="@string/allThings"/>
+    <TextView
+        android:id="@+id/noFinish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/textView_padding"
+        android:layout_margin="@dimen/photo_margin"
+        android:background="@drawable/bg_edittext_normal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="@dimen/content_size"
+        android:textStyle="normal"
+        android:textColor="@color/white"
+        android:text="@string/NoFinish"/>
+    <TextView
+        android:id="@+id/Finished"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/textView_padding"
+        android:layout_margin="@dimen/photo_margin"
+        android:background="@drawable/bg_edittext_normal"
+        android:layout_gravity="end|center_vertical"
+        android:gravity="center"
+        android:textSize="@dimen/content_size"
+        android:textStyle="normal"
+        android:textColor="@color/white"
+        android:text="@string/Finished"/>
+</LinearLayout>

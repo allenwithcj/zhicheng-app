@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFFFF</color>
+    <color name="red">#d23f31</color>
+    <color name="black">#000</color>
+    <color name="albumback">#fff</color>
+    <color name="none_color">#21ffffff</color>
+    <color name="bao_location_bg">#65747070</color>
+    <color name="text_color">#ef464646</color>
+    <color name="touch_bg">#e8363535</color>
+</resources>

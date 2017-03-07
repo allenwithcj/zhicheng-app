@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:padding="@dimen/textView_padding"
+    android:focusableInTouchMode="true">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/textView_padding"
+        android:text="@string/i_content"/>
+    <EditText
+        android:id="@+id/i_bao_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|start"
+        android:textSize="@dimen/content_size"
+        android:background="@null"
+        android:minLines="5"
+        android:hint="@string/i_content_hint"
+        android:textColor="@color/black"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:paddingTop="@dimen/textView_padding"
+        android:background="@color/bao_location_bg"/>
+</LinearLayout>
