@@ -34,8 +34,11 @@ public class DatabaseHelper{
         realm.commitTransaction();
     }
 
-    public void deleteWorkNote(WorkNote wn){
-
+    public void deleteWorkNote(String uID){
+        WorkNote mWorkNote = realm.where(WorkNote.class).equalTo("uID",uID).findFirst();
+        realm.beginTransaction();
+        mWorkNote.deleteFromRealm();
+        realm.commitTransaction();
     }
 
     public List<WorkNote> getWorkNote(){

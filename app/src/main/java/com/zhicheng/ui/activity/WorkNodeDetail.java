@@ -17,6 +17,7 @@ import com.zhicheng.api.presenter.impl.WorkNodePresenterImpl;
 import com.zhicheng.api.view.WorkNodeView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.json.PersonalLogMaRequest;
+import com.zhicheng.common.Constant;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -64,6 +65,7 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
 
         update.setOnClickListener(view -> {
+            Constant.LOG_OPERATE_TYPE = "update";
             PersonalLogMaRequest pr = new PersonalLogMaRequest();
             PersonalLogMaRequest.IqBean iqb = new PersonalLogMaRequest.IqBean();
             iqb.setNamespace("PersonalLogMaRequest");
@@ -78,6 +80,7 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         });
 
         delete.setOnClickListener(view -> {
+            Constant.LOG_OPERATE_TYPE = "delete";
             PersonalLogMaRequest pr = new PersonalLogMaRequest();
             PersonalLogMaRequest.IqBean iqb = new PersonalLogMaRequest.IqBean();
             iqb.setNamespace("PersonalLogMaRequest");
@@ -88,7 +91,6 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
             pr.setIq(iqb);
             Gson gson = new Gson();
             mWorkNodePresenterImpl.deleteWorkNodes(gson.toJson(pr));
-
         });
 
     }
@@ -144,7 +146,11 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
     public void refreshData(Object result) {
         if(result instanceof CommonResponse){
             if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
-                showMessage("操作成功");
+                if(Constant.LOG_OPERATE_TYPE.equals("update")){
+                    showMessage("修改成功");
+                }else if(Constant.LOG_OPERATE_TYPE.equals("delete")){
+                    showMessage("删除成功");
+                }
                 finish();
             }else{
                 showMessage("操作失败");

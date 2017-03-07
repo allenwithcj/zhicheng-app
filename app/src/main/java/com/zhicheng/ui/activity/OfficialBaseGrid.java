@@ -1,28 +1,34 @@
 package com.zhicheng.ui.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.zhicheng.R;
+import com.zhicheng.alarm.LocationUpReciver;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridQueryPresenterImpl;
 import com.zhicheng.api.view.OfficialBaseGridQueryView;
 import com.zhicheng.bean.http.OfficialQueyResponse;
 import com.zhicheng.bean.json.OfficialQueryRequest;
+import com.zhicheng.common.Constant;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.util.List;
@@ -40,17 +46,14 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private OfficialBaseGridAdapter mAdapter;
-    private PopupWindow popupWindow;
-    private EditText grid_search_et;
-    private Button grid_search_btn;
+    private MenuItem item;
+    private Drawable icon;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
-        grid_search_et = (EditText) findViewById(R.id.grid_search_et);
-        grid_search_btn = (Button) findViewById(R.id.grid_search_btn);
         mOfficialBaseGridQueryPresenterImpl = new OfficialBaseGridQueryPresenterImpl(this);
         mAdapter = new OfficialBaseGridAdapter();
         mLinearLayoutManager = new LinearLayoutManager(this);
@@ -63,8 +66,9 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     protected void initData() {
-        onRefresh();
+
     }
+
 
     @Override
     protected void onResume() {
@@ -74,7 +78,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     public void showMessage(String msg) {
-//        Snackbar.make(mToolbar, msg, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mToolbar, msg, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -94,6 +98,8 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             .getPreMsgcon().getPreMsgs());
             mToolbar.setTitle("网格基础数据");
         }
+        mLocationDialog();
+
     }
 
     @Override
@@ -106,10 +112,18 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
 
     @Override
-    protected int getMenuID() {
-        return R.menu.official_grid;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.official_grid, menu);
+        item = menu.findItem(R.id.action_location);
+        if(Constant.ISLOCATION){
+            icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
+        }else{
+            icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
+        }
+        item.setIcon(icon);
+        return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -117,16 +131,66 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             Intent intent = new Intent();
             intent.setClass(this, OfficialBaseGridAdd.class);
             startActivity(intent);
-        }else if(item.getItemId() == R.id.action_search){
-            View view = LayoutInflater.from(this).inflate(R.layout.i_grid_search,null);
-            popupWindow = new PopupWindow(view, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            popupWindow.setAnimationStyle(R.style.popwin_anim_style);
-            popupWindow.setOutsideTouchable(true);
-            popupWindow.setBackgroundDrawable(new BitmapDrawable());
-            popupWindow.showAsDropDown(mToolbar.getRootView());
-
+        }else if(item.getItemId() == R.id.action_location){
+            mLocationDialog();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void mLocationDialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.item_grid_location_switch,null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        TextView mLocation_title = (TextView) view.findViewById(R.id.mLocation_title);
+        TextView mLocation_message = (TextView) view.findViewById(R.id.mLocation_message);
+        builder.setCancelable(false);
+        Intent intent = new Intent(OfficialBaseGrid.this,LocationUpReciver.class);
+        intent.setAction(Constant.ALARM_ACTION);
+        PendingIntent mPendingIntent = PendingIntent.getBroadcast(OfficialBaseGrid.this,0,intent,0);
+        AlarmManager mArm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        if(Constant.ISLOCATION){
+            mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null,null,getResources().getDrawable(R.drawable.ic_location_on_red_24dp),null);
+            mLocation_message.setText(getResources().getString(R.string.grid_location_close_message));
+            builder.setNegativeButton("关闭上传", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    Constant.ISLOCATION = false;
+                    icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
+                    item.setIcon(icon);
+                    if(mArm != null){
+                        mArm.cancel(mPendingIntent);
+                        mPendingIntent.cancel();
+                    }
+                }
+            });
+            builder.show();
+        }else{
+            mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null,null,getResources().getDrawable(R.drawable.ic_location_on_black_24dp),null);
+            mLocation_message.setText(getResources().getString(R.string.grid_location_message));
+            builder.setPositiveButton("开启上传", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
+                    item.setIcon(icon);
+                    Constant.ISLOCATION = true;
+                    mArm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                            SystemClock.elapsedRealtime(), Constant.LOCATION_UP_TIME, mPendingIntent);
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+
+                }
+            });
+            builder.show();
+        }
+
+
     }
 
 

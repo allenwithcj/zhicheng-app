@@ -251,4 +251,5 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,Swipe
     public void addData(Object result) {
 
     }
+
 }

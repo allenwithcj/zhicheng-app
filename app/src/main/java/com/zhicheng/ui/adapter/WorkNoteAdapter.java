@@ -34,16 +34,19 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     }
 
     public void addAllData(List<WorkNote> time){
+        mWorkNotes.clear();
         this.mWorkNotes.addAll(time);
         this.notifyDataSetChanged();
     }
 
     public void insertData(List<WorkNote> wn){
+        wn.clear();
         this.mWorkNotes.addAll(wn);
         this.notifyItemRangeInserted(getItemCount()-1,wn.size());
     }
 
     public void addData(WorkNote time){
+        mWorkNotes.clear();
         this.mWorkNotes.addFirst(time);
         this.notifyItemInserted(0);
     }

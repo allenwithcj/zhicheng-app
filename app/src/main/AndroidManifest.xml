@@ -132,6 +132,13 @@
         <activity android:name=".ui.activity.BaseGridAddSelectType"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
 
+
+        <receiver android:name=".alarm.LocationUpReciver" >
+            <intent-filter>
+                <action android:name= "com.location.alarm.action" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".alarm.LocationUpService"/>
     </application>
 
 </manifest>

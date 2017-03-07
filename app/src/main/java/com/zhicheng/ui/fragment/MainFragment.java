@@ -38,6 +38,7 @@ public class MainFragment extends BaseFragment{
     private InfoAdapter mInfoAdapter;
     private TextView mName;
     private TextView mOccupation;
+    private TextView userpost;
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -66,6 +67,7 @@ public class MainFragment extends BaseFragment{
         mFab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
         mName = (TextView) mRootView.findViewById(R.id.name);
         mOccupation = (TextView) mRootView.findViewById(R.id.occupation);
+        userpost = (TextView) mRootView.findViewById(R.id.userpost);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mInfoAdapter = new InfoAdapter();
         mRecyclerView.setAdapter(mInfoAdapter);
@@ -80,6 +82,7 @@ public class MainFragment extends BaseFragment{
                 sp.apply();
                 mName.setText("未登录");
                 mOccupation.setText("无权限");
+                userpost.setText("无权限");
                 Toast.makeText(getContext(),"账号注销成功",Toast.LENGTH_SHORT).show();
                 BaseApplication.checkLogin();
             }else {
@@ -98,9 +101,11 @@ public class MainFragment extends BaseFragment{
                     .into(mCircleImageView);
             mName.setText(lc.getUserName());
             mOccupation.setText(lc.getDepartment());
+            userpost.setText(lc.getUserPost());
         }else{
             mName.setText("未登录");
             mOccupation.setText("无权限");
+            userpost.setText("无权限");
         }
     }
 

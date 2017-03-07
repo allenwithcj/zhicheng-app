@@ -38,7 +38,26 @@
                     android:src="@color/black" />
 
                 <LinearLayout
-                    android:id="@+id/info"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:id="@+id/info"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+                        <TextView
+                            android:id="@+id/occupation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingRight="@dimen/textView_padding"
+                            android:textColor="@color/pridark"
+                            android:gravity="center"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -50,19 +69,19 @@
                         android:layout_height="match_parent"
                         android:paddingRight="@dimen/textView_padding"
                         android:textColor="@color/pridark"
-                        android:gravity="right"/>
+                        android:gravity="left"/>
                     <TextView
                         android:layout_width="2px"
                         android:layout_height="match_parent"
                         android:paddingRight="@dimen/textView_padding"
                         android:background="@color/pridark"/>
                     <TextView
-                        android:id="@+id/occupation"
+                        android:id="@+id/userpost"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/textView_padding"
                         android:textColor="@color/pridark"
-                        android:gravity="left"/>
+                        android:gravity="right"/>
                 </LinearLayout>
             </LinearLayout>
 
