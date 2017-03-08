@@ -1,10 +1,8 @@
 package com.zhicheng.api.presenter.impl;
 
 
-import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.api.ApiCompleteListener;
-import com.zhicheng.api.model.OfficialModel;
 import com.zhicheng.api.model.impl.OfficialModelImpl;
 import com.zhicheng.api.presenter.OfficialPresenter;
 import com.zhicheng.api.view.OfficialView;
@@ -26,13 +24,13 @@ import java.util.List;
 
 public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListener {
 
-    private OfficialModel mOfficialModel;
+    private OfficialModelImpl mOfficialModelImpl;
     private OfficialView mOfficialView;
     private int start;
 
     public OfficialPresenterImpl(OfficialView view){
         this.mOfficialView = view;
-        this.mOfficialModel = new OfficialModelImpl();
+        this.mOfficialModelImpl = new OfficialModelImpl();
     }
 
     @Override
@@ -43,7 +41,7 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
             mOfficialView.hideProgress();
         }
         mOfficialView.showProgress();
-        mOfficialModel.loadOfficial(j,this);
+        mOfficialModelImpl.loadOfficial(j,this);
     }
 
     @Override
@@ -51,7 +49,7 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialModel.loadOfficialDetail(js,this);
+        mOfficialModelImpl.loadOfficialDetail(js,this);
     }
 
     @Override
@@ -61,7 +59,7 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
             mOfficialView.hideProgress();
         }
         mOfficialView.showProgress();
-        mOfficialModel.loadOfficialDynamic(dyn,this);
+        mOfficialModelImpl.loadOfficialDynamic(dyn,this);
     }
 
     @Override
@@ -69,7 +67,7 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialModel.upDeal(imgs,jFile,GUID,suggest,officialDetailResponse,this);
+        mOfficialModelImpl.upDeal(imgs,jFile,GUID,suggest,officialDetailResponse,this);
     }
 
     @Override
@@ -84,7 +82,7 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
             mOfficialView.hideProgress();
         }
         mOfficialView.showProgress();
-        mOfficialModel.loadNotice(n,this);
+        mOfficialModelImpl.loadNotice(n,this);
     }
 
     @Override

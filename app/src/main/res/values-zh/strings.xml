@@ -49,6 +49,34 @@
     <string name="allThings">全部事项</string>
     <string name="frount_things">前置事项</string>
     <string name="normal_things">普通事项</string>
+    <string name="grid_base_search">查询</string>
+    <string name="action_add">新增</string>
+    <string name="action_operate">操作</string>
+    <string name="action_update">修改</string>
+    <string name="action_submit">提交</string>
+    <string name="search">搜索</string>
+    <string name="delete">删除</string>
+    <string name="grid_base_add_residence">居住地:</string>
+    <string name="grid_base_add_grid_no">网格编号:</string>
+    <string name="grid_base_add_name">姓名:</string>
+    <string name="grid_base_add_relation">与户主关系:</string>
+    <string name="grid_base_add_sex">性别:</string>
+    <string name="grid_base_add_cardid">身份证号:</string>
+    <string name="grid_base_add_policatial">政治面貌:</string>
+    <string name="grid_base_add_degree">文化程度:</string>
+    <string name="grid_base_add_married">婚否:</string>
+    <string name="grid_base_add_brithplace">户籍地址:</string>
+    <string name="grid_base_add_telephone">联系电话:</string>
+    <string name="grid_base_add_workspace">工作单位:</string>
+    <string name="grid_base_add_hobby">兴趣爱好:</string>
+    <string name="grid_base_add_remark">备注:</string>
+    <string name="grid_base_add_fromplace">流出地:</string>
+    <string name="grid_base_add_lessor">出租人:</string>
+    <string name="grid_base_add_lessor_telephone">电话:</string>
+    <string name="grid_base_add_lessor_remark">备注:</string>
+    <string name="grid_location_switch_title">定位提醒</string>
+    <string name="grid_location_message">您已进入到网格数据模块,是否开启定位上传功能记录您的网格基础数据录入行程?</string>
+    <string name="grid_location_close_message">您的定时上传经纬度服务正在运行中，是否关闭?</string>
 
     <string-array name="detail">
         <item>编号:</item>
@@ -64,6 +92,7 @@
 
     <string-array name="NoFinishDetail">
         <item>来源:</item>
+        <item>来源类型:</item>
         <item>爆料人姓名:</item>
         <item>爆料人电话:</item>
         <item>爆料时间:</item>
@@ -71,5 +100,6 @@
         <item>爆料图片:</item>
         <item>爆料时间:</item>
     </string-array>
+
 
 </resources>

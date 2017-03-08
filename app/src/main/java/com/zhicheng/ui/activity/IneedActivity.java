@@ -5,23 +5,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -36,8 +27,6 @@ import com.zhicheng.bean.json.UpFileRequest;
 import com.zhicheng.bean.json.UpThingsRequest;
 import com.zhicheng.module.imageloader.GlideImageLoader;
 import com.zhicheng.ui.adapter.IneedAdapter;
-import com.zhicheng.ui.fragment.MapFragment;
-import com.zhicheng.utils.common.AnimationUtils;
 import com.zhicheng.utils.common.PermissionUtils;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -176,7 +165,6 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.action_send){
-			BaseApplication.log_say(TAG,"---------------->"+activity_deal.size()+"");
 			if (!isCommon && activity_deal.size() == 0){
 				isChangeMenu = false;
 				onPrepareOptionsMenu(mMenu);

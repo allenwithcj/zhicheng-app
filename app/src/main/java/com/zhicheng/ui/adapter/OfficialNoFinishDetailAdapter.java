@@ -79,6 +79,7 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
         if (mData != null){
             if (holder instanceof HeaderViewHolder){
                 ((HeaderViewHolder) holder).NumberId.setText(mData.getIq().getQuery().getFormData().getFormData().getZC01().getViewValue());
+                ((HeaderViewHolder) holder).related_matters.setText("相关事项···");
             }else if (holder instanceof ShowBoxViewHolder){
                 switch (position){
                     case 1:
@@ -87,13 +88,17 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                         break;
                     case 2:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
+                        ((ShowBoxViewHolder) holder).tagContent.setText("群众");
                         break;
                     case 3:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        ((ShowBoxViewHolder) holder).tagContent.setText("手机号码");
+                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
                         break;
                     case 4:
+                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
+                        ((ShowBoxViewHolder) holder).tagContent.setText("手机号码");
+                        break;
+                    case 5:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendTime());
                         break;
@@ -101,15 +106,15 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
 //                        ((ShowBoxViewHolder) holder).tagName.setText(tag_last[0]);
 //                        ((ShowBoxViewHolder) holder).tagContent.setText("承办人");
 //                        break;
-                    case 7:
+                    case 8:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[0]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
                         break;
-                    case 8:
+                    case 9:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getMap().getEventNote());
                         break;
-                    case 9:
+                    case 10:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[2]);
                         break;
                 }
@@ -207,13 +212,13 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         if (position == 0){
             return TYPE_HEADER;
-        }else if (position > 0 && position < 5){
+        }else if (position > 0 && position < 6){
             return TYPE_SHOW_BOX;
-        }else if (position == 5){
-            return TYPE_SHOW_CONTENT;
         }else if (position == 6){
+            return TYPE_SHOW_CONTENT;
+        }else if (position == 7){
             return TYPE_SHOW_IMAGES;
-        }else if (position > 6 && position < getItemCount()-1){
+        }else if (position > 7 && position < getItemCount()-1){
             return TYPE_SHOW_BOX;
         }else {
             return TYPE_SHOW_DEAL;
@@ -223,10 +228,12 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
 
         private TextView NumberId;
+        private TextView related_matters;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
             NumberId = (TextView) itemView.findViewById(R.id.NumberId);
+            related_matters = (TextView) itemView.findViewById(R.id.related_matters);
         }
     }
 
