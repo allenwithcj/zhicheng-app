@@ -22,6 +22,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
 import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.alarm.LocationUpReciver;
@@ -30,6 +33,8 @@ import com.zhicheng.api.view.OfficialBaseGridQueryView;
 import com.zhicheng.bean.http.OfficialQueyResponse;
 import com.zhicheng.bean.json.OfficialQueryRequest;
 import com.zhicheng.common.Constant;
+import com.zhicheng.utils.BDLocationInit;
+import com.zhicheng.utils.common.NotificationUtils;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.util.List;
@@ -49,11 +54,17 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private OfficialBaseGridAdapter mAdapter;
     private MenuItem item;
     private Drawable icon;
+    private LocationClient mLocationClient;
+    private MyLocationListener myLocationListener;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        mLocationClient = new LocationClient(this);
+        BDLocationInit.getInstance().initLocation(mLocationClient);
+        myLocationListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(myLocationListener);
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
         mOfficialBaseGridQueryPresenterImpl = new OfficialBaseGridQueryPresenterImpl(this);
         mAdapter = new OfficialBaseGridAdapter();
@@ -63,10 +74,11 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Constant.ISLOCATION){
+                if(mLocationClient.isStarted()){
                     mLocationDialog();
                 }else{
                     finish();
@@ -127,7 +139,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.official_grid, menu);
         item = menu.findItem(R.id.action_location);
-        if(Constant.ISLOCATION){
+        if(mLocationClient.isStarted()){
             icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
         }else{
             icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
@@ -159,25 +171,25 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         intent.setAction(Constant.ALARM_ACTION);
         PendingIntent mPendingIntent = PendingIntent.getBroadcast(OfficialBaseGrid.this,0,intent,0);
         AlarmManager mArm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        if(Constant.ISLOCATION){
+        if(mLocationClient.isStarted()){
             mLocation_title.setText(getResources().getString(R.string.grid_location_close));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     null,null,getResources().getDrawable(R.drawable.ic_location_on_red_24dp),null);
             mLocation_message.setText(getResources().getString(R.string.grid_location_close_message));
-            builder.setNegativeButton("关闭上传", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("关闭上传", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                    Constant.ISLOCATION = false;
+                    mLocationClient.stop();
                     icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
                     item.setIcon(icon);
                     if(mArm != null){
                         mArm.cancel(mPendingIntent);
                         mPendingIntent.cancel();
+                        new NotificationUtils(OfficialBaseGrid.this,1).clear();
                     }
                 }
-            });
-            builder.show();
+            }).setNegativeButton("取消",null).show();;
         }else{
             mLocation_title.setText(getResources().getString(R.string.grid_location_open));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
@@ -186,24 +198,14 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             builder.setPositiveButton("开启上传", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
+                    mLocationClient.start();
                     icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
                     item.setIcon(icon);
-                    Constant.ISLOCATION = true;
                     mArm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                            SystemClock.elapsedRealtime(), Constant.LOCATION_UP_TIME, mPendingIntent);
+                            SystemClock.elapsedRealtime(),Constant.LOCATION_UP_TIME, mPendingIntent);
                 }
-            });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-
-                }
-            });
-            builder.show();
+            }).setNegativeButton("取消",null).show();
         }
-
-
     }
 
 
@@ -322,10 +324,19 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
     }
 
+    class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            Constant.LATITUDE = String.valueOf(bdLocation.getLatitude());
+            Constant.LONGITUDE = String.valueOf(bdLocation.getLongitude());
+        }
+    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if(keyCode == KeyEvent.KEYCODE_BACK){
-            if(Constant.ISLOCATION){
+            if(mLocationClient.isStarted()){
                 mLocationDialog();
             }else{
                 finish();
