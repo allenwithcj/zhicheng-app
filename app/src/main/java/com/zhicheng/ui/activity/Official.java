@@ -8,24 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.OfficialView;
-import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.json.OfficialRequest;
-import com.zhicheng.utils.common.DensityUtils;
 import com.zhicheng.utils.common.UIUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,11 +60,6 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
     protected void onResume() {
         super.onResume();
         onRefresh();
-    }
-
-    @Override
-    protected int getMenuID() {
-        return R.menu.main;
     }
 
     @Override
