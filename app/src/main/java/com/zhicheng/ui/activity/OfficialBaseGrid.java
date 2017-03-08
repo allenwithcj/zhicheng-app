@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,6 +63,16 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Constant.ISLOCATION){
+                    mLocationDialog();
+                }else{
+                    finish();
+                }
+            }
+        });
     }
 
     @Override
@@ -149,7 +160,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         PendingIntent mPendingIntent = PendingIntent.getBroadcast(OfficialBaseGrid.this,0,intent,0);
         AlarmManager mArm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         if(Constant.ISLOCATION){
-            mLocation_title.setText(getResources().getString(R.string.grid_location_open));
+            mLocation_title.setText(getResources().getString(R.string.grid_location_close));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     null,null,getResources().getDrawable(R.drawable.ic_location_on_red_24dp),null);
             mLocation_message.setText(getResources().getString(R.string.grid_location_close_message));
@@ -168,7 +179,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             });
             builder.show();
         }else{
-            mLocation_title.setText(getResources().getString(R.string.grid_location_close));
+            mLocation_title.setText(getResources().getString(R.string.grid_location_open));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     null,null,getResources().getDrawable(R.drawable.ic_location_on_black_24dp),null);
             mLocation_message.setText(getResources().getString(R.string.grid_location_message));
@@ -309,5 +320,17 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
             lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            if(Constant.ISLOCATION){
+                mLocationDialog();
+            }else{
+                finish();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
