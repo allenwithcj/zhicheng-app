@@ -2,21 +2,17 @@ package com.zhicheng.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -25,7 +21,6 @@ import com.baidu.location.LocationClientOption;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.ui.activity.SearchViewActivity;
-import com.zhicheng.utils.common.PermissionUtils;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.util.HashMap;
@@ -145,9 +140,11 @@ public class IneedAdapter extends RecyclerView.Adapter {
                 }
             });
             if (position == 0){
-                ((InputChooseViewHolder) holder).img.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_explore_black_24dp));
+                ((InputChooseViewHolder) holder).input_choose.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,
+                        holder.itemView.getResources().getDrawable(R.drawable.ic_explore_black_24dp),null);
             }else {
-                ((InputChooseViewHolder) holder).img.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp));
+                ((InputChooseViewHolder) holder).input_choose.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,
+                        holder.itemView.getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp),null);
             }
         }else if (holder instanceof InputContentViewHolder){
             Observable.create(subscriber -> {
@@ -221,14 +218,12 @@ public class IneedAdapter extends RecyclerView.Adapter {
 
         private TextView name;
         public TextView input_choose;
-        private ImageView img;
         public ProgressBar mProgressBar;
 
         public InputChooseViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.tagName);
             input_choose = (TextView) itemView.findViewById(R.id.input);
-            img = (ImageView) itemView.findViewById(R.id.img);
             mProgressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
         }
     }
