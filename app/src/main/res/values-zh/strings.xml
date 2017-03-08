@@ -74,7 +74,8 @@
     <string name="grid_base_add_lessor">出租人:</string>
     <string name="grid_base_add_lessor_telephone">电话:</string>
     <string name="grid_base_add_lessor_remark">备注:</string>
-    <string name="grid_location_switch_title">定位提醒</string>
+    <string name="grid_location_open">定位开启提醒</string>
+    <string name="grid_location_close">定位关闭提醒</string>
     <string name="grid_location_message">您已进入到网格数据模块,是否开启定位上传功能记录您的网格基础数据录入行程?</string>
     <string name="grid_location_close_message">您的定时上传经纬度服务正在运行中，是否关闭?</string>
 

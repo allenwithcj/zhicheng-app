@@ -149,6 +149,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         PendingIntent mPendingIntent = PendingIntent.getBroadcast(OfficialBaseGrid.this,0,intent,0);
         AlarmManager mArm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         if(Constant.ISLOCATION){
+            mLocation_title.setText(getResources().getString(R.string.grid_location_open));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     null,null,getResources().getDrawable(R.drawable.ic_location_on_red_24dp),null);
             mLocation_message.setText(getResources().getString(R.string.grid_location_close_message));
@@ -167,6 +168,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             });
             builder.show();
         }else{
+            mLocation_title.setText(getResources().getString(R.string.grid_location_close));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
                     null,null,getResources().getDrawable(R.drawable.ic_location_on_black_24dp),null);
             mLocation_message.setText(getResources().getString(R.string.grid_location_message));
