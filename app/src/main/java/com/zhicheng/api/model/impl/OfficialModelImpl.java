@@ -156,7 +156,7 @@ public class OfficialModelImpl implements OfficialModel{
     }
 
     @Override
-    public void upDeal(List<String> imgs,String jFile,String GUID,String suggest,OfficialDetailResponse officialDetailResponse,ApiCompleteListener listener) {
+    public void upDeal(List<String> imgs,String jFile,String suggest,String GUID,OfficialDetailResponse officialDetailResponse,ApiCompleteListener listener) {
         if (mOfficialService == null){
             mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
         }
@@ -253,7 +253,6 @@ public class OfficialModelImpl implements OfficialModel{
                 });
     }
 
-
     public void formExportRequest(int requestType,ApiCompleteListener listener){
         MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,MainService.class);
         FormExportRequest feq = new FormExportRequest();
@@ -327,15 +326,15 @@ public class OfficialModelImpl implements OfficialModel{
                     }
 
                     @Override
-                    public void onNext(Response<IneedResponse> ineedResponseResponse) {
-                        if (ineedResponseResponse.isSuccessful()){
-                            if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")){
+                    public void onNext(Response<IneedResponse> mIneedResponse) {
+                        if (mIneedResponse.isSuccessful()){
+                            if (mIneedResponse.body().getIq().getQuery().getErrorCode().equals("0")){
                                 FormSubnodeRequest formSubnode = new FormSubnodeRequest();
                                 FormSubnodeRequest.IqBean iq = new FormSubnodeRequest.IqBean();
                                 FormSubnodeRequest.IqBean.QueryBean query = new FormSubnodeRequest.IqBean.QueryBean();
                                 query.setRequestType(0);
                                 query.setType(3);
-                                query.setId(ineedResponseResponse.body().getIq().getQuery().getNodes().get(0).getId());
+                                query.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
                                 query.setTableName("");
                                 query.setTableID("");
                                 query.setWfInfoID(OfficialDeatail.getIq().getQuery().getId());
@@ -343,7 +342,7 @@ public class OfficialModelImpl implements OfficialModel{
                                 iq.setNamespace("FormSubnodeRequest");
                                 iq.setQuery(query);
                                 formSubnode.setIq(iq);
-                                if (ineedResponseResponse.body().getIq().getQuery().getNodes().get(0).getType().equals("4")){
+                                if (mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType().equals("4")){
                                     FormSendDoRequest formSend = new FormSendDoRequest();
                                     FormSendDoRequest.IqBean iq2 = new FormSendDoRequest.IqBean();
                                     FormSendDoRequest.IqBean.QueryBean query2 = new FormSendDoRequest.IqBean.QueryBean();
@@ -365,21 +364,21 @@ public class OfficialModelImpl implements OfficialModel{
                                     formSend.setIq(iq2);
                                     formSendDoRequest(s,gson.toJson(formSend),listener);
                                 }else {
-                                    formSubnodeRequest(s,gson.toJson(formSubnode),requestType,listener);
+                                    formSubnodeRequest(s,gson.toJson(formSubnode),mIneedResponse,requestType,listener);
                                 }
                                 BaseApplication.log_say("MainModelImpl","FormSubnodeRequest");
                             }else {
-                                listener.onComplected(ineedResponseResponse.body());
-                                Toast.makeText(UIUtils.getContext(),ineedResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                listener.onComplected(mIneedResponse.body());
+                                Toast.makeText(UIUtils.getContext(),mIneedResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
                             }
                         }else {
-                            listener.onFailed(new BaseResponse(ineedResponseResponse.code(),ineedResponseResponse.message()));
+                            listener.onFailed(new BaseResponse(mIneedResponse.code(),mIneedResponse.message()));
                         }
                     }
                 });
     }
 
-    public void formSubnodeRequest(MainService s,String j,int requestType,ApiCompleteListener listener){
+    public void formSubnodeRequest(MainService s, String j, Response<IneedResponse> mIneedResponse, int requestType, ApiCompleteListener listener){
         s.FormSubnodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -414,8 +413,10 @@ public class OfficialModelImpl implements OfficialModel{
                             query.setSuggestion(suggestion+"(来自Android)");
                             query.setIsTrace(0);
                             query.setIsWait(0);
+                            query.setType(Integer.parseInt(ineedResponseResponse.body().getIq().getQuery().getType()));
+                            query.setAttGUID(GUID);
                             query.setIsReturnCurrentNode(0);
-                            node.setGUID(GUID);
+                            node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
                             node.setId(ineedResponseResponse.body().getIq().getQuery().getId());
                             node.setType(Integer.parseInt(OfficialDeatail.getIq().getQuery().getMap().getType()));
                             node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());

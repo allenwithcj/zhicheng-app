@@ -67,7 +67,7 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialModelImpl.upDeal(imgs,jFile,GUID,suggest,officialDetailResponse,this);
+        mOfficialModelImpl.upDeal(imgs,jFile,suggest,GUID,officialDetailResponse,this);
     }
 
     @Override
