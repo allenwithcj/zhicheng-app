@@ -348,7 +348,7 @@ public class OfficialModelImpl implements OfficialModel{
                                     FormSendDoRequest.IqBean.QueryBean query2 = new FormSendDoRequest.IqBean.QueryBean();
                                     List<FormSendDoRequest.IqBean.QueryBean.NodesBean> nodes = new ArrayList<FormSendDoRequest.IqBean.QueryBean.NodesBean>();
                                     FormSendDoRequest.IqBean.QueryBean.NodesBean node = new FormSendDoRequest.IqBean.QueryBean.NodesBean();
-                                    query.setRequestType(requestType);
+                                    query2.setRequestType(requestType);
                                     query2.setTerm(OfficialDeatail.getIq().getQuery().getFormData().getFormData().getZC21().getViewValue());
                                     query2.setTermUnit(OfficialDeatail.getIq().getQuery().getFormData().getFormData().getZC28().getViewValue());
                                     query2.setId(OfficialDeatail.getIq().getQuery().getId());
@@ -357,6 +357,17 @@ public class OfficialModelImpl implements OfficialModel{
                                     query2.setIsTrace(0);
                                     query2.setIsWait(0);
                                     query2.setIsReturnCurrentNode(0);
+                                    query2.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getType()));
+                                    query2.setAttGUID(GUID);
+                                    node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
+                                    node.setId(mIneedResponse.body().getIq().getQuery().getId());
+                                    node.setType(Integer.parseInt(OfficialDeatail.getIq().getQuery().getMap().getType()));
+                                    node.setName(mIneedResponse.body().getIq().getQuery().getItems().get(0).getValue());
+                                    node.setValue("Y"+mIneedResponse.body().getIq().getQuery().getItems().get(0).getKey());
+                                    node.setFigureID("");
+                                    node.setFigureName("");
+                                    node.setFigureType("");
+                                    node.setIsDefaultNode(false);
                                     nodes.add(node);
                                     query2.setNodes(nodes);
                                     iq2.setNamespace("FormSendDoRequest");
@@ -413,9 +424,9 @@ public class OfficialModelImpl implements OfficialModel{
                             query.setSuggestion(suggestion+"(来自Android)");
                             query.setIsTrace(0);
                             query.setIsWait(0);
+                            query.setIsReturnCurrentNode(0);
                             query.setType(Integer.parseInt(ineedResponseResponse.body().getIq().getQuery().getType()));
                             query.setAttGUID(GUID);
-                            query.setIsReturnCurrentNode(0);
                             node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
                             node.setId(ineedResponseResponse.body().getIq().getQuery().getId());
                             node.setType(Integer.parseInt(OfficialDeatail.getIq().getQuery().getMap().getType()));

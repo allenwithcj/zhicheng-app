@@ -74,13 +74,17 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         break;
                     case 2:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
+                        ((ShowBoxViewHolder) holder).tagContent.setText("群众");
                         break;
                     case 3:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        ((ShowBoxViewHolder) holder).tagContent.setText("手机号码");
+                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
                         break;
                     case 4:
+                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
+                        ((ShowBoxViewHolder) holder).tagContent.setText("手机号码");
+                        break;
+                    case 5:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendTime());
                         break;
@@ -186,13 +190,13 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         if(position==0){
             return TYPE_HEADER;
-        }else if(position>0 && position<5){
+        }else if(position>0 && position<6){
             return TYPE_SHOW_BOX;
-        }else if(position==5){
-            return TYPE_SHOW_CONTENT;
         }else if(position==6){
+            return TYPE_SHOW_CONTENT;
+        }else if(position==7){
             return TYPE_SHOW_IMAGES;
-        }else if(position>6 && position<getItemCount()-1){
+        }else if(position>7 && position<getItemCount()-1){
             return TYPE_SHOW_BOX;
         }else{
             return TYPE_SHOW_DEAL;
