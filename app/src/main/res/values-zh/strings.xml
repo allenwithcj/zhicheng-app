@@ -94,12 +94,12 @@
     <string-array name="NoFinishDetail">
         <item>来源:</item>
         <item>来源类型:</item>
+        <item>事项类型:</item>
         <item>爆料人姓名:</item>
         <item>爆料人电话:</item>
         <item>爆料时间:</item>
         <item>爆料内容:</item>
         <item>爆料图片:</item>
-        <item>爆料时间:</item>
     </string-array>
 
 

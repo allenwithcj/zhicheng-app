@@ -294,7 +294,7 @@ public class OfficialModelImpl implements OfficialModel{
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);
                                 formNode.setIq(iq);
-                                formNodeRequest(mMainService,gson.toJson(formNode),requestType,listener);
+                                formNodeRequest(mMainService,gson.toJson(formNode),ineedResponseResponse,requestType,listener);
                                 BaseApplication.log_say("MainModelImpl","FormNodeRequest");
                             }else {
                                 listener.onComplected(ineedResponseResponse.body());
@@ -307,7 +307,7 @@ public class OfficialModelImpl implements OfficialModel{
                 });
     }
 
-    public void formNodeRequest(MainService s,String j,int requestType,ApiCompleteListener listener){
+    public void formNodeRequest(MainService s, String j, Response<IneedResponse> ineedResponseResponse, int requestType, ApiCompleteListener listener){
         s.FormNodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -357,13 +357,13 @@ public class OfficialModelImpl implements OfficialModel{
                                     query2.setIsTrace(0);
                                     query2.setIsWait(0);
                                     query2.setIsReturnCurrentNode(0);
-                                    query2.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getType()));
+                                    query2.setType(Integer.parseInt(OfficialDeatail.getIq().getQuery().getMap().getType()));
                                     query2.setAttGUID(GUID);
                                     node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
-                                    node.setId(mIneedResponse.body().getIq().getQuery().getId());
-                                    node.setType(Integer.parseInt(OfficialDeatail.getIq().getQuery().getMap().getType()));
-                                    node.setName(mIneedResponse.body().getIq().getQuery().getItems().get(0).getValue());
-                                    node.setValue("Y"+mIneedResponse.body().getIq().getQuery().getItems().get(0).getKey());
+                                    node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
+                                    node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
+                                    node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
+                                    node.setValue("Y"+ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
                                     node.setFigureID("");
                                     node.setFigureName("");
                                     node.setFigureType("");
@@ -425,11 +425,11 @@ public class OfficialModelImpl implements OfficialModel{
                             query.setIsTrace(0);
                             query.setIsWait(0);
                             query.setIsReturnCurrentNode(0);
-                            query.setType(Integer.parseInt(ineedResponseResponse.body().getIq().getQuery().getType()));
+                            query.setType(Integer.parseInt(OfficialDeatail.getIq().getQuery().getMap().getType()));
                             query.setAttGUID(GUID);
                             node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
-                            node.setId(ineedResponseResponse.body().getIq().getQuery().getId());
-                            node.setType(Integer.parseInt(OfficialDeatail.getIq().getQuery().getMap().getType()));
+                            node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
+                            node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
                             node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
                             node.setValue("Y"+ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
                             node.setFigureID("");

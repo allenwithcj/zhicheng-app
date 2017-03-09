@@ -92,13 +92,24 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                         break;
                     case 3:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
+                        if(mData.getIq().getQuery().getMap().getType().equals("1")){
+                            ((ShowBoxViewHolder) holder).tagContent.setText("立案核实");
+                        }else if(mData.getIq().getQuery().getMap().getType().equals("2")){
+                            ((ShowBoxViewHolder) holder).tagContent.setText("事件处置");
+                        }else if(mData.getIq().getQuery().getMap().getType().equals("3")){
+                            ((ShowBoxViewHolder) holder).tagContent.setText("结案核实");
+                        }
+
                         break;
                     case 4:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        ((ShowBoxViewHolder) holder).tagContent.setText("手机号码");
+                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
                         break;
                     case 5:
+                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
+                        ((ShowBoxViewHolder) holder).tagContent.setText("手机号码");
+                        break;
+                    case 6:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendTime());
                         break;
@@ -119,10 +130,10 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                         break;
                 }
             }else if (holder instanceof ShowContentViewHolder){
-                ((ShowContentViewHolder) holder).tagContentName.setText(tags[4]);
+                ((ShowContentViewHolder) holder).tagContentName.setText(tags[6]);
                 ((ShowContentViewHolder) holder).tagBaoContent.setText(mData.getIq().getQuery().getFormData().getFormData().getZC04().getViewValue());
             }else if (holder instanceof ShowImageViewHolder){
-                ((ShowImageViewHolder) holder).tagImage.setText(tags[5]);
+                ((ShowImageViewHolder) holder).tagImage.setText(tags[7]);
                 switch (mData.getIq().getQuery().getAttachments().size()){
                     case 1:
                         Glide.with(holder.itemView.getContext())
@@ -205,20 +216,20 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 11;
+        return 12;
     }
 
     @Override
     public int getItemViewType(int position) {
         if (position == 0){
             return TYPE_HEADER;
-        }else if (position > 0 && position < 6){
+        }else if (position > 0 && position < 7){
             return TYPE_SHOW_BOX;
-        }else if (position == 6){
-            return TYPE_SHOW_CONTENT;
         }else if (position == 7){
+            return TYPE_SHOW_CONTENT;
+        }else if (position == 8){
             return TYPE_SHOW_IMAGES;
-        }else if (position > 7 && position < getItemCount()-1){
+        }else if (position > 8 && position < getItemCount()-1){
             return TYPE_SHOW_BOX;
         }else {
             return TYPE_SHOW_DEAL;
