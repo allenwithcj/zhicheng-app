@@ -101,10 +101,6 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendTime());
                         break;
-//                case 7:
-//                    ((ShowBoxViewHolder) holder).tagName.setText(tag_last[0]);
-//                    ((ShowBoxViewHolder) holder).tagContent.setText("承办人");
-//                    break;
                     case 7:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[0]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getMap().getSendUser());
@@ -164,6 +160,103 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img3);
+                        break;
+                    case 4:
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img1);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .centerCrop()
+                                .into(((ShowImageViewHolder) holder).img2);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(2).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img3);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(3).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img4);
+                        break;
+                    case 5:
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img1);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .centerCrop()
+                                .into(((ShowImageViewHolder) holder).img2);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(2).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img3);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(3).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img4);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(4).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .centerCrop()
+                                .into(((ShowImageViewHolder) holder).img5);
+                        break;
+                    case 6:
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img1);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .centerCrop()
+                                .into(((ShowImageViewHolder) holder).img2);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(2).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img3);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(3).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img4);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(4).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .centerCrop()
+                                .into(((ShowImageViewHolder) holder).img5);
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(5).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(((ShowImageViewHolder) holder).img6);
+
                         break;
                 }
             }else if (holder instanceof ShowDealViewHolder) {
@@ -267,6 +360,9 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
         private ImageView img1;
         private ImageView img2;
         private ImageView img3;
+        private ImageView img4;
+        private ImageView img5;
+        private ImageView img6;
 
         public ShowImageViewHolder(View itemView) {
             super(itemView);
@@ -274,6 +370,9 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
             img1 = (ImageView) itemView.findViewById(R.id.img1);
             img2 = (ImageView) itemView.findViewById(R.id.img2);
             img3 = (ImageView) itemView.findViewById(R.id.img3);
+            img4 = (ImageView) itemView.findViewById(R.id.img4);
+            img5 = (ImageView) itemView.findViewById(R.id.img5);
+            img6 = (ImageView) itemView.findViewById(R.id.img6);
         }
     }
 
