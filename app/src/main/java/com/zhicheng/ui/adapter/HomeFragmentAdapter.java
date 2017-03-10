@@ -16,6 +16,7 @@ import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.CallTheCounActivity;
 import com.zhicheng.ui.activity.Official;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
+import com.zhicheng.ui.activity.OfficialSended;
 import com.zhicheng.ui.activity.OfficialWorkDynamic;
 import com.zhicheng.ui.activity.SearchViewActivity;
 import com.zhicheng.ui.activity.WorkNoteActivity;
@@ -107,6 +108,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                 }
                 ((ButtonGroupViewHolder) holder).Finished.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).FenLei.setOnClickListener(this);
+                ((ButtonGroupViewHolder) holder).Sended.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).GridDataBase.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).work.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).Experiment.setOnClickListener(this);
@@ -142,6 +144,9 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                 break;
             case R.id.Finished:
                 UIUtils.startActivity(new Intent(UIUtils.getContext(), officialFinished.class));
+                break;
+            case R.id.Sended:
+                UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialSended.class));
                 break;
             case R.id.FenLei:
                 Intent intent = new Intent(UIUtils.getContext(),SearchViewActivity.class);
@@ -190,6 +195,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
         private TextView noFinish;
         private TextView fabNotice;
         private TextView Finished;
+        private TextView Sended;
         private TextView FenLei;
         private TextView GridDataBase;
         private TextView work;
@@ -202,6 +208,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
             noFinish = (TextView) itemView.findViewById(R.id.noFinish);
             fabNotice = (TextView) itemView.findViewById(R.id.fabNotice);
             Finished = (TextView) itemView.findViewById(R.id.Finished);
+            Sended = (TextView) itemView.findViewById(R.id.Sended);
             FenLei = (TextView) itemView.findViewById(R.id.FenLei);
             GridDataBase = (TextView) itemView.findViewById(R.id.GridDataBase);
             work = (TextView) itemView.findViewById(R.id.work);

@@ -1,6 +1,5 @@
 package com.zhicheng.ui.activity;
 
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -15,10 +14,6 @@ import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.bean.json.OfficialDetailRequest;
 import com.zhicheng.ui.adapter.OfficialFinishDetailAdapter;
-
-import java.util.List;
-
-import cc.dagger.photopicker.PhotoPicker;
 
 /**
  * Created by IBM on 2017/2/10.
@@ -55,11 +50,6 @@ public class OfficialFinishDetail extends BaseActivity implements OfficialView{
         Gson gson = new Gson();
         String strEntity = gson.toJson(odr);
         mOfficialDetail.loadDetail(strEntity);
-    }
-
-    @Override
-    protected int getMenuID() {
-        return R.menu.official_detail;
     }
 
     @Override

@@ -98,14 +98,15 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 		filter = PhotoFilter.build();
 		filter.showGif(false);
 		mIneedAdapter.setSendLocation(maps -> {
+			IneedAdapter.InputChooseViewHolder holder = (IneedAdapter.InputChooseViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
 			if (maps.get("openMap") != null && maps.get("openMap").equals("true")){
 				UIUtils.startActivity(new Intent(this,LcationMapTEST.class));
+				holder.mProgressBar.setVisibility(View.GONE);
 			}else {
 				mData.put(0,maps.get("address"));
 				mData.put(7,maps.get("latitude"));
 				mData.put(8,maps.get("longitude"));
 				mData.put(9,maps.get("desc"));
-				IneedAdapter.InputChooseViewHolder holder = (IneedAdapter.InputChooseViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
 				holder.input_choose.setText(mData.get(0));
 				holder.mProgressBar.setVisibility(View.GONE);
 			}
