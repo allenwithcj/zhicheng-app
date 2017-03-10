@@ -113,10 +113,6 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendTime());
                         break;
-//                    case 7:
-//                        ((ShowBoxViewHolder) holder).tagName.setText(tag_last[0]);
-//                        ((ShowBoxViewHolder) holder).tagContent.setText("承办人");
-//                        break;
                     case 8:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[0]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
@@ -139,6 +135,8 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
 //                                .centerCrop()
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
                         ((ShowImageViewHolder) holder).img1.setOnClickListener(v -> mShowPhoto.onShowPhoto(0));
@@ -147,11 +145,15 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
 //                                .centerCrop()
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
 //                                .centerCrop()
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img2);
                         ((ShowImageViewHolder) holder).img1.setOnClickListener(v -> mShowPhoto.onShowPhoto(0));
@@ -161,16 +163,22 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
 //                                .centerCrop()
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
 //                                .centerCrop()
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img2);
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(2).getHref())
 //                                .centerCrop()
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.5)
                                 .into(((ShowImageViewHolder) holder).img3);
                         ((ShowImageViewHolder) holder).img1.setOnClickListener(v -> mShowPhoto.onShowPhoto(0));

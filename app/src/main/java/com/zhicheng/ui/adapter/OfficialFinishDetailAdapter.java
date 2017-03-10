@@ -126,30 +126,42 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                     case 1:
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
                         break;
                     case 2:
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img2);
                         break;
                     case 3:
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .centerCrop()
                                 .into(((ShowImageViewHolder) holder).img2);
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(2).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img3);
                         break;

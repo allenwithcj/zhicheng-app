@@ -68,7 +68,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,Swipe
         iqb.setNamespace("PersonalLogMaRequest");
         PersonalLogMaRequest.IqBean.QueryBean qb = new PersonalLogMaRequest.IqBean.QueryBean();
         qb.setType("3");
-        qb.setPage("");
+        qb.setPage("1");
         iqb.setQuery(qb);
         pm.setIq(iqb);
         Gson gson = new Gson();
