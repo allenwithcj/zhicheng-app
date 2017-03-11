@@ -269,7 +269,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if(holder instanceof ItemViewHolder){
-                ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0]+data.get(position).getName());
+                ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0]+data.get(position).getNAME());
                 ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[1]+data.get(position).getDOMICILE());
                 ((ItemViewHolder) holder).Suc.setOnClickListener(new View.OnClickListener() {
                     @Override

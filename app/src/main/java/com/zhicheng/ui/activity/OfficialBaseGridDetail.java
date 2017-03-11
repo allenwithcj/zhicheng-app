@@ -76,7 +76,7 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
         OfficialQueryDetailRequest.IqBean irb = new OfficialQueryDetailRequest.IqBean();
         irb.setNamespace("PersonMsgMaRequest");
         OfficialQueryDetailRequest.IqBean.QueryBean qb = new OfficialQueryDetailRequest.IqBean.QueryBean();
-        qb.setType("3");
+        qb.setType("5");
         qb.setID(ID);
         irb.setQuery(qb);
         odr.setIq(irb);

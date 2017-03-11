@@ -116,7 +116,7 @@ public class OfficialQueyResponse {
 
                     private String DOMICILE;
                     private String ID;
-                    private String Name;
+                    private String NAME;
 
                     public String getDOMICILE() {
                         return DOMICILE;
@@ -134,12 +134,12 @@ public class OfficialQueyResponse {
                         this.ID = ID;
                     }
 
-                    public String getName() {
-                        return Name;
+                    public String getNAME() {
+                        return NAME;
                     }
 
-                    public void setName(String Name) {
-                        this.Name = Name;
+                    public void setNAME(String NAME) {
+                        this.NAME = NAME;
                     }
                 }
             }

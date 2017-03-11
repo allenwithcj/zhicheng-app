@@ -25,6 +25,7 @@
                 android:gravity="center_vertical"
                 android:padding="@dimen/textView_padding"
                 android:text="@string/grid_base_add_residence"/>
+
             <EditText
                 android:id="@+id/grid_base_add_residence"
                 android:layout_width="0dp"
@@ -33,6 +34,7 @@
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:background="@null"
+                android:textSize="@dimen/content_size"
                 android:padding="@dimen/textView_padding"/>
         </LinearLayout>
         <include layout="@layout/z_line"/>
@@ -52,6 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
+                android:textSize="@dimen/content_size"
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
                 android:padding="@dimen/textView_padding"/>

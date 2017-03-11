@@ -1,6 +1,8 @@
 package com.zhicheng.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -11,6 +13,8 @@ import com.zhicheng.R;
  */
 
 public class ContactFragment extends BaseFragment {
+    private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public static ContactFragment newInstance(){
         ContactFragment fragment = new ContactFragment();

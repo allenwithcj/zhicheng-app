@@ -56,22 +56,46 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
         this.holder = (ItemViewHolder) holder;
         if(mData != null){
             if(holder instanceof ItemViewHolder){
-                ((ItemViewHolder) holder).grid_base_add_residence.setText(mData.getIq().getQuery().getPreMsgcon().getZZ_RESIDENCE());
-                ((ItemViewHolder) holder).grid_base_add_grid_no.setText(mData.getIq().getQuery().getPreMsgcon().getGRIDNAME());
-                ((ItemViewHolder) holder).grid_base_add_lessor.setText(mData.getIq().getQuery().getPreMsgcon().getRENTNAME());
-                ((ItemViewHolder) holder).grid_base_add_lessor_remark.setText(mData.getIq().getQuery().getPreMsgcon().getREMARK2());
-                ((ItemViewHolder) holder).grid_base_add_lessor_telephone.setText(mData.getIq().getQuery().getPreMsgcon().getRENTPHONE());
-                ((ItemViewHolder) holder).grid_base_add_name.setText(mData.getIq().getQuery().getPreMsgcon().getNAME());
-                ((ItemViewHolder) holder).grid_base_add_relation.setText(mData.getIq().getQuery().getPreMsgcon().getRENTPHONE());
-                ((ItemViewHolder) holder).grid_base_add_cardid.setText(mData.getIq().getQuery().getPreMsgcon().getCARD_NUM());
-                ((ItemViewHolder) holder).grid_base_add_brithplace.setText(mData.getIq().getQuery().getPreMsgcon().getDOMICILE());
-                ((ItemViewHolder) holder).grid_base_add_telephone.setText(mData.getIq().getQuery().getPreMsgcon().getPHONE());
-                ((ItemViewHolder) holder).grid_base_add_workspace.setText(mData.getIq().getQuery().getPreMsgcon().getWORK());
-                ((ItemViewHolder) holder).grid_base_add_hobby.setText(mData.getIq().getQuery().getPreMsgcon().getHOBBY());
-                ((ItemViewHolder) holder).grid_base_add_remark.setText(mData.getIq().getQuery().getPreMsgcon().getREMARK1());
-                ((ItemViewHolder) holder).grid_base_add_outaddress.setText(mData.getIq().getQuery().getPreMsgcon().getOUTADDRESS());
+                ((ItemViewHolder) holder).grid_base_add_residence.setText(mData.getIq().getQuery().getPreMsg().getZZ_RESIDENCE());
+                ((ItemViewHolder) holder).grid_base_add_grid_no.setText(mData.getIq().getQuery().getPreMsg().getGRIDNAME());
+                ((ItemViewHolder) holder).grid_base_add_lessor.setText(mData.getIq().getQuery().getPreMsg().getRENTNAME());
+                ((ItemViewHolder) holder).grid_base_add_lessor_remark.setText(mData.getIq().getQuery().getPreMsg().getREMARK2());
+                ((ItemViewHolder) holder).grid_base_add_lessor_telephone.setText(mData.getIq().getQuery().getPreMsg().getRENTPHONE());
+                ((ItemViewHolder) holder).grid_base_add_name.setText(mData.getIq().getQuery().getPreMsg().getNAME());
+                ((ItemViewHolder) holder).grid_base_add_relation.setText(mData.getIq().getQuery().getPreMsg().getRENTPHONE());
+                ((ItemViewHolder) holder).grid_base_add_sex.setText(getSexString(mData.getIq().getQuery().getPreMsg().getGRIDNAME()));
+                ((ItemViewHolder) holder).grid_base_add_cardid.setText(mData.getIq().getQuery().getPreMsg().getCARD_NUM());
+                ((ItemViewHolder) holder).grid_base_add_policatial.setText(mData.getIq().getQuery().getPreMsg().getPOLITICAL_STATUS());
+                ((ItemViewHolder) holder).grid_base_add_degree.setText(mData.getIq().getQuery().getPreMsg().getEDUCATION());
+                ((ItemViewHolder) holder).grid_base_add_married.setText(getMarriedString(mData.getIq().getQuery().getPreMsg().getMARITAL_STATUS()));
+                ((ItemViewHolder) holder).grid_base_add_brithplace.setText(mData.getIq().getQuery().getPreMsg().getDOMICILE());
+                ((ItemViewHolder) holder).grid_base_add_telephone.setText(mData.getIq().getQuery().getPreMsg().getPHONE());
+                ((ItemViewHolder) holder).grid_base_add_workspace.setText(mData.getIq().getQuery().getPreMsg().getWORK());
+                ((ItemViewHolder) holder).grid_base_add_hobby.setText(mData.getIq().getQuery().getPreMsg().getHOBBY());
+                ((ItemViewHolder) holder).grid_base_add_remark.setText(mData.getIq().getQuery().getPreMsg().getREMARK1());
+                ((ItemViewHolder) holder).grid_base_add_outaddress.setText(mData.getIq().getQuery().getPreMsg().getOUTADDRESS());
 
             }
+        }
+    }
+
+    private String getSexString(String gridname) {
+        if(gridname.equals("0")){
+            return "男";
+        }else {
+            return "女";
+        }
+    }
+
+    private String getMarriedString(String marital_status) {
+        if(marital_status.equals("0")){
+            return "未婚";
+        }else if(marital_status.equals("1")){
+            return "已婚";
+        }else if(marital_status.equals("2")){
+            return "离婚";
+        }else {
+            return "丧偶";
         }
     }
 

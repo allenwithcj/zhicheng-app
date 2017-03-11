@@ -45,16 +45,16 @@ public class OfficialBaseGridDetailResponse {
         }
 
         public static class QueryBean {
-            private PreMsgcon preMsgcon;
+            private PreMsg preMsg;
             private String errorMessage;
             private int errorCode;
 
-            public PreMsgcon getPreMsgcon() {
-                return preMsgcon;
+            public PreMsg getPreMsg() {
+                return preMsg;
             }
 
-            public void setPreMsgcon(PreMsgcon preMsgcon) {
-                this.preMsgcon = preMsgcon;
+            public void setPreMsg(PreMsg preMsg) {
+                this.preMsg = preMsg;
             }
 
             public String getErrorMessage() {
@@ -73,7 +73,7 @@ public class OfficialBaseGridDetailResponse {
                 this.errorCode = errorCode;
             }
 
-            public static class PreMsgcon {
+            public static class PreMsg {
                 /**
                  * caseReportTotal : 3
                  * gridReportTotal : 0
