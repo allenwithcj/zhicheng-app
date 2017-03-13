@@ -170,14 +170,16 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
             if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
                 if(Constant.LOG_OPERATE_TYPE.equals("update")){
                     mDataBase.updateByUid(Uid,mini_content.getText().toString());
-                    showMessage("修改成功");
                 }else if(Constant.LOG_OPERATE_TYPE.equals("delete")){
                     mDataBase.deleteWorkNote(Uid);
-                    showMessage("删除成功");
                 }
                 finish();
             }else{
-                showMessage("操作失败");
+                if(Constant.LOG_OPERATE_TYPE.equals("update")){
+                    showMessage("修改失败");
+                }else if(Constant.LOG_OPERATE_TYPE.equals("delete")){
+                    showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
+                }
             }
         }
     }

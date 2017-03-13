@@ -253,7 +253,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,Swipe
             news.setSendPeopel(mDataBase.getLocalConfig().getName());
             news.setSendWork(mDataBase.getLocalConfig().getDepartment());
             if(((CommonResponse)result).getIq().getQuery().getErrorCode() == 0){
-                showMessage("发送日志成功");
                 mDataBase.setWorkNote(news);
             }else{
                 showMessage("发送日志失败");
