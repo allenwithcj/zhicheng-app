@@ -1,6 +1,6 @@
 package com.zhicheng.ui.activity;
 
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhicheng.R;
@@ -20,6 +21,7 @@ import com.zhicheng.bean.json.PersonalLogMaRequest;
 import com.zhicheng.common.Constant;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -38,6 +40,9 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
     private boolean b = false;
     private WorkNodePresenterImpl mWorkNodePresenterImpl;
     private DatabaseHelper mDataBase;
+    private AlertDialog dialog;
+    private String Uid,work,sender,content;
+    private Date sendTime;
 
     @Override
     protected void initEvents() {
@@ -51,20 +56,31 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         content_txt = (TextView) findViewById(R.id.content_txt);
         mini_content = (EditText) findViewById(R.id.mini_content);
         btn_layout = (LinearLayout) findViewById(R.id.btn_layout);
+
         update = (Button)findViewById(R.id.update);
         delete = (Button)findViewById(R.id.delete);
         if(mWorkNote != null){
+            Uid = mWorkNote.getuID();
+            work = mWorkNote.getSendWork();
+            sender = mWorkNote.getSendPeopel();
+            sendTime = mWorkNote.getCreateTime();
+            content = mWorkNote.getContent();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss", Locale.CHINESE);
-            publicationunit.setText("单位:"+mWorkNote.getSendWork());
-            NoteTime.setText("发表时间:"+sdf.format(mWorkNote.getCreateTime()));
-            publicationpeople.setText("发表人:"+mWorkNote.getSendPeopel());
+            publicationunit.setText("单位:"+work);
+            NoteTime.setText("发表时间:"+sdf.format(sendTime));
+            publicationpeople.setText("发表人:"+sender);
             content_txt.setText("日志内容:");
-            mini_content.setText(mWorkNote.getContent());
-            mini_content.setSelection(mWorkNote.getContent().length());
+            mini_content.setText(content);
+            mini_content.setSelection(content.length());
         }
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
 
         update.setOnClickListener(view -> {
+            dialog = new AlertDialog.Builder(this,R.style.dialog)
+                    .setView(R.layout.z_loading_view)
+                    .setCancelable(false)
+                    .create();
+            dialog.show();
             Constant.LOG_OPERATE_TYPE = "update";
             PersonalLogMaRequest pr = new PersonalLogMaRequest();
             PersonalLogMaRequest.IqBean iqb = new PersonalLogMaRequest.IqBean();
@@ -72,7 +88,7 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
             PersonalLogMaRequest.IqBean.QueryBean qb = new PersonalLogMaRequest.IqBean.QueryBean();
             qb.setType("4");
             qb.setCon(mini_content.getText().toString());
-            qb.setId(mWorkNote.getuID());
+            qb.setId(Uid);
             iqb.setQuery(qb);
             pr.setIq(iqb);
             Gson gson = new Gson();
@@ -80,13 +96,18 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         });
 
         delete.setOnClickListener(view -> {
+            dialog = new AlertDialog.Builder(this,R.style.dialog)
+                    .setView(R.layout.z_loading_view)
+                    .setCancelable(false)
+                    .create();
+            dialog.show();
             Constant.LOG_OPERATE_TYPE = "delete";
             PersonalLogMaRequest pr = new PersonalLogMaRequest();
             PersonalLogMaRequest.IqBean iqb = new PersonalLogMaRequest.IqBean();
             iqb.setNamespace("PersonalLogMaRequest");
             PersonalLogMaRequest.IqBean.QueryBean qb = new PersonalLogMaRequest.IqBean.QueryBean();
             qb.setType("2");
-            qb.setId(mWorkNote.getuID());
+            qb.setId(Uid);
             iqb.setQuery(qb);
             pr.setIq(iqb);
             Gson gson = new Gson();
@@ -129,17 +150,18 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
 
     @Override
     public void showMessage(String msg) {
-        Snackbar.make(mToolbar,msg,Snackbar.LENGTH_SHORT).show();
+        if (dialog != null && dialog.isShowing()){
+            dialog.dismiss();
+        }
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showProgress() {
-
     }
 
     @Override
     public void hideProgress() {
-
     }
 
     @Override
@@ -147,8 +169,10 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         if(result instanceof CommonResponse){
             if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
                 if(Constant.LOG_OPERATE_TYPE.equals("update")){
+                    mDataBase.updateByUid(Uid,mini_content.getText().toString());
                     showMessage("修改成功");
                 }else if(Constant.LOG_OPERATE_TYPE.equals("delete")){
+                    mDataBase.deleteWorkNote(Uid);
                     showMessage("删除成功");
                 }
                 finish();

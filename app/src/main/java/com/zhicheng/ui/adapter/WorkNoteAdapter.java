@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zhicheng.R;
 import com.zhicheng.api.common.database.WorkNote;
 import com.zhicheng.ui.activity.WorkNodeDetail;
+import com.zhicheng.utils.common.UIUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
@@ -33,8 +34,9 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
         mWorkNotes = new LinkedList<WorkNote>();
     }
 
-    public void addAllData(List<WorkNote> time){
-        this.mWorkNotes.addAll(time);
+    public void addAllData(List<WorkNote> workNoteList){
+        mWorkNotes.clear();
+        this.mWorkNotes.addAll(workNoteList);
         this.notifyDataSetChanged();
     }
 
@@ -43,8 +45,8 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
         this.notifyItemRangeInserted(getItemCount()-1,wn.size());
     }
 
-    public void addData(WorkNote time){
-        this.mWorkNotes.addFirst(time);
+    public void addData(WorkNote mWorkNote){
+        this.mWorkNotes.addFirst(mWorkNote);
         this.notifyItemInserted(0);
     }
 
@@ -74,7 +76,7 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("mWorkNote",mWorkNotes.get(position));
                     intent.putExtras(bundle);
-                    view.getContext().startActivity(intent);
+                    UIUtils.startActivity(intent);
             });
         }
     }

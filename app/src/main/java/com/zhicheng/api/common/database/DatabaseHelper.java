@@ -41,6 +41,28 @@ public class DatabaseHelper{
         realm.commitTransaction();
     }
 
+    public void deleteAll(){
+        RealmResults<WorkNote> workNotes = realm.where(WorkNote.class).findAll();
+        realm.executeTransaction(realm1 -> {
+            workNotes.deleteAllFromRealm();
+        });
+    }
+
+    public void updateByUid(String Uid,String content){
+        WorkNote workNote = realm.where(WorkNote.class).equalTo("uID",Uid).findFirst();
+        realm.beginTransaction();
+        workNote.setContent(content);
+        realm.commitTransaction();
+    }
+
+    public boolean queryByUID(String uID){
+         WorkNote mWorkNote = realm.where(WorkNote.class).equalTo("uID",uID).findFirst();
+        if(mWorkNote != null){
+            return true;
+        }
+        return false;
+    }
+
     public List<WorkNote> getWorkNote(){
         RealmResults<WorkNote> list = realm.where(WorkNote.class).findAll();
         return realm.copyFromRealm(list);

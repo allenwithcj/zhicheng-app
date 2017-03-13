@@ -71,6 +71,7 @@ public class WorkNodePresenterImpl implements WorkNodePresenter,ApiCompleteListe
         }
         if (result instanceof PersonalLogMaResponse){
             mWorkNodeView.refreshData(result);
+
         }
         mWorkNodeView.hideProgress();
 

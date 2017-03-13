@@ -1,5 +1,7 @@
 package com.zhicheng.bean.http;
 
+import java.util.List;
+
 /**
  * Created by hp on 2017/3/2.
  */
@@ -79,10 +81,10 @@ public class PersonalLogMaResponse {
                 this.errorCode = errorCode;
             }
 
-            public static class Prelogcon{
+            public static class Prelogcon {
 
                 private String allnum;
-                private Prelogs prelogs;
+                private List<Prelog> prelogs;
 
                 public String getAllnum() {
                     return allnum;
@@ -92,69 +94,62 @@ public class PersonalLogMaResponse {
                     this.allnum = allnum;
                 }
 
-                public Prelogs getPrelogs() {
+                public List<Prelog> getPrelogs() {
                     return prelogs;
                 }
 
-                public void setPrelogs(Prelogs prelogs) {
+                public void setPrelogs(List<Prelog> prelogs) {
                     this.prelogs = prelogs;
                 }
 
-                public static class Prelogs{
-                    public Prelog prelog;
+                public static class Prelog {
+                    public String cd00;
+                    public String cd01;
+                    public String cd02;
+                    public String cd03;
+                    public String cd05;
 
+                    public String getCd00() {
+                        return cd00;
+                    }
 
-                    public static class Prelog{
-                        public String cd00;
-                        public String cd01;
-                        public String cd02;
-                        public String cd03;
-                        public String cd05;
+                    public void setCd00(String cd00) {
+                        this.cd00 = cd00;
+                    }
 
-                        public String getCd00() {
-                            return cd00;
-                        }
+                    public String getCd01() {
+                        return cd01;
+                    }
 
-                        public void setCd00(String cd00) {
-                            this.cd00 = cd00;
-                        }
+                    public void setCd01(String cd01) {
+                        this.cd01 = cd01;
+                    }
 
-                        public String getCd01() {
-                            return cd01;
-                        }
+                    public String getCd02() {
+                        return cd02;
+                    }
 
-                        public void setCd01(String cd01) {
-                            this.cd01 = cd01;
-                        }
+                    public void setCd02(String cd02) {
+                        this.cd02 = cd02;
+                    }
 
-                        public String getCd02() {
-                            return cd02;
-                        }
+                    public String getCd03() {
+                        return cd03;
+                    }
 
-                        public void setCd02(String cd02) {
-                            this.cd02 = cd02;
-                        }
+                    public void setCd03(String cd03) {
+                        this.cd03 = cd03;
+                    }
 
-                        public String getCd03() {
-                            return cd03;
-                        }
+                    public String getCd05() {
+                        return cd05;
+                    }
 
-                        public void setCd03(String cd03) {
-                            this.cd03 = cd03;
-                        }
-
-                        public String getCd05() {
-                            return cd05;
-                        }
-
-                        public void setCd05(String cd05) {
-                            this.cd05 = cd05;
-                        }
+                    public void setCd05(String cd05) {
+                        this.cd05 = cd05;
                     }
                 }
-
             }
         }
     }
-
 }

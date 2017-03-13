@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhicheng.BaseApplication;
@@ -24,7 +25,9 @@ import com.zhicheng.bean.http.PersonalLogMaResponse;
 import com.zhicheng.bean.json.PersonalLogMaRequest;
 import com.zhicheng.ui.adapter.WorkNoteAdapter;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +54,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,Swipe
     private int indexLast = 0;
     private String send_content;
     private String uID;
-    private int position;
 
     public WorkNoteActivity getInstance(){
         return  instance;
@@ -97,7 +99,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,Swipe
 
     @Override
     protected void initData() {
-        onRefresh();
         mInput.setImeOptions(EditorInfo.IME_ACTION_SEND);
         mInput.setImeActionLabel("发送",EditorInfo.IME_ACTION_SEND);
         mInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -124,6 +125,13 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,Swipe
             }
             return false;
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onRefresh();
     }
 
     public void showProgress() {
@@ -165,7 +173,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,Swipe
 
     @Override
     public void showMessage(String msg) {
-        Snackbar.make(mToolbar,msg,Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -173,20 +181,28 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,Swipe
         if(result instanceof PersonalLogMaResponse){
             //查询工作日志返回
             if(((PersonalLogMaResponse)result).getIq().getQuery().getErrorCode() == 0){
-                WorkNote news = new WorkNote();
-                news.setId(mDataBase.generateNewPrimaryKey());
-                news.setuID(((PersonalLogMaResponse)result).getIq().getQuery()
-                        .getPrelogcon().getPrelogs().prelog.cd00);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss", Locale.CHINESE);
-                news.setCreateTime(new Date(sdf.format(((PersonalLogMaResponse)result).getIq().getQuery()
-                        .getPrelogcon().getPrelogs().prelog.cd01)));
-                news.setContent(((PersonalLogMaResponse)result).getIq().
-                        getQuery().getPrelogcon().getPrelogs().prelog.cd02);
-                news.setSendPeopel(((PersonalLogMaResponse)result).getIq().
-                        getQuery().getPrelogcon().getPrelogs().prelog.cd03);
-                news.setSendWork(((PersonalLogMaResponse)result).getIq().
-                        getQuery().getPrelogcon().getPrelogs().prelog.cd05);
-                mDataBase.setWorkNote(news);
+                List<PersonalLogMaResponse.IqBean.QueryBean.Prelogcon.Prelog> prelogList = ((PersonalLogMaResponse)result).getIq().getQuery().getPrelogcon().getPrelogs();
+                List<WorkNote> workNotes = new ArrayList<>();
+                for(PersonalLogMaResponse.IqBean.QueryBean.Prelogcon.Prelog prelog : prelogList){
+                    WorkNote news = new WorkNote();
+                    news.setId(mDataBase.generateNewPrimaryKey());
+                    news.setuID(prelog.getCd00());
+                    try {
+                        String sendTime = prelog.getCd01();
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+                        news.setCreateTime(sdf.parse(sendTime.substring(0,sendTime.length()-2).toString()));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    news.setContent(prelog.getCd02());
+                    news.setSendPeopel(prelog.getCd03());
+                    news.setSendWork(prelog.getCd05());
+                    workNotes.add(news);
+                    if(!mDataBase.queryByUID(news.getuID())){
+                        mDataBase.setWorkNote(news);
+                    }
+                }
+                mWorkNoteAdapter.addAllData(workNotes);
             }else{
                 List<WorkNote> data = mDataBase.getWorkNote();
                 Collections.reverse(data);
@@ -238,10 +254,10 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,Swipe
             news.setSendWork(mDataBase.getLocalConfig().getDepartment());
             if(((CommonResponse)result).getIq().getQuery().getErrorCode() == 0){
                 showMessage("发送日志成功");
+                mDataBase.setWorkNote(news);
             }else{
                 showMessage("发送日志失败");
             }
-            mDataBase.setWorkNote(news);
             mWorkNoteAdapter.addData(news);
             mWorkNoteAdapter.notifyDataSetChanged();
         }
