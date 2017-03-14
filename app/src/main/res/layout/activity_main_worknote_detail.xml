@@ -24,7 +24,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/textView_padding"
                 android:gravity="left|center"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
@@ -73,14 +74,16 @@
                     android:gravity="left|center"/>
 
                 <EditText
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
                     android:id="@+id/mini_content"
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:textColor="@android:color/darker_gray"
                     android:background="@null"
+                    android:layout_gravity="center"
                     android:textSize="@dimen/content_size"
                     android:layout_height="wrap_content" />
-
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

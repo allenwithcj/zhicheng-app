@@ -3,10 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/content">
-    <com.baidu.mapapi.map.TextureMapView
+
+    <com.baidu.mapapi.map.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true">
-    </com.baidu.mapapi.map.TextureMapView>
+    </com.baidu.mapapi.map.MapView>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/request_location"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="bottom|left"
+        android:background="@drawable/custom_loc" />
 </FrameLayout>

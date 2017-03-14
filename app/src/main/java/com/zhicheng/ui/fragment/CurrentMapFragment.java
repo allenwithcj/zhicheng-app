@@ -2,7 +2,10 @@ package com.zhicheng.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -10,13 +13,24 @@ import com.baidu.location.LocationClient;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.InfoWindow;
+import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.map.TextureMapView;
+import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.zhicheng.R;
 import com.zhicheng.utils.BDLocationInit;
+
+import java.util.List;
 
 /**
  * Created by Donson on 2017/2/27.
@@ -24,12 +38,15 @@ import com.zhicheng.utils.BDLocationInit;
 
 public class CurrentMapFragment extends BaseFragment{
 
-    private TextureMapView mTextureMapView;
-    private BaiduMap mBaiduMap;
+    private MapView mMapView;
+    private BaiduMap mBaiduMap;//地图管理器
+    private Marker mMarker;//覆盖物
+    private LatLng mLatLng;
+    private ImageButton request_location;
+
     //定位信息
     private LocationClient mLocationClient = null;
     private LocationListener mLocation;
-    private MyMarkerDragListener myMarkerDragListener;
 
     public static CurrentMapFragment newInstance(){
         CurrentMapFragment fragment = new CurrentMapFragment();
@@ -44,22 +61,40 @@ public class CurrentMapFragment extends BaseFragment{
 
     @Override
     protected void initEvents() {
-        mTextureMapView = (TextureMapView) mRootView.findViewById(R.id.map);
-        mBaiduMap = mTextureMapView.getMap();
+        mMapView = (MapView) mRootView.findViewById(R.id.map);
+        request_location = (ImageButton)mRootView.findViewById(R.id.request_location);
+        mBaiduMap = mMapView.getMap();
+        mBaiduMap.setMyLocationEnabled(true);
         mLocationClient = new LocationClient(getContext());
         BDLocationInit.getInstance().initLocation(mLocationClient);
         mLocation = new LocationListener();
-        myMarkerDragListener = new MyMarkerDragListener();
         mLocationClient.registerLocationListener(mLocation);
-        mBaiduMap.setOnMarkerDragListener(myMarkerDragListener);
+        //mark覆盖物点击监听器
+        mBaiduMap.setOnMarkerClickListener(new MyOnMarkerClickListener());
+        //mark覆盖物拖拽监听器
+        mBaiduMap.setOnMarkerDragListener(new MyOnMarkerDragListener());
+
+        request_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mLocationClient != null && mLocationClient.isStarted()){
+                    mLocationClient.requestLocation();
+                }else if(mLocationClient != null && !mLocationClient.isStarted()){
+                    mLocationClient.start();
+                }
+            }
+        });
+
     }
+
 
     @Override
     protected void initData(boolean isSavedNull) {
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(30.994140,119.9015525)));
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(19));
-        mLocationClient.start();
-        mLocationClient.requestLocation();
+        if(mLocationClient !=null && mLocationClient.isStarted()){
+            mLocationClient.requestLocation();
+        }else if(mLocationClient !=null && !mLocationClient.isStarted()){
+            mLocationClient.start();
+        }
 
     }
 
@@ -68,42 +103,104 @@ public class CurrentMapFragment extends BaseFragment{
     private class LocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            LatLng point = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
-            mBaiduMap.clear();
+            MyLocationData myLocationData = new MyLocationData.Builder()
+                    .accuracy(bdLocation.getRadius())
+                    .direction(100)
+                    .latitude(bdLocation.getLatitude())
+                    .longitude(bdLocation.getLongitude())
+                    .build();
+            mBaiduMap.setMyLocationData(myLocationData);
+
             if (isFirst) {
-                mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(point));
-                isFirst = false;
+                //isFirst = false;
+                mLatLng = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
+                mBaiduMap.clear();
+                mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(mLatLng));
+                //添加覆盖物
+                BitmapDescriptor bitmap = BitmapDescriptorFactory
+                        .fromResource(R.drawable.ic_location_marker);
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(mLatLng)
+                        .icon(bitmap)
+                        .draggable(true)
+                        .animateType(MarkerOptions.MarkerAnimateType.drop);
+                mMarker = (Marker)(mBaiduMap.addOverlay(markerOptions));
+                setPopupTipsInfo(mMarker);
+                MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newLatLngZoom(mLatLng,18.0f);
+                mBaiduMap.animateMapStatus(mapStatusUpdate);
             }
-            BitmapDescriptor bitmap = BitmapDescriptorFactory
-                    .fromResource(R.drawable.ic_location_marker);
-            MarkerOptions option = new MarkerOptions()
-                    .position(point)  //设置marker的位置
-                    .icon(bitmap)  //设置marker图标
-                    .zIndex(9)  //设置marker所在层级
-                    .draggable(true);  //设置手势拖拽
-            mBaiduMap.addOverlay(option);
+
         }
     }
 
-    class MyMarkerDragListener implements BaiduMap.OnMarkerDragListener {
+    class MyOnMarkerClickListener implements BaiduMap.OnMarkerClickListener {
+
+        @Override
+        public boolean onMarkerClick(Marker marker) {
+            setPopupTipsInfo(marker);
+            return false;
+        }
+    }
+
+    class MyOnMarkerDragListener implements BaiduMap.OnMarkerDragListener{
 
         @Override
         public void onMarkerDrag(Marker marker) {
-            //拖拽中
 
         }
 
         @Override
         public void onMarkerDragEnd(Marker marker) {
-            //拖拽结束
-
+            setPopupTipsInfo(marker);
         }
 
         @Override
         public void onMarkerDragStart(Marker marker) {
-            //开始拖拽
 
         }
+    }
+
+    private void setPopupTipsInfo(Marker mMarker) {
+        //获取当前经纬度
+        final LatLng latLng = mMarker.getPosition();
+        final String[] addr = new String[1];
+        //实例化一个地理编码查询对象
+        GeoCoder geoCoder = GeoCoder.newInstance();
+        ReverseGeoCodeOption option = new ReverseGeoCodeOption();
+        option.location(latLng);
+        geoCoder.reverseGeoCode(option);
+        geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
+            @Override
+            public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+
+            }
+
+            @Override
+            public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+                addr[0] = reverseGeoCodeResult.getAddress();
+                ReverseGeoCodeResult.AddressComponent addressComponent = reverseGeoCodeResult.getAddressDetail();
+                StringBuilder sb = new StringBuilder();
+                List<PoiInfo> poiInfos = reverseGeoCodeResult.getPoiList();
+                if(poiInfos != null){
+                    sb.append("\nPoilist size:"+poiInfos.size());
+                    for(PoiInfo p:poiInfos){
+                        sb.append("\n\taddress:"+p.address);
+                        sb.append("name:"+p.name+" postCode:"+p.postCode);
+                    }
+                }
+                Button button = new Button(getActivity());
+                button.setBackgroundResource(R.drawable.location_tips);
+                button.setText(addr[0]);
+                InfoWindow infoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), latLng, -47, new InfoWindow.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick() {
+                        mBaiduMap.hideInfoWindow();
+                    }
+                });
+                mBaiduMap.showInfoWindow(infoWindow);
+            }
+        });
+
     }
 
     @Override
@@ -113,14 +210,14 @@ public class CurrentMapFragment extends BaseFragment{
             mLocationClient.start();
             isFirst = true;
         }
-        mTextureMapView.onResume();
+        mMapView.onResume();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mLocationClient.stop();
-        mTextureMapView.onPause();
+        mMapView.onPause();
     }
 
     @Override
@@ -129,7 +226,8 @@ public class CurrentMapFragment extends BaseFragment{
         if (mLocationClient.isStarted()){
             mLocationClient.stop();
         }
-        mTextureMapView.onDestroy();
+        mBaiduMap.clear();
+        mMapView.onDestroy();
     }
 
 }
