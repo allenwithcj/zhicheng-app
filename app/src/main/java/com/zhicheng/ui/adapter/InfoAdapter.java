@@ -1,5 +1,6 @@
 package com.zhicheng.ui.adapter;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhicheng.R;
+import com.zhicheng.ui.activity.OfficialSended;
+import com.zhicheng.utils.common.UIUtils;
 
 /**
  * Created by Donson on 2017/2/8.
@@ -21,6 +24,7 @@ public class InfoAdapter extends RecyclerView.Adapter {
     private static final int TYPE_LAST = 2;
 
     public InfoAdapter(){
+
     }
 
     @Override
@@ -52,6 +56,9 @@ public class InfoAdapter extends RecyclerView.Adapter {
         }else if (holder instanceof InfoMiddleViewHolder){
             ((InfoMiddleViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_bao_notice));
             ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("我的爆料");
+            ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
+                UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialSended.class));
+            });
         }else if (holder instanceof InfoLastViewHolder){
             if (position == 2){
                 ((InfoLastViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_send_news));

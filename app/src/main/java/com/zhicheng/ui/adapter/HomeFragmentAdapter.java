@@ -7,16 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.library.LoopContentPager;
 import com.library.LoopViewPager;
 import com.zhicheng.R;
+import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.CallTheCounActivity;
 import com.zhicheng.ui.activity.Official;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
-import com.zhicheng.ui.activity.OfficialSended;
 import com.zhicheng.ui.activity.OfficialWorkDynamic;
 import com.zhicheng.ui.activity.SearchViewActivity;
 import com.zhicheng.ui.activity.WorkNoteActivity;
@@ -37,11 +38,11 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
     private static final int TYPE_BAOLIAO = 1;
     private static final int TYPE_TODAY = 2;
     private static final int TYPE_MODEL = 3;
-
+    private DatabaseHelper mData;
     private CommonResponse mainResponses;
 
     public HomeFragmentAdapter(){
-
+        mData = new DatabaseHelper();
     }
 
     public void setAdapterData(CommonResponse mainResponses){
@@ -94,7 +95,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                     }
                     ((TopListViewHolder) holder).mLoopViewPager.setDataViewList(img,content,location,time);
                 }
-//                img.clear();content.clear();location.clear();time.clear();
             }else if (holder instanceof ButtonGroupViewHolder){
                 ((ButtonGroupViewHolder) holder).noFinish.setOnClickListener(this);
                 if (mainResponses.getIq().getQuery().getData() != null){
@@ -108,7 +108,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                 }
                 ((ButtonGroupViewHolder) holder).Finished.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).FenLei.setOnClickListener(this);
-                ((ButtonGroupViewHolder) holder).Sended.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).GridDataBase.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).work.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).Experiment.setOnClickListener(this);
@@ -145,16 +144,19 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
             case R.id.Finished:
                 UIUtils.startActivity(new Intent(UIUtils.getContext(), officialFinished.class));
                 break;
-            case R.id.Sended:
-                UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialSended.class));
-                break;
             case R.id.FenLei:
                 Intent intent = new Intent(UIUtils.getContext(),SearchViewActivity.class);
                 intent.putExtra("fragment","classify");
                 UIUtils.startActivity(intent);
                 break;
             case R.id.GridDataBase:
-                UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialBaseGrid.class));
+                if(mData.getLocalConfig() != null){
+                    if(mData.getLocalConfig().getUserPost().contains("网格员")){
+                        UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialBaseGrid.class));
+                    }else{
+                        Toast.makeText(UIUtils.getContext(),"非网格员无此功能权限",Toast.LENGTH_SHORT).show();
+                    }
+                }
                 break;
             case R.id.work:
                 UIUtils.startActivity(new Intent(UIUtils.getContext(),OfficialWorkDynamic.class));
@@ -195,7 +197,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
         private TextView noFinish;
         private TextView fabNotice;
         private TextView Finished;
-        private TextView Sended;
         private TextView FenLei;
         private TextView GridDataBase;
         private TextView work;
@@ -208,7 +209,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
             noFinish = (TextView) itemView.findViewById(R.id.noFinish);
             fabNotice = (TextView) itemView.findViewById(R.id.fabNotice);
             Finished = (TextView) itemView.findViewById(R.id.Finished);
-            Sended = (TextView) itemView.findViewById(R.id.Sended);
             FenLei = (TextView) itemView.findViewById(R.id.FenLei);
             GridDataBase = (TextView) itemView.findViewById(R.id.GridDataBase);
             work = (TextView) itemView.findViewById(R.id.work);

@@ -7,12 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.OfficialView;
+import com.zhicheng.bean.http.OfficialWorkDynamicList;
 import com.zhicheng.ui.adapter.OfficialDynamicAdapter;
-import com.zhicheng.bean.http.*;
 
 /**
  * Created by Donson on 2017/1/15.
@@ -84,7 +83,7 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView,Sw
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_span){
-            Snackbar.make(mToolbar,"发送动态",Snackbar.LENGTH_SHORT).show();
+
         }
         return super.onOptionsItemSelected(item);
     }
