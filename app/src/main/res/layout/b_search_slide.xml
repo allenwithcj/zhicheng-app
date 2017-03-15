@@ -98,18 +98,21 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:drawableLeft="@drawable/patrol_heading"
             android:gravity="center"
             android:layout_gravity="center"
             android:drawablePadding="5dp"
-            android:text="时间" />
+            android:text="时间"
+            android:id="@+id/textView" />
 
         <TextView
             android:id="@+id/Date"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
             android:layout_height="wrap_content"
             android:padding="@dimen/textView_padding"
             android:layout_margin="@dimen/photo_margin"
@@ -118,6 +121,15 @@
             android:textSize="@dimen/content_size"
             android:textStyle="normal"
             android:textColor="@color/black"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/patrol_next_arrow"
+            />
     </LinearLayout>
 
     <View

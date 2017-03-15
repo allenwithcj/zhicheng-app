@@ -21,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.impl.CaseQueryPresenterImpl;
@@ -28,7 +29,11 @@ import com.zhicheng.api.view.CaseQueryView;
 import com.zhicheng.bean.http.CaseQueryResponse;
 import com.zhicheng.bean.json.CaseQueryRequest;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Donson on 2017/1/17.
@@ -229,15 +234,28 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             case R.id.btn_cancel:
                 mCaseTime = "";
                 mManageState = "";
+                date_txt.setText("");
                 allThings.setChecked(true);
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 onRefresh();
                 break;
             case R.id.btn_confirm:
+                mDrawerLayout.closeDrawer(GravityCompat.START);
                 onRefresh();
                 break;
 
             case R.id.date_layout:
-
+                //时间选择器
+                TimePickerView pvTime = new TimePickerView.Builder(getContext(), new TimePickerView.OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+                        date_txt.setText(sdf.format(date));
+                        mCaseTime = date_txt.getText().toString();
+                    }
+                }).build();
+                pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+                pvTime.show();
                 break;
         }
     }
