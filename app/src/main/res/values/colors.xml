@@ -24,4 +24,6 @@
     <color name="click">#0f789e</color>
     <color name="navigationColor">#ee2e2e2e</color>
     <color name="headView">#2b9bd7</color>
+    <color name="whiteE">#eeeeee</color>
+    <color name="black4">#444444</color>
 </resources>

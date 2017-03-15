@@ -57,4 +57,17 @@
     <style name="ImageTranslucentTheme" parent="AppTheme">
         <!--在Android 4.4之前的版本上运行，直接跟随系统主题-->
     </style>
+
+    <!--通讯录页面-->
+    <!--列表头-->
+    <style name="ContactItemHeader">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/contact_item_header_height</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/whiteE</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingStart">@dimen/activity_horizontal_margin</item>
+        <item name="android:textColor">@color/black4</item>
+        <item name="android:textSize">@dimen/contact_item_header_font</item>
+    </style>
 </resources>

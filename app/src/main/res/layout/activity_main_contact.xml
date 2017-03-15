@@ -7,5 +7,66 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:clipToPadding="false">
-    <include layout="@layout/recycle_content"/>
+
+    <com.zhicheng.utils.ClearEditText
+        android:id="@+id/mClearEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_half_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/search_bar_edit_selector"
+        android:drawableLeft="@drawable/search_bar_icon_normal_"
+        android:drawableStart="@drawable/search_bar_icon_normal_"
+        android:hint="@string/contact_edit_hint"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textSize="@dimen/contact_edit_font_size" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/swipeRefresh"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/mRecyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:scrollbars="none"
+                android:overScrollMode="never"
+                android:paddingBottom="16dp">
+            </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/anno"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:background="@drawable/contact_anno_bg"
+            android:gravity="center"
+            android:alpha="0.5"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="@dimen/contact_anno_font"
+            />
+
+        <TextView
+            android:id="@+id/noResult"
+            style="@style/ContactItemHeader"
+            android:visibility="gone"
+            android:text="@string/contact_no_result"/>
+
+        <com.zhicheng.utils.SideBar
+            android:id="@+id/sideBar"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center" />
+    </FrameLayout>
 </LinearLayout>

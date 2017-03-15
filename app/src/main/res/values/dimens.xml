@@ -12,4 +12,17 @@
     <dimen name="content_size">14sp</dimen>
     <dimen name="timeLine_padding">18dp</dimen>
     <dimen name="small_text_size">12sp</dimen>
+
+    <dimen name="activity_half_margin">8dp</dimen>
+    <dimen name="activity_small_margin">4dp</dimen>
+    <!--搜索栏-->
+    <dimen name="contact_edit_font_size">15sp</dimen>
+    <!--列表项-->
+    <dimen name="contact_item_name_font">16sp</dimen>
+    <dimen name="contact_item_pinyin_font">12sp</dimen>
+    <!--列表标题-->
+    <dimen name="contact_item_header_height">20dp</dimen>
+    <dimen name="contact_item_header_font">12sp</dimen>
+    <!--音序选中提示-->
+    <dimen name="contact_anno_font">30sp</dimen>
 </resources>
