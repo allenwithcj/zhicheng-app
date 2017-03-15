@@ -1,37 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_padding">
-        <EditText
-            android:id="@+id/mInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/enterSearch"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/mRecycleView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:scrollbars="none"
-            android:overScrollMode="never"
-            android:paddingBottom="16dp">
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-    
+
+    <include layout="@layout/recycle_content" />
     <!--筛选侧滑栏-->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:clickable="true"
         android:background="@color/white">
-        <include layout="@layout/b_search_slide"/>
+
+        <include layout="@layout/b_search_slide" />
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

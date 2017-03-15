@@ -3,8 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <include layout="@layout/i_grid_content_detail_v1"/>
-    <include layout="@layout/i_grid_content_detail_v2"/>
-    <include layout="@layout/i_grid_content_detail_v3"/>
+
+    <include layout="@layout/i_grid_content_detail_v1" />
+
+    <include layout="@layout/i_grid_content_detail_v2" />
+
+    <include layout="@layout/i_grid_content_detail_v3" />
 
 </LinearLayout>

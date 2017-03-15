@@ -26,4 +26,7 @@
     <color name="headView">#2b9bd7</color>
     <color name="whiteE">#eeeeee</color>
     <color name="black4">#444444</color>
+    <color name="gray_text">#909497</color>
+    <color name="patrol_finish_blue">#44B2FE</color>
+    <color name="blue_text">#3cafff</color>
 </resources>

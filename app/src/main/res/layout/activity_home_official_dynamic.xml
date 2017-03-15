@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/activity_padding">
+
     <ImageView
         android:id="@+id/img"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:scaleType="fitCenter"
-        android:background="@color/black"/>
+        android:background="@color/black" />
+
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/img"
         android:paddingLeft="@dimen/textView_padding"
-        android:paddingTop="@dimen/textView_padding"/>
+        android:paddingTop="@dimen/textView_padding" />
+
     <me.codeboy.android.aligntextview.AlignTextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
@@ -24,7 +26,8 @@
         android:layout_toRightOf="@+id/img"
         android:layout_below="@+id/name"
         android:paddingLeft="@dimen/textView_padding"
-        android:paddingTop="@dimen/textView_padding"/>
+        android:paddingTop="@dimen/textView_padding" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/image_content"
         android:layout_width="match_parent"
@@ -35,6 +38,7 @@
         android:paddingTop="@dimen/textView_padding">
 
     </android.support.v7.widget.RecyclerView>
+
     <TextView
         android:id="@+id/location"
         android:layout_width="match_parent"
@@ -44,7 +48,8 @@
         android:layout_below="@+id/image_content"
         android:textColor="@color/red"
         android:textSize="@dimen/badge_text_size"
-        android:layout_toRightOf="@+id/img"/>
+        android:layout_toRightOf="@+id/img" />
+
     <TextView
         android:id="@+id/time"
         android:layout_width="wrap_content"
@@ -53,7 +58,8 @@
         android:layout_below="@+id/location"
         android:textColor="@color/text_color"
         android:textSize="@dimen/badge_text_size"
-        android:layout_toRightOf="@+id/img"/>
+        android:layout_toRightOf="@+id/img" />
+
     <ImageButton
         android:id="@+id/more"
         android:layout_width="20dp"
@@ -61,11 +67,12 @@
         android:layout_below="@+id/location"
         android:paddingTop="@dimen/textView_padding"
         android:layout_alignParentRight="true"
-        android:background="@drawable/ic_action_recomment_24dp"/>
+        android:background="@drawable/ic_action_recomment_24dp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
         android:layout_below="@+id/more"
         android:layout_marginTop="@dimen/activity_padding"
-        android:background="@color/bao_location_bg"/>
+        android:background="@color/bao_location_bg" />
 </RelativeLayout>

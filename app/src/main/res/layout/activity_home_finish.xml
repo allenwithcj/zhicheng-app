@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/Suc"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,18 +7,19 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp">
     <!--<ImageView-->
-        <!--android:id="@+id/photo"-->
-        <!--android:layout_width="85dp"-->
-        <!--android:layout_height="85dp"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:layout_margin="@dimen/textView_padding"-->
-        <!--android:background="@color/bao_location_bg"/>-->
+    <!--android:id="@+id/photo"-->
+    <!--android:layout_width="85dp"-->
+    <!--android:layout_height="85dp"-->
+    <!--android:scaleType="centerCrop"-->
+    <!--android:layout_margin="@dimen/textView_padding"-->
+    <!--android:background="@color/bao_location_bg"/>-->
     <TextView
         android:id="@+id/NumberId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/textView_padding"
-        android:paddingLeft="@dimen/textView_padding"/>
+        android:paddingLeft="@dimen/textView_padding" />
+
     <TextView
         android:id="@+id/desc"
         android:layout_width="wrap_content"
@@ -28,7 +28,8 @@
         android:ellipsize="middle"
         android:maxLines="1"
         android:paddingTop="@dimen/textView_padding"
-        android:paddingLeft="@dimen/textView_padding"/>
+        android:paddingLeft="@dimen/textView_padding" />
+
     <TextView
         android:id="@+id/deal"
         android:layout_width="wrap_content"
@@ -36,7 +37,8 @@
         android:layout_below="@+id/desc"
         android:paddingTop="@dimen/textView_padding"
         android:paddingLeft="@dimen/textView_padding"
-        android:paddingBottom="@dimen/textView_padding"/>
-    <include layout="@layout/z_line"/>
+        android:paddingBottom="@dimen/textView_padding" />
+
+    <include layout="@layout/z_line" />
 
 </RelativeLayout>

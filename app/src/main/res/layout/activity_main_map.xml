@@ -4,24 +4,26 @@
     android:layout_height="match_parent"
     android:id="@+id/content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.baidu.mapapi.map.TextureMapView
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clickable="true">
-        </com.baidu.mapapi.map.TextureMapView>
+            android:clickable="true"></com.baidu.mapapi.map.TextureMapView>
     </LinearLayout>
+
     <SearchView
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/bao_location_toolbar"
-        android:iconifiedByDefault="false">
-    </SearchView>
+        android:iconifiedByDefault="false"></SearchView>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_location"
         android:layout_width="50dp"
@@ -30,5 +32,5 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_location_marker"
         app:fabSize="mini"
-        android:layout_gravity="bottom|center_horizontal"/>
+        android:layout_gravity="bottom|center_horizontal" />
 </FrameLayout>

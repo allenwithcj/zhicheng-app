@@ -5,6 +5,7 @@
     android:background="@color/pridark"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <me.wangyuwei.particleview.ParticleView
         android:id="@+id/pv_logo"
         android:layout_width="match_parent"

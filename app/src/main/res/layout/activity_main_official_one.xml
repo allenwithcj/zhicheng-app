@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="240dp"
     android:layout_margin="@dimen/activity_horizontal_margin">
+
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -14,10 +15,12 @@
         android:layout_marginRight="4dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,16 +29,17 @@
                 android:text="@string/NoFinish"
                 android:textColor="@color/white"
                 android:paddingTop="@dimen/textView_padding"
-                android:paddingBottom="@dimen/textView_padding"/>
+                android:paddingBottom="@dimen/textView_padding" />
+
             <ListView
                 android:id="@+id/listView_1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:scrollbars="none">
-            </ListView>
+                android:scrollbars="none"></ListView>
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -45,10 +49,12 @@
         android:layout_marginRight="4dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,14 +63,14 @@
                 android:text="@string/Finished"
                 android:textColor="@color/white"
                 android:paddingTop="@dimen/textView_padding"
-                android:paddingBottom="@dimen/textView_padding"/>
+                android:paddingBottom="@dimen/textView_padding" />
+
             <ListView
                 android:id="@+id/listView_2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:scrollbars="none">
-            </ListView>
+                android:scrollbars="none"></ListView>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <ImageButton
         android:id="@+id/btn"
         android:layout_width="80dp"
@@ -12,13 +12,13 @@
         android:layout_margin="@dimen/photo_margin"
         android:background="@drawable/recycle_touch_bg"
         android:src="@mipmap/icon_addpic_focused"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mRecycleView"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:clipToPadding="false"
         android:scrollbars="none"
-        android:overScrollMode="never">
-    </android.support.v7.widget.RecyclerView>
+        android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
 </LinearLayout>

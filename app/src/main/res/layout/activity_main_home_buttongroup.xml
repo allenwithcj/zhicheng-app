@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,10 +12,12 @@
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
         android:layout_weight="1">
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <TextView
                 android:id="@+id/noFinish"
                 android:layout_width="match_parent"
@@ -25,7 +26,8 @@
                 android:padding="8dp"
                 android:drawablePadding="10dp"
                 android:drawableTop="@mipmap/ic_nofinish"
-                android:text="@string/NoFinish"/>
+                android:text="@string/NoFinish" />
+
             <TextView
                 android:id="@+id/fabNotice"
                 android:layout_width="wrap_content"
@@ -38,8 +40,9 @@
                 android:background="@drawable/i_show_deal"
                 android:textColor="@color/white"
                 android:gravity="center"
-                android:textSize="@dimen/badge_text_size"/>
+                android:textSize="@dimen/badge_text_size" />
         </FrameLayout>
+
         <TextView
             android:id="@+id/Finished"
             android:layout_width="0dp"
@@ -49,7 +52,8 @@
             android:padding="8dp"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_finished"
-            android:text="@string/Finished"/>
+            android:text="@string/Finished" />
+
         <TextView
             android:id="@+id/FenLei"
             android:layout_width="0dp"
@@ -59,7 +63,8 @@
             android:padding="8dp"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_fenlei"
-            android:text="@string/FenLei"/>
+            android:text="@string/FenLei" />
+
         <TextView
             android:id="@+id/GridDataBase"
             android:layout_width="0dp"
@@ -69,7 +74,7 @@
             android:padding="8dp"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_grid"
-            android:text="@string/GridDataBase"/>
+            android:text="@string/GridDataBase" />
     </LinearLayout>
 
     <LinearLayout
@@ -77,6 +82,7 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         android:layout_weight="1">
+
         <TextView
             android:id="@+id/work"
             android:layout_width="0dp"
@@ -86,7 +92,8 @@
             android:padding="8dp"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_fenlei"
-            android:text="@string/work"/>
+            android:text="@string/work" />
+
         <TextView
             android:id="@+id/Experiment"
             android:layout_width="0dp"
@@ -96,7 +103,8 @@
             android:padding="8dp"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_experiment"
-            android:text="@string/Experiment"/>
+            android:text="@string/Experiment" />
+
         <TextView
             android:id="@+id/CallTheCoun"
             android:layout_width="0dp"
@@ -106,7 +114,8 @@
             android:layout_weight="1"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_callthecon"
-            android:text="@string/CallTheCoun"/>
+            android:text="@string/CallTheCoun" />
+
         <TextView
             android:id="@+id/workNote"
             android:layout_width="0dp"
@@ -116,6 +125,6 @@
             android:padding="8dp"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_worknote"
-            android:text="@string/workNote"/>
+            android:text="@string/workNote" />
     </LinearLayout>
 </LinearLayout>

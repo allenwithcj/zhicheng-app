@@ -8,22 +8,25 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="0dp"
     app:cardElevation="8dp">
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
             android:id="@+id/spinner1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"
             android:hint="一单元"
-            android:gravity="center"/>
+            android:gravity="center" />
+
         <ImageView
             android:id="@+id/spinnerImg"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_action_list"/>
+            android:src="@drawable/ic_action_list" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

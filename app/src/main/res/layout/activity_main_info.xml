@@ -4,12 +4,14 @@
     android:id="@+id/topCoordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
+
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_ToolbarLayout"
             android:layout_width="match_parent"
@@ -26,6 +28,7 @@
                 android:orientation="vertical"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.5">
+
                 <com.zhicheng.utils.CircleImageView
                     android:id="@+id/circleImg"
                     android:layout_width="80dp"
@@ -41,19 +44,21 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
                         android:id="@+id/info"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center">
+
                         <TextView
                             android:id="@+id/occupation"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:paddingRight="@dimen/textView_padding"
                             android:textColor="@color/pridark"
-                            android:gravity="center"/>
+                            android:gravity="center" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -63,25 +68,28 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_marginBottom="32dp">
+
                     <TextView
                         android:id="@+id/name"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingRight="@dimen/textView_padding"
                         android:textColor="@color/pridark"
-                        android:gravity="left"/>
+                        android:gravity="left" />
+
                     <TextView
                         android:layout_width="2px"
                         android:layout_height="match_parent"
                         android:paddingRight="@dimen/textView_padding"
-                        android:background="@color/pridark"/>
+                        android:background="@color/pridark" />
+
                     <TextView
                         android:id="@+id/userpost"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:paddingLeft="@dimen/textView_padding"
                         android:textColor="@color/pridark"
-                        android:gravity="right"/>
+                        android:gravity="right" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -95,8 +103,7 @@
         android:clipToPadding="false"
         android:scrollbars="none"
         android:paddingBottom="16dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </android.support.v7.widget.RecyclerView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

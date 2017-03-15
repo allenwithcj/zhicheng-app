@@ -8,8 +8,7 @@
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true">
-    </com.baidu.mapapi.map.MapView>
+        android:clickable="true"></com.baidu.mapapi.map.MapView>
 
     <ImageButton
         android:layout_width="wrap_content"

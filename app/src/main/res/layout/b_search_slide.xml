@@ -1,106 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
+        android:id="@+id/bg_layout"
+        android:orientation="vertical"
+        android:background="@color/headView"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"></LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/type_layout"
+        android:layout_below="@+id/bg_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
-            android:background="@color/headView"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/patrol_heading"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:text="类型" />
+
+        <RadioGroup
+            android:id="@+id/rg_type_group"
             android:layout_width="match_parent"
-            android:layout_height="170dp">
-            <com.zhicheng.utils.CircleImageView
-                android:id="@+id/circleImg"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="22dp"
-                android:layout_gravity="center"
-                app:civ_border_width="2dp"
-                app:civ_border_color="@color/white"
-                android:src="@mipmap/ic_launcher" />
-            <TextView
-                android:id="@+id/permission"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:textSize="@dimen/content_size"
-                android:gravity="center_horizontal"
-                android:text="@string/no_login"/>
-        </LinearLayout>
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
                 android:id="@+id/allThings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/textView_padding"
-                android:layout_margin="@dimen/photo_margin"
-                android:background="@drawable/bg_edittext_normal"
-                android:layout_gravity="start|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/radiobutton_background"
+                android:button="@null"
                 android:gravity="center"
-                android:textSize="@dimen/content_size"
-                android:textStyle="normal"
-                android:textColor="@color/white"
-                android:text="@string/allThings"/>
-            <TextView
-                android:id="@+id/noFinish"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/allThings"
+                android:checked="true"
+                android:textColor="@color/radiobutton_textcolor" />
+
+            <RadioButton
+                android:id="@+id/NoFinish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/textView_padding"
-                android:layout_margin="@dimen/photo_margin"
-                android:background="@drawable/bg_edittext_normal"
-                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/radiobutton_background"
+                android:button="@null"
                 android:gravity="center"
-                android:textSize="@dimen/content_size"
-                android:textStyle="normal"
-                android:textColor="@color/white"
-                android:text="@string/NoFinish"/>
-            <TextView
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/NoFinish"
+                android:textColor="@color/radiobutton_textcolor" />
+
+            <RadioButton
                 android:id="@+id/Finished"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/textView_padding"
-                android:layout_margin="@dimen/photo_margin"
-                android:background="@drawable/bg_edittext_normal"
-                android:layout_gravity="end|center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/radiobutton_background"
+                android:button="@null"
                 android:gravity="center"
-                android:textSize="@dimen/content_size"
-                android:textStyle="normal"
-                android:textColor="@color/white"
-                android:text="@string/Finished"/>
-        </LinearLayout>
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/Finished"
+                android:textColor="@color/radiobutton_textcolor" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_below="@+id/type_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_text" />
+
+    <LinearLayout
+        android:id="@+id/date_layout"
+        android:layout_below="@+id/line1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/patrol_heading"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:text="时间" />
+
         <TextView
             android:id="@+id/Date"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/textView_padding"
             android:layout_margin="@dimen/photo_margin"
-            android:layout_gravity="start|center_vertical"
+            android:layout_gravity="center"
             android:gravity="center"
             android:textSize="@dimen/content_size"
             android:textStyle="normal"
-            android:textColor="@color/black"
-            android:text="2017-1-25"/>
-        <TextView
-            android:id="@+id/Timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/textView_padding"
-            android:layout_margin="@dimen/photo_margin"
-            android:layout_gravity="start|center_vertical"
-            android:gravity="center"
-            android:textSize="@dimen/content_size"
-            android:textStyle="normal"
-            android:textColor="@color/black"
-            android:text="20:02:41"/>
+            android:textColor="@color/black"/>
     </LinearLayout>
-</ScrollView>
+
+    <View
+        android:layout_below="@+id/date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/blue_text"
+            android:text="重置"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape_patrol_corners_blue_confirm"
+            android:text="确定"
+            android:textColor="@color/blue_text" />
+    </LinearLayout>
+</RelativeLayout>

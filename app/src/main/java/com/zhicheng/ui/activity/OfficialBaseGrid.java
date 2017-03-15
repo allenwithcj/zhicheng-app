@@ -305,7 +305,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
     }
 
-    class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {
+    public class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {
         private int lastVisibleItem;
 
         @Override

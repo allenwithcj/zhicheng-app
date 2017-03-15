@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/allThings"
         android:layout_width="wrap_content"
@@ -17,7 +16,8 @@
         android:textSize="@dimen/content_size"
         android:textStyle="normal"
         android:textColor="@color/white"
-        android:text="@string/allThings"/>
+        android:text="@string/allThings" />
+
     <TextView
         android:id="@+id/noFinish"
         android:layout_width="wrap_content"
@@ -30,7 +30,8 @@
         android:textSize="@dimen/content_size"
         android:textStyle="normal"
         android:textColor="@color/white"
-        android:text="@string/NoFinish"/>
+        android:text="@string/NoFinish" />
+
     <TextView
         android:id="@+id/Finished"
         android:layout_width="wrap_content"
@@ -43,5 +44,5 @@
         android:textSize="@dimen/content_size"
         android:textStyle="normal"
         android:textColor="@color/white"
-        android:text="@string/Finished"/>
+        android:text="@string/Finished" />
 </LinearLayout>

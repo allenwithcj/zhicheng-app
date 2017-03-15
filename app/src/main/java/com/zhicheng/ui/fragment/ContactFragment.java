@@ -1,5 +1,6 @@
 package com.zhicheng.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -19,12 +19,14 @@ import com.zhicheng.api.view.ContactView;
 import com.zhicheng.bean.Contacts;
 import com.zhicheng.bean.http.AddressBookResponse;
 import com.zhicheng.bean.json.AddressBookRequest;
+import com.zhicheng.ui.activity.ContactMultilevelActivity;
 import com.zhicheng.ui.adapter.ContactAdapter;
 import com.zhicheng.utils.ClearEditText;
 import com.zhicheng.utils.HanziToPinyin;
 import com.zhicheng.utils.OnRecyclerViewListener;
 import com.zhicheng.utils.OnTouchingLetterChangedListener;
 import com.zhicheng.utils.SideBar;
+import com.zhicheng.utils.common.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,6 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
     private ContactPresenterImpl mContactPresenterImpl;
     private LinearLayoutManager mLinearLayoutManager;
     private List<Contacts> contactsList;
-    private List<Contacts> sortContactsList;
 
     public static ContactFragment newInstance(){
         ContactFragment fragment = new ContactFragment();
@@ -59,8 +60,6 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
 
     @Override
     protected void initEvents() {
-        contactsList = new ArrayList<>();
-        sortContactsList = new ArrayList<>();
         mContactPresenterImpl = new ContactPresenterImpl(this);
         swipeRefresh = (SwipeRefreshLayout)mRootView.findViewById(R.id.swipeRefresh);
         mRecyclerView = (RecyclerView)mRootView.findViewById(R.id.mRecyclerview);
@@ -77,7 +76,6 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
         mRecyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(mAdapter));
         mAdapter.setOnRecyclerViewListener(this);
         mRecyclerView.setAdapter(mAdapter);
-
         swipeRefresh.setOnRefreshListener(this);
         mSideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
             @Override
@@ -102,33 +100,32 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
 
             @Override
             public void afterTextChanged(Editable s) {
-                searchData(s.toString());
+//                searchData(s.toString());
             }
         });
 
     }
 
-    private void searchData(String s) {
-        sortContactsList.clear();
-        if(s.isEmpty()){
-            refresh();
-            mNoResult.setVisibility(View.GONE);
-        }else{
-            for(Contacts contacts : contactsList){
-                String[] str = contacts.getPinyin().split(" ");
-                int strLength = str.length;
-                for(int i = 0; i <strLength; i ++ ){
-                    if(str[i].startsWith(s)){
-                        sortContactsList.add(contacts);
-                    }
-                }
-            }
-            if(sortContactsList.size() == 0){
-                mNoResult.setVisibility(View.VISIBLE);
-            }
-        }
-        mAdapter.notifyDataSetChanged();
-    }
+//    private void searchData(String s) {
+//        if(s.isEmpty()){
+//            refresh();
+//            mNoResult.setVisibility(View.GONE);
+//        }else{
+//            for(Contacts contacts : contactsList){
+//                String[] str = contacts.getPinyin().split(" ");
+//                int strLength = str.length;
+//                for(int i = 0; i <strLength; i ++ ){
+//                    if(str[i].startsWith(s)){
+//                        sortContactsList.add(contacts);
+//                    }
+//                }
+//            }
+//            if(sortContactsList.size() == 0){
+//                mNoResult.setVisibility(View.VISIBLE);
+//            }
+//        }
+//        mAdapter.notifyDataSetChanged();
+//    }
 
     @Override
     protected void initData(boolean isSavedNull) {
@@ -155,8 +152,8 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
         if(result instanceof AddressBookResponse){
             if(((AddressBookResponse) result).getIq().getQuery().getErrorCode().equals("0")){
                 List<AddressBookResponse.IqBean.QueryBean.ItemsBean> itemList = ((AddressBookResponse) result).getIq().getQuery().getItems();
+                contactsList = new ArrayList<>();
                 contactsList.clear();
-                sortContactsList.clear();
                 for(AddressBookResponse.IqBean.QueryBean.ItemsBean item: itemList){
                     Contacts mContacts = new Contacts();
                     mContacts.setId(item.getId());
@@ -173,16 +170,19 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
                     mContacts.setPinyin(hanziTopinyin(item.getName()));
                     contactsList.add(mContacts);
                 }
-                sortContactsList.addAll(contactsList);
-                mAdapter.AddAllDate(sortContactsList);
+                mAdapter.AddAllDate(contactsList);
             }
         }
     }
 
     @Override
     public void onItemClick(int position) {
-        if(!sortContactsList.get(position).getType().equals("1")){
-
+        if(!contactsList.get(position).getType().equals("1")){
+            Intent intent = new Intent(getActivity(), ContactMultilevelActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("contacts",contactsList.get(position));
+            intent.putExtras(bundle);
+            UIUtils.startActivity(intent);
         }
     }
 

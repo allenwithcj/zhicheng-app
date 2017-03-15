@@ -13,6 +13,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -33,9 +34,11 @@
                 android:layout_weight="5"
                 android:background="@null"
                 android:textSize="@dimen/content_size"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
         </LinearLayout>
-        <include layout="@layout/z_line"/>
+
+        <include layout="@layout/z_line" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -46,8 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="@dimen/textView_padding"
-                android:text="@string/grid_base_add_lessor_remark"
-                 />
+                android:text="@string/grid_base_add_lessor_remark" />
 
             <EditText
                 android:id="@+id/grid_base_add_lessor_remark"
@@ -57,19 +59,23 @@
                 android:layout_weight="5"
                 android:background="@null"
                 android:textSize="@dimen/content_size"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
         </LinearLayout>
-        <include layout="@layout/z_line"/>
+
+        <include layout="@layout/z_line" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="@string/grid_base_add_lessor_telephone"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
+
             <EditText
                 android:id="@+id/grid_base_add_lessor_telephone"
                 android:layout_width="0dp"
@@ -80,7 +86,7 @@
                 android:inputType="phone"
                 android:maxLength="11"
                 android:textSize="@dimen/content_size"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

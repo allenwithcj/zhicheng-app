@@ -1,61 +1,57 @@
 package com.zhicheng.ui.fragment;
 
-import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.zhicheng.R;
-import com.zhicheng.api.presenter.impl.SearchPresenterImpl;
-import com.zhicheng.api.view.SearchView;
-import com.zhicheng.bean.http.ClassifyResponse;
-import com.zhicheng.bean.http.SearchResponse;
-import com.zhicheng.utils.CircleImageView;
+import com.zhicheng.api.presenter.impl.CaseQueryPresenterImpl;
+import com.zhicheng.api.view.CaseQueryView;
+import com.zhicheng.bean.http.CaseQueryResponse;
+import com.zhicheng.bean.json.CaseQueryRequest;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Donson on 2017/1/17.
  */
 
-public class SearchClassifyFragment extends BaseFragment implements SearchView{
+public class SearchClassifyFragment extends BaseFragment implements CaseQueryView,
+        SwipeRefreshLayout.OnRefreshListener,RadioGroup.OnCheckedChangeListener,View.OnClickListener {
 
-    private SearchPresenterImpl mSearchPresenterImpl;
+    private CaseQueryPresenterImpl mCaseQueryPresenterImpl;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
-    private EditText mInput;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mainContent;
-    //数据集
-    private List<ClassifyResponse> SearchResult;
     private SearchClassifyAdapter mSearchClassifyAdapter;
-    //侧滑栏
+    private LinearLayoutManager mLinearLayoutManager;
+    private int start;
+    private RadioGroup rg_type_group;
+    private RadioButton allThings,NoFinish,Finished;
+    private Button btn_cancel,btn_confirm;
+    private LinearLayout date_layout;
+    private TextView date_txt;
+    private String mCaseTime = "";
+    private String mManageState = "";
 
 
     @Override
@@ -84,15 +80,32 @@ public class SearchClassifyFragment extends BaseFragment implements SearchView{
     @Override
     protected void initEvents() {
         mDrawerLayout = (DrawerLayout) mRootView.findViewById(R.id.drawer_layout);
-        mInput = (EditText) mRootView.findViewById(R.id.mInput);
+        mSwipeRefreshLayout = (SwipeRefreshLayout)mRootView.findViewById(R.id.swipeRefresh);
         mainContent = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
-        mSearchPresenterImpl = new SearchPresenterImpl(this);
-        SearchResult = new ArrayList<ClassifyResponse>();
+        mCaseQueryPresenterImpl = new CaseQueryPresenterImpl(this);
         //主内容RecyclerView
         mSearchClassifyAdapter = new SearchClassifyAdapter();
-        mainContent.setLayoutManager(new LinearLayoutManager(getContext()));
+        mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mainContent.setLayoutManager(mLinearLayoutManager);
         mainContent.setAdapter(mSearchClassifyAdapter);
+        mainContent.addOnScrollListener(new RecyclerViewScrollDetector());
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         //侧滑栏内容RecyclerView
+        rg_type_group = (RadioGroup) mRootView.findViewById(R.id.rg_type_group);
+        allThings = (RadioButton)mRootView.findViewById(R.id.allThings);
+        NoFinish = (RadioButton)mRootView.findViewById(R.id.NoFinish);
+        Finished = (RadioButton)mRootView.findViewById(R.id.Finished);
+
+        btn_cancel = (Button)mRootView.findViewById(R.id.btn_cancel);
+        btn_confirm = (Button)mRootView.findViewById(R.id.btn_confirm);
+        date_layout = (LinearLayout)mRootView.findViewById(R.id.date_layout);
+        date_txt = (TextView)mRootView.findViewById(R.id.Date);
+
+
+        btn_cancel.setOnClickListener(this);
+        btn_confirm.setOnClickListener(this);
+        date_layout.setOnClickListener(this);
+        rg_type_group.setOnCheckedChangeListener(this);
 
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(),mDrawerLayout,null,R.string.open,R.string.close){
             @Override
@@ -111,22 +124,7 @@ public class SearchClassifyFragment extends BaseFragment implements SearchView{
 
     @Override
     protected void initData(boolean isSavedNull) {
-        Gson gson = new Gson();
-        Map<String,Object> map = new HashMap<>();
-        Map<String,Object> map1 = new HashMap<>();
-        Map<String,Object> mapQuery = new HashMap<>();
-        mapQuery.put("manageStatus","");
-        mapQuery.put("caseTime","");
-        mapQuery.put("pageNum","1");
-        map1.put("namespace","CaseQueryRequest");
-        map1.put("query",mapQuery);
-        map.put("iq",map1);
-        String json = gson.toJson(map);
-        mSearchPresenterImpl.SearchBaoClassify(json);
-        if (getArguments() != null){
-//            mSearchPresenterImpl.getSearchResult(getArguments().getString("request"));
-        }
-
+        onRefresh();
     }
 
     @Override
@@ -135,18 +133,37 @@ public class SearchClassifyFragment extends BaseFragment implements SearchView{
     }
 
     @Override
-    public void updateView(Object result) {
-        if (result instanceof SearchResponse){
-            SearchResult = ((SearchResponse) result).getClassifyResponses();
-            mSearchClassifyAdapter.notifyDataSetChanged();
+    public void showProgress() {
+        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+    }
+
+    @Override
+    public void hideProgress() {
+        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+    }
+
+    @Override
+    public void refreshData(Object result) {
+        if(result instanceof CaseQueryResponse){
+            if(((CaseQueryResponse) result).getIq().getQuery().getErrorCode() == 0){
+                mSearchClassifyAdapter.addAllDate(((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getCases());
+            }
         }
     }
 
     @Override
+    public void addData(Object result) {
+        if(result instanceof CaseQueryResponse){
+            if(((CaseQueryResponse) result).getIq().getQuery().getErrorCode() == 0){
+                mSearchClassifyAdapter.addDataList(((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getCases());
+            }
+        }
+    }
+
+
+    @Override
     public void onPause() {
         super.onPause();
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mInput.getWindowToken(),0);
     }
 
     @Override
@@ -168,7 +185,65 @@ public class SearchClassifyFragment extends BaseFragment implements SearchView{
         return true;
     }
 
+    @Override
+    public void onRefresh() {
+        refresh();
+    }
+
+    private void refresh() {
+        start = 1;
+        String entity = createObj(start,mCaseTime,mManageState);
+        mCaseQueryPresenterImpl.caseQuery(entity,start);
+        start ++;
+    }
+
+    private String createObj(int page,String caseTime,String manageSate){
+        CaseQueryRequest caseQueryRequest = new CaseQueryRequest();
+        CaseQueryRequest.IqBean iq = new CaseQueryRequest.IqBean();
+        CaseQueryRequest.IqBean.QueryBean qb = new CaseQueryRequest.IqBean.QueryBean();
+        iq.setNamespace("CaseQueryRequest");
+        qb.setCaseTime(caseTime);
+        qb.setManageStatus(manageSate);
+        qb.setPageNum(page);
+        iq.setQuery(qb);
+        caseQueryRequest.setIq(iq);
+        Gson gson = new Gson();
+        return gson.toJson(caseQueryRequest);
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        if(i == allThings.getId()){
+            mManageState = "";
+        }else if(i == Finished.getId()){
+            mManageState = "1";
+        }else if(i == NoFinish.getId()){
+            mManageState = "0";
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btn_cancel:
+                mCaseTime = "";
+                mManageState = "";
+                allThings.setChecked(true);
+                onRefresh();
+                break;
+            case R.id.btn_confirm:
+                onRefresh();
+                break;
+
+            case R.id.date_layout:
+
+                break;
+        }
+    }
+
     private class SearchClassifyAdapter extends RecyclerView.Adapter{
+        private List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> caseList;
 
         public SearchClassifyAdapter(){
 
@@ -176,43 +251,78 @@ public class SearchClassifyFragment extends BaseFragment implements SearchView{
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_search_classify,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_search_classify_content,parent,false);
             return new SearchClassifyViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof SearchClassifyViewHolder){
-                if (SearchResult.get(position).getCode() == 200){
-                    Glide.with(getContext())
-                            .load(SearchResult.get(position).getmTitleImage())
-                            .into(((SearchClassifyViewHolder) holder).mTitleImg);
-                    ((SearchClassifyViewHolder) holder).mDesc.setText(SearchResult.get(position).getmDesc());
-                    ((SearchClassifyViewHolder) holder).mOrigin.setText(SearchResult.get(position).getmOrigin());
-                    ((SearchClassifyViewHolder) holder).upTime.setText(SearchResult.get(position).getUpTime());
+                ((SearchClassifyViewHolder) holder).caseNo.setText(caseList.get(position).getCasenum());
+                String caseTime = caseList.get(position).getCasetime();
+                if(caseTime != null){
+                    ((SearchClassifyViewHolder) holder).caseTime.setText(caseTime.substring(0,caseTime.length()-2).toString());
                 }
+                ((SearchClassifyViewHolder) holder).caseAddress.setText(caseList.get(position).getCaseaddress());
             }
         }
 
         @Override
         public int getItemCount() {
-            return SearchResult.size();
+            if(caseList != null){
+                return caseList.size();
+            }
+            return 0;
+        }
+
+        public void addAllDate(List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> caselistcon) {
+            this.caseList = caselistcon;
+            notifyDataSetChanged();
+        }
+
+        public void addDataList(List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> cases) {
+            int page = this.caseList.size();
+            this.caseList.addAll(cases);
+            this.notifyItemRangeInserted(page, cases.size());
         }
 
         private class SearchClassifyViewHolder extends RecyclerView.ViewHolder {
 
-            private ImageView mTitleImg;
-            private TextView mDesc;
-            private TextView mOrigin;
-            private TextView upTime;
+            private TextView caseNo;
+            private TextView caseTime;
+            private TextView caseAddress;
 
             public SearchClassifyViewHolder(View itemView) {
                 super(itemView);
-                mTitleImg = (ImageView) itemView.findViewById(R.id.title_img);
-                mDesc = (TextView) itemView.findViewById(R.id.Desc);
-                mOrigin = (TextView) itemView.findViewById(R.id.Origin);
-                upTime = (TextView) itemView.findViewById(R.id.upTime);
+                caseNo = (TextView) itemView.findViewById(R.id.caseNo);
+                caseTime = (TextView) itemView.findViewById(R.id.caseTime);
+                caseAddress = (TextView) itemView.findViewById(R.id.caseAddress);
             }
+        }
+    }
+
+    class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {
+        private int lastVisibleItem;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mSearchClassifyAdapter.getItemCount()) {
+                onLoadMore();
+            }
+        }
+
+        private void onLoadMore() {
+            String entity = createObj(start,mCaseTime,mManageState);
+            mCaseQueryPresenterImpl.caseQuery(entity,start);
+            start ++;
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
         }
     }
 }

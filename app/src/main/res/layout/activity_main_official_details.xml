@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:background="@color/colorPrimary"
             android:layout_height="?attr/actionBarSize"
             android:minHeight="?attr/actionBarSize"
-            android:elevation="@dimen/photo_margin"/>
+            android:elevation="@dimen/photo_margin" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mRecycleView"
             android:layout_width="match_parent"
@@ -21,9 +24,9 @@
             android:clipToPadding="false"
             android:scrollbars="none"
             android:overScrollMode="never"
-            android:paddingBottom="16dp">
-        </android.support.v7.widget.RecyclerView>
+            android:paddingBottom="16dp"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_satisfy"
         android:layout_width="50dp"

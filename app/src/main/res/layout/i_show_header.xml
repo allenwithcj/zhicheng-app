@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/textView_padding">
-<TextView
-    android:id="@+id/NumberId"
-    android:layout_width="0dp"
-    android:layout_weight="3"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/textView_padding"
-    android:drawablePadding="@dimen/textView_padding"
-    android:gravity="center_vertical">
-</TextView>
+
+    <TextView
+        android:id="@+id/NumberId"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/textView_padding"
+        android:drawablePadding="@dimen/textView_padding"
+        android:gravity="center_vertical"></TextView>
+
     <TextView
         android:id="@+id/related_matters"
         android:layout_width="0dp"
@@ -23,6 +23,5 @@
         android:singleLine="true"
         android:drawablePadding="@dimen/textView_padding"
         android:textColor="@android:color/holo_blue_light"
-        android:gravity="center_vertical">
-    </TextView>
-    </LinearLayout>
+        android:gravity="center_vertical"></TextView>
+</LinearLayout>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/noSuc"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,24 +7,28 @@
     android:paddingLeft="@dimen/textView_padding"
     android:orientation="vertical"
     android:paddingRight="@dimen/textView_padding">
+
     <TextView
         android:id="@+id/notice_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/textView_padding"
-        android:paddingLeft="@dimen/textView_padding"/>
+        android:paddingLeft="@dimen/textView_padding" />
+
     <TextView
         android:id="@+id/notice_sendname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/textView_padding"
-        android:paddingLeft="@dimen/textView_padding"/>
+        android:paddingLeft="@dimen/textView_padding" />
+
     <TextView
         android:id="@+id/notice_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/textView_padding"
-        android:paddingLeft="@dimen/textView_padding"/>
+        android:paddingLeft="@dimen/textView_padding" />
+
     <TextView
         android:id="@+id/notice_content"
         android:layout_width="wrap_content"
@@ -34,7 +37,7 @@
         android:maxLines="2"
         android:paddingTop="@dimen/textView_padding"
         android:paddingLeft="@dimen/textView_padding"
-        android:paddingBottom="8dp"/>
+        android:paddingBottom="8dp" />
 
-    <include layout="@layout/z_line"/>
+    <include layout="@layout/z_line" />
 </LinearLayout>

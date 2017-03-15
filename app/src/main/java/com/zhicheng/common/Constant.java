@@ -23,7 +23,7 @@ public class Constant {
     public static String LOG_OPERATE_TYPE = "";
 
     public static final String ALARM_ACTION ="com.location.alarm.action";
-    public static final int LOCATION_UP_TIME = 60*1000;//1分钟
+    public static final int LOCATION_UP_TIME = 5*60*1000;//5分钟
 
     public static String LATITUDE = "";
     public static String LONGITUDE = "";

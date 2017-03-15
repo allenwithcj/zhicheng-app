@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -11,7 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@color/pridark"
         android:minHeight="?attr/actionBarSize"
-        android:elevation="@dimen/photo_margin"/>
+        android:elevation="@dimen/photo_margin" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -25,17 +26,20 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/publicationunit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/textView_padding"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true" />
+
                 <TextView
                     android:id="@+id/publicationpeople"
                     android:layout_width="wrap_content"
@@ -43,35 +47,38 @@
                     android:layout_centerHorizontal="true"
                     android:layout_alignParentRight="true"
                     android:padding="@dimen/textView_padding"
-                    android:layout_gravity="right"/>
+                    android:layout_gravity="right" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/navigationColor"/>
+                android:background="@color/navigationColor" />
 
             <TextView
                 android:id="@+id/NoteTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/textView_padding"
-                android:gravity="left|center"/>
+                android:gravity="left|center" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/navigationColor"/>
+                android:background="@color/navigationColor" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/content_txt"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/textView_padding"
-                    android:gravity="left|center"/>
+                    android:gravity="left|center" />
 
                 <EditText
                     android:layout_marginTop="5dp"
@@ -96,6 +103,7 @@
         android:visibility="gone"
         android:layout_height="match_parent"
         android:orientation="horizontal">
+
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -104,14 +112,16 @@
             android:layout_margin="8dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="2dp">
-        <Button
-            android:id="@+id/update"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:background="@android:color/transparent"
-            android:text="@string/action_update"/>
+
+            <Button
+                android:id="@+id/update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:background="@android:color/transparent"
+                android:text="@string/action_update" />
         </android.support.v7.widget.CardView>
+
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -120,13 +130,14 @@
             android:layout_margin="8dp"
             app:cardCornerRadius="6dp"
             app:cardElevation="2dp">
-        <Button
-            android:id="@+id/delete"
-            android:textColor="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="@string/delete"/>
+
+            <Button
+                android:id="@+id/delete"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/delete" />
         </android.support.v7.widget.CardView>
     </LinearLayout>
 </LinearLayout>

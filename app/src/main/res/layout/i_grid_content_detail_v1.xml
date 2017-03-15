@@ -18,13 +18,14 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:padding="@dimen/textView_padding"
-                android:text="@string/grid_base_add_residence"/>
+                android:text="@string/grid_base_add_residence" />
 
             <EditText
                 android:id="@+id/grid_base_add_residence"
@@ -35,20 +36,24 @@
                 android:gravity="center_vertical"
                 android:background="@null"
                 android:textSize="@dimen/content_size"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
         </LinearLayout>
-        <include layout="@layout/z_line"/>
+
+        <include layout="@layout/z_line" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:gravity="center_vertical"
                 android:padding="@dimen/textView_padding"
-                android:text="@string/grid_base_add_grid_no"/>
+                android:text="@string/grid_base_add_grid_no" />
+
             <TextView
                 android:id="@+id/grid_base_add_grid_no"
                 android:layout_width="0dp"
@@ -57,7 +62,7 @@
                 android:textSize="@dimen/content_size"
                 android:textColor="@color/black"
                 android:gravity="center_vertical"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

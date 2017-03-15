@@ -26,13 +26,15 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
+
         <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/swipeRefresh"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/mRecyclerview"
                 android:layout_width="match_parent"
@@ -40,8 +42,7 @@
                 android:clipToPadding="false"
                 android:scrollbars="none"
                 android:overScrollMode="never"
-                android:paddingBottom="16dp">
-            </android.support.v7.widget.RecyclerView>
+                android:paddingBottom="16dp"></android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <TextView
@@ -54,14 +55,13 @@
             android:alpha="0.5"
             android:visibility="gone"
             android:textColor="@color/white"
-            android:textSize="@dimen/contact_anno_font"
-            />
+            android:textSize="@dimen/contact_anno_font" />
 
         <TextView
             android:id="@+id/noResult"
             style="@style/ContactItemHeader"
             android:visibility="gone"
-            android:text="@string/contact_no_result"/>
+            android:text="@string/contact_no_result" />
 
         <com.zhicheng.utils.SideBar
             android:id="@+id/sideBar"

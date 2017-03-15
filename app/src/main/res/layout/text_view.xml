@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/recycle_touch_bg"
@@ -8,5 +7,4 @@
     android:padding="@dimen/textView_padding"
     android:textColor="@color/navigationColor"
     android:gravity="center"
-    android:id="@+id/text_view">
-</TextView>
+    android:id="@+id/text_view"></TextView>

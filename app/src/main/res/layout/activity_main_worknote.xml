@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:clipToPadding="false">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -14,7 +14,8 @@
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@color/pridark"
         android:minHeight="?attr/actionBarSize"
-        android:elevation="@dimen/photo_margin"/>
+        android:elevation="@dimen/photo_margin" />
+
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -22,16 +23,17 @@
         android:id="@+id/swipeRefresh"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mRecycleView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/textView_padding"
-        android:clipToPadding="false"
-        android:scrollbars="none"
-        android:overScrollMode="never"
-        android:paddingBottom="16dp">
-    </android.support.v7.widget.RecyclerView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/textView_padding"
+            android:clipToPadding="false"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:paddingBottom="16dp"></android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>
-    <include layout="@layout/z_input_edittext"/>
+
+    <include layout="@layout/z_input_edittext" />
 </LinearLayout>

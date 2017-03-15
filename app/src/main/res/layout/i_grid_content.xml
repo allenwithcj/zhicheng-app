@@ -8,61 +8,72 @@
     android:layout_margin="8dp"
     app:cardCornerRadius="4dp"
     app:cardElevation="4dp">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <include layout="@layout/i_input_choose"/>
+
+        <include layout="@layout/i_input_choose" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="@dimen/textView_padding"
-                android:text="@string/fourAddress"/>
+                android:text="@string/fourAddress" />
+
             <TextView
                 android:id="@+id/fourAddress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:padding="@dimen/textView_padding"
-                android:text="@string/AllAcreage"/>
+                android:text="@string/AllAcreage" />
+
             <TextView
                 android:id="@+id/AllAcreage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="@string/AllHousehold"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
+
             <TextView
                 android:id="@+id/AllHousehold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
