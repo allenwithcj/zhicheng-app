@@ -18,7 +18,7 @@ public interface OfficialModel {
     //工作动态获取
     void loadOfficialDynamic(String dyn,ApiCompleteListener listener);
     //新增工作动态
-    void upOfficialDynamic(String dyn,List<String> imgs,String jFile,String GUID,ApiCompleteListener listener);
+    void upOfficialDynamic(String dyn,List<String> imgs,String jFile,String mLocationSite,String GUID,ApiCompleteListener listener);
 
     void upDeal(List<String> imgs, String jFile, String GUID, String suggest, OfficialDetailResponse officialDetailResponse, ApiCompleteListener listener);
 

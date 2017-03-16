@@ -64,13 +64,11 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
     }
 
     @Override
-    public void upDynamic(String dyn, List<String> imgs, String jFile, String GUID) {
+    public void upDynamic(String dyn, List<String> imgs, String jFile,String mLocationSite,String GUID) {
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
-            mOfficialView.hideProgress();
         }
-        mOfficialView.showProgress();
-        mOfficialModelImpl.upOfficialDynamic(dyn,imgs,jFile,GUID,this);
+        mOfficialModelImpl.upOfficialDynamic(dyn,imgs,jFile,mLocationSite,GUID,this);
     }
 
     @Override
@@ -106,7 +104,11 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
             }
         }
         if (result instanceof OfficialWorkDynamicList){
-            mOfficialView.refreshData(result);
+            if (start == 1){
+                mOfficialView.refreshData(result);
+            }else {
+                mOfficialView.addData(result);
+            }
         }
         if (result instanceof OfficialDetailResponse){
             mOfficialView.refreshData(result);

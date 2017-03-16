@@ -36,18 +36,9 @@ public class LocationUploadRequest {
         }
 
         public static class QueryBean {
-            private String type;
             private String User;
-            private String zlng;
-            private String zlat;
-
-            public String getType() {
-                return type;
-            }
-
-            public void setType(String type) {
-                this.type = type;
-            }
+            private String longitude;
+            private String latitude;
 
             public String getUser() {
                 return User;
@@ -57,20 +48,20 @@ public class LocationUploadRequest {
                 User = user;
             }
 
-            public String getZlng() {
-                return zlng;
+            public String getLongitude() {
+                return longitude;
             }
 
-            public void setZlng(String zlng) {
-                this.zlng = zlng;
+            public void setLongitude(String longitude) {
+                this.longitude = longitude;
             }
 
-            public String getZlat() {
-                return zlat;
+            public String getLatitude() {
+                return latitude;
             }
 
-            public void setZlat(String zlat) {
-                this.zlat = zlat;
+            public void setLatitude(String latitude) {
+                this.latitude = latitude;
             }
         }
      }

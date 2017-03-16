@@ -21,6 +21,7 @@ import com.zhicheng.bean.json.FormExportRequest;
 import com.zhicheng.bean.json.FormNodeRequest;
 import com.zhicheng.bean.json.FormSendDoRequest;
 import com.zhicheng.bean.json.FormSubnodeRequest;
+import com.zhicheng.bean.json.PersonalDynamicRequest;
 import com.zhicheng.common.URL;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -28,6 +29,7 @@ import java.io.File;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -156,10 +158,11 @@ public class OfficialModelImpl implements OfficialModel{
     }
     //新增工作动态
     @Override
-    public void upOfficialDynamic(String dyn,List<String> imgs,String jFile,String GUID, ApiCompleteListener listener) {
+    public void upOfficialDynamic(String jFile,List<String> imgs,String content,String mLocationSite,String GUID, ApiCompleteListener listener) {
         if (mOfficialService == null){
             mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
         }
+
         final MultipartBody.Builder builder = new MultipartBody.Builder();
         Observable.from(imgs)
                 .map(s -> {
@@ -194,6 +197,7 @@ public class OfficialModelImpl implements OfficialModel{
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
                         if (commonResponseResponse.isSuccessful()){
                             if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
+                                personalDynamicRequest(mOfficialService,content,mLocationSite,GUID,listener);
                                 BaseApplication.log_say("MainModelImpl","UpThings");
                             }else {
                                 listener.onComplected(commonResponseResponse.body());
@@ -204,6 +208,50 @@ public class OfficialModelImpl implements OfficialModel{
                         }
                     }
                 });
+    }
+
+    private void personalDynamicRequest(OfficialService mOfficialService, String content,String mLocationSite, String guid, ApiCompleteListener listener) {
+        PersonalDynamicRequest mPersonalDynamicRequest  = new PersonalDynamicRequest();
+        PersonalDynamicRequest.IqBean iqb = new PersonalDynamicRequest.IqBean();
+        PersonalDynamicRequest.IqBean.QueryBean qb = new PersonalDynamicRequest.IqBean.QueryBean();
+        iqb.setNamespace("PersonalDynamicRequest");
+        qb.setType("1");
+        qb.setId(UUID.randomUUID().toString());
+        qb.setCont(content);
+        qb.setAttguid(guid);
+        qb.setLocation(mLocationSite);
+        iqb.setQuery(qb);
+        mPersonalDynamicRequest.setIq(iqb);
+        Gson gson = new Gson();
+
+        mOfficialService.upOfficialWorkDynamic(gson.toJson(mPersonalDynamicRequest))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<CommonResponse>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException){
+                            listener.onFailed(null);
+                            return;
+                        }
+                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                    }
+
+                    @Override
+                    public void onNext(Response<CommonResponse> mcCommonResponse) {
+                        if (mcCommonResponse.isSuccessful()){
+                            listener.onComplected(mcCommonResponse.body());
+                        }else {
+                            listener.onFailed(new BaseResponse(mcCommonResponse.code(),mcCommonResponse.message()));
+                        }
+                    }
+                });
+
+
     }
 
     @Override
