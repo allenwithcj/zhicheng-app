@@ -53,13 +53,24 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
     }
 
     @Override
-    public void loadDynamic(String dyn) {
+    public void loadDynamic(String dyn,int start) {
+        this.start = start;
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mOfficialView.hideProgress();
         }
         mOfficialView.showProgress();
         mOfficialModelImpl.loadOfficialDynamic(dyn,this);
+    }
+
+    @Override
+    public void upDynamic(String dyn, List<String> imgs, String jFile, String GUID) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+            mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
+            mOfficialView.hideProgress();
+        }
+        mOfficialView.showProgress();
+        mOfficialModelImpl.upOfficialDynamic(dyn,imgs,jFile,GUID,this);
     }
 
     @Override

@@ -5,7 +5,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -14,9 +13,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
-import com.zhicheng.bean.http.OfficialWorkDynamicDetail;
+import com.zhicheng.bean.http.OfficialWorkDynamicList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,19 +36,24 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
     private TextView praise;
     private TextView comment;
 
-    private List<OfficialWorkDynamicDetail> mOfficialDynamicDetail;
+    private List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> mOfficialDynamicDetail;
 
     public OfficialDynamicAdapter(){
-        mOfficialDynamicDetail = new ArrayList<OfficialWorkDynamicDetail>();
+        mOfficialDynamicDetail = new ArrayList<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean>();
     }
 
-    public OfficialDynamicAdapter(List<OfficialWorkDynamicDetail> mOfficialDynamicDetail){
+    public OfficialDynamicAdapter(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> mOfficialDynamicDetail){
         this.mOfficialDynamicDetail = mOfficialDynamicDetail;
     }
 
-    public void setAdapterData(List<OfficialWorkDynamicDetail> mOfficialDynamicDetail){
-        this.mOfficialDynamicDetail.clear();
-        this.mOfficialDynamicDetail.addAll(mOfficialDynamicDetail);
+    public void addDataList(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> data){
+        int page = data.size();
+        this.mOfficialDynamicDetail.addAll(data);
+        this.notifyItemRangeInserted(page,data.size());
+    }
+
+    public void setDataList(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> mData){
+        this.mOfficialDynamicDetail = mData;
         this.notifyDataSetChanged();
     }
 
@@ -64,15 +67,15 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
         if (holder instanceof OfficialDynamicHolder){
-            if (mOfficialDynamicDetail.get(position).getImg() != null){
+            if (mOfficialDynamicDetail.get(position).getIMG() != null){
                 Glide.with(holder.itemView.getContext())
-                        .load(mOfficialDynamicDetail.get(position).getImg())
+                        .load(mOfficialDynamicDetail.get(position).getIMG())
                         .into(((OfficialDynamicHolder) holder).img);
             }
-            ((OfficialDynamicHolder) holder).name.setText(mOfficialDynamicDetail.get(position).getName());
-            ((OfficialDynamicHolder) holder).content.setText(mOfficialDynamicDetail.get(position).getContent());
-            ((OfficialDynamicHolder) holder).location.setText(mOfficialDynamicDetail.get(position).getLocation());
-            ((OfficialDynamicHolder) holder).time.setText(mOfficialDynamicDetail.get(position).getTime());
+            ((OfficialDynamicHolder) holder).name.setText(mOfficialDynamicDetail.get(position).getUSERID());
+            ((OfficialDynamicHolder) holder).content.setText(mOfficialDynamicDetail.get(position).getCOUNT());
+            ((OfficialDynamicHolder) holder).location.setText(mOfficialDynamicDetail.get(position).getLOCATION());
+            ((OfficialDynamicHolder) holder).time.setText(mOfficialDynamicDetail.get(position).getDATETIME());
             ((OfficialDynamicHolder) holder).more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -111,7 +114,7 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
                     });
                 }
             });
-            ((OfficialDynamicHolder) holder).mImageRecycler.setAdapter(new ImageRecyclerAdapter(mOfficialDynamicDetail.get(position).getImage_content()));
+//            ((OfficialDynamicHolder) holder).mImageRecycler.setAdapter(new ImageRecyclerAdapter(mOfficialDynamicDetail.get(position)));
         }
     }
 

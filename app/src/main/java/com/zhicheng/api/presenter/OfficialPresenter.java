@@ -13,7 +13,10 @@ public interface OfficialPresenter {
 
     void loadDetail(String js);
 
-    void loadDynamic(String dyn);
+    //工作动态
+    void loadDynamic(String dyn,int start);
+    //新增工作动态
+    void upDynamic(String dyn,List<String> imgs, String jFile,String GUID);
 
     void upDeal(List<String> imgs, String jFile, String suggest, OfficialDetailResponse officialDetailResponse, String GUID);
 

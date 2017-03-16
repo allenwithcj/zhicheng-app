@@ -120,12 +120,12 @@ public class OfficialModelImpl implements OfficialModel{
                 });
     }
 
+    //工作动态获取
     @Override
     public void loadOfficialDynamic(String dyn, ApiCompleteListener listener) {
         if (mOfficialService == null){
             mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
         }
-//        RequestBody body = RequestBody.create(MediaType.parse("application/json"),dyn);
         mOfficialService.getOfficialWorkDynamic(dyn)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -150,6 +150,57 @@ public class OfficialModelImpl implements OfficialModel{
                             listener.onComplected(officialWorkDynamicListResponse.body());
                         }else {
                             listener.onFailed(new BaseResponse(officialWorkDynamicListResponse.code(),officialWorkDynamicListResponse.message()));
+                        }
+                    }
+                });
+    }
+    //新增工作动态
+    @Override
+    public void upOfficialDynamic(String dyn,List<String> imgs,String jFile,String GUID, ApiCompleteListener listener) {
+        if (mOfficialService == null){
+            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
+        }
+        final MultipartBody.Builder builder = new MultipartBody.Builder();
+        Observable.from(imgs)
+                .map(s -> {
+                    File file = new File(s);
+                    builder.addFormDataPart("file",file.getName(), RequestBody.create(MultipartBody.FORM,file));
+                    return s;
+                }).last()
+                .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
+                    @Override
+                    public Observable<Response<CommonResponse>> call(String s) {
+                        RequestBody body = RequestBody.create(MediaType.parse("application/json"),jFile);
+                        return mOfficialService.UpDealFile(body,builder.build());
+                    }
+                }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<CommonResponse>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException){
+                            listener.onFailed(null);
+                            return;
+                        }
+                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                    }
+
+                    @Override
+                    public void onNext(Response<CommonResponse> commonResponseResponse) {
+                        if (commonResponseResponse.isSuccessful()){
+                            if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
+                                BaseApplication.log_say("MainModelImpl","UpThings");
+                            }else {
+                                listener.onComplected(commonResponseResponse.body());
+                                Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                            }
+                        }else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
                         }
                     }
                 });

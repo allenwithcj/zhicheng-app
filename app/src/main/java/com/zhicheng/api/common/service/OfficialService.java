@@ -12,7 +12,6 @@ import okhttp3.RequestBody;
 import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -39,8 +38,24 @@ public interface OfficialService {
     @POST("/servlet/uploadAttachmentServlet")
     Observable<Response<CommonResponse>> UpDealFile(@Part("json") RequestBody rBody, @Part("file") MultipartBody body);
 
-    @GET("api.php")
-    Observable<Response<OfficialWorkDynamicList>> getOfficialWorkDynamic(String j);
+    /**
+     * 工作动态获取
+     * @param rBody 手动构建
+     * @return OfficialWorkDynamicList
+     */
+
+    @FormUrlEncoded
+    @POST("/servlet/mobileServlet")
+    Observable<Response<OfficialWorkDynamicList>> getOfficialWorkDynamic(@Field("json") String rBody);
+
+    /**
+     * 新增工作动态
+     * @param rBody 手动构建
+     * @return 通用响应
+     */
+    @FormUrlEncoded
+    @POST("/servlet/mobileServlet")
+    Observable<Response<CommonResponse>> upOfficialWorkDynamic(@Field("json") String rBody);
 
     //通知公告
     @FormUrlEncoded
