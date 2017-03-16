@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -22,13 +23,15 @@ import com.zhicheng.bean.json.AddressBookRequest;
 import com.zhicheng.ui.activity.ContactMultilevelActivity;
 import com.zhicheng.ui.adapter.ContactAdapter;
 import com.zhicheng.utils.ClearEditText;
-import com.zhicheng.utils.HanziToPinyin;
 import com.zhicheng.utils.OnRecyclerViewListener;
 import com.zhicheng.utils.OnTouchingLetterChangedListener;
+import com.zhicheng.utils.PinyinComparator;
+import com.zhicheng.utils.PinyinUtils;
 import com.zhicheng.utils.SideBar;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -36,11 +39,13 @@ import java.util.List;
  */
 
 public class ContactFragment extends BaseFragment implements ContactView,OnRecyclerViewListener,SwipeRefreshLayout.OnRefreshListener{
+    private int start;
+
     private SwipeRefreshLayout swipeRefresh;
     private RecyclerView mRecyclerView;
     private SideBar mSideBar;
     private ClearEditText mClearEditText;
-    private TextView mAnno;
+    private TextView touch_anno;
     private TextView mNoResult;
     private ContactAdapter mAdapter;
     private ContactPresenterImpl mContactPresenterImpl;
@@ -65,9 +70,9 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
         mRecyclerView = (RecyclerView)mRootView.findViewById(R.id.mRecyclerview);
         mSideBar = (SideBar)mRootView.findViewById(R.id.sideBar);
         mClearEditText = (ClearEditText)mRootView.findViewById(R.id.mClearEditText);
-        mAnno = (TextView)mRootView.findViewById(R.id.anno);
+        touch_anno = (TextView)mRootView.findViewById(R.id.touch_anno);
         mNoResult = (TextView)mRootView.findViewById(R.id.noResult);
-        mSideBar.setmTextDialog(mAnno);
+        mSideBar.setmTextDialog(touch_anno);
 
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new ContactAdapter();
@@ -76,13 +81,16 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
         mRecyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(mAdapter));
         mAdapter.setOnRecyclerViewListener(this);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         swipeRefresh.setOnRefreshListener(this);
+
         mSideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
             @Override
             public void onTouchingLetterChanged(String s) {
                 int position = mAdapter.getPositionForSection(s.charAt(0));
                 if (position != -1) {
-                    mLinearLayoutManager.scrollToPositionWithOffset(position, 0);
+                    LinearLayoutManager mLinear = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                    mLinear.scrollToPositionWithOffset(position, 0);
                 }
             }
         });
@@ -94,38 +102,41 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                mFilterData(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-//                searchData(s.toString());
+
             }
         });
 
     }
 
-//    private void searchData(String s) {
-//        if(s.isEmpty()){
-//            refresh();
-//            mNoResult.setVisibility(View.GONE);
-//        }else{
-//            for(Contacts contacts : contactsList){
-//                String[] str = contacts.getPinyin().split(" ");
-//                int strLength = str.length;
-//                for(int i = 0; i <strLength; i ++ ){
-//                    if(str[i].startsWith(s)){
-//                        sortContactsList.add(contacts);
-//                    }
-//                }
-//            }
-//            if(sortContactsList.size() == 0){
-//                mNoResult.setVisibility(View.VISIBLE);
-//            }
-//        }
-//        mAdapter.notifyDataSetChanged();
-//    }
+    private void mFilterData(String s) {
+        List<Contacts> mSortContactsList = new ArrayList<>();
+        if(s.isEmpty()){
+            mSortContactsList = contactsList;
+            mNoResult.setVisibility(View.GONE);
+        }else{
+            mSortContactsList.clear();
+            for(Contacts contacts : contactsList){
+                 if(contacts.getName().toUpperCase().indexOf(s.toUpperCase()) != -1 ||
+                         PinyinUtils.getPingYin(contacts.getName()).toUpperCase()
+                                 .startsWith(s.toUpperCase())){
+                     mSortContactsList.add(contacts);
+                 }
+            }
+            if(mSortContactsList.size() == 0){
+                mNoResult.setVisibility(View.VISIBLE);
+            }else{
+                mNoResult.setVisibility(View.GONE);
+            }
+        }
+        Collections.sort(mSortContactsList,new PinyinComparator());
+        mAdapter.updateDate(mSortContactsList);
+    }
 
     @Override
     protected void initData(boolean isSavedNull) {
@@ -167,12 +178,21 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
                     mContacts.setTel(item.getTel());
                     mContacts.setPhone(item.getPhone());
                     mContacts.setEmail(item.getEmail());
-                    mContacts.setPinyin(hanziTopinyin(item.getName()));
+                    String pinyin = PinyinUtils.getPingYin(item.getName()).substring(0,1).toUpperCase();
+                    if(pinyin.matches("[A-Z]")){
+                        mContacts.setLetter(pinyin);
+                    }
                     contactsList.add(mContacts);
                 }
+                Collections.sort(contactsList, new PinyinComparator());
                 mAdapter.AddAllDate(contactsList);
             }
         }
+    }
+
+    @Override
+    public void addDate(Object result) {
+
     }
 
     @Override
@@ -191,20 +211,6 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
         return false;
     }
 
-    public String hanziTopinyin(String hanzi){
-        ArrayList<HanziToPinyin.Token> tokens = HanziToPinyin.getInstance().get(hanzi);
-        StringBuilder sb = new StringBuilder();
-        if (tokens != null && tokens.size() > 0) {
-            for (HanziToPinyin.Token token : tokens) {
-                if (HanziToPinyin.Token.PINYIN == token.type) {
-                    sb.append(token.target);
-                } else {
-                    sb.append(token.source);
-                }
-            }
-        }
-        return sb.toString().toLowerCase();
-    }
 
     @Override
     public void onRefresh() {
@@ -212,11 +218,13 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
     }
 
     private void refresh() {
-        String strEntity = createObj();
-        mContactPresenterImpl.loadContacts(strEntity);
+        start = 1;
+        String strEntity = createObj(start);
+        mContactPresenterImpl.loadContacts(strEntity,start);
+        start++;
     }
 
-    private String createObj() {
+    private String createObj(int page) {
         AddressBookRequest mAd = new AddressBookRequest();
         AddressBookRequest.IqBean iqb = new AddressBookRequest.IqBean();
         AddressBookRequest.IqBean.QueryBean qb = new AddressBookRequest.IqBean.QueryBean();
@@ -225,8 +233,8 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
         qb.setParentItemType(0);
         qb.setParentItemID("");
         qb.setDataSourceType(1);
-        qb.setPage("1");
-        qb.setPerPageNums("10");
+        qb.setPage(page);
+        qb.setPerPageNums(10);
         qb.setOrderBy("");
         qb.setOrderType("");
         qb.setSearchKey("");
@@ -236,5 +244,31 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
         mAd.setIq(iqb);
         Gson gson = new Gson();
         return gson.toJson(mAd);
+    }
+
+
+    public class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {
+        private int lastVisibleItem;
+
+        @Override
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            super.onScrollStateChanged(recyclerView, newState);
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()) {
+                onLoadMore();
+            }
+        }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
+        }
+    }
+
+    private void onLoadMore() {
+        String entity = createObj(start);
+        mContactPresenterImpl.loadContacts(entity,start);
+        start++;
     }
 }

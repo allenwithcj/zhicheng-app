@@ -84,4 +84,5 @@ dependencies {
     compile 'com.android.support:customtabs:25.2.0'
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3'
     testCompile 'junit:junit:4.12'
+    compile files('libs/pinyin4j-2.5.0.jar')
 }

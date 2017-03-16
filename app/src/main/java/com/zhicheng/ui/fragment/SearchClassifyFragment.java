@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.TimePickerView;
@@ -262,6 +263,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
     private class SearchClassifyAdapter extends RecyclerView.Adapter{
         private List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> caseList;
+        private String[] tag = {"编号:","办理时间:","地址:"};
 
         public SearchClassifyAdapter(){
 
@@ -276,12 +278,27 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof SearchClassifyViewHolder){
-                ((SearchClassifyViewHolder) holder).caseNo.setText(caseList.get(position).getCasenum());
+                ((SearchClassifyViewHolder) holder).caseNo.setText(tag[0]+caseList.get(position).getCasenum());
                 String caseTime = caseList.get(position).getCasetime();
                 if(caseTime != null){
-                    ((SearchClassifyViewHolder) holder).caseTime.setText(caseTime.substring(0,caseTime.length()-2).toString());
+                    ((SearchClassifyViewHolder) holder).caseTime.setText(tag[1]+caseTime.substring(0,caseTime.length()-2).toString());
                 }
-                ((SearchClassifyViewHolder) holder).caseAddress.setText(caseList.get(position).getCaseaddress());
+                ((SearchClassifyViewHolder) holder).caseAddress.setText(tag[2]+caseList.get(position).getCaseaddress());
+                ((SearchClassifyViewHolder) holder).case_layout.setOnClickListener(view -> {
+                    if(mManageState.equals("")){
+
+
+                    }else if(mManageState.equals("1")){
+                        //Intent intent=new Intent(UIUtils.getContext(),OfficialFinishDetail.class);
+                        //intent.putExtra("detailId",caseList.get(position).getId());
+                        //UIUtils.startActivity(intent);
+
+                    }else if(mManageState.equals("0")){
+                        //Intent intent = new Intent(UIUtils.getContext(),OfficialNoFinishDetails.class);
+                        //intent.putExtra("detailId",caseList.get(position).getId());
+                        //UIUtils.startActivity(intent);
+                    }
+                });
             }
         }
 
@@ -309,12 +326,14 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             private TextView caseNo;
             private TextView caseTime;
             private TextView caseAddress;
+            private RelativeLayout case_layout;
 
             public SearchClassifyViewHolder(View itemView) {
                 super(itemView);
                 caseNo = (TextView) itemView.findViewById(R.id.caseNo);
                 caseTime = (TextView) itemView.findViewById(R.id.caseTime);
                 caseAddress = (TextView) itemView.findViewById(R.id.caseAddress);
+                case_layout = (RelativeLayout) itemView.findViewById(R.id.case_layout);
             }
         }
     }
