@@ -104,17 +104,33 @@
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_experiment"
             android:text="@string/Experiment" />
-
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
         <TextView
             android:id="@+id/CallTheCoun"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:padding="8dp"
-            android:layout_weight="1"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_callthecon"
             android:text="@string/CallTheCoun" />
+            <TextView
+                android:id="@+id/fabNotice2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginRight="@dimen/textView_padding"
+                android:minWidth="19dp"
+                android:maxHeight="19dp"
+                android:padding="2dp"
+                android:background="@drawable/i_show_deal"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/badge_text_size" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/workNote"

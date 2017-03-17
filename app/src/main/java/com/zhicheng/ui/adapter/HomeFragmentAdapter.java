@@ -202,7 +202,9 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
         private TextView work;
         private TextView Experiment;
         private TextView CallTheCoun;
+        private TextView fabNotice2;
         private TextView workNote;
+
 
         public ButtonGroupViewHolder(View itemView) {
             super(itemView);
@@ -214,6 +216,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
             work = (TextView) itemView.findViewById(R.id.work);
             Experiment = (TextView) itemView.findViewById(R.id.Experiment);
             CallTheCoun = (TextView) itemView.findViewById(R.id.CallTheCoun);
+            fabNotice2 = (TextView) itemView.findViewById(R.id.fabNotice2);
             workNote = (TextView) itemView.findViewById(R.id.workNote);
         }
     }

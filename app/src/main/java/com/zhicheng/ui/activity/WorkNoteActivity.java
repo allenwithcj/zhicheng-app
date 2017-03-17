@@ -3,6 +3,7 @@ package com.zhicheng.ui.activity;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
@@ -11,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -71,6 +70,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     private ArrayList<String> mImagePath;//选择照片地址集
     private RecyclerView picRecyclerView;
     private DealAdapter mDealAdapter;
+    private AlertDialog dialog;
 
     public WorkNoteActivity getInstance(){
         return instance;
@@ -148,27 +148,24 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                     || (event != null
                     && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
                     && event.getAction() == KeyEvent.ACTION_DOWN)){
+                dialog = new AlertDialog.Builder(this,R.style.dialog)
+                        .setView(R.layout.z_loading_view)
+                        .setCancelable(false)
+                        .create();
+                dialog.show();
                 if (mInput.getText().toString().isEmpty()){
+                    dialog.dismiss();
                     Snackbar.make(mToolbar,"工作日志不能为空", Snackbar.LENGTH_SHORT).show();
                 }else {
-                    if(mImagePath != null){
                         if(mImagePath.size() != 0){
                             GUID = UUID.randomUUID().toString();
                             send_content = mInput.getText().toString();
                             sendMessage(mImagePath,GUID,send_content);
-                            if (moreTools.getVisibility() == View.VISIBLE){
-                                Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_out);
-                                moreTools.startAnimation(animation);
-                                moreTools.setVisibility(View.GONE);
-                                mImagePath.clear();
-                                mDealAdapter.notifyDataSetChanged();
-                            }
                             mRecyclerView.smoothScrollToPosition(0);
-                            v.setText("");
                         }else{
+                            dialog.dismiss();
                             Toast.makeText(this,"工作日志图片不能为空", Toast.LENGTH_SHORT).show();
                         }
-                    }
 
                 }
                 return true;
@@ -224,6 +221,9 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 
     @Override
     public void showMessage(String msg) {
+        if (dialog != null && dialog.isShowing()){
+            dialog.dismiss();
+        }
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 
@@ -310,8 +310,17 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 //            news.setSendPeopel(mDataBase.getLocalConfig().getName());
 //            news.setSendWork(mDataBase.getLocalConfig().getDepartment());
             if(((CommonResponse)result).getIq().getQuery().getErrorCode() == 0){
-                onRefresh();
+                mInput.setText("");
+                mImagePath.clear();
+                mDealAdapter.notifyDataSetChanged();
                 showMessage("发送日志成功");
+                if (moreTools.getVisibility() == View.VISIBLE){
+//                                Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_out);
+//                                moreTools.startAnimation(animation);
+                    moreTools.setVisibility(View.GONE);
+
+                }
+                onRefresh();
 //                mDataBase.setWorkNote(news);
             }else{
                 showMessage("发送日志失败");
@@ -332,8 +341,8 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         switch (v.getId()){
             case R.id.more:
                 if (moreTools.getVisibility() == View.GONE){
-                    Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_in);
-                    moreTools.startAnimation(animation);
+//                    Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_in);
+//                    moreTools.startAnimation(animation);
                     moreTools.setVisibility(View.VISIBLE);
                     picRecyclerView = (RecyclerView) findViewById(R.id.picRecycleView);
                     LinearLayoutManager mLayoutManager = new LinearLayoutManager(WorkNoteActivity.this);
@@ -341,8 +350,8 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                     picRecyclerView.setLayoutManager(mLayoutManager);
                     picRecyclerView.setAdapter(mDealAdapter);
                 }else {
-                    Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_out);
-                    moreTools.startAnimation(animation);
+//                    Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_out);
+//                    moreTools.startAnimation(animation);
                     moreTools.setVisibility(View.GONE);
                 }
                 break;
