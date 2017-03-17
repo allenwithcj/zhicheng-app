@@ -121,20 +121,22 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
             mNoResult.setVisibility(View.GONE);
         }else{
             mSortContactsList.clear();
-            for(Contacts contacts : contactsList){
-                 if(contacts.getName().toUpperCase().indexOf(s.toUpperCase()) != -1 ||
-                         PinyinUtils.getPingYin(contacts.getName()).toUpperCase()
-                                 .startsWith(s.toUpperCase())){
-                     mSortContactsList.add(contacts);
-                 }
-            }
-            if(mSortContactsList.size() == 0){
-                mNoResult.setVisibility(View.VISIBLE);
-            }else{
-                mNoResult.setVisibility(View.GONE);
+            if(contactsList != null){
+                for(Contacts contacts : contactsList){
+                    if(contacts.getName().toUpperCase().indexOf(s.toUpperCase()) != -1 ||
+                            PinyinUtils.getPingYin(contacts.getName()).toUpperCase()
+                                    .startsWith(s.toUpperCase())){
+                        mSortContactsList.add(contacts);
+                    }
+                }
+                if(mSortContactsList.size() == 0){
+                    mNoResult.setVisibility(View.VISIBLE);
+                }else{
+                    mNoResult.setVisibility(View.GONE);
+                }
+                Collections.sort(mSortContactsList,new PinyinComparator());
             }
         }
-        Collections.sort(mSortContactsList,new PinyinComparator());
         mAdapter.updateDate(mSortContactsList);
     }
 
