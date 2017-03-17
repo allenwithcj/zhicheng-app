@@ -14,12 +14,12 @@ public class URL {
 
 //    public static final String HOST_URL_SERVER_ZHICHENG = "http://192.168.1.157:8090/";
 
-     public static final String HOST_URL_SERVER_ZHICHENG = "http://222.46.11.107:8082";
+//     public static final String HOST_URL_SERVER_ZHICHENG = "http://222.46.11.107:8082";
 
 //    public static final String HOST_URL_SERVER_ZHICHENG = "http://219.131.197.178:9909";
 
     //feiqi
-//    public static final String HOST_URL_SERVER_ZHICHENG = "http://192.168.1.122:8080";
+    public static final String HOST_URL_SERVER_ZHICHENG = "http://192.168.191.1:8080";
 
 
     public static final String HOST_URL_SERVER = "http://nuoche.xiaoyouqiao.com/appapi/";

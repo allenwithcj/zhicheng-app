@@ -2,7 +2,6 @@ package com.zhicheng.api.presenter.impl;
 
 import com.zhicheng.R;
 import com.zhicheng.api.ApiCompleteListener;
-import com.zhicheng.api.model.WorkNodeModel;
 import com.zhicheng.api.model.impl.WorkNodeModelImpl;
 import com.zhicheng.api.presenter.WorkNodePresenter;
 import com.zhicheng.api.view.WorkNodeView;
@@ -12,35 +11,39 @@ import com.zhicheng.bean.http.PersonalLogMaResponse;
 import com.zhicheng.utils.common.NetworkUtils;
 import com.zhicheng.utils.common.UIUtils;
 
+import java.util.List;
+
 /**
  * Created by hp on 2017/3/2.
  */
 
 public class WorkNodePresenterImpl implements WorkNodePresenter,ApiCompleteListener {
     private WorkNodeView mWorkNodeView;
-    private WorkNodeModel mWorkNodeModel;
+    private WorkNodeModelImpl mWorkNodeModelImpl;
+    private int start;
 
     public WorkNodePresenterImpl(WorkNodeView mWorkNodeView) {
         this.mWorkNodeView = mWorkNodeView;
-        mWorkNodeModel = new WorkNodeModelImpl();
+        mWorkNodeModelImpl = new WorkNodeModelImpl();
     }
 
     @Override
-    public void loadWorkNodes(String s) {
+    public void loadWorkNodes(String s,int start) {
+        this.start = start;
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mWorkNodeView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mWorkNodeView.hideProgress();
         }
         mWorkNodeView.showProgress();
-        mWorkNodeModel.loadWorkNodes(s,this);
+        mWorkNodeModelImpl.loadWorkNodes(s,this);
     }
 
     @Override
-    public void sendWorkNodes(String s) {
+    public void sendWorkNodes(String jFile,List<String> imgs, String nodes,String attGUID,String GUID, ApiCompleteListener listener) {
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mWorkNodeView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mWorkNodeModel.sendWorkNodes(s,this);
+        mWorkNodeModelImpl.sendWorkNodes(jFile,imgs,nodes,attGUID,GUID,this);
     }
 
     @Override
@@ -48,7 +51,7 @@ public class WorkNodePresenterImpl implements WorkNodePresenter,ApiCompleteListe
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mWorkNodeView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mWorkNodeModel.updateWorkNodes(s,this);
+        mWorkNodeModelImpl.updateWorkNodes(s,this);
     }
 
     @Override
@@ -56,7 +59,7 @@ public class WorkNodePresenterImpl implements WorkNodePresenter,ApiCompleteListe
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mWorkNodeView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mWorkNodeModel.deleteWorkNodes(s,this);
+        mWorkNodeModelImpl.deleteWorkNodes(s,this);
     }
 
     @Override
@@ -70,8 +73,11 @@ public class WorkNodePresenterImpl implements WorkNodePresenter,ApiCompleteListe
             mWorkNodeView.refreshData(result);
         }
         if (result instanceof PersonalLogMaResponse){
-            mWorkNodeView.refreshData(result);
-
+            if (start == 1){
+                mWorkNodeView.refreshData(result);
+            }else {
+                mWorkNodeView.addData(result);
+            }
         }
         mWorkNodeView.hideProgress();
 

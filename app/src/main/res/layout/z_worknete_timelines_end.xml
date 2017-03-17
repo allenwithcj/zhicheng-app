@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:cb="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
     <com.library.TimeLineMarker
         android:id="@+id/timeLine"
         android:layout_width="0dp"
@@ -15,8 +15,7 @@
         android:layout_marginLeft="@dimen/activity_padding"
         app:markerSize="18dp"
         app:beginLine="@color/navigationColor"
-        app:marker="@drawable/i_cycle" />
-
+        app:marker="@drawable/i_cycle"/>
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -25,37 +24,38 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="2dp">
-
         <LinearLayout
-            android:id="@+id/layout"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <RelativeLayout
+            <TextView
+                android:id="@+id/NoteTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/NoteTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/textView_padding"
-                    android:layout_centerVertical="true" />
-
-            </RelativeLayout>
-
+                android:padding="@dimen/textView_padding"
+                android:gravity="center"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/navigationColor" />
-
+                android:background="@color/navigationColor"/>
             <TextView
                 android:id="@+id/mini_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/textView_padding" />
+                android:padding="@dimen/textView_padding"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/navigationColor"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/imgs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_padding"
+                android:clipToPadding="false"
+                android:scrollbars="horizontal"
+                android:overScrollMode="always">
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

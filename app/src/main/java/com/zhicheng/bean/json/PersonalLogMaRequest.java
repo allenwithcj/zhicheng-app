@@ -50,7 +50,8 @@ public class PersonalLogMaRequest {
             private String type;
             private String con;
             private String id;
-            private String page;
+            private int page;
+            private String attguid;
 
             public String getType() {
                 return type;
@@ -76,12 +77,20 @@ public class PersonalLogMaRequest {
                 this.con = con;
             }
 
-            public String getPage() {
+            public int getPage() {
                 return page;
             }
 
-            public void setPage(String page) {
+            public void setPage(int page) {
                 this.page = page;
+            }
+
+            public String getAttguid() {
+                return attguid;
+            }
+
+            public void setAttguid(String attguid) {
+                this.attguid = attguid;
             }
         }
 

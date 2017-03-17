@@ -1,24 +1,15 @@
 package com.zhicheng.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.design.internal.SnackbarContentLayout;
-import android.support.design.widget.Snackbar;
-import android.telephony.TelephonyManager;
 import android.util.Base64;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,14 +22,10 @@ import com.zhicheng.api.presenter.impl.LoginPresenterImpl;
 import com.zhicheng.api.view.LoginView;
 import com.zhicheng.bean.http.LoginResponse;
 import com.zhicheng.bean.json.LoginRequest;
-import com.zhicheng.utils.common.UIUtils;
 
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.UUID;
 
-import okhttp3.RequestBody;
 import roboguice.inject.InjectView;
 
 /**
@@ -122,7 +109,7 @@ public class LoginActivity extends BaseActivity implements LoginView{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                showMessage("需要内部权限，请登录");
+                BaseApplication.clearAllActivity();
                 return true;
             default:
                 return true;

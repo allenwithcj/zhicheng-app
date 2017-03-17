@@ -82,6 +82,7 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 		isCommon = getIntent().getStringExtra("upType").equals("common");
 		mData = new SparseArray<String>();
 		mNode = new ArrayList<>();
+		mImagePath = new ArrayList<>();
 		activity_deal = new ArrayList<>();
 		mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
 		mIneedAdapter = new IneedAdapter(getApplicationContext());
@@ -172,7 +173,6 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 				startActivityForResult(new Intent(IneedActivity.this,DealActivity.class),ACTIVITY_DEAL);
 				return true;
 			}
-			item.setEnabled(false);
 			DatabaseHelper mDataBase = new DatabaseHelper();
 			LocalConfig config = mDataBase.getLocalConfig();
 			if (config != null && config.getUserName() != null && config.getPwd() != null){
@@ -266,21 +266,28 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 				ufIB.setNamespace("AttachmentUpdateRequest");
 				uf.setIq(ufIB);
 				String jFile = gson.toJson(uf);
-				if (null != mImagePath){
-					dialog = new AlertDialog.Builder(this,R.style.dialog)
-							.setView(R.layout.z_loading_view)
-							.setCancelable(false)
-							.create();
-					dialog.show();
-					if (isCommon){
-						mUpThingsPresenterImpl.UpThings(5,guid,strEntity,jFile,mImagePath);
-					}else {
-						mUpThingsPresenterImpl.UpThings(3,guid,strEntity,jFile,mImagePath);
+				if(mData.get(0) != null){
+					if (null != mImagePath){
+						if(mImagePath.size() != 0){
+							item.setEnabled(false);
+							dialog = new AlertDialog.Builder(this,R.style.dialog)
+									.setView(R.layout.z_loading_view)
+									.setCancelable(false)
+									.create();
+							dialog.show();
+							if (isCommon){
+								mUpThingsPresenterImpl.UpThings(5,guid,strEntity,jFile,mImagePath);
+							}else {
+								mUpThingsPresenterImpl.UpThings(3,guid,strEntity,jFile,mImagePath);
+							}
+							item.setEnabled(false);
+						}else {
+							item.setEnabled(true);
+							Toast.makeText(this,"请选择上传图片",Toast.LENGTH_SHORT).show();
+						}
 					}
-					item.setEnabled(false);
-				}else {
-					item.setEnabled(true);
-					Snackbar.make(mToolbar,"请选择上传图片",Snackbar.LENGTH_SHORT).show();
+				}else{
+					Toast.makeText(this,"请先定位地址",Toast.LENGTH_SHORT).show();
 				}
 			}else {
 				BaseApplication.checkLogin();

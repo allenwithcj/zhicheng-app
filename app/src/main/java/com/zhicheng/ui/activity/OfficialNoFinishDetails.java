@@ -2,8 +2,6 @@ package com.zhicheng.ui.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,14 +23,11 @@ import com.google.gson.Gson;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
-import com.zhicheng.api.view.MainView;
 import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.OfficialDetailResponse;
-import com.zhicheng.bean.json.FormSendDoRequest;
 import com.zhicheng.bean.json.OfficialDetailRequest;
 import com.zhicheng.bean.json.UpFileRequest;
-import com.zhicheng.common.Constant;
 import com.zhicheng.common.URL;
 import com.zhicheng.module.imageloader.GlideImageLoader;
 import com.zhicheng.ui.adapter.OfficialNoFinishDetailAdapter;
@@ -46,8 +41,6 @@ import java.util.UUID;
 
 import cc.dagger.photopicker.PhotoPicker;
 import cc.dagger.photopicker.picker.PhotoFilter;
-import rx.Observable;
-import rx.Subscriber;
 
 
 /**
@@ -141,11 +134,13 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
                 uf.setIq(ufIB);
                 String jFile = gson.toJson(uf);
                 if (null != mImagePath){
-                    mOfficialDetail.upDeal(mImagePath,jFile,mEdit.getText().toString(),OfficialDetail,guid);
-                    mBtn.setText("处理中...");
-                    mBtn.setClickable(false);
-                }else {
-                    Snackbar.make(mToolbar,"请选择上传图片",Snackbar.LENGTH_SHORT).show();
+                    if(mImagePath.size() != 0){
+                        mOfficialDetail.upDeal(mImagePath,jFile,mEdit.getText().toString(),OfficialDetail,guid);
+                        mBtn.setText("处理中...");
+                        mBtn.setClickable(false);
+                    }else {
+                        Toast.makeText(this,"请选择上传图片",Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             RecyclerView dealRecyclerView = (RecyclerView) pop_view.findViewById(R.id.mRecycleView);

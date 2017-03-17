@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.zhicheng.R;
 import com.zhicheng.bean.http.OfficialWorkDynamicList;
+import com.zhicheng.common.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,7 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
         if (holder instanceof OfficialDynamicHolder){
             if (mOfficialDynamicDetail.get(position).getIMG() != null){
                 Glide.with(holder.itemView.getContext())
-                        .load(mOfficialDynamicDetail.get(position).getIMG())
+                        .load(R.drawable.profle)
                         .into(((OfficialDynamicHolder) holder).img);
             }
             ((OfficialDynamicHolder) holder).name.setText(mOfficialDynamicDetail.get(position).getUSERID());
@@ -114,7 +115,8 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
                     });
                 }
             });
-//            ((OfficialDynamicHolder) holder).mImageRecycler.setAdapter(new ImageRecyclerAdapter(mOfficialDynamicDetail.get(position)));
+            ((OfficialDynamicHolder) holder).mImageRecycler
+                    .setAdapter(new ImageRecyclerAdapter(mOfficialDynamicDetail.get(position).getIMG()));
         }
     }
 
@@ -149,9 +151,9 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
 
     private class ImageRecyclerAdapter extends RecyclerView.Adapter{
 
-        private List<String> imgs;
+        List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean.IMGBean> imgs;
 
-        ImageRecyclerAdapter(List<String> imgs){
+        ImageRecyclerAdapter(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean.IMGBean> imgs){
             this.imgs = imgs;
         }
 
@@ -165,7 +167,9 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof imgViewHolder){
                 Glide.with(holder.itemView.getContext())
-                        .load(imgs.get(position))
+                        .load(URL.HOST_URL_SERVER_ZHICHENG+imgs.get(position).getHref())
+                        .placeholder(R.drawable.glide_loading)
+                        .error(R.drawable.glide_failed)
                         .into(((imgViewHolder) holder).mImageView);
             }
         }

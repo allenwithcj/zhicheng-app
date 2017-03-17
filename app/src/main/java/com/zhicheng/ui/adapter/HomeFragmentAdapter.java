@@ -154,7 +154,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                     if(mData.getLocalConfig().getUserPost().contains("网格员")){
                         UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialBaseGrid.class));
                     }else{
-                        Toast.makeText(UIUtils.getContext(),"非网格员无此功能权限",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UIUtils.getContext(),"非网格员无此功能操作权限",Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;

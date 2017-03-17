@@ -188,6 +188,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                         mPendingIntent.cancel();
                         new NotificationUtils(OfficialBaseGrid.this,1).clear();
                     }
+                    finish();
                 }
             }).setNegativeButton("取消",null).show();;
         }else{
@@ -250,7 +251,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
 
         public void addDataList(List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
-            int page = this.data.size();
+            int page = data.size();
             this.data.addAll(data);
             this.notifyItemRangeInserted(page, data.size());
         }

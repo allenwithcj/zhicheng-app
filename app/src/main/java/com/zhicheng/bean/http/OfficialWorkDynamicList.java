@@ -10,7 +10,7 @@ public class OfficialWorkDynamicList {
 
 
     /**
-     * iq : {"namespace":"PersonalDynamicResponse","query":{"prelogcon":{"prelogs":[{"LOCATION":"雉城街道办事处","IMG":"23729999-2424-5238-A4D3-A7D15FB21DDE","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":"工作动态","DEPT":"雉城指挥中心","ID":"27B76788-C10A-217E-FB10-B6CA3122A5B4"},{"LOCATION":"府前社区","IMG":"A6730003-5594-5365-8D9A-A1E44A3117DF","DATETIME":"2017-03-15 00:00:00.0","USERID":"张烈纯","COUNT":"\u201c三小的孩子太棒了！为你们喝彩!\u201d \r\n\r\n\u201c一件件神奇的艺术品，真是独具匠心啊！赞一个！\u201d \r\n\r\n\u2026\u2026 \r\n\r\n3月14日下午，长兴三小校园内，一场\u201c碎纸变变变小卖场\u201d商品淘宝义卖活动正在热烈开展，活动现场由学生们制作一幅精美的纸浆画作品引来学生、老师和家长的围观、称赞。该校校长文宏章介绍，这是该校学生综合实践活动《以\u201c纸\u201d为媒，独具\u201c浆\u201d心》成果的展示之一，也是该校学生践行学校\u201c雅正\u201d文化的具体体现。","DEPT":"雉城指挥中心","ID":"6BDD1C21-FDF5-ED16-B892-6226D40174A7"},{"LOCATION":null,"IMG":"C8630001-4674-58EF-878D-A79997343BEF","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":"惺惺惜惺惺想寻","DEPT":"雉城指挥中心","ID":"46CEEC39-868B-7F0E-59CD-A5DB3F4A82D5"},{"LOCATION":null,"IMG":"95330000-6A04-57A2-899A-D2500F3B21ED","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":null,"DEPT":"雉城指挥中心","ID":"7787E3FD-CA49-6279-B493-90A7EF944E60"}],"allnum":4},"errorCode":"0","errorMessage":"成功"}}
+     * iq : {"namespace":"PersonalDynamicResponse","query":{"prelogcon":{"prelogs":[{"LOCATION":"中国浙江省湖州市长兴县林荫路","IMG":[{"size":"288.40K","name":"Balance(magazine)-02-2.3.005-bigpicture_02_1.jpg","id":"/v8AMgA4ADUANgA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA3","type":"1"}],"DATETIME":"2017-03-16 17:57:35.0","USERID":"宋莹","COUNT":"来吧，说点什么","DEPT":"凤凰小区-第四网格","ID":"42654448-bd64-48db-b4c9-d0750629be90"},{"LOCATION":"中国浙江省湖州市长兴县林荫路","IMG":[{"size":"885.46K","name":"Picture_03_Eiffel.jpg","id":"/v8AMgA4ADUANgA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA2","type":"1"}],"DATETIME":"2017-03-16 17:55:13.0","USERID":"宋莹","COUNT":"好的时候就会让你有Tom","DEPT":"凤凰小区-第四网格","ID":"cb822f73-fea8-4b2d-b2bb-6fbb9d740c0c"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"51.65K","name":"0081d0b0-e817-4f13-b2e8-4c7f318bee07.jpg","id":"/v8AMgA4ADUANgA0","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA0","type":"1"}],"DATETIME":"2017-03-16 17:26:31.0","USERID":"宋莹","COUNT":"有个职业生涯小朋友小清新","DEPT":"凤凰小区-第四网格","ID":"39de3fd0-2582-4fef-a413-f60c868989be"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"225.03K","name":"IMG_20170225_154306.jpg","id":"/v8AMgA4ADUANgAz","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAz","type":"1"}],"DATETIME":"2017-03-16 17:23:28.0","USERID":"宋莹","COUNT":"来吧来吧来吧","DEPT":"凤凰小区-第四网格","ID":"52a6894e-95a4-40f4-a779-dfdab1333d7e"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"226.14K","name":"IMG_20170225_154332.jpg","id":"/v8AMgA4ADUANgAy","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAy","type":"1"}],"DATETIME":"2017-03-16 17:18:41.0","USERID":"宋莹","COUNT":"默默的说话题材","DEPT":"凤凰小区-第四网格","ID":"133dfd0a-d9a1-4130-aa52-b194b2c7e250"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"323.88K","name":"Balance(magazine)-03-2.3.005-bigpicture_03_1.jpg","id":"/v8AMgA4ADUANgAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAx","type":"1"}],"DATETIME":"2017-03-16 17:14:43.0","USERID":"宋莹","COUNT":"我是刘建军，你打我啊","DEPT":"凤凰小区-第四网格","ID":"f8856fdc-2a18-477c-bb89-393aaeb3bd29"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"2.24M","name":"IMG_-1568577897.jpg","id":"/v8AMgA4ADUANgAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAw","type":"1"}],"DATETIME":"2017-03-16 17:02:29.0","USERID":"宋莹","COUNT":"测试","DEPT":"凤凰小区-第四网格","ID":"34a2fd01-ab56-4aed-b16a-0d538324c2f1"}],"allnum":7},"errorCode":"0","errorMessage":"成功"}}
      */
 
     private IqBean iq;
@@ -26,7 +26,7 @@ public class OfficialWorkDynamicList {
     public static class IqBean {
         /**
          * namespace : PersonalDynamicResponse
-         * query : {"prelogcon":{"prelogs":[{"LOCATION":"雉城街道办事处","IMG":"23729999-2424-5238-A4D3-A7D15FB21DDE","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":"工作动态","DEPT":"雉城指挥中心","ID":"27B76788-C10A-217E-FB10-B6CA3122A5B4"},{"LOCATION":"府前社区","IMG":"A6730003-5594-5365-8D9A-A1E44A3117DF","DATETIME":"2017-03-15 00:00:00.0","USERID":"张烈纯","COUNT":"\u201c三小的孩子太棒了！为你们喝彩!\u201d \r\n\r\n\u201c一件件神奇的艺术品，真是独具匠心啊！赞一个！\u201d \r\n\r\n\u2026\u2026 \r\n\r\n3月14日下午，长兴三小校园内，一场\u201c碎纸变变变小卖场\u201d商品淘宝义卖活动正在热烈开展，活动现场由学生们制作一幅精美的纸浆画作品引来学生、老师和家长的围观、称赞。该校校长文宏章介绍，这是该校学生综合实践活动《以\u201c纸\u201d为媒，独具\u201c浆\u201d心》成果的展示之一，也是该校学生践行学校\u201c雅正\u201d文化的具体体现。","DEPT":"雉城指挥中心","ID":"6BDD1C21-FDF5-ED16-B892-6226D40174A7"},{"LOCATION":null,"IMG":"C8630001-4674-58EF-878D-A79997343BEF","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":"惺惺惜惺惺想寻","DEPT":"雉城指挥中心","ID":"46CEEC39-868B-7F0E-59CD-A5DB3F4A82D5"},{"LOCATION":null,"IMG":"95330000-6A04-57A2-899A-D2500F3B21ED","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":null,"DEPT":"雉城指挥中心","ID":"7787E3FD-CA49-6279-B493-90A7EF944E60"}],"allnum":4},"errorCode":"0","errorMessage":"成功"}
+         * query : {"prelogcon":{"prelogs":[{"LOCATION":"中国浙江省湖州市长兴县林荫路","IMG":[{"size":"288.40K","name":"Balance(magazine)-02-2.3.005-bigpicture_02_1.jpg","id":"/v8AMgA4ADUANgA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA3","type":"1"}],"DATETIME":"2017-03-16 17:57:35.0","USERID":"宋莹","COUNT":"来吧，说点什么","DEPT":"凤凰小区-第四网格","ID":"42654448-bd64-48db-b4c9-d0750629be90"},{"LOCATION":"中国浙江省湖州市长兴县林荫路","IMG":[{"size":"885.46K","name":"Picture_03_Eiffel.jpg","id":"/v8AMgA4ADUANgA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA2","type":"1"}],"DATETIME":"2017-03-16 17:55:13.0","USERID":"宋莹","COUNT":"好的时候就会让你有Tom","DEPT":"凤凰小区-第四网格","ID":"cb822f73-fea8-4b2d-b2bb-6fbb9d740c0c"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"51.65K","name":"0081d0b0-e817-4f13-b2e8-4c7f318bee07.jpg","id":"/v8AMgA4ADUANgA0","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA0","type":"1"}],"DATETIME":"2017-03-16 17:26:31.0","USERID":"宋莹","COUNT":"有个职业生涯小朋友小清新","DEPT":"凤凰小区-第四网格","ID":"39de3fd0-2582-4fef-a413-f60c868989be"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"225.03K","name":"IMG_20170225_154306.jpg","id":"/v8AMgA4ADUANgAz","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAz","type":"1"}],"DATETIME":"2017-03-16 17:23:28.0","USERID":"宋莹","COUNT":"来吧来吧来吧","DEPT":"凤凰小区-第四网格","ID":"52a6894e-95a4-40f4-a779-dfdab1333d7e"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"226.14K","name":"IMG_20170225_154332.jpg","id":"/v8AMgA4ADUANgAy","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAy","type":"1"}],"DATETIME":"2017-03-16 17:18:41.0","USERID":"宋莹","COUNT":"默默的说话题材","DEPT":"凤凰小区-第四网格","ID":"133dfd0a-d9a1-4130-aa52-b194b2c7e250"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"323.88K","name":"Balance(magazine)-03-2.3.005-bigpicture_03_1.jpg","id":"/v8AMgA4ADUANgAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAx","type":"1"}],"DATETIME":"2017-03-16 17:14:43.0","USERID":"宋莹","COUNT":"我是刘建军，你打我啊","DEPT":"凤凰小区-第四网格","ID":"f8856fdc-2a18-477c-bb89-393aaeb3bd29"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"2.24M","name":"IMG_-1568577897.jpg","id":"/v8AMgA4ADUANgAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAw","type":"1"}],"DATETIME":"2017-03-16 17:02:29.0","USERID":"宋莹","COUNT":"测试","DEPT":"凤凰小区-第四网格","ID":"34a2fd01-ab56-4aed-b16a-0d538324c2f1"}],"allnum":7},"errorCode":"0","errorMessage":"成功"}
          */
 
         private String namespace;
@@ -50,7 +50,7 @@ public class OfficialWorkDynamicList {
 
         public static class QueryBean {
             /**
-             * prelogcon : {"prelogs":[{"LOCATION":"雉城街道办事处","IMG":"23729999-2424-5238-A4D3-A7D15FB21DDE","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":"工作动态","DEPT":"雉城指挥中心","ID":"27B76788-C10A-217E-FB10-B6CA3122A5B4"},{"LOCATION":"府前社区","IMG":"A6730003-5594-5365-8D9A-A1E44A3117DF","DATETIME":"2017-03-15 00:00:00.0","USERID":"张烈纯","COUNT":"\u201c三小的孩子太棒了！为你们喝彩!\u201d \r\n\r\n\u201c一件件神奇的艺术品，真是独具匠心啊！赞一个！\u201d \r\n\r\n\u2026\u2026 \r\n\r\n3月14日下午，长兴三小校园内，一场\u201c碎纸变变变小卖场\u201d商品淘宝义卖活动正在热烈开展，活动现场由学生们制作一幅精美的纸浆画作品引来学生、老师和家长的围观、称赞。该校校长文宏章介绍，这是该校学生综合实践活动《以\u201c纸\u201d为媒，独具\u201c浆\u201d心》成果的展示之一，也是该校学生践行学校\u201c雅正\u201d文化的具体体现。","DEPT":"雉城指挥中心","ID":"6BDD1C21-FDF5-ED16-B892-6226D40174A7"},{"LOCATION":null,"IMG":"C8630001-4674-58EF-878D-A79997343BEF","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":"惺惺惜惺惺想寻","DEPT":"雉城指挥中心","ID":"46CEEC39-868B-7F0E-59CD-A5DB3F4A82D5"},{"LOCATION":null,"IMG":"95330000-6A04-57A2-899A-D2500F3B21ED","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":null,"DEPT":"雉城指挥中心","ID":"7787E3FD-CA49-6279-B493-90A7EF944E60"}],"allnum":4}
+             * prelogcon : {"prelogs":[{"LOCATION":"中国浙江省湖州市长兴县林荫路","IMG":[{"size":"288.40K","name":"Balance(magazine)-02-2.3.005-bigpicture_02_1.jpg","id":"/v8AMgA4ADUANgA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA3","type":"1"}],"DATETIME":"2017-03-16 17:57:35.0","USERID":"宋莹","COUNT":"来吧，说点什么","DEPT":"凤凰小区-第四网格","ID":"42654448-bd64-48db-b4c9-d0750629be90"},{"LOCATION":"中国浙江省湖州市长兴县林荫路","IMG":[{"size":"885.46K","name":"Picture_03_Eiffel.jpg","id":"/v8AMgA4ADUANgA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA2","type":"1"}],"DATETIME":"2017-03-16 17:55:13.0","USERID":"宋莹","COUNT":"好的时候就会让你有Tom","DEPT":"凤凰小区-第四网格","ID":"cb822f73-fea8-4b2d-b2bb-6fbb9d740c0c"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"51.65K","name":"0081d0b0-e817-4f13-b2e8-4c7f318bee07.jpg","id":"/v8AMgA4ADUANgA0","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA0","type":"1"}],"DATETIME":"2017-03-16 17:26:31.0","USERID":"宋莹","COUNT":"有个职业生涯小朋友小清新","DEPT":"凤凰小区-第四网格","ID":"39de3fd0-2582-4fef-a413-f60c868989be"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"225.03K","name":"IMG_20170225_154306.jpg","id":"/v8AMgA4ADUANgAz","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAz","type":"1"}],"DATETIME":"2017-03-16 17:23:28.0","USERID":"宋莹","COUNT":"来吧来吧来吧","DEPT":"凤凰小区-第四网格","ID":"52a6894e-95a4-40f4-a779-dfdab1333d7e"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"226.14K","name":"IMG_20170225_154332.jpg","id":"/v8AMgA4ADUANgAy","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAy","type":"1"}],"DATETIME":"2017-03-16 17:18:41.0","USERID":"宋莹","COUNT":"默默的说话题材","DEPT":"凤凰小区-第四网格","ID":"133dfd0a-d9a1-4130-aa52-b194b2c7e250"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"323.88K","name":"Balance(magazine)-03-2.3.005-bigpicture_03_1.jpg","id":"/v8AMgA4ADUANgAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAx","type":"1"}],"DATETIME":"2017-03-16 17:14:43.0","USERID":"宋莹","COUNT":"我是刘建军，你打我啊","DEPT":"凤凰小区-第四网格","ID":"f8856fdc-2a18-477c-bb89-393aaeb3bd29"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"2.24M","name":"IMG_-1568577897.jpg","id":"/v8AMgA4ADUANgAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAw","type":"1"}],"DATETIME":"2017-03-16 17:02:29.0","USERID":"宋莹","COUNT":"测试","DEPT":"凤凰小区-第四网格","ID":"34a2fd01-ab56-4aed-b16a-0d538324c2f1"}],"allnum":7}
              * errorCode : 0
              * errorMessage : 成功
              */
@@ -85,8 +85,8 @@ public class OfficialWorkDynamicList {
 
             public static class PrelogconBean {
                 /**
-                 * prelogs : [{"LOCATION":"雉城街道办事处","IMG":"23729999-2424-5238-A4D3-A7D15FB21DDE","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":"工作动态","DEPT":"雉城指挥中心","ID":"27B76788-C10A-217E-FB10-B6CA3122A5B4"},{"LOCATION":"府前社区","IMG":"A6730003-5594-5365-8D9A-A1E44A3117DF","DATETIME":"2017-03-15 00:00:00.0","USERID":"张烈纯","COUNT":"\u201c三小的孩子太棒了！为你们喝彩!\u201d \r\n\r\n\u201c一件件神奇的艺术品，真是独具匠心啊！赞一个！\u201d \r\n\r\n\u2026\u2026 \r\n\r\n3月14日下午，长兴三小校园内，一场\u201c碎纸变变变小卖场\u201d商品淘宝义卖活动正在热烈开展，活动现场由学生们制作一幅精美的纸浆画作品引来学生、老师和家长的围观、称赞。该校校长文宏章介绍，这是该校学生综合实践活动《以\u201c纸\u201d为媒，独具\u201c浆\u201d心》成果的展示之一，也是该校学生践行学校\u201c雅正\u201d文化的具体体现。","DEPT":"雉城指挥中心","ID":"6BDD1C21-FDF5-ED16-B892-6226D40174A7"},{"LOCATION":null,"IMG":"C8630001-4674-58EF-878D-A79997343BEF","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":"惺惺惜惺惺想寻","DEPT":"雉城指挥中心","ID":"46CEEC39-868B-7F0E-59CD-A5DB3F4A82D5"},{"LOCATION":null,"IMG":"95330000-6A04-57A2-899A-D2500F3B21ED","DATETIME":"2017-03-15 00:00:00.0","USERID":"曹正","COUNT":null,"DEPT":"雉城指挥中心","ID":"7787E3FD-CA49-6279-B493-90A7EF944E60"}]
-                 * allnum : 4
+                 * prelogs : [{"LOCATION":"中国浙江省湖州市长兴县林荫路","IMG":[{"size":"288.40K","name":"Balance(magazine)-02-2.3.005-bigpicture_02_1.jpg","id":"/v8AMgA4ADUANgA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA3","type":"1"}],"DATETIME":"2017-03-16 17:57:35.0","USERID":"宋莹","COUNT":"来吧，说点什么","DEPT":"凤凰小区-第四网格","ID":"42654448-bd64-48db-b4c9-d0750629be90"},{"LOCATION":"中国浙江省湖州市长兴县林荫路","IMG":[{"size":"885.46K","name":"Picture_03_Eiffel.jpg","id":"/v8AMgA4ADUANgA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA2","type":"1"}],"DATETIME":"2017-03-16 17:55:13.0","USERID":"宋莹","COUNT":"好的时候就会让你有Tom","DEPT":"凤凰小区-第四网格","ID":"cb822f73-fea8-4b2d-b2bb-6fbb9d740c0c"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"51.65K","name":"0081d0b0-e817-4f13-b2e8-4c7f318bee07.jpg","id":"/v8AMgA4ADUANgA0","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA0","type":"1"}],"DATETIME":"2017-03-16 17:26:31.0","USERID":"宋莹","COUNT":"有个职业生涯小朋友小清新","DEPT":"凤凰小区-第四网格","ID":"39de3fd0-2582-4fef-a413-f60c868989be"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"225.03K","name":"IMG_20170225_154306.jpg","id":"/v8AMgA4ADUANgAz","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAz","type":"1"}],"DATETIME":"2017-03-16 17:23:28.0","USERID":"宋莹","COUNT":"来吧来吧来吧","DEPT":"凤凰小区-第四网格","ID":"52a6894e-95a4-40f4-a779-dfdab1333d7e"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"226.14K","name":"IMG_20170225_154332.jpg","id":"/v8AMgA4ADUANgAy","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAy","type":"1"}],"DATETIME":"2017-03-16 17:18:41.0","USERID":"宋莹","COUNT":"默默的说话题材","DEPT":"凤凰小区-第四网格","ID":"133dfd0a-d9a1-4130-aa52-b194b2c7e250"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"323.88K","name":"Balance(magazine)-03-2.3.005-bigpicture_03_1.jpg","id":"/v8AMgA4ADUANgAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAx","type":"1"}],"DATETIME":"2017-03-16 17:14:43.0","USERID":"宋莹","COUNT":"我是刘建军，你打我啊","DEPT":"凤凰小区-第四网格","ID":"f8856fdc-2a18-477c-bb89-393aaeb3bd29"},{"LOCATION":"你猜我在哪里","IMG":[{"size":"2.24M","name":"IMG_-1568577897.jpg","id":"/v8AMgA4ADUANgAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgAw","type":"1"}],"DATETIME":"2017-03-16 17:02:29.0","USERID":"宋莹","COUNT":"测试","DEPT":"凤凰小区-第四网格","ID":"34a2fd01-ab56-4aed-b16a-0d538324c2f1"}]
+                 * allnum : 7
                  */
 
                 private int allnum;
@@ -110,22 +110,22 @@ public class OfficialWorkDynamicList {
 
                 public static class PrelogsBean {
                     /**
-                     * LOCATION : 雉城街道办事处
-                     * IMG : 23729999-2424-5238-A4D3-A7D15FB21DDE
-                     * DATETIME : 2017-03-15 00:00:00.0
-                     * USERID : 曹正
-                     * COUNT : 工作动态
-                     * DEPT : 雉城指挥中心
-                     * ID : 27B76788-C10A-217E-FB10-B6CA3122A5B4
+                     * LOCATION : 中国浙江省湖州市长兴县林荫路
+                     * IMG : [{"size":"288.40K","name":"Balance(magazine)-02-2.3.005-bigpicture_02_1.jpg","id":"/v8AMgA4ADUANgA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA3","type":"1"}]
+                     * DATETIME : 2017-03-16 17:57:35.0
+                     * USERID : 宋莹
+                     * COUNT : 来吧，说点什么
+                     * DEPT : 凤凰小区-第四网格
+                     * ID : 42654448-bd64-48db-b4c9-d0750629be90
                      */
 
                     private String LOCATION;
-                    private String IMG;
                     private String DATETIME;
                     private String USERID;
                     private String COUNT;
                     private String DEPT;
                     private String ID;
+                    private List<IMGBean> IMG;
 
                     public String getLOCATION() {
                         return LOCATION;
@@ -133,14 +133,6 @@ public class OfficialWorkDynamicList {
 
                     public void setLOCATION(String LOCATION) {
                         this.LOCATION = LOCATION;
-                    }
-
-                    public String getIMG() {
-                        return IMG;
-                    }
-
-                    public void setIMG(String IMG) {
-                        this.IMG = IMG;
                     }
 
                     public String getDATETIME() {
@@ -181,6 +173,70 @@ public class OfficialWorkDynamicList {
 
                     public void setID(String ID) {
                         this.ID = ID;
+                    }
+
+                    public List<IMGBean> getIMG() {
+                        return IMG;
+                    }
+
+                    public void setIMG(List<IMGBean> IMG) {
+                        this.IMG = IMG;
+                    }
+
+                    public static class IMGBean {
+                        /**
+                         * size : 288.40K
+                         * name : Balance(magazine)-02-2.3.005-bigpicture_02_1.jpg
+                         * id : /v8AMgA4ADUANgA3
+                         * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANgA3
+                         * type : 1
+                         */
+
+                        private String size;
+                        private String name;
+                        private String id;
+                        private String href;
+                        private String type;
+
+                        public String getSize() {
+                            return size;
+                        }
+
+                        public void setSize(String size) {
+                            this.size = size;
+                        }
+
+                        public String getName() {
+                            return name;
+                        }
+
+                        public void setName(String name) {
+                            this.name = name;
+                        }
+
+                        public String getId() {
+                            return id;
+                        }
+
+                        public void setId(String id) {
+                            this.id = id;
+                        }
+
+                        public String getHref() {
+                            return href;
+                        }
+
+                        public void setHref(String href) {
+                            this.href = href;
+                        }
+
+                        public String getType() {
+                            return type;
+                        }
+
+                        public void setType(String type) {
+                            this.type = type;
+                        }
                     }
                 }
             }

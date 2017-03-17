@@ -214,7 +214,7 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                             ((ShowDealViewHolder) holder).Complete.setText("");
                         }
                         ((ShowDealViewHolder) holder).Complete.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.red));
-                        ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal_normal));
+                        ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                         break;
                 }
             }
