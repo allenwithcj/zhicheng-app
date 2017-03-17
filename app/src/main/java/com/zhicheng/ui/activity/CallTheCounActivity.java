@@ -7,13 +7,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.zhicheng.R;
+import com.zhicheng.api.ApiCompleteListener;
+import com.zhicheng.api.presenter.impl.NewsDetailPresenterImpl;
 import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
+import com.zhicheng.api.view.NewsDetailView;
 import com.zhicheng.api.view.OfficialView;
+import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.NoticeResponse;
+import com.zhicheng.bean.json.NewsDetailsRequest;
 import com.zhicheng.bean.json.OfficialRequest;
 
 import java.util.List;
@@ -22,7 +28,8 @@ import java.util.List;
  * Created by Donson on 2017/1/22.
  */
 
-public class CallTheCounActivity  extends BaseActivity implements OfficialView,SwipeRefreshLayout.OnRefreshListener{
+public class CallTheCounActivity  extends BaseActivity implements OfficialView
+        ,SwipeRefreshLayout.OnRefreshListener,ApiCompleteListener{
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private OfficialPresenterImpl mOfficialPresenterImpl ;
@@ -107,6 +114,16 @@ public class CallTheCounActivity  extends BaseActivity implements OfficialView,S
         mOfficialPresenterImpl.LoadNotice(g);
     }
 
+    @Override
+    public void onComplected(Object result) {
+
+    }
+
+    @Override
+    public void onFailed(BaseResponse msg) {
+
+    }
+
     private class NoticeAdapter extends RecyclerView.Adapter{
         private List<List<NoticeResponse.IqBean.QueryBean.TableBean.TableRowsBean>> data;
         private String [] tag={"标题:","送办人:","时间:","内容:"};
@@ -141,6 +158,43 @@ public class CallTheCounActivity  extends BaseActivity implements OfficialView,S
                     ((NoticeViewHolder) holder).notice_sendname.setText(tag[1]+data.get(position).get(5).getValue());
                     ((NoticeViewHolder) holder).notice_time.setText(tag[2]+data.get(position).get(6).getValue());
                     ((NoticeViewHolder) holder).notice_content.setText(tag[3]+data.get(position).get(1).getValue());
+                    ((NoticeViewHolder) holder).noSuc.setOnClickListener(view -> {
+                        //查询公告附件
+                        NewsDetailsRequest newsDetailsRequest = new NewsDetailsRequest();
+                        NewsDetailsRequest.IqBean iq = new NewsDetailsRequest.IqBean();
+                        NewsDetailsRequest.IqBean.QueryBean qb = new NewsDetailsRequest.IqBean.QueryBean();
+                        iq.setNamespace("NewsDetailsRequest");
+                        qb.setId(data.get(position).get(0).getValue());
+                        qb.setMsgId("-1");
+                        qb.setRequestType("1");
+                        iq.setQuery(qb);
+                        newsDetailsRequest.setIq(iq);
+                        Gson gson = new Gson();
+                        NewsDetailView newsDetailView = new NewsDetailView() {
+                            @Override
+                            public void showMessage(String msg) {
+
+                            }
+
+                            @Override
+                            public void showProgress() {
+
+                            }
+
+                            @Override
+                            public void hideProgress() {
+
+                            }
+
+                            @Override
+                            public void refreshData(Object result) {
+
+                            }
+                        };
+                        NewsDetailPresenterImpl newsDetailPresenter = new NewsDetailPresenterImpl(newsDetailView);
+//                        newsDetailPresenter.queryNewsDetail(gson.toJson(newsDetailsRequest),this);
+
+                    });
                 }
             }
         }
@@ -160,6 +214,7 @@ public class CallTheCounActivity  extends BaseActivity implements OfficialView,S
         private TextView notice_sendname;
         private TextView notice_time;
         private TextView notice_content;
+        private LinearLayout noSuc;
 
         public NoticeViewHolder(View itemView) {
             super(itemView);
@@ -167,6 +222,7 @@ public class CallTheCounActivity  extends BaseActivity implements OfficialView,S
             notice_sendname=(TextView)itemView.findViewById(R.id.notice_sendname);
             notice_time=(TextView)itemView.findViewById(R.id.notice_time);
             notice_content=(TextView)itemView.findViewById(R.id.notice_content);
+            noSuc = (LinearLayout)itemView.findViewById(R.id.noSuc);
         }
     }
 

@@ -10,11 +10,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.zhicheng.R;
-import com.zhicheng.api.common.database.WorkNote;
+import com.zhicheng.bean.http.PersonalLogMaResponse;
+import com.zhicheng.common.URL;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,29 +29,27 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     private static final int TYPE_ITEM_CONTENT = 1;
     private static final int TYPE_ITEM_END = 2;
 
-    private LinkedList<WorkNote> NormalContent;
+    List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogsBeen;
     private ImageAdapter mImageAdapter;
 
     public WorkNoteAdapter(){
-        NormalContent = new LinkedList<WorkNote>();
         mImageAdapter = new ImageAdapter();
     }
 
-    public void addAllData(List<WorkNote> time){
-        NormalContent.clear();
-        this.NormalContent.addAll(time);
+    public void addAllData(List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogsBeen){
+        this.prelogsBeen = prelogsBeen;
         this.notifyDataSetChanged();
     }
 
-    public void insertData(List<WorkNote> wn){
-        this.NormalContent.addAll(wn);
-        this.notifyItemRangeInserted(getItemCount()-1,wn.size());
-    }
-
-    public void addData(WorkNote time){
-        this.NormalContent.addFirst(time);
-        this.notifyItemInserted(0);
-    }
+//    public void insertData(List<WorkNote> wn){
+//        this.NormalContent.addAll(wn);
+//        this.notifyItemRangeInserted(getItemCount()-1,wn.size());
+//    }
+//
+//    public void addData(WorkNote time){
+//        this.NormalContent.addFirst(time);
+//        this.notifyItemInserted(0);
+//    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -72,19 +69,27 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof WorkNoteViewHolder){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss", Locale.CHINESE);
-            String str = simpleDateFormat.format(NormalContent.get(position).getCreateTime());
-            ((WorkNoteViewHolder) holder).mTextView.setText(str);
-            ((WorkNoteViewHolder) holder).mMiniContent.setText(NormalContent.get(position).getContent());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+            String sendTime = prelogsBeen.get(position).getCd01();
+//            String str = simpleDateFormat.format(sendTime.substring(0,sendTime.length()-2));
+            ((WorkNoteViewHolder) holder).mTextView.setText(sendTime);
+            ((WorkNoteViewHolder) holder).mMiniContent.setText(prelogsBeen.get(position).getCd02());
             //图片显示,可判断如果图片数量为0，就设置mRecycler为GONE
-            //((WorkNoteViewHolder) holder).mRecyclerView.setVisibility(View.GONE);
-            ((WorkNoteViewHolder) holder).mRecyclerView.setAdapter(mImageAdapter);
+            if(prelogsBeen.get(position).getCd04() != null){
+                ((WorkNoteViewHolder) holder).mRecyclerView.setAdapter(mImageAdapter);
+                mImageAdapter.setImagePath(prelogsBeen.get(position).getCd04());
+            }else{
+                ((WorkNoteViewHolder) holder).mRecyclerView.setVisibility(View.GONE);
+            }
         }
     }
 
     @Override
     public int getItemCount() {
-        return NormalContent.size();
+        if(prelogsBeen != null){
+            return prelogsBeen.size();
+        }
+        return 0;
     }
 
     @Override
@@ -115,13 +120,10 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     //图片adapter
     private class ImageAdapter extends RecyclerView.Adapter{
 
-        private List<String> mImagePath;
+        private List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean.Cd04Bean> mImagePath;
 
-        ImageAdapter(){
-            mImagePath = new ArrayList<>();
-        }
         //设置数据集
-        public void setImagePath(List<String> data){
+        public void setImagePath(List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean.Cd04Bean> data){
             this.mImagePath = data;
             this.notifyDataSetChanged();
         }
@@ -135,7 +137,9 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof ImageViewHolder){
                 Glide.with(holder.itemView.getContext())
-                        .load("url")//设置数据
+                        .load(URL.HOST_URL_SERVER_ZHICHENG+mImagePath.get(position).getHref())//设置数据
+                        .placeholder(R.drawable.glide_loading)
+                        .error(R.drawable.glide_failed)
                         .thumbnail((float) 0.3)
                         .into(((ImageViewHolder) holder).mImageView);
             }

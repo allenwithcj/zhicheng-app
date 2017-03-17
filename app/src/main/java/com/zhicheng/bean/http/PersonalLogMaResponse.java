@@ -7,8 +7,9 @@ import java.util.List;
  */
 
 public class PersonalLogMaResponse {
+
     /**
-     * iq : {"query":{"data":{"caseReportTotal":3,"gridReportTotal":0,"cases":[{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANwA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA2","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANwA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA3","type":"1"}],"itemcon":"grrwrgewrgewgrewgr","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANAA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANAA5","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANQAw","type":"1"}],"itemcon":"fqwefqwefqwefq","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw","type":"1"}],"itemcon":"了解","itemaddress":"fdasdfqwef","itemtime":""}],"weekDoneTotal":1,"daiBanTotal":0},"errorMessage":"成功","errorCode":0},"namespace":"NewsCaseTotalResponse"}
+     * iq : {"namespace":"PersonalLogMaResponse","query":{"prelogcon":{"prelogs":[{"cd05":"安监中心","cd03":"熊文文","cd04":[{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}],"cd01":"2017-03-17 20:51:09.0","cd02":"我所有者权益","cd00":"638290f8-0719-4d16-9cbc-bd7c6fe73dcf"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:36.0","cd02":"nxnxnx","cd00":"76b1a449-6282-4fb0-8efd-f69ab2380661"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:34.0","cd02":"jxjxj","cd00":"c25b6f6d-4c83-41c0-a2ec-78e6cdb22032"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:32.0","cd02":"nxnxn","cd00":"73f6da89-1bf0-4577-8a3f-ef427b3f4730"}],"allnum":4},"errorCode":"0","errorMessage":"成功"}}
      */
 
     private IqBean iq;
@@ -23,20 +24,12 @@ public class PersonalLogMaResponse {
 
     public static class IqBean {
         /**
-         * query : {"data":{"caseReportTotal":3,"gridReportTotal":0,"cases":[{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANwA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA2","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANwA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA3","type":"1"}],"itemcon":"grrwrgewrgewgrewgr","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANAA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANAA5","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANQAw","type":"1"}],"itemcon":"fqwefqwefqwefq","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw","type":"1"}],"itemcon":"了解","itemaddress":"fdasdfqwef","itemtime":""}],"weekDoneTotal":1,"daiBanTotal":0},"errorMessage":"成功","errorCode":0}
-         * namespace : NewsCaseTotalResponse
+         * namespace : PersonalLogMaResponse
+         * query : {"prelogcon":{"prelogs":[{"cd05":"安监中心","cd03":"熊文文","cd04":[{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}],"cd01":"2017-03-17 20:51:09.0","cd02":"我所有者权益","cd00":"638290f8-0719-4d16-9cbc-bd7c6fe73dcf"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:36.0","cd02":"nxnxnx","cd00":"76b1a449-6282-4fb0-8efd-f69ab2380661"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:34.0","cd02":"jxjxj","cd00":"c25b6f6d-4c83-41c0-a2ec-78e6cdb22032"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:32.0","cd02":"nxnxn","cd00":"73f6da89-1bf0-4577-8a3f-ef427b3f4730"}],"allnum":4},"errorCode":"0","errorMessage":"成功"}
          */
 
-        private QueryBean query;
         private String namespace;
-
-        public QueryBean getQuery() {
-            return query;
-        }
-
-        public void setQuery(QueryBean query) {
-            this.query = query;
-        }
+        private QueryBean query;
 
         public String getNamespace() {
             return namespace;
@@ -46,23 +39,39 @@ public class PersonalLogMaResponse {
             this.namespace = namespace;
         }
 
+        public QueryBean getQuery() {
+            return query;
+        }
+
+        public void setQuery(QueryBean query) {
+            this.query = query;
+        }
+
         public static class QueryBean {
             /**
-             * data : {"caseReportTotal":3,"gridReportTotal":0,"cases":[{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANwA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA2","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANwA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA3","type":"1"}],"itemcon":"grrwrgewrgewgrewgr","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANAA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANAA5","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANQAw","type":"1"}],"itemcon":"fqwefqwefqwefq","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw","type":"1"}],"itemcon":"了解","itemaddress":"fdasdfqwef","itemtime":""}],"weekDoneTotal":1,"daiBanTotal":0}
-             * errorMessage : 成功
+             * prelogcon : {"prelogs":[{"cd05":"安监中心","cd03":"熊文文","cd04":[{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}],"cd01":"2017-03-17 20:51:09.0","cd02":"我所有者权益","cd00":"638290f8-0719-4d16-9cbc-bd7c6fe73dcf"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:36.0","cd02":"nxnxnx","cd00":"76b1a449-6282-4fb0-8efd-f69ab2380661"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:34.0","cd02":"jxjxj","cd00":"c25b6f6d-4c83-41c0-a2ec-78e6cdb22032"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:32.0","cd02":"nxnxn","cd00":"73f6da89-1bf0-4577-8a3f-ef427b3f4730"}],"allnum":4}
              * errorCode : 0
+             * errorMessage : 成功
              */
 
-            private Prelogcon prelogcon;
+            private PrelogconBean prelogcon;
+            private String errorCode;
             private String errorMessage;
-            private int errorCode;
 
-            public Prelogcon getPrelogcon() {
+            public PrelogconBean getPrelogcon() {
                 return prelogcon;
             }
 
-            public void setPrelogcon(Prelogcon prelogcon) {
+            public void setPrelogcon(PrelogconBean prelogcon) {
                 this.prelogcon = prelogcon;
+            }
+
+            public String getErrorCode() {
+                return errorCode;
+            }
+
+            public void setErrorCode(String errorCode) {
+                this.errorCode = errorCode;
             }
 
             public String getErrorMessage() {
@@ -73,48 +82,62 @@ public class PersonalLogMaResponse {
                 this.errorMessage = errorMessage;
             }
 
-            public int getErrorCode() {
-                return errorCode;
-            }
+            public static class PrelogconBean {
+                /**
+                 * prelogs : [{"cd05":"安监中心","cd03":"熊文文","cd04":[{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}],"cd01":"2017-03-17 20:51:09.0","cd02":"我所有者权益","cd00":"638290f8-0719-4d16-9cbc-bd7c6fe73dcf"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:36.0","cd02":"nxnxnx","cd00":"76b1a449-6282-4fb0-8efd-f69ab2380661"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:34.0","cd02":"jxjxj","cd00":"c25b6f6d-4c83-41c0-a2ec-78e6cdb22032"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:32.0","cd02":"nxnxn","cd00":"73f6da89-1bf0-4577-8a3f-ef427b3f4730"}]
+                 * allnum : 4
+                 */
 
-            public void setErrorCode(int errorCode) {
-                this.errorCode = errorCode;
-            }
+                private int allnum;
+                private List<PrelogsBean> prelogs;
 
-            public static class Prelogcon {
-
-                private String allnum;
-                private List<Prelog> prelogs;
-
-                public String getAllnum() {
+                public int getAllnum() {
                     return allnum;
                 }
 
-                public void setAllnum(String allnum) {
+                public void setAllnum(int allnum) {
                     this.allnum = allnum;
                 }
 
-                public List<Prelog> getPrelogs() {
+                public List<PrelogsBean> getPrelogs() {
                     return prelogs;
                 }
 
-                public void setPrelogs(List<Prelog> prelogs) {
+                public void setPrelogs(List<PrelogsBean> prelogs) {
                     this.prelogs = prelogs;
                 }
 
-                public static class Prelog {
-                    public String cd00;
-                    public String cd01;
-                    public String cd02;
-                    public String cd03;
-                    public String cd05;
+                public static class PrelogsBean {
+                    /**
+                     * cd05 : 安监中心
+                     * cd03 : 熊文文
+                     * cd04 : [{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}]
+                     * cd01 : 2017-03-17 20:51:09.0
+                     * cd02 : 我所有者权益
+                     * cd00 : 638290f8-0719-4d16-9cbc-bd7c6fe73dcf
+                     */
 
-                    public String getCd00() {
-                        return cd00;
+                    private String cd05;
+                    private String cd03;
+                    private String cd01;
+                    private String cd02;
+                    private String cd00;
+                    private List<Cd04Bean> cd04;
+
+                    public String getCd05() {
+                        return cd05;
                     }
 
-                    public void setCd00(String cd00) {
-                        this.cd00 = cd00;
+                    public void setCd05(String cd05) {
+                        this.cd05 = cd05;
+                    }
+
+                    public String getCd03() {
+                        return cd03;
+                    }
+
+                    public void setCd03(String cd03) {
+                        this.cd03 = cd03;
                     }
 
                     public String getCd01() {
@@ -133,20 +156,76 @@ public class PersonalLogMaResponse {
                         this.cd02 = cd02;
                     }
 
-                    public String getCd03() {
-                        return cd03;
+                    public String getCd00() {
+                        return cd00;
                     }
 
-                    public void setCd03(String cd03) {
-                        this.cd03 = cd03;
+                    public void setCd00(String cd00) {
+                        this.cd00 = cd00;
                     }
 
-                    public String getCd05() {
-                        return cd05;
+                    public List<Cd04Bean> getCd04() {
+                        return cd04;
                     }
 
-                    public void setCd05(String cd05) {
-                        this.cd05 = cd05;
+                    public void setCd04(List<Cd04Bean> cd04) {
+                        this.cd04 = cd04;
+                    }
+
+                    public static class Cd04Bean {
+                        /**
+                         * size : 18.69K
+                         * name : pic_uc_1488970950034.jpg
+                         * id : /v8AMgA4ADUANwAx
+                         * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx
+                         * type : 1
+                         */
+
+                        private String size;
+                        private String name;
+                        private String id;
+                        private String href;
+                        private String type;
+
+                        public String getSize() {
+                            return size;
+                        }
+
+                        public void setSize(String size) {
+                            this.size = size;
+                        }
+
+                        public String getName() {
+                            return name;
+                        }
+
+                        public void setName(String name) {
+                            this.name = name;
+                        }
+
+                        public String getId() {
+                            return id;
+                        }
+
+                        public void setId(String id) {
+                            this.id = id;
+                        }
+
+                        public String getHref() {
+                            return href;
+                        }
+
+                        public void setHref(String href) {
+                            this.href = href;
+                        }
+
+                        public String getType() {
+                            return type;
+                        }
+
+                        public void setType(String type) {
+                            this.type = type;
+                        }
                     }
                 }
             }
