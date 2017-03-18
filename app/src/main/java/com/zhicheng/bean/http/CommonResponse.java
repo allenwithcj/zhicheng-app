@@ -92,6 +92,7 @@ public class CommonResponse {
                  */
 
                 private int caseReportTotal;
+                private int noticeTotal;
                 private int gridReportTotal;
                 private int weekDoneTotal;
                 private int daiBanTotal;
@@ -103,6 +104,14 @@ public class CommonResponse {
 
                 public void setCaseReportTotal(int caseReportTotal) {
                     this.caseReportTotal = caseReportTotal;
+                }
+
+                public int getNoticeTotal() {
+                    return noticeTotal;
+                }
+
+                public void setNoticeTotal(int noticeTotal) {
+                    this.noticeTotal = noticeTotal;
                 }
 
                 public int getGridReportTotal() {

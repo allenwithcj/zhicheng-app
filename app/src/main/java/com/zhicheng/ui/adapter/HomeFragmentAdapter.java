@@ -103,8 +103,14 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                     }else {
                         ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.GONE);
                     }
+                    if(mainResponses.getIq().getQuery().getData().getNoticeTotal() != 0){
+                        ((ButtonGroupViewHolder) holder).fabNotice2.setText(""+mainResponses.getIq().getQuery().getData().getNoticeTotal());
+                    }else{
+                        ((ButtonGroupViewHolder) holder).fabNotice2.setVisibility(View.GONE);
+                    }
                 }else {
                     ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.GONE);
+                    ((ButtonGroupViewHolder) holder).fabNotice2.setVisibility(View.GONE);
                 }
                 ((ButtonGroupViewHolder) holder).Finished.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).FenLei.setOnClickListener(this);

@@ -69,6 +69,7 @@ public class OfficialRequest {
             private String perPageNums;
             private String orderType;
             private String requestType;
+            private String status;
 
             public String getOrderBy() {
                 return orderBy;
@@ -108,6 +109,14 @@ public class OfficialRequest {
 
             public void setRequestType(String requestType) {
                 this.requestType = requestType;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
             }
         }
     }

@@ -8,8 +8,9 @@ import java.util.List;
 
 public class PersonalLogMaResponse {
 
+
     /**
-     * iq : {"namespace":"PersonalLogMaResponse","query":{"prelogcon":{"prelogs":[{"cd05":"安监中心","cd03":"熊文文","cd04":[{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}],"cd01":"2017-03-17 20:51:09.0","cd02":"我所有者权益","cd00":"638290f8-0719-4d16-9cbc-bd7c6fe73dcf"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:36.0","cd02":"nxnxnx","cd00":"76b1a449-6282-4fb0-8efd-f69ab2380661"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:34.0","cd02":"jxjxj","cd00":"c25b6f6d-4c83-41c0-a2ec-78e6cdb22032"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:32.0","cd02":"nxnxn","cd00":"73f6da89-1bf0-4577-8a3f-ef427b3f4730"}],"allnum":4},"errorCode":"0","errorMessage":"成功"}}
+     * iq : {"namespace":"PersonalLogMaResponse","query":{"prelogcon":{"prelogs":[{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"481.95K","name":"magazine-unlock-05-2.3.529-bigpicture_05_32.jpg","id":"/v8AMgA4ADcANAA4","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA4","type":"1"}],"cd01":"2017-03-18 13:26:02.0","cd02":"检查检查","cd00":"3632b667-9f88-4157-a76f-1cb377f21b3a"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"15.01K","name":"IMG_1963056045_clip.jpg","id":"/v8AMgA4ADcANAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA2","type":"1"}],"cd01":"2017-03-18 13:21:28.0","cd02":"测试版","cd00":"8d8088e5-34c6-4f86-800f-2615f6acf842"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"3.02M","name":"IMG20170310165136.jpg","id":"/v8AMgA4ADcANAA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA1","type":"1"}],"cd01":"2017-03-18 13:20:54.0","cd02":"工作测试","cd00":"b873d4ca-f0b6-4dde-b2ab-1030a8b7e03d"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"7.59K","name":"pic_uc_1488970963898.jpg","id":"/v8AMgA4ADYANwA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADYANwA1","type":"1"}],"cd01":"2017-03-17 17:30:22.0","cd02":"xbnxn","cd00":"d1c945b8-71b9-49ce-a0d5-bad775d366ee"}],"allnum":4},"errorCode":"0","errorMessage":"成功"}}
      */
 
     private IqBean iq;
@@ -25,7 +26,7 @@ public class PersonalLogMaResponse {
     public static class IqBean {
         /**
          * namespace : PersonalLogMaResponse
-         * query : {"prelogcon":{"prelogs":[{"cd05":"安监中心","cd03":"熊文文","cd04":[{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}],"cd01":"2017-03-17 20:51:09.0","cd02":"我所有者权益","cd00":"638290f8-0719-4d16-9cbc-bd7c6fe73dcf"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:36.0","cd02":"nxnxnx","cd00":"76b1a449-6282-4fb0-8efd-f69ab2380661"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:34.0","cd02":"jxjxj","cd00":"c25b6f6d-4c83-41c0-a2ec-78e6cdb22032"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:32.0","cd02":"nxnxn","cd00":"73f6da89-1bf0-4577-8a3f-ef427b3f4730"}],"allnum":4},"errorCode":"0","errorMessage":"成功"}
+         * query : {"prelogcon":{"prelogs":[{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"481.95K","name":"magazine-unlock-05-2.3.529-bigpicture_05_32.jpg","id":"/v8AMgA4ADcANAA4","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA4","type":"1"}],"cd01":"2017-03-18 13:26:02.0","cd02":"检查检查","cd00":"3632b667-9f88-4157-a76f-1cb377f21b3a"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"15.01K","name":"IMG_1963056045_clip.jpg","id":"/v8AMgA4ADcANAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA2","type":"1"}],"cd01":"2017-03-18 13:21:28.0","cd02":"测试版","cd00":"8d8088e5-34c6-4f86-800f-2615f6acf842"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"3.02M","name":"IMG20170310165136.jpg","id":"/v8AMgA4ADcANAA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA1","type":"1"}],"cd01":"2017-03-18 13:20:54.0","cd02":"工作测试","cd00":"b873d4ca-f0b6-4dde-b2ab-1030a8b7e03d"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"7.59K","name":"pic_uc_1488970963898.jpg","id":"/v8AMgA4ADYANwA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADYANwA1","type":"1"}],"cd01":"2017-03-17 17:30:22.0","cd02":"xbnxn","cd00":"d1c945b8-71b9-49ce-a0d5-bad775d366ee"}],"allnum":4},"errorCode":"0","errorMessage":"成功"}
          */
 
         private String namespace;
@@ -49,7 +50,7 @@ public class PersonalLogMaResponse {
 
         public static class QueryBean {
             /**
-             * prelogcon : {"prelogs":[{"cd05":"安监中心","cd03":"熊文文","cd04":[{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}],"cd01":"2017-03-17 20:51:09.0","cd02":"我所有者权益","cd00":"638290f8-0719-4d16-9cbc-bd7c6fe73dcf"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:36.0","cd02":"nxnxnx","cd00":"76b1a449-6282-4fb0-8efd-f69ab2380661"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:34.0","cd02":"jxjxj","cd00":"c25b6f6d-4c83-41c0-a2ec-78e6cdb22032"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:32.0","cd02":"nxnxn","cd00":"73f6da89-1bf0-4577-8a3f-ef427b3f4730"}],"allnum":4}
+             * prelogcon : {"prelogs":[{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"481.95K","name":"magazine-unlock-05-2.3.529-bigpicture_05_32.jpg","id":"/v8AMgA4ADcANAA4","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA4","type":"1"}],"cd01":"2017-03-18 13:26:02.0","cd02":"检查检查","cd00":"3632b667-9f88-4157-a76f-1cb377f21b3a"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"15.01K","name":"IMG_1963056045_clip.jpg","id":"/v8AMgA4ADcANAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA2","type":"1"}],"cd01":"2017-03-18 13:21:28.0","cd02":"测试版","cd00":"8d8088e5-34c6-4f86-800f-2615f6acf842"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"3.02M","name":"IMG20170310165136.jpg","id":"/v8AMgA4ADcANAA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA1","type":"1"}],"cd01":"2017-03-18 13:20:54.0","cd02":"工作测试","cd00":"b873d4ca-f0b6-4dde-b2ab-1030a8b7e03d"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"7.59K","name":"pic_uc_1488970963898.jpg","id":"/v8AMgA4ADYANwA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADYANwA1","type":"1"}],"cd01":"2017-03-17 17:30:22.0","cd02":"xbnxn","cd00":"d1c945b8-71b9-49ce-a0d5-bad775d366ee"}],"allnum":4}
              * errorCode : 0
              * errorMessage : 成功
              */
@@ -84,7 +85,7 @@ public class PersonalLogMaResponse {
 
             public static class PrelogconBean {
                 /**
-                 * prelogs : [{"cd05":"安监中心","cd03":"熊文文","cd04":[{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}],"cd01":"2017-03-17 20:51:09.0","cd02":"我所有者权益","cd00":"638290f8-0719-4d16-9cbc-bd7c6fe73dcf"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:36.0","cd02":"nxnxnx","cd00":"76b1a449-6282-4fb0-8efd-f69ab2380661"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:34.0","cd02":"jxjxj","cd00":"c25b6f6d-4c83-41c0-a2ec-78e6cdb22032"},{"cd05":"安监中心","cd03":"熊文文","cd04":[],"cd01":"2017-03-13 14:46:32.0","cd02":"nxnxn","cd00":"73f6da89-1bf0-4577-8a3f-ef427b3f4730"}]
+                 * prelogs : [{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"481.95K","name":"magazine-unlock-05-2.3.529-bigpicture_05_32.jpg","id":"/v8AMgA4ADcANAA4","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA4","type":"1"}],"cd01":"2017-03-18 13:26:02.0","cd02":"检查检查","cd00":"3632b667-9f88-4157-a76f-1cb377f21b3a"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"15.01K","name":"IMG_1963056045_clip.jpg","id":"/v8AMgA4ADcANAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA2","type":"1"}],"cd01":"2017-03-18 13:21:28.0","cd02":"测试版","cd00":"8d8088e5-34c6-4f86-800f-2615f6acf842"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"3.02M","name":"IMG20170310165136.jpg","id":"/v8AMgA4ADcANAA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA1","type":"1"}],"cd01":"2017-03-18 13:20:54.0","cd02":"工作测试","cd00":"b873d4ca-f0b6-4dde-b2ab-1030a8b7e03d"},{"cd05":"钮店湾南片-第一网格","cd03":"李军军","cd04":[{"size":"7.59K","name":"pic_uc_1488970963898.jpg","id":"/v8AMgA4ADYANwA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADYANwA1","type":"1"}],"cd01":"2017-03-17 17:30:22.0","cd02":"xbnxn","cd00":"d1c945b8-71b9-49ce-a0d5-bad775d366ee"}]
                  * allnum : 4
                  */
 
@@ -109,12 +110,12 @@ public class PersonalLogMaResponse {
 
                 public static class PrelogsBean {
                     /**
-                     * cd05 : 安监中心
-                     * cd03 : 熊文文
-                     * cd04 : [{"size":"18.69K","name":"pic_uc_1488970950034.jpg","id":"/v8AMgA4ADUANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx","type":"1"}]
-                     * cd01 : 2017-03-17 20:51:09.0
-                     * cd02 : 我所有者权益
-                     * cd00 : 638290f8-0719-4d16-9cbc-bd7c6fe73dcf
+                     * cd05 : 钮店湾南片-第一网格
+                     * cd03 : 李军军
+                     * cd04 : [{"size":"481.95K","name":"magazine-unlock-05-2.3.529-bigpicture_05_32.jpg","id":"/v8AMgA4ADcANAA4","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA4","type":"1"}]
+                     * cd01 : 2017-03-18 13:26:02.0
+                     * cd02 : 检查检查
+                     * cd00 : 3632b667-9f88-4157-a76f-1cb377f21b3a
                      */
 
                     private String cd05;
@@ -174,10 +175,10 @@ public class PersonalLogMaResponse {
 
                     public static class Cd04Bean {
                         /**
-                         * size : 18.69K
-                         * name : pic_uc_1488970950034.jpg
-                         * id : /v8AMgA4ADUANwAx
-                         * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADUANwAx
+                         * size : 481.95K
+                         * name : magazine-unlock-05-2.3.529-bigpicture_05_32.jpg
+                         * id : /v8AMgA4ADcANAA4
+                         * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADcANAA4
                          * type : 1
                          */
 

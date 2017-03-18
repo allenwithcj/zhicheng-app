@@ -1,6 +1,8 @@
 package com.zhicheng.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import com.zhicheng.R;
 import com.zhicheng.api.presenter.impl.MainPresenterImpl;
 import com.zhicheng.api.view.MainView;
 import com.zhicheng.bean.http.CommonResponse;
+import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.HomeFragmentAdapter;
 
 import java.util.HashMap;
@@ -37,10 +40,32 @@ public class HomeFragment extends BaseFragment implements MainView,SwipeRefreshL
         return fragment;
     }
 
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            onRefresh();
+            mHandler.sendEmptyMessageDelayed(0, Constant.TIME);
+        }
+    };
+
     @Override
     public void onResume() {
         super.onResume();
-        onRefresh();
+        mHandler.sendEmptyMessage(0);
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeMessages(0);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeMessages(0);
     }
 
     @Override
@@ -61,9 +86,9 @@ public class HomeFragment extends BaseFragment implements MainView,SwipeRefreshL
 
     @Override
     protected void initData(boolean isSavedNull) {
-        if (isSavedNull){
-            onRefresh();
-        }
+//        if (isSavedNull){
+//            onRefresh();
+//        }
     }
 
     @Override
@@ -105,4 +130,10 @@ public class HomeFragment extends BaseFragment implements MainView,SwipeRefreshL
 //            parentActivity.isTouch(true);
         }
     }
+
+
+
+
+
+
 }

@@ -61,7 +61,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     private ImageView more;
 
 //    private DatabaseHelper mDataBase;
-    private int indexLast = 0;
+//    private int indexLast = 0;
     private String send_content;
     private String GUID;
 
@@ -82,7 +82,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     }
 
     private void refresh() {
-        start = 1;
         String strEntity = createObj(start);
         mWorkNodePresenter.loadWorkNodes(strEntity,start);
         start ++;
@@ -135,7 +134,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 
     @Override
     protected void initData() {
-        onRefresh();
         mInput.setImeOptions(EditorInfo.IME_ACTION_SEND);
         mInput.setImeActionLabel("发送",EditorInfo.IME_ACTION_SEND);
         mInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -161,7 +159,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                             GUID = UUID.randomUUID().toString();
                             send_content = mInput.getText().toString();
                             sendMessage(mImagePath,GUID,send_content);
-                            mRecyclerView.smoothScrollToPosition(0);
                         }else{
                             dialog.dismiss();
                             Toast.makeText(this,"工作日志图片不能为空", Toast.LENGTH_SHORT).show();
@@ -178,6 +175,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     @Override
     protected void onResume() {
         super.onResume();
+        onLoadMore();
 
     }
 
@@ -312,15 +310,18 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
             if(((CommonResponse)result).getIq().getQuery().getErrorCode() == 0){
                 mInput.setText("");
                 mImagePath.clear();
-                mDealAdapter.notifyDataSetChanged();
+//                mDealAdapter.notifyDataSetChanged();
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mInput.getWindowToken(),0);
                 showMessage("发送日志成功");
+                mRecyclerView.smoothScrollToPosition(0);
                 if (moreTools.getVisibility() == View.VISIBLE){
 //                                Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_out);
 //                                moreTools.startAnimation(animation);
                     moreTools.setVisibility(View.GONE);
 
                 }
-                onRefresh();
+                refresh();
 //                mDataBase.setWorkNote(news);
             }else{
                 showMessage("发送日志失败");
@@ -332,7 +333,11 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 
     @Override
     public void addData(Object result) {
-
+        //查询工作日志返回
+        if(((PersonalLogMaResponse)result).getIq().getQuery().getErrorCode().equals("0")){
+            List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogList = ((PersonalLogMaResponse)result).getIq().getQuery().getPrelogcon().getPrelogs();
+            mWorkNoteAdapter.addDataList(prelogList);
+        }
     }
 
     //新增
@@ -441,6 +446,13 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.img_content);
         }
+    }
+
+    private void onLoadMore() {
+        start = 1;
+        String strEntity = createObj(start);
+        mWorkNodePresenter.loadWorkNodes(strEntity,start);
+        start++;
     }
 
 }

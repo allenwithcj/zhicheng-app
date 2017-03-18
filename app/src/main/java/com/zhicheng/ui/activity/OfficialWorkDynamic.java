@@ -317,7 +317,7 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView,Sw
                                 .gridColumns(4) // 照片列表显示列数
                                 .showCamera(true)
                                 .multi()
-                                .maxPickSize(3) // 最大选择数
+                                .maxPickSize(9) // 最大选择数
                                 .selectedPaths(mImagePath) // 已选择的照片地址
                                 .start(OfficialWorkDynamic.this); // 从Fragment、Activity中启动
                     });

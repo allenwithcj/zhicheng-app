@@ -1,5 +1,6 @@
 package com.zhicheng.ui.adapter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,13 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.zhicheng.R;
 import com.zhicheng.bean.http.PersonalLogMaResponse;
 import com.zhicheng.common.URL;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 
 /**
@@ -41,15 +42,11 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
         this.notifyDataSetChanged();
     }
 
-//    public void insertData(List<WorkNote> wn){
-//        this.NormalContent.addAll(wn);
-//        this.notifyItemRangeInserted(getItemCount()-1,wn.size());
-//    }
-//
-//    public void addData(WorkNote time){
-//        this.NormalContent.addFirst(time);
-//        this.notifyItemInserted(0);
-//    }
+    public void addDataList(List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogsBeen) {
+        int page = prelogsBeen.size();
+        this.prelogsBeen.addAll(prelogsBeen);
+        this.notifyItemRangeInserted(page, prelogsBeen.size());
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -69,17 +66,11 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof WorkNoteViewHolder){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
             String sendTime = prelogsBeen.get(position).getCd01();
-//            String str = simpleDateFormat.format(sendTime.substring(0,sendTime.length()-2));
-            ((WorkNoteViewHolder) holder).mTextView.setText(sendTime);
+            ((WorkNoteViewHolder) holder).mTextView.setText(sendTime.substring(0,sendTime.length()-2));
             ((WorkNoteViewHolder) holder).mMiniContent.setText(prelogsBeen.get(position).getCd02());
-            //图片显示,可判断如果图片数量为0，就设置mRecycler为GONE
             if(prelogsBeen.get(position).getCd04() != null){
-                ((WorkNoteViewHolder) holder).mRecyclerView.setAdapter(mImageAdapter);
                 mImageAdapter.setImagePath(prelogsBeen.get(position).getCd04());
-            }else{
-                ((WorkNoteViewHolder) holder).mRecyclerView.setVisibility(View.GONE);
             }
         }
     }
@@ -103,7 +94,7 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private static class WorkNoteViewHolder extends RecyclerView.ViewHolder {
+    private class WorkNoteViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTextView;
         private TextView mMiniContent;
@@ -114,11 +105,13 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
             mTextView = (TextView) itemView.findViewById(R.id.NoteTime);
             mMiniContent = (TextView) itemView.findViewById(R.id.mini_content);
             mRecyclerView = (RecyclerView) itemView.findViewById(R.id.imgs);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.HORIZONTAL,false));
+            mRecyclerView.setLayoutManager(new LinearLayoutManager
+                    (itemView.getContext(),LinearLayoutManager.HORIZONTAL,false));
+            mRecyclerView.setAdapter(mImageAdapter);
         }
     }
     //图片adapter
-    private class ImageAdapter extends RecyclerView.Adapter{
+    private class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder>{
 
         private List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean.Cd04Bean> mImagePath;
 
@@ -129,32 +122,56 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ImageViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view,parent,false));
+        public ImageAdapter.ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view,parent,false);
+            return new ImageViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-            if (holder instanceof ImageViewHolder){
-                Glide.with(holder.itemView.getContext())
-                        .load(URL.HOST_URL_SERVER_ZHICHENG+mImagePath.get(position).getHref())//设置数据
-                        .placeholder(R.drawable.glide_loading)
-                        .error(R.drawable.glide_failed)
-                        .thumbnail((float) 0.3)
-                        .into(((ImageViewHolder) holder).mImageView);
-            }
+        public void onViewRecycled(ImageViewHolder holder) {
+            super.onViewRecycled(holder);
         }
+
+        @Override
+        public void onBindViewHolder(ImageViewHolder holder, int position) {
+            String mURL = URL.HOST_URL_SERVER_ZHICHENG + mImagePath.get(position).getHref();
+            holder.mImageView.setTag(mURL);
+            SimpleTarget target = new SimpleTarget<Bitmap>() {
+
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    if(mURL.equals(holder.mImageView.getTag())){
+                        holder.mImageView.setImageBitmap(resource);
+                    }
+                }
+            };
+
+            Glide.with(holder.itemView.getContext())
+                    .load(mURL)//设置数据
+                    .asBitmap()
+                    .placeholder(R.drawable.glide_loading)
+                    .error(R.drawable.glide_failed)
+                    .thumbnail((float) 0.3)
+                    .into(target);
+
+
+
+        }
+
 
         @Override
         public int getItemCount() {
-            return mImagePath.size();
+            if(mImagePath != null){
+                return mImagePath.size();
+            }
+            return 0;
         }
 
-        private class ImageViewHolder extends RecyclerView.ViewHolder {
+        public class ImageViewHolder extends RecyclerView.ViewHolder {
 
             private ImageView mImageView;
 
-            ImageViewHolder(View itemView) {
+            public ImageViewHolder(View itemView) {
                 super(itemView);
                 mImageView = (ImageView) itemView.findViewById(R.id.img_content);
             }
