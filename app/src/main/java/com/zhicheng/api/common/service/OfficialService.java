@@ -61,4 +61,9 @@ public interface OfficialService {
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")
     Observable<Response<NoticeResponse>> getNotice(@Field("json") String rBody);
+    //通知详情
+    @FormUrlEncoded
+    @POST("/servlet/mobileServlet")
+    Observable<Response<NoticeResponse>> queryNewsDetail(@Field("json") String rBody);
+
 }

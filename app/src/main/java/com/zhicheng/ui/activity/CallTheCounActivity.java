@@ -13,9 +13,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.api.ApiCompleteListener;
-import com.zhicheng.api.presenter.impl.NewsDetailPresenterImpl;
 import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
-import com.zhicheng.api.view.NewsDetailView;
 import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.NoticeResponse;
@@ -28,7 +26,7 @@ import java.util.List;
  * Created by Donson on 2017/1/22.
  */
 
-public class CallTheCounActivity  extends BaseActivity implements OfficialView
+public class CallTheCounActivity extends BaseActivity implements OfficialView
         ,SwipeRefreshLayout.OnRefreshListener,ApiCompleteListener{
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -165,34 +163,12 @@ public class CallTheCounActivity  extends BaseActivity implements OfficialView
                         NewsDetailsRequest.IqBean.QueryBean qb = new NewsDetailsRequest.IqBean.QueryBean();
                         iq.setNamespace("NewsDetailsRequest");
                         qb.setId(data.get(position).get(0).getValue());
-                        qb.setMsgId("-1");
+                        qb.setMsgId("");
                         qb.setRequestType("1");
                         iq.setQuery(qb);
                         newsDetailsRequest.setIq(iq);
                         Gson gson = new Gson();
-                        NewsDetailView newsDetailView = new NewsDetailView() {
-                            @Override
-                            public void showMessage(String msg) {
-
-                            }
-
-                            @Override
-                            public void showProgress() {
-
-                            }
-
-                            @Override
-                            public void hideProgress() {
-
-                            }
-
-                            @Override
-                            public void refreshData(Object result) {
-
-                            }
-                        };
-                        NewsDetailPresenterImpl newsDetailPresenter = new NewsDetailPresenterImpl(newsDetailView);
-//                        newsDetailPresenter.queryNewsDetail(gson.toJson(newsDetailsRequest),this);
+                        mOfficialPresenterImpl.queryMewsDetail(gson.toJson(newsDetailsRequest));
 
                     });
                 }

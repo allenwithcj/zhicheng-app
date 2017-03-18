@@ -25,4 +25,6 @@ public interface OfficialModel {
     void cancelLoading();
 
     void loadNotice(String n, ApiCompleteListener listener);//通知公告
+    //查询通知公告详情
+    void queryNewsDetail(String j, ApiCompleteListener listener);
 }

@@ -23,4 +23,6 @@ public interface OfficialPresenter {
     void cancelLoading();
 
     void LoadNotice(String n);
+    //查询通知公告详情
+    void queryMewsDetail(String js);
 }
