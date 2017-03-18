@@ -6,6 +6,7 @@ import com.zhicheng.api.ApiCompleteListener;
 import com.zhicheng.api.model.impl.OfficialModelImpl;
 import com.zhicheng.api.presenter.OfficialPresenter;
 import com.zhicheng.api.view.OfficialView;
+import com.zhicheng.bean.http.AnnoucementDetailsResponse;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.NoticeResponse;
@@ -128,6 +129,9 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
             mOfficialView.refreshData(result);
         }
         if (result instanceof NoticeResponse){
+            mOfficialView.refreshData(result);
+        }
+        if(result instanceof AnnoucementDetailsResponse){
             mOfficialView.refreshData(result);
         }
         mOfficialView.hideProgress();

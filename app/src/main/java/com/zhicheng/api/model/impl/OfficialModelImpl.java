@@ -10,6 +10,7 @@ import com.zhicheng.api.common.ServiceFactory;
 import com.zhicheng.api.common.service.MainService;
 import com.zhicheng.api.common.service.OfficialService;
 import com.zhicheng.api.model.OfficialModel;
+import com.zhicheng.bean.http.AnnoucementDetailsResponse;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.IneedResponse;
@@ -360,7 +361,7 @@ public class OfficialModelImpl implements OfficialModel{
         mOfficialService.queryNewsDetail(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<NoticeResponse>>() {
+                .subscribe(new Subscriber<Response<AnnoucementDetailsResponse>>() {
                     @Override
                     public void onCompleted() {
 
@@ -377,11 +378,11 @@ public class OfficialModelImpl implements OfficialModel{
                     }
 
                     @Override
-                    public void onNext(Response<NoticeResponse> noticeResponseResponse) {
-                        if (noticeResponseResponse.isSuccessful()){
-                            listener.onComplected(noticeResponseResponse.body());
+                    public void onNext(Response<AnnoucementDetailsResponse> mAnnoucementDetailsResponseResponse) {
+                        if (mAnnoucementDetailsResponseResponse.isSuccessful()){
+                            listener.onComplected(mAnnoucementDetailsResponseResponse.body());
                         }else {
-                            listener.onFailed(new BaseResponse(noticeResponseResponse.code(),noticeResponseResponse.message()));
+                            listener.onFailed(new BaseResponse(mAnnoucementDetailsResponseResponse.code(),mAnnoucementDetailsResponseResponse.message()));
                         }
                     }
                 });

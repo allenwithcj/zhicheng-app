@@ -1,5 +1,6 @@
 package com.zhicheng.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +18,8 @@ import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.NoticeResponse;
-import com.zhicheng.bean.json.NewsDetailsRequest;
 import com.zhicheng.bean.json.OfficialRequest;
+import com.zhicheng.utils.common.UIUtils;
 
 import java.util.List;
 
@@ -124,7 +125,7 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
 
     private class NoticeAdapter extends RecyclerView.Adapter{
         private List<List<NoticeResponse.IqBean.QueryBean.TableBean.TableRowsBean>> data;
-        private String [] tag={"标题:","送办人:","时间:","内容:"};
+        private String [] tag={"标题:","送办人:","时间:"};
 
         public NoticeAdapter() {
 
@@ -153,22 +154,12 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
             if (holder instanceof NoticeViewHolder){
                 if (data!=null){
                     ((NoticeViewHolder) holder).notice_title.setText(tag[0]+data.get(position).get(4).getValue());
-                    ((NoticeViewHolder) holder).notice_sendname.setText(tag[1]+data.get(position).get(5).getValue());
                     ((NoticeViewHolder) holder).notice_time.setText(tag[2]+data.get(position).get(6).getValue());
-                    ((NoticeViewHolder) holder).notice_content.setText(tag[3]+data.get(position).get(1).getValue());
                     ((NoticeViewHolder) holder).noSuc.setOnClickListener(view -> {
                         //查询公告附件
-                        NewsDetailsRequest newsDetailsRequest = new NewsDetailsRequest();
-                        NewsDetailsRequest.IqBean iq = new NewsDetailsRequest.IqBean();
-                        NewsDetailsRequest.IqBean.QueryBean qb = new NewsDetailsRequest.IqBean.QueryBean();
-                        iq.setNamespace("NewsDetailsRequest");
-                        qb.setId(data.get(position).get(0).getValue());
-                        qb.setMsgId("");
-                        qb.setRequestType("1");
-                        iq.setQuery(qb);
-                        newsDetailsRequest.setIq(iq);
-                        Gson gson = new Gson();
-                        mOfficialPresenterImpl.queryMewsDetail(gson.toJson(newsDetailsRequest));
+                        Intent intent = new Intent(CallTheCounActivity.this,CallTheCounDetailActivity.class);
+                        intent.putExtra("id",data.get(position).get(0).getValue());
+                        UIUtils.startActivity(intent);
 
                     });
                 }
@@ -187,17 +178,13 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
     private class NoticeViewHolder extends RecyclerView.ViewHolder{
 
         private TextView notice_title;
-        private TextView notice_sendname;
         private TextView notice_time;
-        private TextView notice_content;
         private LinearLayout noSuc;
 
         public NoticeViewHolder(View itemView) {
             super(itemView);
             notice_title=(TextView)itemView.findViewById(R.id.notice_title);
-            notice_sendname=(TextView)itemView.findViewById(R.id.notice_sendname);
             notice_time=(TextView)itemView.findViewById(R.id.notice_time);
-            notice_content=(TextView)itemView.findViewById(R.id.notice_content);
             noSuc = (LinearLayout)itemView.findViewById(R.id.noSuc);
         }
     }

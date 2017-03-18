@@ -110,9 +110,12 @@ public class LoopViewPager extends FrameLayout {
     //设置图片数据
     public void setImages(List<View> images){
         int[] imgs = {
-                R.drawable.banner_defult,
-                R.drawable.banner2,
-                R.drawable.banner3
+//                R.drawable.banner_defult,
+//                R.drawable.banner2,
+//                R.drawable.banner3
+                R.drawable.banner_1,
+                R.drawable.banner_2,
+                R.drawable.banner_3
         };
         for (int i=0;i<DataNum;i++){
             View view = new ImageView(getContext());

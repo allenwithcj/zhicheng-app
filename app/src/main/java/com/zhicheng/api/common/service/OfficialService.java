@@ -1,5 +1,6 @@
 package com.zhicheng.api.common.service;
 
+import com.zhicheng.bean.http.AnnoucementDetailsResponse;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.NoticeResponse;
 import com.zhicheng.bean.http.OfficialDealResponse;
@@ -64,6 +65,6 @@ public interface OfficialService {
     //通知详情
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")
-    Observable<Response<NoticeResponse>> queryNewsDetail(@Field("json") String rBody);
+    Observable<Response<AnnoucementDetailsResponse>> queryNewsDetail(@Field("json") String rBody);
 
 }
