@@ -29,7 +29,7 @@
                 android:text="@string/NoFinish" />
 
             <TextView
-                android:id="@+id/fabNotice"
+                android:id="@+id/fabNotice_nofinish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|end"
@@ -42,18 +42,33 @@
                 android:gravity="center"
                 android:textSize="@dimen/badge_text_size" />
         </FrameLayout>
-
-        <TextView
-            android:id="@+id/Finished"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1">
+        <TextView
+            android:id="@+id/Finished"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
             android:padding="8dp"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_finished"
             android:text="@string/Finished" />
-
+            <TextView
+                android:id="@+id/fabNotice_finished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginRight="@dimen/textView_padding"
+                android:minWidth="19dp"
+                android:maxHeight="19dp"
+                android:padding="2dp"
+                android:background="@drawable/i_show_deal"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/badge_text_size" />
+        </FrameLayout>
         <TextView
             android:id="@+id/FenLei"
             android:layout_width="0dp"
@@ -82,17 +97,33 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/work"
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1">
+        <TextView
+            android:id="@+id/work"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_weight="1"
             android:padding="8dp"
             android:drawablePadding="10dp"
             android:drawableTop="@mipmap/ic_fenlei"
             android:text="@string/work" />
+            <TextView
+                android:id="@+id/fabNotice_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginRight="@dimen/textView_padding"
+                android:minWidth="19dp"
+                android:maxHeight="19dp"
+                android:padding="2dp"
+                android:background="@drawable/i_show_deal"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:textSize="@dimen/badge_text_size" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/Experiment"
@@ -118,7 +149,7 @@
             android:drawableTop="@mipmap/ic_callthecon"
             android:text="@string/CallTheCoun" />
             <TextView
-                android:id="@+id/fabNotice2"
+                android:id="@+id/fabNotice_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|end"

@@ -100,18 +100,18 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
             }else if (holder instanceof ButtonGroupViewHolder){
                 if (mainResponses.getIq().getQuery().getData() != null){
                     if (mainResponses.getIq().getQuery().getData().getDaiBanTotal() != 0){
-                        ((ButtonGroupViewHolder) holder).fabNotice.setText(""+mainResponses.getIq().getQuery().getData().getDaiBanTotal());
+                        ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setText(""+mainResponses.getIq().getQuery().getData().getDaiBanTotal());
                     }else {
-                        ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.GONE);
+                        ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.GONE);
                     }
                     if(mainResponses.getIq().getQuery().getData().getNoticeTotal() != 0){
-                        ((ButtonGroupViewHolder) holder).fabNotice2.setText(""+mainResponses.getIq().getQuery().getData().getNoticeTotal());
+                        ((ButtonGroupViewHolder) holder).fabNotice_notice.setText(""+mainResponses.getIq().getQuery().getData().getNoticeTotal());
                     }else{
-                        ((ButtonGroupViewHolder) holder).fabNotice2.setVisibility(View.GONE);
+                        ((ButtonGroupViewHolder) holder).fabNotice_notice.setVisibility(View.GONE);
                     }
                 }else {
-                    ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.GONE);
-                    ((ButtonGroupViewHolder) holder).fabNotice2.setVisibility(View.GONE);
+                    ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.GONE);
+                    ((ButtonGroupViewHolder) holder).fabNotice_notice.setVisibility(View.GONE);
                 }
                 ((ButtonGroupViewHolder) holder).noFinish.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).Finished.setOnClickListener(this);
@@ -203,29 +203,34 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
     class ButtonGroupViewHolder extends RecyclerView.ViewHolder {
 
         private TextView noFinish;
-        private TextView fabNotice;
+        private TextView fabNotice_nofinish;
         private TextView Finished;
         private TextView FenLei;
         private TextView GridDataBase;
         private TextView work;
         private TextView Experiment;
         private TextView CallTheCoun;
-        private TextView fabNotice2;
+        private TextView fabNotice_finished;
         private TextView workNote;
+        private TextView fabNotice_work;
+        private TextView fabNotice_notice;
 
 
         public ButtonGroupViewHolder(View itemView) {
             super(itemView);
             noFinish = (TextView) itemView.findViewById(R.id.noFinish);
-            fabNotice = (TextView) itemView.findViewById(R.id.fabNotice);
+            fabNotice_nofinish = (TextView) itemView.findViewById(R.id.fabNotice_nofinish);
             Finished = (TextView) itemView.findViewById(R.id.Finished);
             FenLei = (TextView) itemView.findViewById(R.id.FenLei);
             GridDataBase = (TextView) itemView.findViewById(R.id.GridDataBase);
             work = (TextView) itemView.findViewById(R.id.work);
             Experiment = (TextView) itemView.findViewById(R.id.Experiment);
             CallTheCoun = (TextView) itemView.findViewById(R.id.CallTheCoun);
-            fabNotice2 = (TextView) itemView.findViewById(R.id.fabNotice2);
+            fabNotice_finished = (TextView) itemView.findViewById(R.id.fabNotice_finished);
             workNote = (TextView) itemView.findViewById(R.id.workNote);
+            fabNotice_notice = (TextView)itemView.findViewById(R.id.fabNotice_notice);
+            fabNotice_notice = (TextView)itemView.findViewById(R.id.fabNotice_notice);
+
         }
     }
 
