@@ -1,7 +1,7 @@
-package com.zhicheng.ui.activity;
+package com.zhicheng.ui.fragment;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhicheng.R;
@@ -17,54 +18,57 @@ import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.json.OfficialRequest;
+import com.zhicheng.ui.activity.OfficialNoFinishDetails;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.util.List;
 
 /**
- * Created by Donson on 2017/1/4.
+ * Created by Donson on 2017/1/15.
  */
 
-public class Official extends BaseActivity implements OfficialView,SwipeRefreshLayout.OnRefreshListener{
-
+public class MyNewsFragment extends BaseFragment implements OfficialView,SwipeRefreshLayout.OnRefreshListener{
     private int start;
-
-
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private OfficialPresenterImpl mOfficialPresenterImpl;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private NoFinishAdapter mNoFinishAdapter;
 
+    public static MyNewsFragment newInstance(){
+        Bundle args = new Bundle();
+        MyNewsFragment fragment = new MyNewsFragment();
+        return fragment;
+    }
+
+    @Override
+    protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mRootView = inflater.inflate(R.layout.activity_my_news,container,false);
+    }
+
     @Override
     protected void initEvents() {
-        setContentView(R.layout.activity_main_official);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
         mOfficialPresenterImpl = new OfficialPresenterImpl(this);
-        mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
+        mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
         mNoFinishAdapter = new NoFinishAdapter();
-        mLinearLayoutManager = new LinearLayoutManager(this);
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         mRecyclerView.setAdapter(mNoFinishAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
     }
 
-    @Override
-    protected void initData() {
-        onRefresh();
-    }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         onRefresh();
     }
 
     @Override
     public void showMessage(String msg) {
-        Snackbar.make(mToolbar,msg,Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(UIUtils.getContext(),msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -78,15 +82,14 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
     }
 
     @Override
+    protected void initData(boolean isSavedNull) {
+        onRefresh();
+    }
+
+    @Override
     public void refreshData(Object result) {
         if (result instanceof OfficialResponse){
             mNoFinishAdapter.setDataList(((OfficialResponse) result).getIq().getQuery().getTable());
-            int num = ((OfficialResponse) result).getIq().getQuery().getTotalNums();
-            if (num != 0){
-                mToolbar.setTitle("待办事项("+num+")");
-            }else {
-                mToolbar.setTitle("待办事项(0)");
-            }
         }
     }
 
@@ -131,7 +134,6 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
 
     private class NoFinishAdapter extends RecyclerView.Adapter{
 
-//        private OfficialResponse.IqBean.QueryBean.TableBean data;
         private List<List<OfficialResponse.IqBean.QueryBean.TableBean.TableRowsBean>> data;
         private String[] tag = {"编号:","描述:","发起时间:"};
 
@@ -152,7 +154,7 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(Official.this).inflate(R.layout.activity_home_nofinsh,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_nofinsh,parent,false);
             return new noFinishViewHolder(view);
         }
 
@@ -160,17 +162,13 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof noFinishViewHolder){
                 if (data != null){
-//                    Glide.with(Official.this)
-//                            .load("http://219.131.197.178:9904/"+data.get(position).get(5).getValue())
-//                            .thumbnail((float) 0.7)
-//                            .into(((noFinishViewHolder) holder).photo);
                     ((noFinishViewHolder) holder).NumberId.setText(tag[0]+data.get(position).get(1).getValue());
                     ((noFinishViewHolder) holder).desc.setText(tag[1]+data.get(position).get(4).getValue());
                     ((noFinishViewHolder) holder).deal.setText(tag[2]+data.get(position).get(3).getValue());
                     ((noFinishViewHolder) holder).noSuc.setOnClickListener(v -> {
                         Intent intent = new Intent(UIUtils.getContext(),OfficialNoFinishDetails.class);
                         intent.putExtra("detailId",data.get(position).get(0).getValue());
-                        intent.putExtra("type","nofinish");
+                        intent.putExtra("type","news");
                         UIUtils.startActivity(intent);
                     });
                 }
@@ -188,7 +186,6 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
         private class noFinishViewHolder extends RecyclerView.ViewHolder {
 
             private RelativeLayout noSuc;
-//            private ImageView photo;
             private TextView NumberId;
             private TextView desc;
             private TextView deal;
@@ -196,7 +193,6 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
             public noFinishViewHolder(View itemView) {
                 super(itemView);
                 noSuc = (RelativeLayout) itemView.findViewById(R.id.noSuc);
-//                photo = (ImageView) itemView.findViewById(R.id.photo);
                 NumberId = (TextView) itemView.findViewById(R.id.NumberId);
                 desc = (TextView) itemView.findViewById(R.id.desc);
                 deal = (TextView) itemView.findViewById(R.id.deal);
@@ -204,10 +200,8 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
         }
     }
 
-    public class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {
+    class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {
         private int lastVisibleItem;
-//        private int mScrollThreshold = DensityUtils.dp2px(Official.this, 1);
-
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
@@ -219,7 +213,6 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-
             lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
         }
     }

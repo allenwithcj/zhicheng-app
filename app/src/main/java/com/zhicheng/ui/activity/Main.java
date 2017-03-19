@@ -17,7 +17,7 @@ import com.library.NoTouchBottomButton;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.ui.fragment.BaseFragment;
-import com.zhicheng.ui.fragment.ContactFragment;
+import com.zhicheng.ui.fragment.MyNewsFragment;
 import com.zhicheng.ui.fragment.CurrentMapFragment;
 import com.zhicheng.ui.fragment.HomeFragment;
 import com.zhicheng.ui.fragment.MainFragment;
@@ -33,9 +33,8 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
     private FragmentManager mFragmentManager = getSupportFragmentManager();
     private HomeFragment mHomeFragment;
     private CurrentMapFragment mCurrentMapFragment;
-    private ContactFragment mContactFragment;
+    private MyNewsFragment mMyNewsFragment;
     private MainFragment mMainFragment;
-    //popWindow
     private PopupWindow mPopupWindow;
 
     @Override
@@ -60,7 +59,7 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
                 .addItem(new BottomNavigationItem(R.drawable.ic_navigation_home,"首页"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_navigation_map,"地图"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_navigation_report,"爆料"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_contact,"通讯录"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_contact,"消息"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_navigation_info,"我的"))
                 .setFirstSelectedPosition(0)
                 .initialise();
@@ -93,8 +92,8 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
         if (mCurrentMapFragment != null){
             ft.hide(mCurrentMapFragment);
         }
-        if (mContactFragment != null){
-            ft.hide(mContactFragment);
+        if (mMyNewsFragment != null){
+            ft.hide(mMyNewsFragment);
         }
         if (mMainFragment != null){
             ft.hide(mMainFragment);
@@ -190,11 +189,11 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
                 startActivityForResult(intent,0);
                 break;
             case 3:
-                if (mContactFragment == null){
-                    mContactFragment = ContactFragment.newInstance();
-                    ft.add(R.id.main_content,mContactFragment);
+                if (mMyNewsFragment == null){
+                    mMyNewsFragment = MyNewsFragment.newInstance();
+                    ft.add(R.id.main_content, mMyNewsFragment);
                 }else {
-                    ft.show(mContactFragment);
+                    ft.show(mMyNewsFragment);
                 }
                 break;
             case 4:

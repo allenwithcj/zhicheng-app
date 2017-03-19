@@ -1,7 +1,6 @@
 package com.zhicheng.ui.adapter;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhicheng.R;
+import com.zhicheng.ui.activity.ContactActivity;
 import com.zhicheng.ui.activity.OfficialSended;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -47,8 +47,10 @@ public class InfoAdapter extends RecyclerView.Adapter {
         if (holder instanceof InfoHeadViewHolder){
             if (position == 0){
                 ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_news));
-                ((InfoHeadViewHolder) holder).mTextViewHead.setText("我的消息");
-                ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(v -> Snackbar.make(v,"我的消息",Snackbar.LENGTH_SHORT).show());
+                ((InfoHeadViewHolder) holder).mTextViewHead.setText("通讯录");
+                ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(view -> {
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(), ContactActivity.class));
+                });
             }else{
                 ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_night_mode));
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("夜间模式");

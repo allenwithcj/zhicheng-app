@@ -172,6 +172,8 @@
         <activity android:name=".ui.activity.ContactDetailActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".ui.activity.CallTheCounDetailActivity"
+        android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity android:name=".ui.activity.ContactActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
     </application>
 

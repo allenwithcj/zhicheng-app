@@ -1,4 +1,4 @@
-package com.zhicheng.ui.fragment;
+package com.zhicheng.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,9 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -20,7 +19,6 @@ import com.zhicheng.api.view.ContactView;
 import com.zhicheng.bean.Contacts;
 import com.zhicheng.bean.http.AddressBookResponse;
 import com.zhicheng.bean.json.AddressBookRequest;
-import com.zhicheng.ui.activity.ContactMultilevelActivity;
 import com.zhicheng.ui.adapter.ContactAdapter;
 import com.zhicheng.utils.ClearEditText;
 import com.zhicheng.utils.OnRecyclerViewListener;
@@ -38,7 +36,7 @@ import java.util.List;
  * Created by Donson on 2017/1/15.
  */
 
-public class ContactFragment extends BaseFragment implements ContactView,OnRecyclerViewListener,SwipeRefreshLayout.OnRefreshListener{
+public class ContactActivity extends BaseActivity implements ContactView,OnRecyclerViewListener,SwipeRefreshLayout.OnRefreshListener{
     private int start;
 
     private SwipeRefreshLayout swipeRefresh;
@@ -52,37 +50,29 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
     private LinearLayoutManager mLinearLayoutManager;
     private List<Contacts> contactsList;
 
-    public static ContactFragment newInstance(){
-        ContactFragment fragment = new ContactFragment();
-
-        return fragment;
-    }
-
-    @Override
-    protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.activity_main_contact,container,false);
-    }
-
     @Override
     protected void initEvents() {
+        setContentView(R.layout.activity_main_contact);
         mContactPresenterImpl = new ContactPresenterImpl(this);
-        swipeRefresh = (SwipeRefreshLayout)mRootView.findViewById(R.id.swipeRefresh);
-        mRecyclerView = (RecyclerView)mRootView.findViewById(R.id.mRecyclerview);
-        mSideBar = (SideBar)mRootView.findViewById(R.id.sideBar);
-        mClearEditText = (ClearEditText)mRootView.findViewById(R.id.mClearEditText);
-        touch_anno = (TextView)mRootView.findViewById(R.id.touch_anno);
-        mNoResult = (TextView)mRootView.findViewById(R.id.noResult);
+        swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefresh);
+        mRecyclerView = (RecyclerView)findViewById(R.id.mRecyclerview);
+        mSideBar = (SideBar)findViewById(R.id.sideBar);
+        mClearEditText = (ClearEditText)findViewById(R.id.mClearEditText);
+        touch_anno = (TextView)findViewById(R.id.touch_anno);
+        mNoResult = (TextView)findViewById(R.id.noResult);
         mSideBar.setmTextDialog(touch_anno);
 
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new ContactAdapter();
-        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.addItemDecoration(new StickyRecyclerHeadersDecoration(mAdapter));
         mAdapter.setOnRecyclerViewListener(this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         swipeRefresh.setOnRefreshListener(this);
+        mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+
 
         mSideBar.setOnTouchingLetterChangedListener(new OnTouchingLetterChangedListener() {
             @Override
@@ -114,6 +104,11 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
 
     }
 
+    @Override
+    protected void initData() {
+        onRefresh();
+    }
+
     private void mFilterData(String s) {
         List<Contacts> mSortContactsList = new ArrayList<>();
         if(s.isEmpty()){
@@ -141,13 +136,14 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
     }
 
     @Override
-    protected void initData(boolean isSavedNull) {
-        onRefresh();
+    public void showMessage(String msg) {
+
     }
 
     @Override
-    public void showMessage(String msg) {
-
+    public boolean onCreateOptionsMenu(Menu menu) {
+        mToolbar.setTitle("通讯录");
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -200,7 +196,7 @@ public class ContactFragment extends BaseFragment implements ContactView,OnRecyc
     @Override
     public void onItemClick(int position) {
         if(!contactsList.get(position).getType().equals("1")){
-            Intent intent = new Intent(getActivity(), ContactMultilevelActivity.class);
+            Intent intent = new Intent(this, ContactMultilevelActivity.class);
             Bundle bundle = new Bundle();
             bundle.putSerializable("contacts",contactsList.get(position));
             intent.putExtras(bundle);

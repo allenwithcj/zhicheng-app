@@ -62,10 +62,12 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
 
     private TextView mBtn;
     private OfficialDetailResponse OfficialDetail;
+    private String type;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_selectimg);
+        type = getIntent().getStringExtra("type");
         parentView = (ViewGroup) findViewById(android.R.id.content).getRootView();
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -106,7 +108,10 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
 
     @Override
     protected int getMenuID() {
-        return R.menu.official_detail;
+        if(type.equals("nofinsh")){
+            return R.menu.official_detail;
+        }
+        return super.getMenuID();
     }
 
     @Override
