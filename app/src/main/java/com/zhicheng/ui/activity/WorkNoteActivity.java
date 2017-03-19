@@ -60,8 +60,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     private ImageView emoji;
     private ImageView more;
 
-//    private DatabaseHelper mDataBase;
-//    private int indexLast = 0;
     private String send_content;
     private String GUID;
 
@@ -127,7 +125,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         mRecyclerView.setLayoutManager(mLLM);
         mWorkNoteAdapter = new WorkNoteAdapter();
         mRecyclerView.setAdapter(mWorkNoteAdapter);
-//        mDataBase = new DatabaseHelper();
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
     }
@@ -231,103 +228,25 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
             //查询工作日志返回
             if(((PersonalLogMaResponse)result).getIq().getQuery().getErrorCode().equals("0")){
                 List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogList = ((PersonalLogMaResponse)result).getIq().getQuery().getPrelogcon().getPrelogs();
-//                List<WorkNote> workNotes = new ArrayList<>();
-//                for(PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean prelog : prelogList){
-//                    WorkNote news = new WorkNote();
-//                    news.setId(mDataBase.generateNewPrimaryKey());
-//                    news.setuID(prelog.getCd00());
-//                    try {
-//                        String sendTime = prelog.getCd01();
-//                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
-//                        news.setCreateTime(sdf.parse(sendTime.substring(0,sendTime.length()-2).toString()));
-//                    } catch (ParseException e) {
-//                        e.printStackTrace();
-//                    }
-//                    news.setContent(prelog.getCd02());
-//                    news.setSendPeopel(prelog.getCd03());
-//                    news.setSendWork(prelog.getCd05());
-//                    List<String> strings = new ArrayList<>();
-//                    for(PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean.Cd04Bean coCd04Bean : prelog.getCd04()){
-//                        strings.add(coCd04Bean.getHref());
-//                    }
-//                    news.setStringList(strings);
-//                    workNotes.add(news);
-//                    if(!mDataBase.queryByUID(news.getuID())){
-//                        mDataBase.setWorkNote(news);
-//                    }
-//                }
                 mWorkNoteAdapter.addAllData(prelogList);
             }
-//            else{
-//                List<WorkNote> data = mDataBase.getWorkNote();
-//                Collections.reverse(data);
-//                if (data.size() < 10){
-//                    mWorkNoteAdapter.addAllData(data);
-//                }else {
-//                    indexLast = 10;
-//                    mWorkNoteAdapter.addAllData(data.subList(0,indexLast));
-//                }
-//                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//
-//
-//                    private int lastVisibleItemPosition;
-//                    private int targetIndex;
-//
-//                    @Override
-//                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                        super.onScrollStateChanged(recyclerView, newState);
-//                        if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition + 1 == mWorkNoteAdapter.getItemCount()){
-//                            targetIndex = indexLast+10;
-//                            if (targetIndex > data.size()){
-//                                targetIndex = data.size();
-//                            }
-//                            if (indexLast != 0 && indexLast < data.size()){
-//                                mWorkNoteAdapter.insertData(data.subList(indexLast,targetIndex));
-//                                BaseApplication.log_say(TAG,""+indexLast);
-//                                indexLast += 10;
-//                            }
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                        super.onScrolled(recyclerView, dx, dy);
-//                        lastVisibleItemPosition = mLLM.findLastVisibleItemPosition();
-//                    }
-//                });
-//            }
         }
         //发送工作日志返回
         if(result instanceof CommonResponse){
-//            WorkNote news = new WorkNote();
-//            news.setId(mDataBase.generateNewPrimaryKey());
-//            news.setuID(GUID);
-//            news.setCreateTime(new Date(System.currentTimeMillis()));
-//            news.setContent(send_content);
-//            news.setSendPeopel(mDataBase.getLocalConfig().getName());
-//            news.setSendWork(mDataBase.getLocalConfig().getDepartment());
             if(((CommonResponse)result).getIq().getQuery().getErrorCode() == 0){
                 mInput.setText("");
                 mImagePath.clear();
-//                mDealAdapter.notifyDataSetChanged();
+                onLoadMore();
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mInput.getWindowToken(),0);
                 showMessage("发送日志成功");
                 mRecyclerView.smoothScrollToPosition(0);
                 if (moreTools.getVisibility() == View.VISIBLE){
-//                                Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_out);
-//                                moreTools.startAnimation(animation);
                     moreTools.setVisibility(View.GONE);
-
                 }
-                refresh();
-//                mDataBase.setWorkNote(news);
             }else{
                 showMessage("发送日志失败");
             }
-//            mWorkNoteAdapter.addData(news);
-//            mWorkNoteAdapter.notifyDataSetChanged();
         }
     }
 
@@ -346,8 +265,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         switch (v.getId()){
             case R.id.more:
                 if (moreTools.getVisibility() == View.GONE){
-//                    Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_in);
-//                    moreTools.startAnimation(animation);
                     moreTools.setVisibility(View.VISIBLE);
                     picRecyclerView = (RecyclerView) findViewById(R.id.picRecycleView);
                     LinearLayoutManager mLayoutManager = new LinearLayoutManager(WorkNoteActivity.this);
@@ -355,8 +272,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                     picRecyclerView.setLayoutManager(mLayoutManager);
                     picRecyclerView.setAdapter(mDealAdapter);
                 }else {
-//                    Animation animation = AnimationUtils.loadAnimation(this,R.anim.activity_translate_out);
-//                    moreTools.startAnimation(animation);
                     moreTools.setVisibility(View.GONE);
                 }
                 break;

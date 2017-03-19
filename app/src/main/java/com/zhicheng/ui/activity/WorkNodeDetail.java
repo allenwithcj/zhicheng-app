@@ -1,28 +1,31 @@
 package com.zhicheng.ui.activity;
 
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.zhicheng.R;
-import com.zhicheng.api.common.database.DatabaseHelper;
-import com.zhicheng.api.common.database.WorkNote;
 import com.zhicheng.api.presenter.impl.WorkNodePresenterImpl;
 import com.zhicheng.api.view.WorkNodeView;
 import com.zhicheng.bean.http.CommonResponse;
+import com.zhicheng.bean.http.PersonalLogMaResponse;
 import com.zhicheng.bean.json.PersonalLogMaRequest;
 import com.zhicheng.common.Constant;
+import com.zhicheng.common.URL;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
 /**
  * Created by hp on 2017/3/3.
@@ -33,45 +36,46 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
     private TextView NoteTime;
     private TextView publicationpeople;
     private TextView content_txt;
-    private EditText mini_content;
+    private TextView mini_content;
     private LinearLayout btn_layout;
+    private RecyclerView mRecyclerView;
     private Button update,delete;
-    private WorkNote mWorkNote;
     private boolean b = false;
     private WorkNodePresenterImpl mWorkNodePresenterImpl;
-    private DatabaseHelper mDataBase;
     private AlertDialog dialog;
     private String Uid,work,sender,content;
-    private Date sendTime;
+    private String sendTime;
+    private PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean prelogsBean;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_worknote_detail);
-        mDataBase = new DatabaseHelper();
-        mWorkNote = (WorkNote) getIntent().getSerializableExtra("mWorkNote");
+        prelogsBean = getIntent().getParcelableExtra("prelogsBeen");
         mWorkNodePresenterImpl = new WorkNodePresenterImpl(this);
         publicationunit = (TextView) findViewById(R.id.publicationunit);
         NoteTime = (TextView) findViewById(R.id.NoteTime);
         publicationpeople = (TextView) findViewById(R.id.publicationpeople);
         content_txt = (TextView) findViewById(R.id.content_txt);
-        mini_content = (EditText) findViewById(R.id.mini_content);
+        mini_content = (TextView) findViewById(R.id.mini_content);
         btn_layout = (LinearLayout) findViewById(R.id.btn_layout);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.imgs);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        mRecyclerView.setAdapter(new ImageAdapter(prelogsBean.getCd04()));
 
         update = (Button)findViewById(R.id.update);
         delete = (Button)findViewById(R.id.delete);
-        if(mWorkNote != null){
-            Uid = mWorkNote.getuID();
-            work = mWorkNote.getSendWork();
-            sender = mWorkNote.getSendPeopel();
-            sendTime = mWorkNote.getCreateTime();
-            content = mWorkNote.getContent();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd   HH:mm:ss", Locale.CHINESE);
+        if(prelogsBean != null){
+            Uid = prelogsBean.getCd00();
+            work = prelogsBean.getCd05();
+            sender = prelogsBean.getCd03();
+            sendTime = prelogsBean.getCd01();
+            content = prelogsBean.getCd02();
             publicationunit.setText("单位:"+work);
-            NoteTime.setText("发表时间:"+sdf.format(sendTime));
+            NoteTime.setText("发表时间:"+sendTime.substring(0,sendTime.length()-2));
             publicationpeople.setText("发表人:"+sender);
             content_txt.setText("日志内容:");
             mini_content.setText(content);
-            mini_content.setSelection(content.length());
         }
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
 
@@ -169,9 +173,9 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         if(result instanceof CommonResponse){
             if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
                 if(Constant.LOG_OPERATE_TYPE.equals("update")){
-                    mDataBase.updateByUid(Uid,mini_content.getText().toString());
+                    showMessage("修改成功");
                 }else if(Constant.LOG_OPERATE_TYPE.equals("delete")){
-                    mDataBase.deleteWorkNote(Uid);
+                    showMessage("删除失败");
                 }
                 finish();
             }else{
@@ -187,5 +191,51 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
     @Override
     public void addData(Object result) {
 
+    }
+
+    private class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder>{
+
+        private List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean.Cd04Bean> mImagePath;
+
+        public ImageAdapter(List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean.Cd04Bean> data){
+            this.mImagePath = data;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public ImageAdapter.ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view,parent,false);
+            return new ImageViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ImageViewHolder holder, int position) {
+            String mURL = URL.HOST_URL_SERVER_ZHICHENG + mImagePath.get(position).getHref();
+            Glide.with(holder.itemView.getContext())
+                    .load(mURL)//设置数据
+                    .placeholder(R.drawable.glide_loading)
+                    .error(R.drawable.glide_failed)
+                    .thumbnail((float) 0.3)
+                    .into(holder.mImageView);
+        }
+
+
+        @Override
+        public int getItemCount() {
+            if(mImagePath != null){
+                return mImagePath.size();
+            }
+            return 0;
+        }
+
+        public class ImageViewHolder extends RecyclerView.ViewHolder {
+
+            private ImageView mImageView;
+
+            public ImageViewHolder(View itemView) {
+                super(itemView);
+                mImageView = (ImageView) itemView.findViewById(R.id.img_content);
+            }
+        }
     }
 }

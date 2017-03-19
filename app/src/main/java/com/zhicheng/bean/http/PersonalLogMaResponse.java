@@ -1,5 +1,8 @@
 package com.zhicheng.bean.http;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
@@ -108,7 +111,7 @@ public class PersonalLogMaResponse {
                     this.prelogs = prelogs;
                 }
 
-                public static class PrelogsBean {
+                public static class PrelogsBean implements Parcelable {
                     /**
                      * cd05 : 钮店湾南片-第一网格
                      * cd03 : 李军军
@@ -124,6 +127,27 @@ public class PersonalLogMaResponse {
                     private String cd02;
                     private String cd00;
                     private List<Cd04Bean> cd04;
+
+                    protected PrelogsBean(Parcel in) {
+                        cd05 = in.readString();
+                        cd03 = in.readString();
+                        cd01 = in.readString();
+                        cd02 = in.readString();
+                        cd00 = in.readString();
+                        cd04 = in.createTypedArrayList(Cd04Bean.CREATOR);
+                    }
+
+                    public static final Creator<PrelogsBean> CREATOR = new Creator<PrelogsBean>() {
+                        @Override
+                        public PrelogsBean createFromParcel(Parcel in) {
+                            return new PrelogsBean(in);
+                        }
+
+                        @Override
+                        public PrelogsBean[] newArray(int size) {
+                            return new PrelogsBean[size];
+                        }
+                    };
 
                     public String getCd05() {
                         return cd05;
@@ -173,7 +197,22 @@ public class PersonalLogMaResponse {
                         this.cd04 = cd04;
                     }
 
-                    public static class Cd04Bean {
+                    @Override
+                    public int describeContents() {
+                        return 0;
+                    }
+
+                    @Override
+                    public void writeToParcel(Parcel parcel, int i) {
+                        parcel.writeString(cd05);
+                        parcel.writeString(cd03);
+                        parcel.writeString(cd01);
+                        parcel.writeString(cd02);
+                        parcel.writeString(cd00);
+                        parcel.writeTypedList(cd04);
+                    }
+
+                    public static class Cd04Bean implements Parcelable {
                         /**
                          * size : 481.95K
                          * name : magazine-unlock-05-2.3.529-bigpicture_05_32.jpg
@@ -187,6 +226,26 @@ public class PersonalLogMaResponse {
                         private String id;
                         private String href;
                         private String type;
+
+                        protected Cd04Bean(Parcel in) {
+                            size = in.readString();
+                            name = in.readString();
+                            id = in.readString();
+                            href = in.readString();
+                            type = in.readString();
+                        }
+
+                        public static final Creator<Cd04Bean> CREATOR = new Creator<Cd04Bean>() {
+                            @Override
+                            public Cd04Bean createFromParcel(Parcel in) {
+                                return new Cd04Bean(in);
+                            }
+
+                            @Override
+                            public Cd04Bean[] newArray(int size) {
+                                return new Cd04Bean[size];
+                            }
+                        };
 
                         public String getSize() {
                             return size;
@@ -226,6 +285,20 @@ public class PersonalLogMaResponse {
 
                         public void setType(String type) {
                             this.type = type;
+                        }
+
+                        @Override
+                        public int describeContents() {
+                            return 0;
+                        }
+
+                        @Override
+                        public void writeToParcel(Parcel parcel, int i) {
+                            parcel.writeString(size);
+                            parcel.writeString(name);
+                            parcel.writeString(id);
+                            parcel.writeString(href);
+                            parcel.writeString(type);
                         }
                     }
                 }

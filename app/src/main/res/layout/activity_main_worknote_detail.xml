@@ -80,7 +80,7 @@
                     android:padding="@dimen/textView_padding"
                     android:gravity="left|center" />
 
-                <EditText
+                <TextView
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:id="@+id/mini_content"
@@ -92,6 +92,15 @@
                     android:textSize="@dimen/content_size"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/imgs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/activity_padding"
+                android:clipToPadding="false"
+                android:scrollbars="horizontal"
+                android:overScrollMode="always">
+            </android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
@@ -111,6 +120,7 @@
             app:cardBackgroundColor="@color/login_bg"
             android:layout_margin="8dp"
             app:cardCornerRadius="6dp"
+            android:visibility="gone"
             app:cardElevation="2dp">
 
             <Button
