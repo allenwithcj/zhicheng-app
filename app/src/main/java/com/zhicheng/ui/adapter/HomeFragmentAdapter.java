@@ -96,14 +96,15 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                     ((TopListViewHolder) holder).mLoopViewPager.setDataViewList(img,content,location,time);
                 }
             }else if (holder instanceof ButtonGroupViewHolder){
-                ((ButtonGroupViewHolder) holder).noFinish.setOnClickListener(this);
                 if (mainResponses.getIq().getQuery().getData() != null){
                     if (mainResponses.getIq().getQuery().getData().getDaiBanTotal() != 0){
+                        ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.VISIBLE);
                         ((ButtonGroupViewHolder) holder).fabNotice.setText(""+mainResponses.getIq().getQuery().getData().getDaiBanTotal());
                     }else {
                         ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.GONE);
                     }
                     if(mainResponses.getIq().getQuery().getData().getNoticeTotal() != 0){
+                        ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.VISIBLE);
                         ((ButtonGroupViewHolder) holder).fabNotice2.setText(""+mainResponses.getIq().getQuery().getData().getNoticeTotal());
                     }else{
                         ((ButtonGroupViewHolder) holder).fabNotice2.setVisibility(View.GONE);
@@ -112,6 +113,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                     ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.GONE);
                     ((ButtonGroupViewHolder) holder).fabNotice2.setVisibility(View.GONE);
                 }
+                ((ButtonGroupViewHolder) holder).noFinish.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).Finished.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).FenLei.setOnClickListener(this);
                 ((ButtonGroupViewHolder) holder).GridDataBase.setOnClickListener(this);

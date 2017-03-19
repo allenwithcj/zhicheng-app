@@ -126,7 +126,9 @@ public class HomeFragment extends BaseFragment implements MainView,SwipeRefreshL
     @Override
     public void refreshData(Object result) {
         if (result instanceof CommonResponse){
-            mHomeAdapter.setAdapterData((CommonResponse) result);
+            if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
+                mHomeAdapter.setAdapterData((CommonResponse) result);
+            }
 //            parentActivity.isTouch(true);
         }
     }
