@@ -230,9 +230,8 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                 List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogList = ((PersonalLogMaResponse)result).getIq().getQuery().getPrelogcon().getPrelogs();
                 mWorkNoteAdapter.addAllData(prelogList);
             }
-        }
-        //发送工作日志返回
-        if(result instanceof CommonResponse){
+            //发送工作日志返回
+         }else if(result instanceof CommonResponse){
             if(((CommonResponse)result).getIq().getQuery().getErrorCode() == 0){
                 mInput.setText("");
                 mImagePath.clear();

@@ -1,5 +1,6 @@
 package com.zhicheng.ui.activity;
 
+import android.app.Activity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,7 +26,10 @@ import com.zhicheng.bean.json.PersonalLogMaRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.common.URL;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import cc.dagger.photopicker.PhotoPicker;
 
 /**
  * Created by hp on 2017/3/3.
@@ -217,6 +221,16 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
                     .error(R.drawable.glide_failed)
                     .thumbnail((float) 0.3)
                     .into(holder.mImageView);
+            ArrayList<String> paths = new ArrayList<String>();
+            for(int i = 0;i<mImagePath.size();i++){
+                paths.add(URL.HOST_URL_SERVER_ZHICHENG+mImagePath.get(i).getHref());
+            }
+            holder.mImageView.setOnClickListener(view -> {
+                PhotoPicker.preview()
+                            .paths(paths)
+                            .currentItem(position)
+                            .start((Activity) holder.itemView.getContext());
+                });
         }
 
 

@@ -1,8 +1,10 @@
 package com.zhicheng.ui.adapter;
 
+import android.app.Activity;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.zhicheng.common.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import cc.dagger.photopicker.PhotoPicker;
 import me.codeboy.android.aligntextview.AlignTextView;
 
 /**
@@ -76,7 +79,10 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
             ((OfficialDynamicHolder) holder).name.setText(mOfficialDynamicDetail.get(position).getUSERID());
             ((OfficialDynamicHolder) holder).content.setText(mOfficialDynamicDetail.get(position).getCOUNT());
             ((OfficialDynamicHolder) holder).location.setText(mOfficialDynamicDetail.get(position).getLOCATION());
-            ((OfficialDynamicHolder) holder).time.setText(mOfficialDynamicDetail.get(position).getDATETIME());
+            String sendTime = mOfficialDynamicDetail.get(position).getDATETIME();
+            if(!TextUtils.isEmpty(sendTime)){
+                ((OfficialDynamicHolder) holder).time.setText(sendTime.substring(0,sendTime.length()-2));
+            }
             ((OfficialDynamicHolder) holder).more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -171,6 +177,16 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
                         .placeholder(R.drawable.glide_loading)
                         .error(R.drawable.glide_failed)
                         .into(((imgViewHolder) holder).mImageView);
+                ArrayList<String> paths = new ArrayList<String>();
+                for(int i = 0;i<imgs.size();i++){
+                    paths.add(URL.HOST_URL_SERVER_ZHICHENG+imgs.get(i).getHref());
+                }
+                ((imgViewHolder) holder).mImageView.setOnClickListener(view -> {
+                    PhotoPicker.preview()
+                            .paths(paths)
+                            .currentItem(position)
+                            .start((Activity) holder.itemView.getContext());
+                });
             }
         }
 
