@@ -50,6 +50,8 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
         this.notifyDataSetChanged();
     }
 
+
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
@@ -88,7 +90,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                     List<String> location = new ArrayList<>();
                     List<String> time = new ArrayList<>();
                     for (CommonResponse.IqBean.QueryBean.DataBean.CasesBean c : mainResponses.getIq().getQuery().getData().getCases()){
-                        img.add(URL.HOST_URL_SERVER_ZHICHENG+c.getAttachments().get(0).getHref());
+                        img.add(URL.HOST_URL_SERVER_ZHICHENG + c.getAttachments().get(0).getHref());
                         content.add(c.getItemcon());
                         location.add(c.getItemaddress());
                         time.add(c.getItemtime());
@@ -98,13 +100,11 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
             }else if (holder instanceof ButtonGroupViewHolder){
                 if (mainResponses.getIq().getQuery().getData() != null){
                     if (mainResponses.getIq().getQuery().getData().getDaiBanTotal() != 0){
-                        ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.VISIBLE);
                         ((ButtonGroupViewHolder) holder).fabNotice.setText(""+mainResponses.getIq().getQuery().getData().getDaiBanTotal());
                     }else {
                         ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.GONE);
                     }
                     if(mainResponses.getIq().getQuery().getData().getNoticeTotal() != 0){
-                        ((ButtonGroupViewHolder) holder).fabNotice.setVisibility(View.VISIBLE);
                         ((ButtonGroupViewHolder) holder).fabNotice2.setText(""+mainResponses.getIq().getQuery().getData().getNoticeTotal());
                     }else{
                         ((ButtonGroupViewHolder) holder).fabNotice2.setVisibility(View.GONE);

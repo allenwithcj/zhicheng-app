@@ -6,7 +6,6 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,13 +21,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.codeboy.android.aligntextview.AlignTextView;
 import me.codeboy.android.aligntextview.CBAlignTextView;
 
 
@@ -137,6 +133,7 @@ public class LoopContentPager extends FrameLayout {
         mHandler.sendEmptyMessage(UPDATE_IMAGE);
     }
 
+
     private class mPagerAdapter extends PagerAdapter {
 
         public mPagerAdapter(){}
@@ -169,6 +166,8 @@ public class LoopContentPager extends FrameLayout {
                 initView(position);
                 Glide.with(getContext())
                         .load(mDataViewList.getImgs().get(position))
+                        .placeholder(R.drawable.welcome)
+                        .error(R.drawable.welcome)
                         .centerCrop()
                         .into(mViewHolder.img);
                 mViewHolder.mContent.setText(mDataViewList.getmContents().get(position));
@@ -225,6 +224,9 @@ public class LoopContentPager extends FrameLayout {
                     break;
                 case UPDATE_IMAGE:
                     mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1,true);
+                    mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE,CHANGE_DURATION);
+                    break;
+                case MotionEvent.ACTION_CANCEL:
                     mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE,CHANGE_DURATION);
                     break;
             }

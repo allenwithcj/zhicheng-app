@@ -3,7 +3,6 @@ package com.zhicheng.ui.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import com.zhicheng.api.view.MainView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.HomeFragmentAdapter;
+import com.zhicheng.utils.VpSwipeRefreshLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +27,10 @@ import java.util.Map;
  * Created by Donson on 2017/1/2.
  */
 
-public class HomeFragment extends BaseFragment implements MainView,SwipeRefreshLayout.OnRefreshListener{
+public class HomeFragment extends BaseFragment implements MainView
+        ,VpSwipeRefreshLayout.OnRefreshListener{
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private VpSwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private MainPresenterImpl mMainPresenterImpl;
     private HomeFragmentAdapter mHomeAdapter;
@@ -76,13 +77,14 @@ public class HomeFragment extends BaseFragment implements MainView,SwipeRefreshL
     @Override
     protected void initEvents() {
         mMainPresenterImpl = new MainPresenterImpl(this);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
+        mSwipeRefreshLayout = (VpSwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mHomeAdapter = new HomeFragmentAdapter();
         mRecyclerView.setAdapter(mHomeAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
+
 
     @Override
     protected void initData(boolean isSavedNull) {
@@ -132,8 +134,6 @@ public class HomeFragment extends BaseFragment implements MainView,SwipeRefreshL
 //            parentActivity.isTouch(true);
         }
     }
-
-
 
 
 
