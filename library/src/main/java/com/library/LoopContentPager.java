@@ -126,6 +126,9 @@ public class LoopContentPager extends FrameLayout {
                     case MotionEvent.ACTION_UP:
                         mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE,CHANGE_DURATION);
                         break;
+                    case MotionEvent.ACTION_CANCEL:
+                        mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE,CHANGE_DURATION);
+                        break;
                 }
                 return false;
             }
