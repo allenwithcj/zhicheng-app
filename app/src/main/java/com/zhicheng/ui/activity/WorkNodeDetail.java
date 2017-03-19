@@ -175,7 +175,7 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
                 if(Constant.LOG_OPERATE_TYPE.equals("update")){
                     showMessage("修改成功");
                 }else if(Constant.LOG_OPERATE_TYPE.equals("delete")){
-                    showMessage("删除失败");
+                    showMessage("删除成功");
                 }
                 finish();
             }else{
