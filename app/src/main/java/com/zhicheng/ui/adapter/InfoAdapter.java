@@ -56,11 +56,19 @@ public class InfoAdapter extends RecyclerView.Adapter {
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("夜间模式");
             }
         }else if (holder instanceof InfoMiddleViewHolder){
-            ((InfoMiddleViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_bao_notice));
-            ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("我的爆料");
-            ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
-                UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialSended.class));
-            });
+            if(position == 1){
+                ((InfoMiddleViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_bao_notice));
+                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("我的爆料");
+                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialSended.class));
+                });
+            }else{
+                ((InfoMiddleViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_bao_notice));
+                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("版本更新");
+                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
+
+                });
+            }
         }else if (holder instanceof InfoLastViewHolder){
             if (position == 2){
                 ((InfoLastViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_send_news));
@@ -74,7 +82,7 @@ public class InfoAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 6;
     }
 
     @Override
@@ -87,6 +95,8 @@ public class InfoAdapter extends RecyclerView.Adapter {
             return TYPE_LAST;
         }else if(position == 3){
             return TYPE_HEAD;
+        }else if(position == 4){
+            return TYPE_MIDDLE;
         }else {
             return TYPE_LAST;
         }

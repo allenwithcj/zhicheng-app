@@ -280,7 +280,6 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 							}else {
 								mUpThingsPresenterImpl.UpThings(3,guid,strEntity,jFile,mImagePath);
 							}
-							item.setEnabled(false);
 						}else {
 							item.setEnabled(true);
 							Toast.makeText(this,"请选择上传图片",Toast.LENGTH_SHORT).show();
@@ -333,6 +332,7 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 				showMessage("上报成功");
 				this.finish();
 			}else {
+				mMenu.findItem(R.id.action_send).setEnabled(true);
 				showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
 			}
 		}
