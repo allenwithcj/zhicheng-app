@@ -136,6 +136,8 @@ public class HomeFragment extends BaseFragment implements MainView
                 intent.setAction("com.news.count.action");
                 intent.putExtra("news",String.valueOf(((CommonResponse) result).getIq().getQuery().getData().getDaiBanTotal()));
                 UIUtils.getContext().sendBroadcast(intent);
+            }else{
+                showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }
 //            parentActivity.isTouch(true);
         }

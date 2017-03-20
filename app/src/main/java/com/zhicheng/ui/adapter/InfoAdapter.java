@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zhicheng.R;
+import com.zhicheng.download.HttpDownManager;
 import com.zhicheng.ui.activity.ContactActivity;
 import com.zhicheng.ui.activity.OfficialSended;
 import com.zhicheng.utils.common.UIUtils;
@@ -22,9 +24,24 @@ public class InfoAdapter extends RecyclerView.Adapter {
     private static final int TYPE_HEAD = 0;
     private static final int TYPE_MIDDLE = 1;
     private static final int TYPE_LAST = 2;
+    private HttpDownManager manager;
+    private PopupWindow mPopupWindow;
 
+    public interface ButtonClick{
+        void onButtonClick();
+    }
+
+
+    private ButtonClick mButtonClick;
+
+    public void setButtonClick(ButtonClick mButtonClick){
+        if (this.mButtonClick == null){
+            this.mButtonClick = mButtonClick;
+        }
+    }
     public InfoAdapter(){
 
+        manager = HttpDownManager.getInstance();
     }
 
     @Override
@@ -66,7 +83,7 @@ public class InfoAdapter extends RecyclerView.Adapter {
                 ((InfoMiddleViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_bao_notice));
                 ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("版本更新");
                 ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
-
+                     mButtonClick.onButtonClick();
                 });
             }
         }else if (holder instanceof InfoLastViewHolder){

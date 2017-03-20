@@ -5,12 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +28,7 @@ import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.LoginActivity;
 import com.zhicheng.ui.adapter.InfoAdapter;
 import com.zhicheng.utils.CircleImageView;
+import com.zhicheng.utils.common.AnimationUtils;
 import com.zhicheng.utils.common.UIUtils;
 
 
@@ -39,6 +45,7 @@ public class MainFragment extends BaseFragment{
     private TextView mName;
     private TextView mOccupation;
     private TextView userpost;
+    private PopupWindow mPopupWindow;
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -111,7 +118,25 @@ public class MainFragment extends BaseFragment{
 
     @Override
     protected void initData(boolean isSavedNull) {
-
+        mInfoAdapter.setButtonClick(() ->{
+            View pop_view = LayoutInflater.from(getContext()).inflate
+                    (R.layout.activity_version_dialog,null);
+            if (null != mPopupWindow){
+                mPopupWindow.dismiss();
+            }else {
+                mPopupWindow = new PopupWindow
+                        (pop_view, WindowManager.LayoutParams.WRAP_CONTENT,
+                                WindowManager.LayoutParams.WRAP_CONTENT,true);
+                mPopupWindow.setAnimationStyle(R.style.popwin_anim_style);
+                mPopupWindow.setOutsideTouchable(true);
+                mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+                mPopupWindow.setOnDismissListener(() -> {
+                    AnimationUtils.darkBackgroundColor(getActivity().getWindow(),1f);
+                });
+            }
+            mPopupWindow.showAtLocation(mRootView,Gravity.CENTER,0,0);
+            AnimationUtils.darkBackgroundColor(getActivity().getWindow(),0.4f);
+        });
     }
 
     @Override
