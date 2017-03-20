@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -119,16 +120,16 @@ public class MainFragment extends BaseFragment{
     @Override
     protected void initData(boolean isSavedNull) {
         mInfoAdapter.setButtonClick(() ->{
-            View pop_view = LayoutInflater.from(getContext()).inflate
-                    (R.layout.activity_version_dialog,null);
+            View pop_view = LayoutInflater.from(getContext()).inflate(R.layout.activity_version_dialog,null);
+            Button btn_update = (Button)pop_view.findViewById(R.id.btn_update);
+            Button btn_cancel = (Button)pop_view.findViewById(R.id.btn_cancel);
             if (null != mPopupWindow){
                 mPopupWindow.dismiss();
             }else {
-                mPopupWindow = new PopupWindow
-                        (pop_view, WindowManager.LayoutParams.WRAP_CONTENT,
+                mPopupWindow = new PopupWindow(pop_view, WindowManager.LayoutParams.WRAP_CONTENT,
                                 WindowManager.LayoutParams.WRAP_CONTENT,true);
                 mPopupWindow.setAnimationStyle(R.style.popwin_anim_style);
-                mPopupWindow.setOutsideTouchable(true);
+                mPopupWindow.setOutsideTouchable(false);
                 mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
                 mPopupWindow.setOnDismissListener(() -> {
                     AnimationUtils.darkBackgroundColor(getActivity().getWindow(),1f);
@@ -136,6 +137,16 @@ public class MainFragment extends BaseFragment{
             }
             mPopupWindow.showAtLocation(mRootView,Gravity.CENTER,0,0);
             AnimationUtils.darkBackgroundColor(getActivity().getWindow(),0.4f);
+
+            btn_update.setOnClickListener(view -> {
+
+            });
+
+            btn_cancel.setOnClickListener(view -> {
+                if(mPopupWindow.isShowing()){
+                    mPopupWindow.dismiss();
+                }
+            });
         });
     }
 
