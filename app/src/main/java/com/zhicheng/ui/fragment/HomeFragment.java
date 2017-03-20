@@ -1,5 +1,6 @@
 package com.zhicheng.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -18,6 +19,7 @@ import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.HomeFragmentAdapter;
 import com.zhicheng.utils.VpSwipeRefreshLayout;
+import com.zhicheng.utils.common.UIUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -130,6 +132,10 @@ public class HomeFragment extends BaseFragment implements MainView
         if (result instanceof CommonResponse){
             if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
                 mHomeAdapter.setAdapterData((CommonResponse) result);
+                Intent intent = new Intent();
+                intent.setAction("com.news.count.action");
+                intent.putExtra("news",String.valueOf(((CommonResponse) result).getIq().getQuery().getData().getDaiBanTotal()));
+                UIUtils.getContext().sendBroadcast(intent);
             }
 //            parentActivity.isTouch(true);
         }

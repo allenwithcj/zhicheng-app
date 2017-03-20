@@ -37,7 +37,7 @@
     <string name="belongStreet">所在街道</string>
     <string name="addPersonal">登记楼栋人员信息</string>
     <string name="belongBuild">所在楼栋:</string>
-    <string name="login">登陆</string>
+    <string name="login">登录</string>
     <string name="open">打开</string>
     <string name="close">关闭</string>
     <string name="account_name">请输入用户名</string>

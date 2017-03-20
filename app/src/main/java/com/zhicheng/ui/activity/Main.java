@@ -1,6 +1,9 @@
 package com.zhicheng.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,16 +14,17 @@ import android.view.MenuItem;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
+import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.library.NoTouchBottomButton;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.ui.fragment.BaseFragment;
-import com.zhicheng.ui.fragment.MyNewsFragment;
 import com.zhicheng.ui.fragment.CurrentMapFragment;
 import com.zhicheng.ui.fragment.HomeFragment;
 import com.zhicheng.ui.fragment.MainFragment;
+import com.zhicheng.ui.fragment.MyNewsFragment;
 import com.zhicheng.utils.common.PermissionUtils;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -28,7 +32,8 @@ import roboguice.inject.InjectView;
 
 public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
 
-    @InjectView(R.id.bottomNavigationBar) private NoTouchBottomButton mBottomNavigation;
+    @InjectView(R.id.bottomNavigationBar)
+    private NoTouchBottomButton mBottomNavigation;
     private BaseFragment currentFragment;
     private FragmentManager mFragmentManager = getSupportFragmentManager();
     private HomeFragment mHomeFragment;
@@ -36,11 +41,35 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
     private MyNewsFragment mMyNewsFragment;
     private MainFragment mMainFragment;
     private PopupWindow mPopupWindow;
+    private String newsCount;
+    private BadgeItem badgeItem;
+
+    private BroadcastReceiver receiver = new BroadcastReceiver(){
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("com.news.count.action")){
+                newsCount = intent.getStringExtra("news");
+                if(!newsCount.equals("0") && newsCount != null){
+                    badgeItem.setHideOnSelect(false)
+                            .setText(newsCount)
+                            .setBackgroundColorResource(R.color.red)
+                            .setBorderWidth(0);
+                }else{
+                    badgeItem.hide();
+                }
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.news.count.action");
+        registerReceiver(receiver,intentFilter);
+        badgeItem = new BadgeItem();
         initBottomNavigationBar();
         if (mFragmentManager == null){
             mFragmentManager = getSupportFragmentManager();
@@ -55,16 +84,19 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
         mBottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mBottomNavigation.setInActiveColor(R.color.navigationColor);
         mBottomNavigation.setActiveColor(R.color.pridark);
+
+
         mBottomNavigation
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_home,"首页"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_map,"地图"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_report,"爆料"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_contact,"消息"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_navigation_info,"我的"))
-                .setFirstSelectedPosition(0)
-                .initialise();
-        mBottomNavigation.setTabSelectedListener(this);
+                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_home,"首页"))
+                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_map,"地图"))
+                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_report,"爆料"))
+                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_contact,"消息")
+                    .setBadgeItem(badgeItem))
+                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_info,"我的"))
+                    .setFirstSelectedPosition(0)
+                    .initialise();
         setDefaultFragment();
+        mBottomNavigation.setTabSelectedListener(this);
     }
 
     @Override
@@ -264,5 +296,11 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 }

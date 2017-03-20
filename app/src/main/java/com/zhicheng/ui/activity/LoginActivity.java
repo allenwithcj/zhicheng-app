@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.Base64;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
@@ -88,7 +89,7 @@ public class LoginActivity extends BaseActivity implements LoginView{
                 BaseApplication.log_say(TAG,strEntity);
                 mLoginPresenterImpl.login(strEntity);
                 login.setClickable(false);
-                login.setText("登陆中...");
+                login.setText("登录中...");
             }
         });
     }
@@ -119,7 +120,7 @@ public class LoginActivity extends BaseActivity implements LoginView{
     @Override
     public void showMessage(String msg) {
         login.setClickable(true);
-        login.setText("登陆");
+        login.setText("登录");
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
 //        Snackbar snackbar = Snackbar.make(mToolbar,msg,Snackbar.LENGTH_SHORT);
 //        View view = snackbar.getView();
@@ -144,10 +145,10 @@ public class LoginActivity extends BaseActivity implements LoginView{
                 Intent intent = new Intent();
                 intent.setAction("com.mainFragment.update");
                 this.sendBroadcast(intent);
-                showMessage("登陆成功");
+                showMessage("登录成功");
                 this.finish();
             }else {
-                showMessage("登陆失败:"+((LoginResponse) result).getIq().getQuery().getErrorMessage());
+                showMessage("登录失败:"+((LoginResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
     }
@@ -196,5 +197,13 @@ public class LoginActivity extends BaseActivity implements LoginView{
         super.onPause();
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(account_name.getWindowToken(),0);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            BaseApplication.clearAllActivity();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

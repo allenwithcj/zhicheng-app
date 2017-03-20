@@ -108,10 +108,11 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
 
     @Override
     protected int getMenuID() {
-        if(type.equals("nofinsh")){
+        if(type.equals("nofinish")){
             return R.menu.official_detail;
+        }else{
+            return super.getMenuID();
         }
-        return super.getMenuID();
     }
 
     @Override
