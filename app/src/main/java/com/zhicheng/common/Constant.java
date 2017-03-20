@@ -24,7 +24,7 @@ public class Constant {
 
     public static final String ALARM_ACTION ="com.location.alarm.action";
     public static final int LOCATION_UP_TIME = 5*60*1000;//5分钟
-    public static final int TIME = 2*60*1000;
+    public static final int TIME = 2*60*1000;//2分钟
 
     public static String LATITUDE = "";
     public static String LONGITUDE = "";
