@@ -25,8 +25,9 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="true"
@@ -163,18 +164,25 @@
 
         <service android:name=".alarm.LocationUpService" />
 
-        <activity android:name=".ui.activity.OfficialSended"
+        <activity
+            android:name=".ui.activity.OfficialSended"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.activity.OfficialSendDetails"
+        <activity
+            android:name=".ui.activity.OfficialSendDetails"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.activity.ContactMultilevelActivity"
+        <activity
+            android:name=".ui.activity.ContactMultilevelActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.activity.ContactDetailActivity"
+        <activity
+            android:name=".ui.activity.ContactDetailActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.activity.CallTheCounDetailActivity"
-        android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
-        <activity android:name=".ui.activity.ContactActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"/>
+        <activity
+            android:name=".ui.activity.CallTheCounDetailActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity
+            android:name=".ui.activity.ContactActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+        <activity android:name=".ui.activity.ReplyActivity"></activity>
     </application>
 
 </manifest>

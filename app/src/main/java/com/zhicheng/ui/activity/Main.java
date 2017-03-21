@@ -85,7 +85,6 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
         mBottomNavigation.setInActiveColor(R.color.navigationColor);
         mBottomNavigation.setActiveColor(R.color.pridark);
 
-
         mBottomNavigation
                     .addItem(new BottomNavigationItem(R.drawable.ic_navigation_home,"首页"))
                     .addItem(new BottomNavigationItem(R.drawable.ic_navigation_map,"地图"))

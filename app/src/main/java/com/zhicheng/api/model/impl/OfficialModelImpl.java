@@ -492,7 +492,7 @@ public class OfficialModelImpl implements OfficialModel{
                                     query2.setIsTrace(0);
                                     query2.setIsWait(0);
                                     query2.setIsReturnCurrentNode(0);
-                                    query2.setType(Integer.parseInt(OfficialDeatail.getIq().getQuery().getMap().getType()));
+                                    query2.setType(OfficialDeatail.getIq().getQuery().getMap().getType());
                                     query2.setAttGUID(GUID);
                                     node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
                                     node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
@@ -560,7 +560,7 @@ public class OfficialModelImpl implements OfficialModel{
                             query.setIsTrace(0);
                             query.setIsWait(0);
                             query.setIsReturnCurrentNode(0);
-                            query.setType(Integer.parseInt(OfficialDeatail.getIq().getQuery().getMap().getType()));
+                            query.setType(OfficialDeatail.getIq().getQuery().getMap().getType());
                             query.setAttGUID(GUID);
                             node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
                             node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());

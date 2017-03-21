@@ -91,7 +91,7 @@
 
     <string-array name="detail_last">
         <item>协办人:</item>
-        <item>备注:</item>
+        <item>事件备注:</item>
         <item>办理进度:</item>
     </string-array>
 

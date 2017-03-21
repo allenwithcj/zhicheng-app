@@ -172,8 +172,6 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
 
     @Override
     public void showMessage(String msg) {
-        mBtn.setText("处理");
-        mBtn.setClickable(true);
         Toast.makeText(UIUtils.getContext(),msg,Toast.LENGTH_SHORT).show();
         if (mPopupWindow != null && mPopupWindow.isShowing()){
             mPopupWindow.dismiss();
@@ -205,6 +203,8 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
                 showMessage("处理成功");
                 this.finish();
             }else {
+                mBtn.setText("处理");
+                mBtn.setClickable(true);
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }
         }

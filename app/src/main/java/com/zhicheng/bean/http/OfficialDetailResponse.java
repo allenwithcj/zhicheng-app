@@ -1,5 +1,6 @@
 package com.zhicheng.bean.http;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,8 +9,9 @@ import java.util.List;
 
 public class OfficialDetailResponse {
 
+
     /**
-     * iq : {"namespace":"CollaborationDetailsResponse","query":{"id":"151","type":"1","requestType":"0","title":"《案件办理-YPT20170222004》","sendUser":"叶思阳","sendUserID":"7494","sendUserImageHref":"/UserUploadFile/photo/photo.png","sendTime":"2017-02-22 17:34","content":"/fe.do?SYS.ID=995-041-000&p_e=/v8AMQA1ADE=&t_e=/v8AMA==","nodeType":"0","nodeName":"","isAddsign":"1","isReturn":"1","isTrace":"","currentFlowNodeGUID":"0C825E39-5D15-9340-89DF-E39E12820907","flow":{"name":"事件上报流程","GUID":"36C9CF7D-390C-9F4F-BCA3-21F3EE377566","nodes":[]},"formFlowUrl":"/cooperate/videotexMonitor.jsp?master_key=124&flowcode=36C9CF7D-390C-9F4F-BCA3-21F3EE377566","isHasSubReplyAttachment":"1","isCanReturnCurrentNode":"1","formHandleViewURL":"/mobile/otherControl/toDoControl.jsp?guid=0C825E39-5D15-9340-89DF-E39E12820907&id=151","supplyContents":[],"trailContents":[],"attachmentGUID":"","attachments":[{"id":"/v8AMgA3ADkAMQAw","name":"IMG_1076319621.jpg","size":"7.24K","type":"1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw"}],"replies":[],"formData":{"formData":{"ZC01":{"name":"ZC01","realValue":"YPT20170222004","viewValue":"YPT20170222004","isReadonly":false},"ZC02":{"name":"ZC02","realValue":"2017-02-22 04:34:10","viewValue":"2017-02-22 04:34:10","isReadonly":false},"ZC03":{"name":"ZC03","realValue":"fdasdfqwef","viewValue":"fdasdfqwef","isReadonly":false},"ZC04":{"name":"ZC04","realValue":"","viewValue":"","isReadonly":false},"ZC05":{"name":"ZC05","realValue":"","viewValue":"","isReadonly":false},"ZC06":{"name":"ZC06","realValue":"","viewValue":"","isReadonly":false},"ZC07":{"name":"ZC07","realValue":"7494","viewValue":"叶思阳","isReadonly":false},"ZC08":{"name":"ZC08","realValue":"综治App","viewValue":"综治App","isReadonly":false},"ZC09":{"name":"ZC09","realValue":"2334","viewValue":"2334","isReadonly":false},"ZC10":{"name":"ZC10","realValue":"2333","viewValue":"2333","isReadonly":false},"ZC11":{"name":"ZC11","realValue":"1","viewValue":"1","isReadonly":false},"ZC12":{"name":"ZC12","realValue":"","viewValue":"","isReadonly":false},"ZC14":{"name":"ZC14","realValue":"","viewValue":"","isReadonly":false},"ZC15":{"name":"ZC15","realValue":"","viewValue":"","isReadonly":false},"ZC16":{"name":"ZC16","realValue":"","viewValue":"","isReadonly":false},"ZC17":{"name":"ZC17","realValue":"2074","viewValue":"有毒有害及危险作业问题","isReadonly":false},"ZC18":{"name":"ZC18","realValue":"","viewValue":"","isReadonly":false},"ZC19":{"name":"ZC19","realValue":"安检中心","viewValue":"安检中心","isReadonly":false},"ZC20":{"name":"ZC20","realValue":"","viewValue":"","isReadonly":false},"ZC21":{"name":"ZC21","realValue":"是","viewValue":"是","isReadonly":false},"ZC22":{"name":"ZC22","realValue":"1个工作日","viewValue":"1个工作日","isReadonly":false},"ZC23":{"name":"ZC23","realValue":"","viewValue":"","isReadonly":false},"ZC24":{"name":"ZC24","realValue":"04","viewValue":"04","isReadonly":false},"ZC25":{"name":"ZC25","realValue":"","viewValue":"","isReadonly":false},"ZC26":{"name":"ZC26","realValue":"","viewValue":"","isReadonly":false},"ZC27":{"name":"ZC27","realValue":"1","viewValue":"1","isReadonly":false},"ZC28":{"name":"ZC28","realValue":"工作日","viewValue":"工作日","isReadonly":false},"ZC29":{"name":"ZC29","realValue":"","viewValue":"","isReadonly":false},"ZC30":{"name":"ZC30","realValue":"","viewValue":"","isReadonly":false},"ZC32":{"name":"ZC32","realValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","viewValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","items":[{"master_key_mobile":"%2Fv8AMgA3ADkAMQAw","fsize":"(7.24K)","viewName":"IMG_1076319621.jpg","width":null,"guid":"FDCE8A7B-68C1-DC39-74D5-1A1C0E81E86A","ext_name":"jpg_div","time":null,"master_key":"Mjc5MTA=","height":null}],"sizeLimit":"50.0","isReadonly":false},"ZC33":{"name":"ZC33","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC34":{"name":"ZC34","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC35":{"name":"ZC35","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC36":{"name":"ZC36","realValue":"","viewValue":"","isReadonly":false},"ZC37":{"name":"ZC37","realValue":"","viewValue":"","isReadonly":false},"ZC38":{"name":"ZC38","realValue":"1","viewValue":"1","isReadonly":false},"ZC39":{"name":"ZC39","realValue":"","viewValue":"","isReadonly":false},"ZC40":{"name":"ZC40","realValue":"","viewValue":"","isReadonly":false},"ZC41":{"name":"ZC41","realValue":"","viewValue":"","isReadonly":false},"ZC42":{"name":"ZC42","realValue":"","viewValue":"","isReadonly":false},"ZC44":{"name":"ZC44","realValue":"","viewValue":"","isReadonly":false},"master_key":{"name":"master_key","primary":"ZC00","primaryValue":"68","value":"68"},"ZC00":{"name":"ZC00","viewValue":"68","realValue":"68"}}},"map":{"eventAddress":"fdasdfqwef","businessTable":"FE_APP5.ZZ_CASE","businessTableId":"68","lon":"","type":"201702160953150","reportPerson":"","itemCon":"","sendTime":"2017-02-22 17:34","eventNote":"","reportChannel":"综治App","reportDate":"","grid":"","itemClass":"","eventDescription":"","showPageId":"201702160953150","lat":"","taskId":"124","eventDate":"2017-02-22 04:34:10.0"},"errorCode":"0","errorMessage":""}}
+     * iq : {"namespace":"CollaborationDetailsResponse","query":{"id":"1241","type":"1","requestType":"0","title":"《案件办理-YPT20170321003》","sendUser":"黄利芬","sendUserID":"7685","sendUserImageHref":"/UserUploadFile/photo/photo.png","sendTime":"2017-03-21 13:52","content":"/fe.do?SYS.ID=995-041-000&p_e=/v8AMQAyADQAMQ==&t_e=/v8AMA==","nodeType":"0","nodeName":"","isAddsign":"1","isReturn":"1","isTrace":"","currentFlowNodeGUID":"8F22E8FB-E0D3-2645-ABE3-2B9776D5CF9F","flow":{"name":"事件上报流程","GUID":"36C9CF7D-390C-9F4F-BCA3-21F3EE377566","nodes":[]},"formFlowUrl":"/cooperate/videotexMonitor.jsp?master_key=488&flowcode=36C9CF7D-390C-9F4F-BCA3-21F3EE377566","isHasSubReplyAttachment":"1","isCanReturnCurrentNode":"1","formHandleViewURL":"/mobile/otherControl/toDoControl.jsp?guid=8F22E8FB-E0D3-2645-ABE3-2B9776D5CF9F&id=1241","supplyContents":[],"trailContents":[],"attachmentGUID":"","attachments":[{"id":"/v8AMgA4ADkAMgA4","name":"IMG_666571090.jpg","size":"3.22M","type":"1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMgA4"},{"id":"/v8AMgA4ADkAMgA5","name":"IMG_-896041123.jpg","size":"3.18M","type":"1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMgA5"}],"replies":[{"id":"1224","nodeName":"镇街受理员立案","content":"社区协商多次没有解决，申请协调。","writtenGUID":"","writtenContentHref":[],"sendTime":"2017-03-21 14:50","sendUserID":"7677","sendUser":"黄燕","sendUserImg":"/UserUploadFile/photo/photo.png","attitude":"","isHidden":"","isTemporary":"0","attachments":[],"hasAttachment":"0","hasReply":"0","tips":""}],"formData":{"formData":{"ZC01":{"name":"ZC01","realValue":"YPT20170321003","viewValue":"YPT20170321003","isReadonly":false},"ZC02":{"name":"ZC02","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false},"ZC03":{"name":"ZC03","realValue":"中国浙江省湖州市长兴县仓前街169号","viewValue":"中国浙江省湖州市长兴县仓前街169号","isReadonly":false},"ZC04":{"name":"ZC04","realValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","viewValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","isReadonly":false},"ZC05":{"name":"ZC05","realValue":"","viewValue":"","isReadonly":false},"ZC06":{"name":"ZC06","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false},"ZC07":{"name":"ZC07","realValue":"7685","viewValue":"黄利芬","isReadonly":false},"ZC08":{"name":"ZC08","realValue":"智慧雉城App","viewValue":"智慧雉城App","isReadonly":false},"ZC09":{"name":"ZC09","realValue":"2503","viewValue":"2503","isReadonly":false},"ZC10":{"name":"ZC10","realValue":"2333","viewValue":"2333","isReadonly":false},"ZC11":{"name":"ZC11","realValue":"1","viewValue":"1","isReadonly":false},"ZC12":{"name":"ZC12","realValue":"","viewValue":"","isReadonly":false},"ZC14":{"name":"ZC14","realValue":"","viewValue":"","isReadonly":false},"ZC15":{"name":"ZC15","realValue":"","viewValue":"","isReadonly":false},"ZC16":{"name":"ZC16","realValue":"11","viewValue":"雉城街道/仓前街社区/仓前街社区（第六网格）","isReadonly":false},"ZC17":{"name":"ZC17","realValue":"2087","viewValue":"破坏公共设施","isReadonly":false},"ZC18":{"name":"ZC18","realValue":"公共安全/破坏公共设施","viewValue":"公共安全/破坏公共设施","isReadonly":false},"ZC19":{"name":"ZC19","realValue":"综治办","viewValue":"综治办","isReadonly":false},"ZC20":{"name":"ZC20","realValue":"","viewValue":"","isReadonly":false},"ZC21":{"name":"ZC21","realValue":"是","viewValue":"是","isReadonly":false},"ZC22":{"name":"ZC22","realValue":"4小时","viewValue":"4小时","isReadonly":false},"ZC23":{"name":"ZC23","realValue":"","viewValue":"","isReadonly":false},"ZC24":{"name":"ZC24","realValue":"06","viewValue":"06","isReadonly":false},"ZC25":{"name":"ZC25","realValue":"","viewValue":"","isReadonly":false},"ZC26":{"name":"ZC26","realValue":"","viewValue":"","isReadonly":false},"ZC27":{"name":"ZC27","realValue":"5","viewValue":"5","isReadonly":false},"ZC28":{"name":"ZC28","realValue":"工作日","viewValue":"工作日","isReadonly":false},"ZC29":{"name":"ZC29","realValue":"119.918806","viewValue":"119.918806","isReadonly":false},"ZC30":{"name":"ZC30","realValue":"31.007465","viewValue":"31.007465","isReadonly":false},"ZC32":{"name":"ZC32","realValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","viewValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","items":[{"master_key_mobile":"%2Fv8AMgA4ADkAMgA4","fsize":"(3.22M)","viewName":"IMG_666571090.jpg","width":null,"guid":"3A39CBF7-E476-EA6D-18B4-8A78F815488C","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjg=","height":null},{"master_key_mobile":"%2Fv8AMgA4ADkAMgA5","fsize":"(3.18M)","viewName":"IMG_-896041123.jpg","width":null,"guid":"269C11D6-0A28-3CCD-8DE3-FC8001CB68C2","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjk=","height":null}],"sizeLimit":"50.0","isReadonly":false},"ZC33":{"name":"ZC33","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC34":{"name":"ZC34","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC35":{"name":"ZC35","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC36":{"name":"ZC36","realValue":"","viewValue":"","isReadonly":false},"ZC37":{"name":"ZC37","realValue":"","viewValue":"","isReadonly":false},"ZC38":{"name":"ZC38","realValue":"2","viewValue":"2","isReadonly":false},"ZC39":{"name":"ZC39","realValue":"2503,2340","viewValue":"2503,2340","isReadonly":false},"ZC40":{"name":"ZC40","realValue":"仓前街社区第六网格,安监中心","viewValue":"仓前街社区第六网格,安监中心","isReadonly":false},"ZC41":{"name":"ZC41","realValue":"","viewValue":"","isReadonly":false},"ZC42":{"name":"ZC42","realValue":"","viewValue":"","isReadonly":false},"ZC44":{"name":"ZC44","realValue":"","viewValue":"","isReadonly":false},"master_key":{"name":"master_key","primary":"ZC00","primaryValue":"363","value":"363"},"ZC00":{"name":"ZC00","viewValue":"363","realValue":"363"}}},"map":{"eventAddress":"","businessTable":"FE_APP5.ZZ_CASE","businessTableId":"363","lon":"","type":2,"itemCon":"","tnnodeenddate":"","reportDate":"","pretype":"","eventDescription":"","showPageId":"201702160953150","lat":"","reportPersonPhone":"","flowEndTime":"","precon":"","tnnodestartdate":"2017-03-21 14:50:25.0","reportPerson":"","sendTime":"2017-03-21 14:50","eventNote":"","reportChannel":"","grid":"","itemClass":"","flowStartTime":"","flowStatus":"","taskId":"488","eventDate":""},"errorCode":"0","errorMessage":""}}
      */
 
     private IqBean iq;
@@ -25,7 +27,7 @@ public class OfficialDetailResponse {
     public static class IqBean {
         /**
          * namespace : CollaborationDetailsResponse
-         * query : {"id":"151","type":"1","requestType":"0","title":"《案件办理-YPT20170222004》","sendUser":"叶思阳","sendUserID":"7494","sendUserImageHref":"/UserUploadFile/photo/photo.png","sendTime":"2017-02-22 17:34","content":"/fe.do?SYS.ID=995-041-000&p_e=/v8AMQA1ADE=&t_e=/v8AMA==","nodeType":"0","nodeName":"","isAddsign":"1","isReturn":"1","isTrace":"","currentFlowNodeGUID":"0C825E39-5D15-9340-89DF-E39E12820907","flow":{"name":"事件上报流程","GUID":"36C9CF7D-390C-9F4F-BCA3-21F3EE377566","nodes":[]},"formFlowUrl":"/cooperate/videotexMonitor.jsp?master_key=124&flowcode=36C9CF7D-390C-9F4F-BCA3-21F3EE377566","isHasSubReplyAttachment":"1","isCanReturnCurrentNode":"1","formHandleViewURL":"/mobile/otherControl/toDoControl.jsp?guid=0C825E39-5D15-9340-89DF-E39E12820907&id=151","supplyContents":[],"trailContents":[],"attachmentGUID":"","attachments":[{"id":"/v8AMgA3ADkAMQAw","name":"IMG_1076319621.jpg","size":"7.24K","type":"1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw"}],"replies":[],"formData":{"formData":{"ZC01":{"name":"ZC01","realValue":"YPT20170222004","viewValue":"YPT20170222004","isReadonly":false},"ZC02":{"name":"ZC02","realValue":"2017-02-22 04:34:10","viewValue":"2017-02-22 04:34:10","isReadonly":false},"ZC03":{"name":"ZC03","realValue":"fdasdfqwef","viewValue":"fdasdfqwef","isReadonly":false},"ZC04":{"name":"ZC04","realValue":"","viewValue":"","isReadonly":false},"ZC05":{"name":"ZC05","realValue":"","viewValue":"","isReadonly":false},"ZC06":{"name":"ZC06","realValue":"","viewValue":"","isReadonly":false},"ZC07":{"name":"ZC07","realValue":"7494","viewValue":"叶思阳","isReadonly":false},"ZC08":{"name":"ZC08","realValue":"综治App","viewValue":"综治App","isReadonly":false},"ZC09":{"name":"ZC09","realValue":"2334","viewValue":"2334","isReadonly":false},"ZC10":{"name":"ZC10","realValue":"2333","viewValue":"2333","isReadonly":false},"ZC11":{"name":"ZC11","realValue":"1","viewValue":"1","isReadonly":false},"ZC12":{"name":"ZC12","realValue":"","viewValue":"","isReadonly":false},"ZC14":{"name":"ZC14","realValue":"","viewValue":"","isReadonly":false},"ZC15":{"name":"ZC15","realValue":"","viewValue":"","isReadonly":false},"ZC16":{"name":"ZC16","realValue":"","viewValue":"","isReadonly":false},"ZC17":{"name":"ZC17","realValue":"2074","viewValue":"有毒有害及危险作业问题","isReadonly":false},"ZC18":{"name":"ZC18","realValue":"","viewValue":"","isReadonly":false},"ZC19":{"name":"ZC19","realValue":"安检中心","viewValue":"安检中心","isReadonly":false},"ZC20":{"name":"ZC20","realValue":"","viewValue":"","isReadonly":false},"ZC21":{"name":"ZC21","realValue":"是","viewValue":"是","isReadonly":false},"ZC22":{"name":"ZC22","realValue":"1个工作日","viewValue":"1个工作日","isReadonly":false},"ZC23":{"name":"ZC23","realValue":"","viewValue":"","isReadonly":false},"ZC24":{"name":"ZC24","realValue":"04","viewValue":"04","isReadonly":false},"ZC25":{"name":"ZC25","realValue":"","viewValue":"","isReadonly":false},"ZC26":{"name":"ZC26","realValue":"","viewValue":"","isReadonly":false},"ZC27":{"name":"ZC27","realValue":"1","viewValue":"1","isReadonly":false},"ZC28":{"name":"ZC28","realValue":"工作日","viewValue":"工作日","isReadonly":false},"ZC29":{"name":"ZC29","realValue":"","viewValue":"","isReadonly":false},"ZC30":{"name":"ZC30","realValue":"","viewValue":"","isReadonly":false},"ZC32":{"name":"ZC32","realValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","viewValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","items":[{"master_key_mobile":"%2Fv8AMgA3ADkAMQAw","fsize":"(7.24K)","viewName":"IMG_1076319621.jpg","width":null,"guid":"FDCE8A7B-68C1-DC39-74D5-1A1C0E81E86A","ext_name":"jpg_div","time":null,"master_key":"Mjc5MTA=","height":null}],"sizeLimit":"50.0","isReadonly":false},"ZC33":{"name":"ZC33","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC34":{"name":"ZC34","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC35":{"name":"ZC35","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC36":{"name":"ZC36","realValue":"","viewValue":"","isReadonly":false},"ZC37":{"name":"ZC37","realValue":"","viewValue":"","isReadonly":false},"ZC38":{"name":"ZC38","realValue":"1","viewValue":"1","isReadonly":false},"ZC39":{"name":"ZC39","realValue":"","viewValue":"","isReadonly":false},"ZC40":{"name":"ZC40","realValue":"","viewValue":"","isReadonly":false},"ZC41":{"name":"ZC41","realValue":"","viewValue":"","isReadonly":false},"ZC42":{"name":"ZC42","realValue":"","viewValue":"","isReadonly":false},"ZC44":{"name":"ZC44","realValue":"","viewValue":"","isReadonly":false},"master_key":{"name":"master_key","primary":"ZC00","primaryValue":"68","value":"68"},"ZC00":{"name":"ZC00","viewValue":"68","realValue":"68"}}},"map":{"eventAddress":"fdasdfqwef","businessTable":"FE_APP5.ZZ_CASE","businessTableId":"68","lon":"","type":"201702160953150","reportPerson":"","itemCon":"","sendTime":"2017-02-22 17:34","eventNote":"","reportChannel":"综治App","reportDate":"","grid":"","itemClass":"","eventDescription":"","showPageId":"201702160953150","lat":"","taskId":"124","eventDate":"2017-02-22 04:34:10.0"},"errorCode":"0","errorMessage":""}
+         * query : {"id":"1241","type":"1","requestType":"0","title":"《案件办理-YPT20170321003》","sendUser":"黄利芬","sendUserID":"7685","sendUserImageHref":"/UserUploadFile/photo/photo.png","sendTime":"2017-03-21 13:52","content":"/fe.do?SYS.ID=995-041-000&p_e=/v8AMQAyADQAMQ==&t_e=/v8AMA==","nodeType":"0","nodeName":"","isAddsign":"1","isReturn":"1","isTrace":"","currentFlowNodeGUID":"8F22E8FB-E0D3-2645-ABE3-2B9776D5CF9F","flow":{"name":"事件上报流程","GUID":"36C9CF7D-390C-9F4F-BCA3-21F3EE377566","nodes":[]},"formFlowUrl":"/cooperate/videotexMonitor.jsp?master_key=488&flowcode=36C9CF7D-390C-9F4F-BCA3-21F3EE377566","isHasSubReplyAttachment":"1","isCanReturnCurrentNode":"1","formHandleViewURL":"/mobile/otherControl/toDoControl.jsp?guid=8F22E8FB-E0D3-2645-ABE3-2B9776D5CF9F&id=1241","supplyContents":[],"trailContents":[],"attachmentGUID":"","attachments":[{"id":"/v8AMgA4ADkAMgA4","name":"IMG_666571090.jpg","size":"3.22M","type":"1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMgA4"},{"id":"/v8AMgA4ADkAMgA5","name":"IMG_-896041123.jpg","size":"3.18M","type":"1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMgA5"}],"replies":[{"id":"1224","nodeName":"镇街受理员立案","content":"社区协商多次没有解决，申请协调。","writtenGUID":"","writtenContentHref":[],"sendTime":"2017-03-21 14:50","sendUserID":"7677","sendUser":"黄燕","sendUserImg":"/UserUploadFile/photo/photo.png","attitude":"","isHidden":"","isTemporary":"0","attachments":[],"hasAttachment":"0","hasReply":"0","tips":""}],"formData":{"formData":{"ZC01":{"name":"ZC01","realValue":"YPT20170321003","viewValue":"YPT20170321003","isReadonly":false},"ZC02":{"name":"ZC02","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false},"ZC03":{"name":"ZC03","realValue":"中国浙江省湖州市长兴县仓前街169号","viewValue":"中国浙江省湖州市长兴县仓前街169号","isReadonly":false},"ZC04":{"name":"ZC04","realValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","viewValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","isReadonly":false},"ZC05":{"name":"ZC05","realValue":"","viewValue":"","isReadonly":false},"ZC06":{"name":"ZC06","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false},"ZC07":{"name":"ZC07","realValue":"7685","viewValue":"黄利芬","isReadonly":false},"ZC08":{"name":"ZC08","realValue":"智慧雉城App","viewValue":"智慧雉城App","isReadonly":false},"ZC09":{"name":"ZC09","realValue":"2503","viewValue":"2503","isReadonly":false},"ZC10":{"name":"ZC10","realValue":"2333","viewValue":"2333","isReadonly":false},"ZC11":{"name":"ZC11","realValue":"1","viewValue":"1","isReadonly":false},"ZC12":{"name":"ZC12","realValue":"","viewValue":"","isReadonly":false},"ZC14":{"name":"ZC14","realValue":"","viewValue":"","isReadonly":false},"ZC15":{"name":"ZC15","realValue":"","viewValue":"","isReadonly":false},"ZC16":{"name":"ZC16","realValue":"11","viewValue":"雉城街道/仓前街社区/仓前街社区（第六网格）","isReadonly":false},"ZC17":{"name":"ZC17","realValue":"2087","viewValue":"破坏公共设施","isReadonly":false},"ZC18":{"name":"ZC18","realValue":"公共安全/破坏公共设施","viewValue":"公共安全/破坏公共设施","isReadonly":false},"ZC19":{"name":"ZC19","realValue":"综治办","viewValue":"综治办","isReadonly":false},"ZC20":{"name":"ZC20","realValue":"","viewValue":"","isReadonly":false},"ZC21":{"name":"ZC21","realValue":"是","viewValue":"是","isReadonly":false},"ZC22":{"name":"ZC22","realValue":"4小时","viewValue":"4小时","isReadonly":false},"ZC23":{"name":"ZC23","realValue":"","viewValue":"","isReadonly":false},"ZC24":{"name":"ZC24","realValue":"06","viewValue":"06","isReadonly":false},"ZC25":{"name":"ZC25","realValue":"","viewValue":"","isReadonly":false},"ZC26":{"name":"ZC26","realValue":"","viewValue":"","isReadonly":false},"ZC27":{"name":"ZC27","realValue":"5","viewValue":"5","isReadonly":false},"ZC28":{"name":"ZC28","realValue":"工作日","viewValue":"工作日","isReadonly":false},"ZC29":{"name":"ZC29","realValue":"119.918806","viewValue":"119.918806","isReadonly":false},"ZC30":{"name":"ZC30","realValue":"31.007465","viewValue":"31.007465","isReadonly":false},"ZC32":{"name":"ZC32","realValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","viewValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","items":[{"master_key_mobile":"%2Fv8AMgA4ADkAMgA4","fsize":"(3.22M)","viewName":"IMG_666571090.jpg","width":null,"guid":"3A39CBF7-E476-EA6D-18B4-8A78F815488C","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjg=","height":null},{"master_key_mobile":"%2Fv8AMgA4ADkAMgA5","fsize":"(3.18M)","viewName":"IMG_-896041123.jpg","width":null,"guid":"269C11D6-0A28-3CCD-8DE3-FC8001CB68C2","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjk=","height":null}],"sizeLimit":"50.0","isReadonly":false},"ZC33":{"name":"ZC33","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC34":{"name":"ZC34","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC35":{"name":"ZC35","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC36":{"name":"ZC36","realValue":"","viewValue":"","isReadonly":false},"ZC37":{"name":"ZC37","realValue":"","viewValue":"","isReadonly":false},"ZC38":{"name":"ZC38","realValue":"2","viewValue":"2","isReadonly":false},"ZC39":{"name":"ZC39","realValue":"2503,2340","viewValue":"2503,2340","isReadonly":false},"ZC40":{"name":"ZC40","realValue":"仓前街社区第六网格,安监中心","viewValue":"仓前街社区第六网格,安监中心","isReadonly":false},"ZC41":{"name":"ZC41","realValue":"","viewValue":"","isReadonly":false},"ZC42":{"name":"ZC42","realValue":"","viewValue":"","isReadonly":false},"ZC44":{"name":"ZC44","realValue":"","viewValue":"","isReadonly":false},"master_key":{"name":"master_key","primary":"ZC00","primaryValue":"363","value":"363"},"ZC00":{"name":"ZC00","viewValue":"363","realValue":"363"}}},"map":{"eventAddress":"","businessTable":"FE_APP5.ZZ_CASE","businessTableId":"363","lon":"","type":2,"itemCon":"","tnnodeenddate":"","reportDate":"","pretype":"","eventDescription":"","showPageId":"201702160953150","lat":"","reportPersonPhone":"","flowEndTime":"","precon":"","tnnodestartdate":"2017-03-21 14:50:25.0","reportPerson":"","sendTime":"2017-03-21 14:50","eventNote":"","reportChannel":"","grid":"","itemClass":"","flowStartTime":"","flowStatus":"","taskId":"488","eventDate":""},"errorCode":"0","errorMessage":""}
          */
 
         private String namespace;
@@ -49,33 +51,33 @@ public class OfficialDetailResponse {
 
         public static class QueryBean {
             /**
-             * id : 151
+             * id : 1241
              * type : 1
              * requestType : 0
-             * title : 《案件办理-YPT20170222004》
-             * sendUser : 叶思阳
-             * sendUserID : 7494
+             * title : 《案件办理-YPT20170321003》
+             * sendUser : 黄利芬
+             * sendUserID : 7685
              * sendUserImageHref : /UserUploadFile/photo/photo.png
-             * sendTime : 2017-02-22 17:34
-             * content : /fe.do?SYS.ID=995-041-000&p_e=/v8AMQA1ADE=&t_e=/v8AMA==
+             * sendTime : 2017-03-21 13:52
+             * content : /fe.do?SYS.ID=995-041-000&p_e=/v8AMQAyADQAMQ==&t_e=/v8AMA==
              * nodeType : 0
              * nodeName :
              * isAddsign : 1
              * isReturn : 1
              * isTrace :
-             * currentFlowNodeGUID : 0C825E39-5D15-9340-89DF-E39E12820907
+             * currentFlowNodeGUID : 8F22E8FB-E0D3-2645-ABE3-2B9776D5CF9F
              * flow : {"name":"事件上报流程","GUID":"36C9CF7D-390C-9F4F-BCA3-21F3EE377566","nodes":[]}
-             * formFlowUrl : /cooperate/videotexMonitor.jsp?master_key=124&flowcode=36C9CF7D-390C-9F4F-BCA3-21F3EE377566
+             * formFlowUrl : /cooperate/videotexMonitor.jsp?master_key=488&flowcode=36C9CF7D-390C-9F4F-BCA3-21F3EE377566
              * isHasSubReplyAttachment : 1
              * isCanReturnCurrentNode : 1
-             * formHandleViewURL : /mobile/otherControl/toDoControl.jsp?guid=0C825E39-5D15-9340-89DF-E39E12820907&id=151
+             * formHandleViewURL : /mobile/otherControl/toDoControl.jsp?guid=8F22E8FB-E0D3-2645-ABE3-2B9776D5CF9F&id=1241
              * supplyContents : []
              * trailContents : []
              * attachmentGUID :
-             * attachments : [{"id":"/v8AMgA3ADkAMQAw","name":"IMG_1076319621.jpg","size":"7.24K","type":"1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw"}]
-             * replies : []
-             * formData : {"formData":{"ZC01":{"name":"ZC01","realValue":"YPT20170222004","viewValue":"YPT20170222004","isReadonly":false},"ZC02":{"name":"ZC02","realValue":"2017-02-22 04:34:10","viewValue":"2017-02-22 04:34:10","isReadonly":false},"ZC03":{"name":"ZC03","realValue":"fdasdfqwef","viewValue":"fdasdfqwef","isReadonly":false},"ZC04":{"name":"ZC04","realValue":"","viewValue":"","isReadonly":false},"ZC05":{"name":"ZC05","realValue":"","viewValue":"","isReadonly":false},"ZC06":{"name":"ZC06","realValue":"","viewValue":"","isReadonly":false},"ZC07":{"name":"ZC07","realValue":"7494","viewValue":"叶思阳","isReadonly":false},"ZC08":{"name":"ZC08","realValue":"综治App","viewValue":"综治App","isReadonly":false},"ZC09":{"name":"ZC09","realValue":"2334","viewValue":"2334","isReadonly":false},"ZC10":{"name":"ZC10","realValue":"2333","viewValue":"2333","isReadonly":false},"ZC11":{"name":"ZC11","realValue":"1","viewValue":"1","isReadonly":false},"ZC12":{"name":"ZC12","realValue":"","viewValue":"","isReadonly":false},"ZC14":{"name":"ZC14","realValue":"","viewValue":"","isReadonly":false},"ZC15":{"name":"ZC15","realValue":"","viewValue":"","isReadonly":false},"ZC16":{"name":"ZC16","realValue":"","viewValue":"","isReadonly":false},"ZC17":{"name":"ZC17","realValue":"2074","viewValue":"有毒有害及危险作业问题","isReadonly":false},"ZC18":{"name":"ZC18","realValue":"","viewValue":"","isReadonly":false},"ZC19":{"name":"ZC19","realValue":"安检中心","viewValue":"安检中心","isReadonly":false},"ZC20":{"name":"ZC20","realValue":"","viewValue":"","isReadonly":false},"ZC21":{"name":"ZC21","realValue":"是","viewValue":"是","isReadonly":false},"ZC22":{"name":"ZC22","realValue":"1个工作日","viewValue":"1个工作日","isReadonly":false},"ZC23":{"name":"ZC23","realValue":"","viewValue":"","isReadonly":false},"ZC24":{"name":"ZC24","realValue":"04","viewValue":"04","isReadonly":false},"ZC25":{"name":"ZC25","realValue":"","viewValue":"","isReadonly":false},"ZC26":{"name":"ZC26","realValue":"","viewValue":"","isReadonly":false},"ZC27":{"name":"ZC27","realValue":"1","viewValue":"1","isReadonly":false},"ZC28":{"name":"ZC28","realValue":"工作日","viewValue":"工作日","isReadonly":false},"ZC29":{"name":"ZC29","realValue":"","viewValue":"","isReadonly":false},"ZC30":{"name":"ZC30","realValue":"","viewValue":"","isReadonly":false},"ZC32":{"name":"ZC32","realValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","viewValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","items":[{"master_key_mobile":"%2Fv8AMgA3ADkAMQAw","fsize":"(7.24K)","viewName":"IMG_1076319621.jpg","width":null,"guid":"FDCE8A7B-68C1-DC39-74D5-1A1C0E81E86A","ext_name":"jpg_div","time":null,"master_key":"Mjc5MTA=","height":null}],"sizeLimit":"50.0","isReadonly":false},"ZC33":{"name":"ZC33","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC34":{"name":"ZC34","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC35":{"name":"ZC35","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC36":{"name":"ZC36","realValue":"","viewValue":"","isReadonly":false},"ZC37":{"name":"ZC37","realValue":"","viewValue":"","isReadonly":false},"ZC38":{"name":"ZC38","realValue":"1","viewValue":"1","isReadonly":false},"ZC39":{"name":"ZC39","realValue":"","viewValue":"","isReadonly":false},"ZC40":{"name":"ZC40","realValue":"","viewValue":"","isReadonly":false},"ZC41":{"name":"ZC41","realValue":"","viewValue":"","isReadonly":false},"ZC42":{"name":"ZC42","realValue":"","viewValue":"","isReadonly":false},"ZC44":{"name":"ZC44","realValue":"","viewValue":"","isReadonly":false},"master_key":{"name":"master_key","primary":"ZC00","primaryValue":"68","value":"68"},"ZC00":{"name":"ZC00","viewValue":"68","realValue":"68"}}}
-             * map : {"eventAddress":"fdasdfqwef","businessTable":"FE_APP5.ZZ_CASE","businessTableId":"68","lon":"","type":"201702160953150","reportPerson":"","itemCon":"","sendTime":"2017-02-22 17:34","eventNote":"","reportChannel":"综治App","reportDate":"","grid":"","itemClass":"","eventDescription":"","showPageId":"201702160953150","lat":"","taskId":"124","eventDate":"2017-02-22 04:34:10.0"}
+             * attachments : [{"id":"/v8AMgA4ADkAMgA4","name":"IMG_666571090.jpg","size":"3.22M","type":"1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMgA4"},{"id":"/v8AMgA4ADkAMgA5","name":"IMG_-896041123.jpg","size":"3.18M","type":"1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMgA5"}]
+             * replies : [{"id":"1224","nodeName":"镇街受理员立案","content":"社区协商多次没有解决，申请协调。","writtenGUID":"","writtenContentHref":[],"sendTime":"2017-03-21 14:50","sendUserID":"7677","sendUser":"黄燕","sendUserImg":"/UserUploadFile/photo/photo.png","attitude":"","isHidden":"","isTemporary":"0","attachments":[],"hasAttachment":"0","hasReply":"0","tips":""}]
+             * formData : {"formData":{"ZC01":{"name":"ZC01","realValue":"YPT20170321003","viewValue":"YPT20170321003","isReadonly":false},"ZC02":{"name":"ZC02","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false},"ZC03":{"name":"ZC03","realValue":"中国浙江省湖州市长兴县仓前街169号","viewValue":"中国浙江省湖州市长兴县仓前街169号","isReadonly":false},"ZC04":{"name":"ZC04","realValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","viewValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","isReadonly":false},"ZC05":{"name":"ZC05","realValue":"","viewValue":"","isReadonly":false},"ZC06":{"name":"ZC06","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false},"ZC07":{"name":"ZC07","realValue":"7685","viewValue":"黄利芬","isReadonly":false},"ZC08":{"name":"ZC08","realValue":"智慧雉城App","viewValue":"智慧雉城App","isReadonly":false},"ZC09":{"name":"ZC09","realValue":"2503","viewValue":"2503","isReadonly":false},"ZC10":{"name":"ZC10","realValue":"2333","viewValue":"2333","isReadonly":false},"ZC11":{"name":"ZC11","realValue":"1","viewValue":"1","isReadonly":false},"ZC12":{"name":"ZC12","realValue":"","viewValue":"","isReadonly":false},"ZC14":{"name":"ZC14","realValue":"","viewValue":"","isReadonly":false},"ZC15":{"name":"ZC15","realValue":"","viewValue":"","isReadonly":false},"ZC16":{"name":"ZC16","realValue":"11","viewValue":"雉城街道/仓前街社区/仓前街社区（第六网格）","isReadonly":false},"ZC17":{"name":"ZC17","realValue":"2087","viewValue":"破坏公共设施","isReadonly":false},"ZC18":{"name":"ZC18","realValue":"公共安全/破坏公共设施","viewValue":"公共安全/破坏公共设施","isReadonly":false},"ZC19":{"name":"ZC19","realValue":"综治办","viewValue":"综治办","isReadonly":false},"ZC20":{"name":"ZC20","realValue":"","viewValue":"","isReadonly":false},"ZC21":{"name":"ZC21","realValue":"是","viewValue":"是","isReadonly":false},"ZC22":{"name":"ZC22","realValue":"4小时","viewValue":"4小时","isReadonly":false},"ZC23":{"name":"ZC23","realValue":"","viewValue":"","isReadonly":false},"ZC24":{"name":"ZC24","realValue":"06","viewValue":"06","isReadonly":false},"ZC25":{"name":"ZC25","realValue":"","viewValue":"","isReadonly":false},"ZC26":{"name":"ZC26","realValue":"","viewValue":"","isReadonly":false},"ZC27":{"name":"ZC27","realValue":"5","viewValue":"5","isReadonly":false},"ZC28":{"name":"ZC28","realValue":"工作日","viewValue":"工作日","isReadonly":false},"ZC29":{"name":"ZC29","realValue":"119.918806","viewValue":"119.918806","isReadonly":false},"ZC30":{"name":"ZC30","realValue":"31.007465","viewValue":"31.007465","isReadonly":false},"ZC32":{"name":"ZC32","realValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","viewValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","items":[{"master_key_mobile":"%2Fv8AMgA4ADkAMgA4","fsize":"(3.22M)","viewName":"IMG_666571090.jpg","width":null,"guid":"3A39CBF7-E476-EA6D-18B4-8A78F815488C","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjg=","height":null},{"master_key_mobile":"%2Fv8AMgA4ADkAMgA5","fsize":"(3.18M)","viewName":"IMG_-896041123.jpg","width":null,"guid":"269C11D6-0A28-3CCD-8DE3-FC8001CB68C2","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjk=","height":null}],"sizeLimit":"50.0","isReadonly":false},"ZC33":{"name":"ZC33","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC34":{"name":"ZC34","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC35":{"name":"ZC35","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC36":{"name":"ZC36","realValue":"","viewValue":"","isReadonly":false},"ZC37":{"name":"ZC37","realValue":"","viewValue":"","isReadonly":false},"ZC38":{"name":"ZC38","realValue":"2","viewValue":"2","isReadonly":false},"ZC39":{"name":"ZC39","realValue":"2503,2340","viewValue":"2503,2340","isReadonly":false},"ZC40":{"name":"ZC40","realValue":"仓前街社区第六网格,安监中心","viewValue":"仓前街社区第六网格,安监中心","isReadonly":false},"ZC41":{"name":"ZC41","realValue":"","viewValue":"","isReadonly":false},"ZC42":{"name":"ZC42","realValue":"","viewValue":"","isReadonly":false},"ZC44":{"name":"ZC44","realValue":"","viewValue":"","isReadonly":false},"master_key":{"name":"master_key","primary":"ZC00","primaryValue":"363","value":"363"},"ZC00":{"name":"ZC00","viewValue":"363","realValue":"363"}}}
+             * map : {"eventAddress":"","businessTable":"FE_APP5.ZZ_CASE","businessTableId":"363","lon":"","type":2,"itemCon":"","tnnodeenddate":"","reportDate":"","pretype":"","eventDescription":"","showPageId":"201702160953150","lat":"","reportPersonPhone":"","flowEndTime":"","precon":"","tnnodestartdate":"2017-03-21 14:50:25.0","reportPerson":"","sendTime":"2017-03-21 14:50","eventNote":"","reportChannel":"","grid":"","itemClass":"","flowStartTime":"","flowStatus":"","taskId":"488","eventDate":""}
              * errorCode : 0
              * errorMessage :
              */
@@ -108,7 +110,7 @@ public class OfficialDetailResponse {
             private List<?> supplyContents;
             private List<?> trailContents;
             private List<AttachmentsBean> attachments;
-            private List<?> replies;
+            private List<RepliesBean> replies;
 
             public String getId() {
                 return id;
@@ -334,11 +336,11 @@ public class OfficialDetailResponse {
                 this.attachments = attachments;
             }
 
-            public List<?> getReplies() {
+            public List<RepliesBean> getReplies() {
                 return replies;
             }
 
-            public void setReplies(List<?> replies) {
+            public void setReplies(List<RepliesBean> replies) {
                 this.replies = replies;
             }
 
@@ -380,7 +382,7 @@ public class OfficialDetailResponse {
 
             public static class FormDataBeanX {
                 /**
-                 * formData : {"ZC01":{"name":"ZC01","realValue":"YPT20170222004","viewValue":"YPT20170222004","isReadonly":false},"ZC02":{"name":"ZC02","realValue":"2017-02-22 04:34:10","viewValue":"2017-02-22 04:34:10","isReadonly":false},"ZC03":{"name":"ZC03","realValue":"fdasdfqwef","viewValue":"fdasdfqwef","isReadonly":false},"ZC04":{"name":"ZC04","realValue":"","viewValue":"","isReadonly":false},"ZC05":{"name":"ZC05","realValue":"","viewValue":"","isReadonly":false},"ZC06":{"name":"ZC06","realValue":"","viewValue":"","isReadonly":false},"ZC07":{"name":"ZC07","realValue":"7494","viewValue":"叶思阳","isReadonly":false},"ZC08":{"name":"ZC08","realValue":"综治App","viewValue":"综治App","isReadonly":false},"ZC09":{"name":"ZC09","realValue":"2334","viewValue":"2334","isReadonly":false},"ZC10":{"name":"ZC10","realValue":"2333","viewValue":"2333","isReadonly":false},"ZC11":{"name":"ZC11","realValue":"1","viewValue":"1","isReadonly":false},"ZC12":{"name":"ZC12","realValue":"","viewValue":"","isReadonly":false},"ZC14":{"name":"ZC14","realValue":"","viewValue":"","isReadonly":false},"ZC15":{"name":"ZC15","realValue":"","viewValue":"","isReadonly":false},"ZC16":{"name":"ZC16","realValue":"","viewValue":"","isReadonly":false},"ZC17":{"name":"ZC17","realValue":"2074","viewValue":"有毒有害及危险作业问题","isReadonly":false},"ZC18":{"name":"ZC18","realValue":"","viewValue":"","isReadonly":false},"ZC19":{"name":"ZC19","realValue":"安检中心","viewValue":"安检中心","isReadonly":false},"ZC20":{"name":"ZC20","realValue":"","viewValue":"","isReadonly":false},"ZC21":{"name":"ZC21","realValue":"是","viewValue":"是","isReadonly":false},"ZC22":{"name":"ZC22","realValue":"1个工作日","viewValue":"1个工作日","isReadonly":false},"ZC23":{"name":"ZC23","realValue":"","viewValue":"","isReadonly":false},"ZC24":{"name":"ZC24","realValue":"04","viewValue":"04","isReadonly":false},"ZC25":{"name":"ZC25","realValue":"","viewValue":"","isReadonly":false},"ZC26":{"name":"ZC26","realValue":"","viewValue":"","isReadonly":false},"ZC27":{"name":"ZC27","realValue":"1","viewValue":"1","isReadonly":false},"ZC28":{"name":"ZC28","realValue":"工作日","viewValue":"工作日","isReadonly":false},"ZC29":{"name":"ZC29","realValue":"","viewValue":"","isReadonly":false},"ZC30":{"name":"ZC30","realValue":"","viewValue":"","isReadonly":false},"ZC32":{"name":"ZC32","realValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","viewValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","items":[{"master_key_mobile":"%2Fv8AMgA3ADkAMQAw","fsize":"(7.24K)","viewName":"IMG_1076319621.jpg","width":null,"guid":"FDCE8A7B-68C1-DC39-74D5-1A1C0E81E86A","ext_name":"jpg_div","time":null,"master_key":"Mjc5MTA=","height":null}],"sizeLimit":"50.0","isReadonly":false},"ZC33":{"name":"ZC33","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC34":{"name":"ZC34","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC35":{"name":"ZC35","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC36":{"name":"ZC36","realValue":"","viewValue":"","isReadonly":false},"ZC37":{"name":"ZC37","realValue":"","viewValue":"","isReadonly":false},"ZC38":{"name":"ZC38","realValue":"1","viewValue":"1","isReadonly":false},"ZC39":{"name":"ZC39","realValue":"","viewValue":"","isReadonly":false},"ZC40":{"name":"ZC40","realValue":"","viewValue":"","isReadonly":false},"ZC41":{"name":"ZC41","realValue":"","viewValue":"","isReadonly":false},"ZC42":{"name":"ZC42","realValue":"","viewValue":"","isReadonly":false},"ZC44":{"name":"ZC44","realValue":"","viewValue":"","isReadonly":false},"master_key":{"name":"master_key","primary":"ZC00","primaryValue":"68","value":"68"},"ZC00":{"name":"ZC00","viewValue":"68","realValue":"68"}}
+                 * formData : {"ZC01":{"name":"ZC01","realValue":"YPT20170321003","viewValue":"YPT20170321003","isReadonly":false},"ZC02":{"name":"ZC02","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false},"ZC03":{"name":"ZC03","realValue":"中国浙江省湖州市长兴县仓前街169号","viewValue":"中国浙江省湖州市长兴县仓前街169号","isReadonly":false},"ZC04":{"name":"ZC04","realValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","viewValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","isReadonly":false},"ZC05":{"name":"ZC05","realValue":"","viewValue":"","isReadonly":false},"ZC06":{"name":"ZC06","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false},"ZC07":{"name":"ZC07","realValue":"7685","viewValue":"黄利芬","isReadonly":false},"ZC08":{"name":"ZC08","realValue":"智慧雉城App","viewValue":"智慧雉城App","isReadonly":false},"ZC09":{"name":"ZC09","realValue":"2503","viewValue":"2503","isReadonly":false},"ZC10":{"name":"ZC10","realValue":"2333","viewValue":"2333","isReadonly":false},"ZC11":{"name":"ZC11","realValue":"1","viewValue":"1","isReadonly":false},"ZC12":{"name":"ZC12","realValue":"","viewValue":"","isReadonly":false},"ZC14":{"name":"ZC14","realValue":"","viewValue":"","isReadonly":false},"ZC15":{"name":"ZC15","realValue":"","viewValue":"","isReadonly":false},"ZC16":{"name":"ZC16","realValue":"11","viewValue":"雉城街道/仓前街社区/仓前街社区（第六网格）","isReadonly":false},"ZC17":{"name":"ZC17","realValue":"2087","viewValue":"破坏公共设施","isReadonly":false},"ZC18":{"name":"ZC18","realValue":"公共安全/破坏公共设施","viewValue":"公共安全/破坏公共设施","isReadonly":false},"ZC19":{"name":"ZC19","realValue":"综治办","viewValue":"综治办","isReadonly":false},"ZC20":{"name":"ZC20","realValue":"","viewValue":"","isReadonly":false},"ZC21":{"name":"ZC21","realValue":"是","viewValue":"是","isReadonly":false},"ZC22":{"name":"ZC22","realValue":"4小时","viewValue":"4小时","isReadonly":false},"ZC23":{"name":"ZC23","realValue":"","viewValue":"","isReadonly":false},"ZC24":{"name":"ZC24","realValue":"06","viewValue":"06","isReadonly":false},"ZC25":{"name":"ZC25","realValue":"","viewValue":"","isReadonly":false},"ZC26":{"name":"ZC26","realValue":"","viewValue":"","isReadonly":false},"ZC27":{"name":"ZC27","realValue":"5","viewValue":"5","isReadonly":false},"ZC28":{"name":"ZC28","realValue":"工作日","viewValue":"工作日","isReadonly":false},"ZC29":{"name":"ZC29","realValue":"119.918806","viewValue":"119.918806","isReadonly":false},"ZC30":{"name":"ZC30","realValue":"31.007465","viewValue":"31.007465","isReadonly":false},"ZC32":{"name":"ZC32","realValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","viewValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","items":[{"master_key_mobile":"%2Fv8AMgA4ADkAMgA4","fsize":"(3.22M)","viewName":"IMG_666571090.jpg","width":null,"guid":"3A39CBF7-E476-EA6D-18B4-8A78F815488C","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjg=","height":null},{"master_key_mobile":"%2Fv8AMgA4ADkAMgA5","fsize":"(3.18M)","viewName":"IMG_-896041123.jpg","width":null,"guid":"269C11D6-0A28-3CCD-8DE3-FC8001CB68C2","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjk=","height":null}],"sizeLimit":"50.0","isReadonly":false},"ZC33":{"name":"ZC33","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC34":{"name":"ZC34","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC35":{"name":"ZC35","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false},"ZC36":{"name":"ZC36","realValue":"","viewValue":"","isReadonly":false},"ZC37":{"name":"ZC37","realValue":"","viewValue":"","isReadonly":false},"ZC38":{"name":"ZC38","realValue":"2","viewValue":"2","isReadonly":false},"ZC39":{"name":"ZC39","realValue":"2503,2340","viewValue":"2503,2340","isReadonly":false},"ZC40":{"name":"ZC40","realValue":"仓前街社区第六网格,安监中心","viewValue":"仓前街社区第六网格,安监中心","isReadonly":false},"ZC41":{"name":"ZC41","realValue":"","viewValue":"","isReadonly":false},"ZC42":{"name":"ZC42","realValue":"","viewValue":"","isReadonly":false},"ZC44":{"name":"ZC44","realValue":"","viewValue":"","isReadonly":false},"master_key":{"name":"master_key","primary":"ZC00","primaryValue":"363","value":"363"},"ZC00":{"name":"ZC00","viewValue":"363","realValue":"363"}}
                  */
 
                 private FormDataBean formData;
@@ -395,49 +397,49 @@ public class OfficialDetailResponse {
 
                 public static class FormDataBean {
                     /**
-                     * ZC01 : {"name":"ZC01","realValue":"YPT20170222004","viewValue":"YPT20170222004","isReadonly":false}
-                     * ZC02 : {"name":"ZC02","realValue":"2017-02-22 04:34:10","viewValue":"2017-02-22 04:34:10","isReadonly":false}
-                     * ZC03 : {"name":"ZC03","realValue":"fdasdfqwef","viewValue":"fdasdfqwef","isReadonly":false}
-                     * ZC04 : {"name":"ZC04","realValue":"","viewValue":"","isReadonly":false}
+                     * ZC01 : {"name":"ZC01","realValue":"YPT20170321003","viewValue":"YPT20170321003","isReadonly":false}
+                     * ZC02 : {"name":"ZC02","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false}
+                     * ZC03 : {"name":"ZC03","realValue":"中国浙江省湖州市长兴县仓前街169号","viewValue":"中国浙江省湖州市长兴县仓前街169号","isReadonly":false}
+                     * ZC04 : {"name":"ZC04","realValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","viewValue":"仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。","isReadonly":false}
                      * ZC05 : {"name":"ZC05","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC06 : {"name":"ZC06","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC07 : {"name":"ZC07","realValue":"7494","viewValue":"叶思阳","isReadonly":false}
-                     * ZC08 : {"name":"ZC08","realValue":"综治App","viewValue":"综治App","isReadonly":false}
-                     * ZC09 : {"name":"ZC09","realValue":"2334","viewValue":"2334","isReadonly":false}
+                     * ZC06 : {"name":"ZC06","realValue":"2017-03-21 13:52:29","viewValue":"2017-03-21 13:52:29","isReadonly":false}
+                     * ZC07 : {"name":"ZC07","realValue":"7685","viewValue":"黄利芬","isReadonly":false}
+                     * ZC08 : {"name":"ZC08","realValue":"智慧雉城App","viewValue":"智慧雉城App","isReadonly":false}
+                     * ZC09 : {"name":"ZC09","realValue":"2503","viewValue":"2503","isReadonly":false}
                      * ZC10 : {"name":"ZC10","realValue":"2333","viewValue":"2333","isReadonly":false}
                      * ZC11 : {"name":"ZC11","realValue":"1","viewValue":"1","isReadonly":false}
                      * ZC12 : {"name":"ZC12","realValue":"","viewValue":"","isReadonly":false}
                      * ZC14 : {"name":"ZC14","realValue":"","viewValue":"","isReadonly":false}
                      * ZC15 : {"name":"ZC15","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC16 : {"name":"ZC16","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC17 : {"name":"ZC17","realValue":"2074","viewValue":"有毒有害及危险作业问题","isReadonly":false}
-                     * ZC18 : {"name":"ZC18","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC19 : {"name":"ZC19","realValue":"安检中心","viewValue":"安检中心","isReadonly":false}
+                     * ZC16 : {"name":"ZC16","realValue":"11","viewValue":"雉城街道/仓前街社区/仓前街社区（第六网格）","isReadonly":false}
+                     * ZC17 : {"name":"ZC17","realValue":"2087","viewValue":"破坏公共设施","isReadonly":false}
+                     * ZC18 : {"name":"ZC18","realValue":"公共安全/破坏公共设施","viewValue":"公共安全/破坏公共设施","isReadonly":false}
+                     * ZC19 : {"name":"ZC19","realValue":"综治办","viewValue":"综治办","isReadonly":false}
                      * ZC20 : {"name":"ZC20","realValue":"","viewValue":"","isReadonly":false}
                      * ZC21 : {"name":"ZC21","realValue":"是","viewValue":"是","isReadonly":false}
-                     * ZC22 : {"name":"ZC22","realValue":"1个工作日","viewValue":"1个工作日","isReadonly":false}
+                     * ZC22 : {"name":"ZC22","realValue":"4小时","viewValue":"4小时","isReadonly":false}
                      * ZC23 : {"name":"ZC23","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC24 : {"name":"ZC24","realValue":"04","viewValue":"04","isReadonly":false}
+                     * ZC24 : {"name":"ZC24","realValue":"06","viewValue":"06","isReadonly":false}
                      * ZC25 : {"name":"ZC25","realValue":"","viewValue":"","isReadonly":false}
                      * ZC26 : {"name":"ZC26","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC27 : {"name":"ZC27","realValue":"1","viewValue":"1","isReadonly":false}
+                     * ZC27 : {"name":"ZC27","realValue":"5","viewValue":"5","isReadonly":false}
                      * ZC28 : {"name":"ZC28","realValue":"工作日","viewValue":"工作日","isReadonly":false}
-                     * ZC29 : {"name":"ZC29","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC30 : {"name":"ZC30","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC32 : {"name":"ZC32","realValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","viewValue":"3122b3d4-2939-4fcd-a554-d2914d50a385","items":[{"master_key_mobile":"%2Fv8AMgA3ADkAMQAw","fsize":"(7.24K)","viewName":"IMG_1076319621.jpg","width":null,"guid":"FDCE8A7B-68C1-DC39-74D5-1A1C0E81E86A","ext_name":"jpg_div","time":null,"master_key":"Mjc5MTA=","height":null}],"sizeLimit":"50.0","isReadonly":false}
+                     * ZC29 : {"name":"ZC29","realValue":"119.918806","viewValue":"119.918806","isReadonly":false}
+                     * ZC30 : {"name":"ZC30","realValue":"31.007465","viewValue":"31.007465","isReadonly":false}
+                     * ZC32 : {"name":"ZC32","realValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","viewValue":"65b290e3-7cd6-4708-bd14-0ef78ce81ac2","items":[{"master_key_mobile":"%2Fv8AMgA4ADkAMgA4","fsize":"(3.22M)","viewName":"IMG_666571090.jpg","width":null,"guid":"3A39CBF7-E476-EA6D-18B4-8A78F815488C","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjg=","height":null},{"master_key_mobile":"%2Fv8AMgA4ADkAMgA5","fsize":"(3.18M)","viewName":"IMG_-896041123.jpg","width":null,"guid":"269C11D6-0A28-3CCD-8DE3-FC8001CB68C2","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjk=","height":null}],"sizeLimit":"50.0","isReadonly":false}
                      * ZC33 : {"name":"ZC33","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false}
                      * ZC34 : {"name":"ZC34","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false}
                      * ZC35 : {"name":"ZC35","realValue":"","viewValue":"","items":[],"sizeLimit":"50.0","isReadonly":false}
                      * ZC36 : {"name":"ZC36","realValue":"","viewValue":"","isReadonly":false}
                      * ZC37 : {"name":"ZC37","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC38 : {"name":"ZC38","realValue":"1","viewValue":"1","isReadonly":false}
-                     * ZC39 : {"name":"ZC39","realValue":"","viewValue":"","isReadonly":false}
-                     * ZC40 : {"name":"ZC40","realValue":"","viewValue":"","isReadonly":false}
+                     * ZC38 : {"name":"ZC38","realValue":"2","viewValue":"2","isReadonly":false}
+                     * ZC39 : {"name":"ZC39","realValue":"2503,2340","viewValue":"2503,2340","isReadonly":false}
+                     * ZC40 : {"name":"ZC40","realValue":"仓前街社区第六网格,安监中心","viewValue":"仓前街社区第六网格,安监中心","isReadonly":false}
                      * ZC41 : {"name":"ZC41","realValue":"","viewValue":"","isReadonly":false}
                      * ZC42 : {"name":"ZC42","realValue":"","viewValue":"","isReadonly":false}
                      * ZC44 : {"name":"ZC44","realValue":"","viewValue":"","isReadonly":false}
-                     * master_key : {"name":"master_key","primary":"ZC00","primaryValue":"68","value":"68"}
-                     * ZC00 : {"name":"ZC00","viewValue":"68","realValue":"68"}
+                     * master_key : {"name":"master_key","primary":"ZC00","primaryValue":"363","value":"363"}
+                     * ZC00 : {"name":"ZC00","viewValue":"363","realValue":"363"}
                      */
 
                     private ZC01Bean ZC01;
@@ -831,8 +833,8 @@ public class OfficialDetailResponse {
                     public static class ZC01Bean {
                         /**
                          * name : ZC01
-                         * realValue : YPT20170222004
-                         * viewValue : YPT20170222004
+                         * realValue : YPT20170321003
+                         * viewValue : YPT20170321003
                          * isReadonly : false
                          */
 
@@ -877,8 +879,8 @@ public class OfficialDetailResponse {
                     public static class ZC02Bean {
                         /**
                          * name : ZC02
-                         * realValue : 2017-02-22 04:34:10
-                         * viewValue : 2017-02-22 04:34:10
+                         * realValue : 2017-03-21 13:52:29
+                         * viewValue : 2017-03-21 13:52:29
                          * isReadonly : false
                          */
 
@@ -923,8 +925,8 @@ public class OfficialDetailResponse {
                     public static class ZC03Bean {
                         /**
                          * name : ZC03
-                         * realValue : fdasdfqwef
-                         * viewValue : fdasdfqwef
+                         * realValue : 中国浙江省湖州市长兴县仓前街169号
+                         * viewValue : 中国浙江省湖州市长兴县仓前街169号
                          * isReadonly : false
                          */
 
@@ -969,8 +971,8 @@ public class OfficialDetailResponse {
                     public static class ZC04Bean {
                         /**
                          * name : ZC04
-                         * realValue :
-                         * viewValue :
+                         * realValue : 仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。
+                         * viewValue : 仓前二街金阳光宾馆外墙装修板老化松动，随时可能脱落，存在安全隐患。社区已多次跟营业主联系，一直没有解决。
                          * isReadonly : false
                          */
 
@@ -1061,8 +1063,8 @@ public class OfficialDetailResponse {
                     public static class ZC06Bean {
                         /**
                          * name : ZC06
-                         * realValue :
-                         * viewValue :
+                         * realValue : 2017-03-21 13:52:29
+                         * viewValue : 2017-03-21 13:52:29
                          * isReadonly : false
                          */
 
@@ -1107,8 +1109,8 @@ public class OfficialDetailResponse {
                     public static class ZC07Bean {
                         /**
                          * name : ZC07
-                         * realValue : 7494
-                         * viewValue : 叶思阳
+                         * realValue : 7685
+                         * viewValue : 黄利芬
                          * isReadonly : false
                          */
 
@@ -1153,8 +1155,8 @@ public class OfficialDetailResponse {
                     public static class ZC08Bean {
                         /**
                          * name : ZC08
-                         * realValue : 综治App
-                         * viewValue : 综治App
+                         * realValue : 智慧雉城App
+                         * viewValue : 智慧雉城App
                          * isReadonly : false
                          */
 
@@ -1199,8 +1201,8 @@ public class OfficialDetailResponse {
                     public static class ZC09Bean {
                         /**
                          * name : ZC09
-                         * realValue : 2334
-                         * viewValue : 2334
+                         * realValue : 2503
+                         * viewValue : 2503
                          * isReadonly : false
                          */
 
@@ -1475,8 +1477,8 @@ public class OfficialDetailResponse {
                     public static class ZC16Bean {
                         /**
                          * name : ZC16
-                         * realValue :
-                         * viewValue :
+                         * realValue : 11
+                         * viewValue : 雉城街道/仓前街社区/仓前街社区（第六网格）
                          * isReadonly : false
                          */
 
@@ -1521,8 +1523,8 @@ public class OfficialDetailResponse {
                     public static class ZC17Bean {
                         /**
                          * name : ZC17
-                         * realValue : 2074
-                         * viewValue : 有毒有害及危险作业问题
+                         * realValue : 2087
+                         * viewValue : 破坏公共设施
                          * isReadonly : false
                          */
 
@@ -1567,8 +1569,8 @@ public class OfficialDetailResponse {
                     public static class ZC18Bean {
                         /**
                          * name : ZC18
-                         * realValue :
-                         * viewValue :
+                         * realValue : 公共安全/破坏公共设施
+                         * viewValue : 公共安全/破坏公共设施
                          * isReadonly : false
                          */
 
@@ -1613,8 +1615,8 @@ public class OfficialDetailResponse {
                     public static class ZC19Bean {
                         /**
                          * name : ZC19
-                         * realValue : 安检中心
-                         * viewValue : 安检中心
+                         * realValue : 综治办
+                         * viewValue : 综治办
                          * isReadonly : false
                          */
 
@@ -1751,8 +1753,8 @@ public class OfficialDetailResponse {
                     public static class ZC22Bean {
                         /**
                          * name : ZC22
-                         * realValue : 1个工作日
-                         * viewValue : 1个工作日
+                         * realValue : 4小时
+                         * viewValue : 4小时
                          * isReadonly : false
                          */
 
@@ -1843,8 +1845,8 @@ public class OfficialDetailResponse {
                     public static class ZC24Bean {
                         /**
                          * name : ZC24
-                         * realValue : 04
-                         * viewValue : 04
+                         * realValue : 06
+                         * viewValue : 06
                          * isReadonly : false
                          */
 
@@ -1981,8 +1983,8 @@ public class OfficialDetailResponse {
                     public static class ZC27Bean {
                         /**
                          * name : ZC27
-                         * realValue : 1
-                         * viewValue : 1
+                         * realValue : 5
+                         * viewValue : 5
                          * isReadonly : false
                          */
 
@@ -2073,8 +2075,8 @@ public class OfficialDetailResponse {
                     public static class ZC29Bean {
                         /**
                          * name : ZC29
-                         * realValue :
-                         * viewValue :
+                         * realValue : 119.918806
+                         * viewValue : 119.918806
                          * isReadonly : false
                          */
 
@@ -2119,8 +2121,8 @@ public class OfficialDetailResponse {
                     public static class ZC30Bean {
                         /**
                          * name : ZC30
-                         * realValue :
-                         * viewValue :
+                         * realValue : 31.007465
+                         * viewValue : 31.007465
                          * isReadonly : false
                          */
 
@@ -2165,9 +2167,9 @@ public class OfficialDetailResponse {
                     public static class ZC32Bean {
                         /**
                          * name : ZC32
-                         * realValue : 3122b3d4-2939-4fcd-a554-d2914d50a385
-                         * viewValue : 3122b3d4-2939-4fcd-a554-d2914d50a385
-                         * items : [{"master_key_mobile":"%2Fv8AMgA3ADkAMQAw","fsize":"(7.24K)","viewName":"IMG_1076319621.jpg","width":null,"guid":"FDCE8A7B-68C1-DC39-74D5-1A1C0E81E86A","ext_name":"jpg_div","time":null,"master_key":"Mjc5MTA=","height":null}]
+                         * realValue : 65b290e3-7cd6-4708-bd14-0ef78ce81ac2
+                         * viewValue : 65b290e3-7cd6-4708-bd14-0ef78ce81ac2
+                         * items : [{"master_key_mobile":"%2Fv8AMgA4ADkAMgA4","fsize":"(3.22M)","viewName":"IMG_666571090.jpg","width":null,"guid":"3A39CBF7-E476-EA6D-18B4-8A78F815488C","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjg=","height":null},{"master_key_mobile":"%2Fv8AMgA4ADkAMgA5","fsize":"(3.18M)","viewName":"IMG_-896041123.jpg","width":null,"guid":"269C11D6-0A28-3CCD-8DE3-FC8001CB68C2","ext_name":"jpg_div","time":null,"master_key":"Mjg5Mjk=","height":null}]
                          * sizeLimit : 50.0
                          * isReadonly : false
                          */
@@ -2229,14 +2231,14 @@ public class OfficialDetailResponse {
 
                         public static class ItemsBean {
                             /**
-                             * master_key_mobile : %2Fv8AMgA3ADkAMQAw
-                             * fsize : (7.24K)
-                             * viewName : IMG_1076319621.jpg
+                             * master_key_mobile : %2Fv8AMgA4ADkAMgA4
+                             * fsize : (3.22M)
+                             * viewName : IMG_666571090.jpg
                              * width : null
-                             * guid : FDCE8A7B-68C1-DC39-74D5-1A1C0E81E86A
+                             * guid : 3A39CBF7-E476-EA6D-18B4-8A78F815488C
                              * ext_name : jpg_div
                              * time : null
-                             * master_key : Mjc5MTA=
+                             * master_key : Mjg5Mjg=
                              * height : null
                              */
 
@@ -2617,8 +2619,8 @@ public class OfficialDetailResponse {
                     public static class ZC38Bean {
                         /**
                          * name : ZC38
-                         * realValue : 1
-                         * viewValue : 1
+                         * realValue : 2
+                         * viewValue : 2
                          * isReadonly : false
                          */
 
@@ -2663,8 +2665,8 @@ public class OfficialDetailResponse {
                     public static class ZC39Bean {
                         /**
                          * name : ZC39
-                         * realValue :
-                         * viewValue :
+                         * realValue : 2503,2340
+                         * viewValue : 2503,2340
                          * isReadonly : false
                          */
 
@@ -2709,8 +2711,8 @@ public class OfficialDetailResponse {
                     public static class ZC40Bean {
                         /**
                          * name : ZC40
-                         * realValue :
-                         * viewValue :
+                         * realValue : 仓前街社区第六网格,安监中心
+                         * viewValue : 仓前街社区第六网格,安监中心
                          * isReadonly : false
                          */
 
@@ -2894,8 +2896,8 @@ public class OfficialDetailResponse {
                         /**
                          * name : master_key
                          * primary : ZC00
-                         * primaryValue : 68
-                         * value : 68
+                         * primaryValue : 363
+                         * value : 363
                          */
 
                         private String name;
@@ -2939,8 +2941,8 @@ public class OfficialDetailResponse {
                     public static class ZC00Bean {
                         /**
                          * name : ZC00
-                         * viewValue : 68
-                         * realValue : 68
+                         * viewValue : 363
+                         * realValue : 363
                          */
 
                         private String name;
@@ -2976,107 +2978,60 @@ public class OfficialDetailResponse {
 
             public static class MapBean {
                 /**
-                 * eventAddress : fdasdfqwef
+                 * eventAddress :
                  * businessTable : FE_APP5.ZZ_CASE
-                 * businessTableId : 68
+                 * businessTableId : 363
                  * lon :
-                 * type : 201702160953150
-                 * reportPerson :
+                 * type : 2
                  * itemCon :
-                 * sendTime : 2017-02-22 17:34
-                 * eventNote :
-                 * reportChannel : 综治App
+                 * tnnodeenddate :
                  * reportDate :
-                 * grid :
-                 * itemClass :
+                 * pretype :
                  * eventDescription :
                  * showPageId : 201702160953150
                  * lat :
-                 * taskId : 124
-                 * eventDate : 2017-02-22 04:34:10.0
+                 * reportPersonPhone :
+                 * flowEndTime :
+                 * precon :
+                 * tnnodestartdate : 2017-03-21 14:50:25.0
+                 * reportPerson :
+                 * sendTime : 2017-03-21 14:50
+                 * eventNote :
+                 * reportChannel :
+                 * grid :
+                 * itemClass :
+                 * flowStartTime :
+                 * flowStatus :
+                 * taskId : 488
+                 * eventDate :
                  */
 
                 private String eventAddress;
-                private String reportPersonPhone;
                 private String businessTable;
-                private String flowEndTime;
-                private String importance;
                 private String businessTableId;
-                private String sendUser;
                 private String lon;
-                private String title;
-                private String type;
-                private String reportPerson;
+                private int type;
                 private String itemCon;
+                private String tnnodeenddate;
+                private String reportDate;
+                private String pretype;
+                private String eventDescription;
+                private String showPageId;
+                private String lat;
+                private String reportPersonPhone;
+                private String flowEndTime;
+                private String precon;
+                private String tnnodestartdate;
+                private String reportPerson;
                 private String sendTime;
                 private String eventNote;
                 private String reportChannel;
-                private String reportDate;
                 private String grid;
                 private String itemClass;
-                private String eventDescription;
-                private String showPageId;
                 private String flowStartTime;
                 private String flowStatus;
-                private String lat;
                 private String taskId;
                 private String eventDate;
-
-                public String getReportPersonPhone() {
-                    return reportPersonPhone;
-                }
-
-                public void setReportPersonPhone(String reportPersonPhone) {
-                    this.reportPersonPhone = reportPersonPhone;
-                }
-
-                public String getFlowEndTime() {
-                    return flowEndTime;
-                }
-
-                public void setFlowEndTime(String flowEndTime) {
-                    this.flowEndTime = flowEndTime;
-                }
-
-                public String getImportance() {
-                    return importance;
-                }
-
-                public void setImportance(String importance) {
-                    this.importance = importance;
-                }
-
-                public String getSendUser() {
-                    return sendUser;
-                }
-
-                public void setSendUser(String sendUser) {
-                    this.sendUser = sendUser;
-                }
-
-                public String getTitle() {
-                    return title;
-                }
-
-                public void setTitle(String title) {
-                    this.title = title;
-                }
-
-                public String getFlowStartTime() {
-                    return flowStartTime;
-                }
-
-                public void setFlowStartTime(String flowStartTime) {
-                    this.flowStartTime = flowStartTime;
-                }
-
-                public String getFlowStatus() {
-                    return flowStatus;
-                }
-
-                public void setFlowStatus(String flowStatus) {
-                    this.flowStatus = flowStatus;
-                }
 
                 public String getEventAddress() {
                     return eventAddress;
@@ -3110,20 +3065,12 @@ public class OfficialDetailResponse {
                     this.lon = lon;
                 }
 
-                public String getType() {
+                public int getType() {
                     return type;
                 }
 
-                public void setType(String type) {
+                public void setType(int type) {
                     this.type = type;
-                }
-
-                public String getReportPerson() {
-                    return reportPerson;
-                }
-
-                public void setReportPerson(String reportPerson) {
-                    this.reportPerson = reportPerson;
                 }
 
                 public String getItemCon() {
@@ -3134,28 +3081,12 @@ public class OfficialDetailResponse {
                     this.itemCon = itemCon;
                 }
 
-                public String getSendTime() {
-                    return sendTime;
+                public String getTnnodeenddate() {
+                    return tnnodeenddate;
                 }
 
-                public void setSendTime(String sendTime) {
-                    this.sendTime = sendTime;
-                }
-
-                public String getEventNote() {
-                    return eventNote;
-                }
-
-                public void setEventNote(String eventNote) {
-                    this.eventNote = eventNote;
-                }
-
-                public String getReportChannel() {
-                    return reportChannel;
-                }
-
-                public void setReportChannel(String reportChannel) {
-                    this.reportChannel = reportChannel;
+                public void setTnnodeenddate(String tnnodeenddate) {
+                    this.tnnodeenddate = tnnodeenddate;
                 }
 
                 public String getReportDate() {
@@ -3166,20 +3097,12 @@ public class OfficialDetailResponse {
                     this.reportDate = reportDate;
                 }
 
-                public String getGrid() {
-                    return grid;
+                public String getPretype() {
+                    return pretype;
                 }
 
-                public void setGrid(String grid) {
-                    this.grid = grid;
-                }
-
-                public String getItemClass() {
-                    return itemClass;
-                }
-
-                public void setItemClass(String itemClass) {
-                    this.itemClass = itemClass;
+                public void setPretype(String pretype) {
+                    this.pretype = pretype;
                 }
 
                 public String getEventDescription() {
@@ -3206,6 +3129,102 @@ public class OfficialDetailResponse {
                     this.lat = lat;
                 }
 
+                public String getReportPersonPhone() {
+                    return reportPersonPhone;
+                }
+
+                public void setReportPersonPhone(String reportPersonPhone) {
+                    this.reportPersonPhone = reportPersonPhone;
+                }
+
+                public String getFlowEndTime() {
+                    return flowEndTime;
+                }
+
+                public void setFlowEndTime(String flowEndTime) {
+                    this.flowEndTime = flowEndTime;
+                }
+
+                public String getPrecon() {
+                    return precon;
+                }
+
+                public void setPrecon(String precon) {
+                    this.precon = precon;
+                }
+
+                public String getTnnodestartdate() {
+                    return tnnodestartdate;
+                }
+
+                public void setTnnodestartdate(String tnnodestartdate) {
+                    this.tnnodestartdate = tnnodestartdate;
+                }
+
+                public String getReportPerson() {
+                    return reportPerson;
+                }
+
+                public void setReportPerson(String reportPerson) {
+                    this.reportPerson = reportPerson;
+                }
+
+                public String getSendTime() {
+                    return sendTime;
+                }
+
+                public void setSendTime(String sendTime) {
+                    this.sendTime = sendTime;
+                }
+
+                public String getEventNote() {
+                    return eventNote;
+                }
+
+                public void setEventNote(String eventNote) {
+                    this.eventNote = eventNote;
+                }
+
+                public String getReportChannel() {
+                    return reportChannel;
+                }
+
+                public void setReportChannel(String reportChannel) {
+                    this.reportChannel = reportChannel;
+                }
+
+                public String getGrid() {
+                    return grid;
+                }
+
+                public void setGrid(String grid) {
+                    this.grid = grid;
+                }
+
+                public String getItemClass() {
+                    return itemClass;
+                }
+
+                public void setItemClass(String itemClass) {
+                    this.itemClass = itemClass;
+                }
+
+                public String getFlowStartTime() {
+                    return flowStartTime;
+                }
+
+                public void setFlowStartTime(String flowStartTime) {
+                    this.flowStartTime = flowStartTime;
+                }
+
+                public String getFlowStatus() {
+                    return flowStatus;
+                }
+
+                public void setFlowStatus(String flowStatus) {
+                    this.flowStatus = flowStatus;
+                }
+
                 public String getTaskId() {
                     return taskId;
                 }
@@ -3225,11 +3244,11 @@ public class OfficialDetailResponse {
 
             public static class AttachmentsBean {
                 /**
-                 * id : /v8AMgA3ADkAMQAw
-                 * name : IMG_1076319621.jpg
-                 * size : 7.24K
+                 * id : /v8AMgA4ADkAMgA4
+                 * name : IMG_666571090.jpg
+                 * size : 3.22M
                  * type : 1
-                 * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw
+                 * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMgA4
                  */
 
                 private String id;
@@ -3276,6 +3295,172 @@ public class OfficialDetailResponse {
 
                 public void setHref(String href) {
                     this.href = href;
+                }
+            }
+
+            public static class RepliesBean implements Serializable{
+                /**
+                 * id : 1224
+                 * nodeName : 镇街受理员立案
+                 * content : 社区协商多次没有解决，申请协调。
+                 * writtenGUID :
+                 * writtenContentHref : []
+                 * sendTime : 2017-03-21 14:50
+                 * sendUserID : 7677
+                 * sendUser : 黄燕
+                 * sendUserImg : /UserUploadFile/photo/photo.png
+                 * attitude :
+                 * isHidden :
+                 * isTemporary : 0
+                 * attachments : []
+                 * hasAttachment : 0
+                 * hasReply : 0
+                 * tips :
+                 */
+
+                private String id;
+                private String nodeName;
+                private String content;
+                private String writtenGUID;
+                private String sendTime;
+                private String sendUserID;
+                private String sendUser;
+                private String sendUserImg;
+                private String attitude;
+                private String isHidden;
+                private String isTemporary;
+                private String hasAttachment;
+                private String hasReply;
+                private String tips;
+                private List<?> writtenContentHref;
+                private List<?> attachments;
+
+                public String getId() {
+                    return id;
+                }
+
+                public void setId(String id) {
+                    this.id = id;
+                }
+
+                public String getNodeName() {
+                    return nodeName;
+                }
+
+                public void setNodeName(String nodeName) {
+                    this.nodeName = nodeName;
+                }
+
+                public String getContent() {
+                    return content;
+                }
+
+                public void setContent(String content) {
+                    this.content = content;
+                }
+
+                public String getWrittenGUID() {
+                    return writtenGUID;
+                }
+
+                public void setWrittenGUID(String writtenGUID) {
+                    this.writtenGUID = writtenGUID;
+                }
+
+                public String getSendTime() {
+                    return sendTime;
+                }
+
+                public void setSendTime(String sendTime) {
+                    this.sendTime = sendTime;
+                }
+
+                public String getSendUserID() {
+                    return sendUserID;
+                }
+
+                public void setSendUserID(String sendUserID) {
+                    this.sendUserID = sendUserID;
+                }
+
+                public String getSendUser() {
+                    return sendUser;
+                }
+
+                public void setSendUser(String sendUser) {
+                    this.sendUser = sendUser;
+                }
+
+                public String getSendUserImg() {
+                    return sendUserImg;
+                }
+
+                public void setSendUserImg(String sendUserImg) {
+                    this.sendUserImg = sendUserImg;
+                }
+
+                public String getAttitude() {
+                    return attitude;
+                }
+
+                public void setAttitude(String attitude) {
+                    this.attitude = attitude;
+                }
+
+                public String getIsHidden() {
+                    return isHidden;
+                }
+
+                public void setIsHidden(String isHidden) {
+                    this.isHidden = isHidden;
+                }
+
+                public String getIsTemporary() {
+                    return isTemporary;
+                }
+
+                public void setIsTemporary(String isTemporary) {
+                    this.isTemporary = isTemporary;
+                }
+
+                public String getHasAttachment() {
+                    return hasAttachment;
+                }
+
+                public void setHasAttachment(String hasAttachment) {
+                    this.hasAttachment = hasAttachment;
+                }
+
+                public String getHasReply() {
+                    return hasReply;
+                }
+
+                public void setHasReply(String hasReply) {
+                    this.hasReply = hasReply;
+                }
+
+                public String getTips() {
+                    return tips;
+                }
+
+                public void setTips(String tips) {
+                    this.tips = tips;
+                }
+
+                public List<?> getWrittenContentHref() {
+                    return writtenContentHref;
+                }
+
+                public void setWrittenContentHref(List<?> writtenContentHref) {
+                    this.writtenContentHref = writtenContentHref;
+                }
+
+                public List<?> getAttachments() {
+                    return attachments;
+                }
+
+                public void setAttachments(List<?> attachments) {
+                    this.attachments = attachments;
                 }
             }
         }

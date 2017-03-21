@@ -66,7 +66,7 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (mData != null){
             if (holder instanceof HeaderViewHolder){
-                ((HeaderViewHolder) holder).NumberId.setText(mData.getIq().getQuery().getMap().getTitle());
+                ((HeaderViewHolder) holder).NumberId.setText(mData.getIq().getQuery().getTitle());
             }else if (holder instanceof ShowBoxViewHolder){
                 switch (position){
                     case 1:
@@ -79,15 +79,12 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         break;
                     case 3:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        if(mData.getIq().getQuery().getMap().getType() != null){
-                            if(mData.getIq().getQuery().getMap().getType().equals("1")){
-                                ((ShowBoxViewHolder) holder).tagContent.setText("立案核实");
-                            }else if(mData.getIq().getQuery().getMap().getType().equals("2")){
-                                ((ShowBoxViewHolder) holder).tagContent.setText("事件处置");
-                            }else if(mData.getIq().getQuery().getMap().getType().equals("3")){
-                                ((ShowBoxViewHolder) holder).tagContent.setText("结案核实");
-                            }
-
+                        if(mData.getIq().getQuery().getMap().getType() == 1){
+                            ((ShowBoxViewHolder) holder).tagContent.setText("立案核实");
+                        }else if(mData.getIq().getQuery().getMap().getType() == 2){
+                            ((ShowBoxViewHolder) holder).tagContent.setText("事件处置");
+                        }else if(mData.getIq().getQuery().getMap().getType() == 3){
+                            ((ShowBoxViewHolder) holder).tagContent.setText("结案核实");
                         }
                         break;
                     case 4:
@@ -104,7 +101,7 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         break;
                     case 7:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[0]);
-                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getMap().getSendUser());
+                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
                         break;
                     case 8:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[1]);

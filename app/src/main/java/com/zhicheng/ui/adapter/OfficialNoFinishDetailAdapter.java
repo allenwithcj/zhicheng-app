@@ -1,5 +1,6 @@
 package com.zhicheng.ui.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,11 @@ import com.bumptech.glide.Glide;
 import com.zhicheng.R;
 import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.common.URL;
+import com.zhicheng.ui.activity.ReplyActivity;
 import com.zhicheng.utils.common.UIUtils;
+
+import java.io.Serializable;
+import java.util.List;
 
 import me.codeboy.android.aligntextview.CBAlignTextView;
 
@@ -79,7 +84,16 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
         if (mData != null){
             if (holder instanceof HeaderViewHolder){
                 ((HeaderViewHolder) holder).NumberId.setText(mData.getIq().getQuery().getFormData().getFormData().getZC01().getViewValue());
-                ((HeaderViewHolder) holder).related_matters.setText("相关事项···");
+                if(mData.getIq().getQuery().getReplies() != null){
+                    ((HeaderViewHolder) holder).replies.setVisibility(View.VISIBLE);
+                    ((HeaderViewHolder) holder).replies.setText(mData.getIq().getQuery().getReplies().size()+"条回复");
+                    ((HeaderViewHolder) holder).replies.setOnClickListener(view -> {
+                        List<OfficialDetailResponse.IqBean.QueryBean.RepliesBean> mRepliesBeanList = mData.getIq().getQuery().getReplies();
+                        Intent intent = new Intent(holder.itemView.getContext(), ReplyActivity.class);
+                        intent.putExtra("replies", (Serializable) mRepliesBeanList);
+                        UIUtils.startActivity(intent);
+                    });
+                }
             }else if (holder instanceof ShowBoxViewHolder){
                 switch (position){
                     case 1:
@@ -92,11 +106,11 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                         break;
                     case 3:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        if(mData.getIq().getQuery().getMap().getType().equals("1")){
+                        if(mData.getIq().getQuery().getMap().getType() == 1){
                             ((ShowBoxViewHolder) holder).tagContent.setText("立案核实");
-                        }else if(mData.getIq().getQuery().getMap().getType().equals("2")){
+                        }else if(mData.getIq().getQuery().getMap().getType() == 2){
                             ((ShowBoxViewHolder) holder).tagContent.setText("事件处置");
-                        }else if(mData.getIq().getQuery().getMap().getType().equals("3")){
+                        }else if(mData.getIq().getQuery().getMap().getType() == 3){
                             ((ShowBoxViewHolder) holder).tagContent.setText("结案核实");
                         }
 
@@ -263,12 +277,12 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
 
         private TextView NumberId;
-        private TextView related_matters;
+        private TextView replies;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
             NumberId = (TextView) itemView.findViewById(R.id.NumberId);
-            related_matters = (TextView) itemView.findViewById(R.id.related_matters);
+            replies = (TextView) itemView.findViewById(R.id.replies);
         }
     }
 
