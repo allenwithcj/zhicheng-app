@@ -8,8 +8,9 @@ import java.util.List;
 
 public class CommonResponse {
 
+
     /**
-     * iq : {"query":{"data":{"caseReportTotal":3,"gridReportTotal":0,"cases":[{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANwA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA2","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANwA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA3","type":"1"}],"itemcon":"grrwrgewrgewgrewgr","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANAA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANAA5","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANQAw","type":"1"}],"itemcon":"fqwefqwefqwefq","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw","type":"1"}],"itemcon":"了解","itemaddress":"fdasdfqwef","itemtime":""}],"weekDoneTotal":1,"daiBanTotal":0},"errorMessage":"成功","errorCode":0},"namespace":"NewsCaseTotalResponse"}
+     * iq : {"query":{"data":{"caseReportTotal":1,"gridReportTotal":0,"cases":[{"attachments":[{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}],"itemcon":"在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集","itemaddress":"中国浙江省湖州市长兴县金莲桥弄","itemtime":"2017-03-21 09:02:54.0"}],"weekDoneTotal":0,"noticeTotal":0,"daiBanTotal":0},"errorMessage":"成功","errorCode":0},"namespace":"NewsCaseTotalResponse"}
      */
 
     private IqBean iq;
@@ -24,7 +25,7 @@ public class CommonResponse {
 
     public static class IqBean {
         /**
-         * query : {"data":{"caseReportTotal":3,"gridReportTotal":0,"cases":[{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANwA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA2","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANwA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA3","type":"1"}],"itemcon":"grrwrgewrgewgrewgr","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANAA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANAA5","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANQAw","type":"1"}],"itemcon":"fqwefqwefqwefq","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw","type":"1"}],"itemcon":"了解","itemaddress":"fdasdfqwef","itemtime":""}],"weekDoneTotal":1,"daiBanTotal":0},"errorMessage":"成功","errorCode":0}
+         * query : {"data":{"caseReportTotal":1,"gridReportTotal":0,"cases":[{"attachments":[{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}],"itemcon":"在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集","itemaddress":"中国浙江省湖州市长兴县金莲桥弄","itemtime":"2017-03-21 09:02:54.0"}],"weekDoneTotal":0,"noticeTotal":0,"daiBanTotal":0},"errorMessage":"成功","errorCode":0}
          * namespace : NewsCaseTotalResponse
          */
 
@@ -49,7 +50,7 @@ public class CommonResponse {
 
         public static class QueryBean {
             /**
-             * data : {"caseReportTotal":3,"gridReportTotal":0,"cases":[{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANwA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA2","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANwA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA3","type":"1"}],"itemcon":"grrwrgewrgewgrewgr","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANAA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANAA5","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANQAw","type":"1"}],"itemcon":"fqwefqwefqwefq","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw","type":"1"}],"itemcon":"了解","itemaddress":"fdasdfqwef","itemtime":""}],"weekDoneTotal":1,"daiBanTotal":0}
+             * data : {"caseReportTotal":1,"gridReportTotal":0,"cases":[{"attachments":[{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}],"itemcon":"在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集","itemaddress":"中国浙江省湖州市长兴县金莲桥弄","itemtime":"2017-03-21 09:02:54.0"}],"weekDoneTotal":0,"noticeTotal":0,"daiBanTotal":0}
              * errorMessage : 成功
              * errorCode : 0
              */
@@ -84,17 +85,18 @@ public class CommonResponse {
 
             public static class DataBean {
                 /**
-                 * caseReportTotal : 3
+                 * caseReportTotal : 1
                  * gridReportTotal : 0
-                 * cases : [{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANwA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA2","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANwA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA3","type":"1"}],"itemcon":"grrwrgewrgewgrewgr","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANAA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANAA5","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANQAw","type":"1"}],"itemcon":"fqwefqwefqwefq","itemaddress":"","itemtime":""},{"attachments":[{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkAMQAw","type":"1"}],"itemcon":"了解","itemaddress":"fdasdfqwef","itemtime":""}]
-                 * weekDoneTotal : 1
+                 * cases : [{"attachments":[{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}],"itemcon":"在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集","itemaddress":"中国浙江省湖州市长兴县金莲桥弄","itemtime":"2017-03-21 09:02:54.0"}]
+                 * weekDoneTotal : 0
+                 * noticeTotal : 0
                  * daiBanTotal : 0
                  */
 
                 private int caseReportTotal;
-                private int noticeTotal;
                 private int gridReportTotal;
                 private int weekDoneTotal;
+                private int noticeTotal;
                 private int daiBanTotal;
                 private List<CasesBean> cases;
 
@@ -104,14 +106,6 @@ public class CommonResponse {
 
                 public void setCaseReportTotal(int caseReportTotal) {
                     this.caseReportTotal = caseReportTotal;
-                }
-
-                public int getNoticeTotal() {
-                    return noticeTotal;
-                }
-
-                public void setNoticeTotal(int noticeTotal) {
-                    this.noticeTotal = noticeTotal;
                 }
 
                 public int getGridReportTotal() {
@@ -128,6 +122,14 @@ public class CommonResponse {
 
                 public void setWeekDoneTotal(int weekDoneTotal) {
                     this.weekDoneTotal = weekDoneTotal;
+                }
+
+                public int getNoticeTotal() {
+                    return noticeTotal;
+                }
+
+                public void setNoticeTotal(int noticeTotal) {
+                    this.noticeTotal = noticeTotal;
                 }
 
                 public int getDaiBanTotal() {
@@ -148,10 +150,10 @@ public class CommonResponse {
 
                 public static class CasesBean {
                     /**
-                     * attachments : [{"size":"7.24K","name":"IMG_1076319621.jpg","id":"/v8AMgA3ADkANwA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA2","type":"1"},{"size":"7.28K","name":"IMG_-1055677178.jpg","id":"/v8AMgA3ADkANwA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA3","type":"1"}]
-                     * itemcon : grrwrgewrgewgrewgr
-                     * itemaddress :
-                     * itemtime :
+                     * attachments : [{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}]
+                     * itemcon : 在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集
+                     * itemaddress : 中国浙江省湖州市长兴县金莲桥弄
+                     * itemtime : 2017-03-21 09:02:54.0
                      */
 
                     private String itemcon;
@@ -193,10 +195,10 @@ public class CommonResponse {
 
                     public static class AttachmentsBean {
                         /**
-                         * size : 7.24K
-                         * name : IMG_1076319621.jpg
-                         * id : /v8AMgA3ADkANwA2
-                         * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA3ADkANwA2
+                         * size : 5.82M
+                         * name : IMG_20170321_085745.jpg
+                         * id : /v8AMgA4ADkAMQAw
+                         * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw
                          * type : 1
                          */
 

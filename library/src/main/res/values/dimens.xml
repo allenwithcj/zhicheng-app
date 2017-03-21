@@ -4,6 +4,8 @@
     <dimen name="activity_vertical_margin">8dp</dimen>
     <dimen name="activity_padding">12dp</dimen>
     <dimen name="textView_padding">8dp</dimen>
+    <dimen name="small_textView_padding">5dp</dimen>
+    <dimen name="xsmall_textView_padding">2dp</dimen>
     <dimen name="ui_10_dip">10dp</dimen>
     <dimen name="fab_margin">0dp</dimen>
     <dimen name="title_text_size">18sp</dimen>

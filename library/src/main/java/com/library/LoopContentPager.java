@@ -82,7 +82,7 @@ public class LoopContentPager extends FrameLayout {
     }
 
     private void setContentImages(List<View> images){
-        for (int i=0;i<DataNum;i++){
+        for (int i=0;i< DataNum;i++){
             View view = LayoutInflater.from(getContext()).inflate(R.layout.viewpager_content,null);
             ViewGroup.LayoutParams params = mViewPager.getLayoutParams();
             view.setLayoutParams(params);
@@ -167,15 +167,49 @@ public class LoopContentPager extends FrameLayout {
                     mViewHolder = new ViewHolder();
                 }
                 initView(position);
-                Glide.with(getContext())
-                        .load(mDataViewList.getImgs().get(position))
-                        .placeholder(R.drawable.welcome)
-                        .error(R.drawable.welcome)
-                        .centerCrop()
-                        .into(mViewHolder.img);
-                mViewHolder.mContent.setText(mDataViewList.getmContents().get(position));
-                mViewHolder.mLocation.setText(mDataViewList.getmLocation().get(position));
-                mViewHolder.mTime.setText(mDataViewList.getmTime().get(position));
+                if(mDataViewList.getImgs().size() == 3){
+                    Glide.with(getContext())
+                            .load(mDataViewList.getImgs().get(position))
+                            .placeholder(R.drawable.welcome)
+                            .error(R.drawable.welcome)
+                            .centerCrop()
+                            .into(mViewHolder.img);
+                    mViewHolder.mContent.setText(mDataViewList.getmContents().get(position));
+                    mViewHolder.mLocation.setText(mDataViewList.getmLocation().get(position));
+                    mViewHolder.mTime.setText(mDataViewList.getmTime().get(position));
+                }else if(mDataViewList.getImgs().size() == 2){
+                    if(position == 0){
+                        Glide.with(getContext())
+                                .load(mDataViewList.getImgs().get(0))
+                                .placeholder(R.drawable.welcome)
+                                .error(R.drawable.welcome)
+                                .centerCrop()
+                                .into(mViewHolder.img);
+                        mViewHolder.mContent.setText(mDataViewList.getmContents().get(0));
+                        mViewHolder.mLocation.setText(mDataViewList.getmLocation().get(0));
+                        mViewHolder.mTime.setText(mDataViewList.getmTime().get(0));
+                    }else if(position == 1){
+                        Glide.with(getContext())
+                                .load(mDataViewList.getImgs().get(1))
+                                .placeholder(R.drawable.welcome)
+                                .error(R.drawable.welcome)
+                                .centerCrop()
+                                .into(mViewHolder.img);
+                        mViewHolder.mContent.setText(mDataViewList.getmContents().get(1));
+                        mViewHolder.mLocation.setText(mDataViewList.getmLocation().get(1));
+                        mViewHolder.mTime.setText(mDataViewList.getmTime().get(1));
+                    }
+                }else if(mDataViewList.getImgs().size() == 1){
+                    Glide.with(getContext())
+                            .load(mDataViewList.getImgs().get(0))
+                            .placeholder(R.drawable.welcome)
+                            .error(R.drawable.welcome)
+                            .centerCrop()
+                            .into(mViewHolder.img);
+                    mViewHolder.mContent.setText(mDataViewList.getmContents().get(0));
+                    mViewHolder.mLocation.setText(mDataViewList.getmLocation().get(0));
+                    mViewHolder.mTime.setText(mDataViewList.getmTime().get(0));
+                }
 
             }
             container.addView(images.get(position));
