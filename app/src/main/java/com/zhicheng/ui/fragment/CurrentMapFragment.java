@@ -29,6 +29,7 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.zhicheng.R;
 import com.zhicheng.utils.BDLocationInit;
+import com.zhicheng.utils.common.PermissionUtils;
 
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class CurrentMapFragment extends BaseFragment{
 
     @Override
     protected void initEvents() {
+        PermissionUtils.requestLocationPermission(getActivity());
         mMapView = (MapView) mRootView.findViewById(R.id.map);
         request_location = (ImageButton)mRootView.findViewById(R.id.request_location);
         mBaiduMap = mMapView.getMap();

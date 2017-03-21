@@ -35,6 +35,7 @@ import com.zhicheng.bean.json.OfficialQueryRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.utils.BDLocationInit;
 import com.zhicheng.utils.common.NotificationUtils;
+import com.zhicheng.utils.common.PermissionUtils;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.util.List;
@@ -89,7 +90,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     protected void initData() {
-
+        PermissionUtils.requestLocationPermission(this);
     }
 
 

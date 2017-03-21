@@ -40,7 +40,8 @@
                 android:background="@drawable/i_show_deal"
                 android:textColor="@color/white"
                 android:gravity="center"
-                android:textSize="@dimen/badge_text_size" />
+                android:textSize="@dimen/badge_text_size"
+                android:visibility="gone"/>
         </FrameLayout>
         <FrameLayout
             android:layout_width="0dp"
@@ -162,6 +163,7 @@
                 android:background="@drawable/i_show_deal"
                 android:textColor="@color/white"
                 android:gravity="center"
+                android:visibility="gone"
                 android:textSize="@dimen/badge_text_size" />
         </FrameLayout>
 

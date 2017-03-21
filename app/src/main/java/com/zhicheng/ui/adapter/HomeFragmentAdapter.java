@@ -93,18 +93,22 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                         img.add(URL.HOST_URL_SERVER_ZHICHENG + c.getAttachments().get(0).getHref());
                         content.add(c.getItemcon());
                         location.add(c.getItemaddress());
-                        time.add(c.getItemtime());
+                        if(c.getItemtime() !=null){
+                            time.add(c.getItemtime().substring(0,c.getItemtime().length()-2));
+                        }
                     }
                     ((TopListViewHolder) holder).mLoopViewPager.setDataViewList(img,content,location,time);
                 }
             }else if (holder instanceof ButtonGroupViewHolder){
                 if (mainResponses.getIq().getQuery().getData() != null){
                     if (mainResponses.getIq().getQuery().getData().getDaiBanTotal() != 0){
+                        ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.VISIBLE);
                         ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setText(""+mainResponses.getIq().getQuery().getData().getDaiBanTotal());
                     }else {
                         ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.GONE);
                     }
                     if(mainResponses.getIq().getQuery().getData().getNoticeTotal() != 0){
+                        ((ButtonGroupViewHolder) holder).fabNotice_notice.setVisibility(View.VISIBLE);
                         ((ButtonGroupViewHolder) holder).fabNotice_notice.setText(""+mainResponses.getIq().getQuery().getData().getNoticeTotal());
                     }else{
                         ((ButtonGroupViewHolder) holder).fabNotice_notice.setVisibility(View.GONE);
