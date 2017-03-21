@@ -107,8 +107,6 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView,Sw
             dialog.dismiss();
         }
         if (mPopupWindow != null && mPopupWindow.isShowing()){
-            mBtn.setText("处理");
-            mBtn.setClickable(true);
             mPopupWindow.dismiss();
             mPopupWindow = null;
         }
@@ -134,6 +132,8 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView,Sw
                 showMessage("发送动态成功");
                 fresh();
             }else {
+                mBtn.setText("处理");
+                mBtn.setClickable(true);
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
