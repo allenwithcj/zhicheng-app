@@ -119,6 +119,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/badge_text_size"
                 android:gravity="center"
+                android:singleLine="true"
                 android:paddingBottom="@dimen/textView_padding" />
 
             <ImageView
