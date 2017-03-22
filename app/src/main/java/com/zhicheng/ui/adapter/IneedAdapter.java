@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,7 +125,7 @@ public class IneedAdapter extends RecyclerView.Adapter {
         if (holder instanceof InputChooseEdittTextViewHolder){
             ((InputChooseEdittTextViewHolder) holder).name.setText(TAGNAME[0]);
             ((InputChooseEdittTextViewHolder) holder).input_choose.setOnClickListener(v -> {
-                if (position == 0){
+                if(TextUtils.isEmpty(((InputChooseEdittTextViewHolder) holder).input_choose.getText())){
                     if (!mLocationClient.isStarted()){
                         mLocationClient.start();
                         mLocationClient.requestLocation();
@@ -133,6 +134,7 @@ public class IneedAdapter extends RecyclerView.Adapter {
                     ((InputChooseEdittTextViewHolder) holder).mProgressBar.setVisibility(View.VISIBLE);
                 }
             });
+
             ((InputChooseEdittTextViewHolder) holder).input_choose.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,
                     holder.itemView.getResources().getDrawable(R.drawable.ic_explore_black_24dp),null);
         }else if(holder instanceof  InputChooseTextViewViewHolder){
