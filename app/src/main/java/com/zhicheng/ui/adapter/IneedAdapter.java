@@ -39,9 +39,10 @@ import rx.schedulers.Schedulers;
 
 public class IneedAdapter extends RecyclerView.Adapter {
 
-    private static final int TYPE_INPUT_CHOOSE = 0;
-    private static final int TYPE_CONTENT_BOX = 1;
-    private static final int TYPE_PHOTO_BOX = 2;
+    private static final int TYPE_INPUT_CHOOSE_EDITTEXT = 0;
+    private static final int TYPE_INPUT_CHOOSE_TEXTVIEW = 1;
+    private static final int TYPE_CONTENT_BOX = 2;
+    private static final int TYPE_PHOTO_BOX = 3;
 
     private final String[] TAGNAME = {"地图位置:","爆料类型:"};
     private boolean isLocation = false;
@@ -103,9 +104,12 @@ public class IneedAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if (viewType == TYPE_INPUT_CHOOSE){
+        if (viewType == TYPE_INPUT_CHOOSE_EDITTEXT){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_input_choose,parent,false);
-            return new InputChooseViewHolder(view);
+            return new InputChooseEdittTextViewHolder(view);
+        }else if (viewType == TYPE_INPUT_CHOOSE_TEXTVIEW){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_input_choose_textview,parent,false);
+            return new InputChooseTextViewViewHolder(view);
         }else if (viewType == TYPE_CONTENT_BOX){
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_input_content,parent,false);
             return new InputContentViewHolder(view);
@@ -117,33 +121,30 @@ public class IneedAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof InputChooseViewHolder){
-            ((InputChooseViewHolder) holder).name.setText(TAGNAME[position]);
-            if (position == 0) ((InputChooseViewHolder) holder).input_choose.setText("请点此处定位");
-            ((InputChooseViewHolder) holder).input_choose.setOnClickListener(v -> {
+        if (holder instanceof InputChooseEdittTextViewHolder){
+            ((InputChooseEdittTextViewHolder) holder).name.setText(TAGNAME[0]);
+            ((InputChooseEdittTextViewHolder) holder).input_choose.setOnClickListener(v -> {
                 if (position == 0){
                     if (!mLocationClient.isStarted()){
                         mLocationClient.start();
                         mLocationClient.requestLocation();
                         isLocation = true;
                     }
-                    ((InputChooseViewHolder) holder).mProgressBar.setVisibility(View.VISIBLE);
-                }else {
-                    if (!isLocation){
-                        Intent intent = new Intent(UIUtils.getContext(), SearchViewActivity.class);
-                        intent.putExtra("fragment","Search");
-                        intent.putExtra("isClassify","true");
-                        UIUtils.startActivity(intent);
-                    }
+                    ((InputChooseEdittTextViewHolder) holder).mProgressBar.setVisibility(View.VISIBLE);
                 }
             });
-            if (position == 0){
-                ((InputChooseViewHolder) holder).input_choose.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,
-                        holder.itemView.getResources().getDrawable(R.drawable.ic_explore_black_24dp),null);
-            }else {
-                ((InputChooseViewHolder) holder).input_choose.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,
-                        holder.itemView.getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp),null);
-            }
+            ((InputChooseEdittTextViewHolder) holder).input_choose.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,
+                    holder.itemView.getResources().getDrawable(R.drawable.ic_explore_black_24dp),null);
+        }else if(holder instanceof  InputChooseTextViewViewHolder){
+            ((InputChooseTextViewViewHolder) holder).name.setText(TAGNAME[1]);
+            ((InputChooseTextViewViewHolder) holder).input_choose.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,
+                    holder.itemView.getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp),null);
+            ((InputChooseTextViewViewHolder) holder).input_choose.setOnClickListener(view -> {
+                Intent intent = new Intent(UIUtils.getContext(), SearchViewActivity.class);
+                intent.putExtra("fragment","Search");
+                intent.putExtra("isClassify","true");
+                UIUtils.startActivity(intent);
+            });
         }else if (holder instanceof InputContentViewHolder){
             Observable.create(subscriber -> {
                 ((InputContentViewHolder) holder).i_bao_content.setTag(position);
@@ -203,8 +204,10 @@ public class IneedAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position < 2){
-            return TYPE_INPUT_CHOOSE;
+        if (position == 0){
+            return TYPE_INPUT_CHOOSE_EDITTEXT;
+        }else if(position == 1){
+            return TYPE_INPUT_CHOOSE_TEXTVIEW;
         }else if (position == 2){
             return TYPE_CONTENT_BOX;
         }else {
@@ -212,17 +215,29 @@ public class IneedAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public class InputChooseViewHolder extends RecyclerView.ViewHolder{
+    public class InputChooseEdittTextViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView name;
-        public TextView input_choose;
+        public TextView name;
+        public EditText input_choose;
         public ProgressBar mProgressBar;
 
-        public InputChooseViewHolder(View itemView) {
+        public InputChooseEdittTextViewHolder(View itemView) {
+            super(itemView);
+            name = (TextView) itemView.findViewById(R.id.tagName);
+            input_choose = (EditText) itemView.findViewById(R.id.input);
+            mProgressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
+        }
+    }
+
+    public class InputChooseTextViewViewHolder extends RecyclerView.ViewHolder{
+
+        public TextView name;
+        public TextView input_choose;
+
+        public InputChooseTextViewViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.tagName);
             input_choose = (TextView) itemView.findViewById(R.id.input);
-            mProgressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
         }
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Process;
 import android.os.StrictMode;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -15,8 +16,6 @@ import com.zhicheng.api.common.ServiceFactory;
 import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.common.database.LocalConfig;
 import com.zhicheng.api.common.service.LoginService;
-import com.zhicheng.api.common.service.MainService;
-import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.LoginResponse;
 import com.zhicheng.bean.json.LoginRequest;
 import com.zhicheng.common.URL;
@@ -26,16 +25,12 @@ import com.zhicheng.utils.common.FileUtils;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.net.UnknownHostException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Response;
 import roboguice.RoboGuice;
 import rx.Observable;
@@ -64,6 +59,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
         mActivities = new LinkedList<>();
         mBaseApplication = this;
         mainTid = Process.myTid();

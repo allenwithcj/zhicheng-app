@@ -81,7 +81,7 @@ public class InfoAdapter extends RecyclerView.Adapter {
                 });
             }else{
                 ((InfoMiddleViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_bao_notice));
-                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("版本更新");
+                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("在线更新");
                 ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
                      mButtonClick.onButtonClick();
                 });

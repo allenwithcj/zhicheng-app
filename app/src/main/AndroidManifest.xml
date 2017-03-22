@@ -182,7 +182,8 @@
         <activity
             android:name=".ui.activity.ContactActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity android:name=".ui.activity.ReplyActivity"></activity>
+        <activity android:name=".ui.activity.ReplyActivity" />
+        <activity android:name=".ui.activity.VersionUpdateActivity"></activity>
     </application>
 
 </manifest>

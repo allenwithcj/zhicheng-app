@@ -65,11 +65,11 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 				mData.put(7,location.get(0));//latitude
 				mData.put(8,location.get(1));//longitude
 				mData.put(9,location.get(3));//desc
-				IneedAdapter.InputChooseViewHolder holder = (IneedAdapter.InputChooseViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
+				IneedAdapter.InputChooseEdittTextViewHolder holder = (IneedAdapter.InputChooseEdittTextViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
 				holder.input_choose.setText(mData.get(0));
 				holder.mProgressBar.setVisibility(View.GONE);
 			}else {
-				IneedAdapter.InputChooseViewHolder holder = (IneedAdapter.InputChooseViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(1));
+				IneedAdapter.InputChooseTextViewViewHolder holder = (IneedAdapter.InputChooseTextViewViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(1));
 				mNode = intent.getStringArrayListExtra("node");
 				holder.input_choose.setText(mNode.get(3));
 			}
@@ -99,7 +99,7 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 		filter = PhotoFilter.build();
 		filter.showGif(false);
 		mIneedAdapter.setSendLocation(maps -> {
-			IneedAdapter.InputChooseViewHolder holder = (IneedAdapter.InputChooseViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
+			IneedAdapter.InputChooseEdittTextViewHolder holder = (IneedAdapter.InputChooseEdittTextViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
 			if (maps.get("openMap") != null && maps.get("openMap").equals("true")){
 				UIUtils.startActivity(new Intent(this,LcationMapTEST.class));
 				holder.mProgressBar.setVisibility(View.GONE);

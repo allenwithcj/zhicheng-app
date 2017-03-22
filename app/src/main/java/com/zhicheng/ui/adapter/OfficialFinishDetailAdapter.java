@@ -1,5 +1,6 @@
 package com.zhicheng.ui.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,11 @@ import com.bumptech.glide.Glide;
 import com.zhicheng.R;
 import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.common.URL;
+import com.zhicheng.ui.activity.ReplyActivity;
 import com.zhicheng.utils.common.UIUtils;
+
+import java.io.Serializable;
+import java.util.List;
 
 import me.codeboy.android.aligntextview.CBAlignTextView;
 
@@ -67,6 +72,16 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
         if (mData != null){
             if (holder instanceof HeaderViewHolder){
                 ((HeaderViewHolder) holder).NumberId.setText(mData.getIq().getQuery().getTitle());
+                if(mData.getIq().getQuery().getReplies() != null){
+                    ((HeaderViewHolder) holder).replies.setVisibility(View.VISIBLE);
+                    ((HeaderViewHolder) holder).replies.setText(mData.getIq().getQuery().getReplies().size()+"条回复");
+                    ((HeaderViewHolder) holder).replies.setOnClickListener(view -> {
+                        List<OfficialDetailResponse.IqBean.QueryBean.RepliesBean> mRepliesBeanList = mData.getIq().getQuery().getReplies();
+                        Intent intent = new Intent(holder.itemView.getContext(), ReplyActivity.class);
+                        intent.putExtra("replies", (Serializable) mRepliesBeanList);
+                        UIUtils.startActivity(intent);
+                    });
+                }
             }else if (holder instanceof ShowBoxViewHolder){
                 switch (position){
                     case 1:
@@ -180,79 +195,24 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
 
                 }
             }else if (holder instanceof ShowDealViewHolder) {
-                if(mType.equals("handing")){
-                    switch (3){
-                        case 1:
-                            ((ShowDealViewHolder) holder).Bao.setText(null);
-                            ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            break;
-                        case 2:
-                            ((ShowDealViewHolder) holder).Bao.setText(null);
-                            ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Accept.setText(null);
-                            ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            break;
-                        case 3:
-                            ((ShowDealViewHolder) holder).Bao.setText(null);
-                            ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Accept.setText(null);
-                            ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Deal.setText(null);
-                            ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            break;
-                        case 4:
-                            ((ShowDealViewHolder) holder).Bao.setText(mData.getIq().getQuery().getMap().getFlowStartTime().substring(0,10));
-                            ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Accept.setText(null);
-                            ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Deal.setText(null);
-                            ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            if (!mData.getIq().getQuery().getMap().getFlowEndTime().equals("")){
-                                ((ShowDealViewHolder) holder).Complete.setText(mData.getIq().getQuery().getMap().getFlowEndTime().substring(0,10));
-                            }else {
-                                ((ShowDealViewHolder) holder).Complete.setText("");
-                            }
-                            ((ShowDealViewHolder) holder).Complete.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.red));
-                            ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            break;
-                    }
-
-                }else if(mType.equals("finished")){
-                    switch (4){
-                        case 1:
-                            ((ShowDealViewHolder) holder).Bao.setText(null);
-                            ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            break;
-                        case 2:
-                            ((ShowDealViewHolder) holder).Bao.setText(null);
-                            ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Accept.setText(null);
-                            ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            break;
-                        case 3:
-                            ((ShowDealViewHolder) holder).Bao.setText(null);
-                            ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Accept.setText(null);
-                            ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Deal.setText(null);
-                            ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            break;
-                        case 4:
-                            ((ShowDealViewHolder) holder).Bao.setText(mData.getIq().getQuery().getMap().getFlowStartTime().substring(0,10));
-                            ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Accept.setText(null);
-                            ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            ((ShowDealViewHolder) holder).Deal.setText(null);
-                            ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            if (!mData.getIq().getQuery().getMap().getFlowEndTime().equals("")){
-                                ((ShowDealViewHolder) holder).Complete.setText(mData.getIq().getQuery().getMap().getFlowEndTime().substring(0,10));
-                            }else {
-                                ((ShowDealViewHolder) holder).Complete.setText("");
-                            }
-                            ((ShowDealViewHolder) holder).Complete.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.red));
-                            ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                            break;
-                    }
+                String mFlowStatus = mData.getIq().getQuery().getMap().getFlowStatus();
+                if(mFlowStatus.equals("1")){
+                    ((ShowDealViewHolder) holder).Bao.setText(null);
+                    ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Accept.setText(null);
+                    ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Deal.setText("办理中...");
+                    ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                }else if(mFlowStatus.equals("2")){
+                    ((ShowDealViewHolder) holder).Bao.setText(mData.getIq().getQuery().getSendTime().substring(0,10));
+                    ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Accept.setText(null);
+                    ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Deal.setText(null);
+                    ((ShowDealViewHolder) holder).Deal.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.red));
+                    ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Complete.setText(mData.getIq().getQuery().getMap().getFlowEndTime());
+                    ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal_normal));
                 }
 
             }
@@ -283,10 +243,14 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
+
         private TextView NumberId;
-        public HeaderViewHolder(View view) {
-            super(view);
-            NumberId=(TextView)view.findViewById(R.id.NumberId);
+        private TextView replies;
+
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+            NumberId = (TextView) itemView.findViewById(R.id.NumberId);
+            replies = (TextView) itemView.findViewById(R.id.replies);
         }
     }
 

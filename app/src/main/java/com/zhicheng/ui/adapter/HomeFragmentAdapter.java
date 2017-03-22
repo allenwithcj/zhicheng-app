@@ -93,9 +93,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                         img.add(URL.HOST_URL_SERVER_ZHICHENG + c.getAttachments().get(0).getHref());
                         content.add(c.getItemcon());
                         location.add(c.getItemaddress());
-                        if(c.getItemtime() !=null){
-                            time.add(c.getItemtime().substring(0,c.getItemtime().length()-2));
-                        }
+                        time.add(c.getItemtime());
                     }
                     ((TopListViewHolder) holder).mLoopViewPager.setDataViewList(img,content,location,time);
                 }

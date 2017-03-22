@@ -16,6 +16,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -85,4 +86,5 @@ dependencies {
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3'
     testCompile 'junit:junit:4.12'
     compile files('libs/pinyin4j-2.5.0.jar')
+    compile 'com.android.support:multidex:1.0.1'
 }

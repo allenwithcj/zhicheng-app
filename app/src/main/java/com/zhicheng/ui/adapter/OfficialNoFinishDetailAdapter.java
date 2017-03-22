@@ -217,36 +217,24 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
 
                 }
             }else if (holder instanceof ShowDealViewHolder){
-                switch (4){
-                    case 1:
-                        ((ShowDealViewHolder) holder).Bao.setText(null);
-                        ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        break;
-                    case 2:
-                        ((ShowDealViewHolder) holder).Bao.setText(null);
-                        ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Accept.setText(null);
-                        ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        break;
-                    case 3:
-                        ((ShowDealViewHolder) holder).Bao.setText(null);
-                        ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Accept.setText(null);
-                        ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Deal.setText(null);
-                        ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        break;
-                    case 4:
-                        ((ShowDealViewHolder) holder).Bao.setText(mData.getIq().getQuery().getSendTime().substring(0,10));
-                        ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Accept.setText(null);
-                        ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Deal.setText("办理中...");
-                        ((ShowDealViewHolder) holder).Deal.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.red));
-                        ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Complete.setText(null);
-                        ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal_normal));
-                        break;
+                String mFlowStatus = mData.getIq().getQuery().getMap().getFlowStatus();
+                if(mFlowStatus.equals("2")){
+                    ((ShowDealViewHolder) holder).Bao.setText(mData.getIq().getQuery().getSendTime().substring(0,10));
+                    ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Accept.setText(null);
+                    ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Deal.setText(null);
+                    ((ShowDealViewHolder) holder).Deal.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.red));
+                    ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Complete.setText(mData.getIq().getQuery().getMap().getFlowEndTime());
+                    ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal_normal));
+                }else{
+                    ((ShowDealViewHolder) holder).Bao.setText(null);
+                    ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Accept.setText(null);
+                    ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Deal.setText("办理中...");
+                    ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                 }
             }
         }

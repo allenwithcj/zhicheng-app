@@ -1,7 +1,8 @@
 package com.zhicheng.ui.fragment;
 
 import android.content.Context;
-import android.hardware.input.InputManager;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -32,6 +33,7 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
     private ImageButton btnMore;
     private TextView title;
     private boolean showClose = false;
+    private String mUrl;
 
     public static WebViewFragment newInstance(String url,String title){
         WebViewFragment fragment = new WebViewFragment();
@@ -49,6 +51,7 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     protected void initEvents() {
+        mUrl = getArguments().getString("url");
         mWebView = (WebView) mRootView.findViewById(R.id.mWebView);
         btnBack = (ImageButton) mRootView.findViewById(R.id.webView_back);
         btnClose = (ImageButton) mRootView.findViewById(R.id.webView_close);
@@ -58,10 +61,8 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
         btnClose.setOnClickListener(this);
         btnMore.setOnClickListener(this);
         initWebView();
-//        mWebView.loadUrl("file:///android_asset/testpage.html");
-//        mWebView.loadUrl("http://10.0.2.2/helloworld/index.html");
         mWebView.clearCache(true);
-        mWebView.loadUrl(getArguments().getString("url"));
+        mWebView.loadUrl(mUrl);
         title.setText(getArguments().getString("title"));
     }
 
@@ -108,7 +109,11 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
                 getActivity().finish();
                 break;
             case R.id.webView_more:
-                Snackbar.make(mWebView,"Click More Button",Snackbar.LENGTH_SHORT).show();
+                Intent intent= new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                Uri content_url = Uri.parse(mUrl);
+                intent.setData(content_url);
+                startActivity(intent);
                 break;
         }
     }
@@ -124,9 +129,9 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
             FragmentManager mFragmentManage = getFragmentManager();
             FragmentTransaction ft = mFragmentManage.beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-//            ft.setCustomAnimations(
-//                    R.animator.fragment_slide_right_in, R.animator.fragment_slide_left_out,
-//                    R.animator.fragment_slide_left_in, R.animator.fragment_slide_right_out);
+            ft.setCustomAnimations(
+                    R.animator.fragment_slide_right_in, R.animator.fragment_slide_left_out,
+                    R.animator.fragment_slide_left_in, R.animator.fragment_slide_right_out);
             ft.hide(WebViewFragment.this);
             ft.add(R.id.webView_content,WebViewFragment.newInstance(url,name));
             ft.addToBackStack(null);

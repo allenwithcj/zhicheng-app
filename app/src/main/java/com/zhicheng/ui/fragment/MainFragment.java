@@ -22,6 +22,7 @@ import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.common.database.LocalConfig;
 import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.LoginActivity;
+import com.zhicheng.ui.activity.VersionUpdateActivity;
 import com.zhicheng.ui.adapter.InfoAdapter;
 import com.zhicheng.utils.CircleImageView;
 import com.zhicheng.utils.common.UIUtils;
@@ -114,7 +115,9 @@ public class MainFragment extends BaseFragment{
     @Override
     protected void initData(boolean isSavedNull) {
         mInfoAdapter.setButtonClick(() ->{
-            Toast.makeText(getActivity(),"已是最新版本",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(),VersionUpdateActivity.class);
+            startActivity(intent);
+
 //            View pop_view = LayoutInflater.from(getContext()).inflate(R.layout.activity_version_dialog,null);
 //            Button btn_update = (Button)pop_view.findViewById(R.id.btn_update);
 //            Button btn_cancel = (Button)pop_view.findViewById(R.id.btn_cancel);
