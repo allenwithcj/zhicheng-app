@@ -53,7 +53,7 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
 
     @Override
     protected void initData() {
-        onRefresh();
+
     }
 
     @Override

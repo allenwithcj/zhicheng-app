@@ -89,11 +89,17 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                     List<String> content = new ArrayList<>();
                     List<String> location = new ArrayList<>();
                     List<String> time = new ArrayList<>();
-                    for (CommonResponse.IqBean.QueryBean.DataBean.CasesBean c : mainResponses.getIq().getQuery().getData().getCases()){
-                        img.add(URL.HOST_URL_SERVER_ZHICHENG + c.getAttachments().get(0).getHref());
-                        content.add(c.getItemcon());
-                        location.add(c.getItemaddress());
-                        time.add(c.getItemtime());
+                    if(mainResponses.getIq().getQuery().getData().getCases().size() != 0){
+                        for (CommonResponse.IqBean.QueryBean.DataBean.CasesBean c : mainResponses.getIq().getQuery().getData().getCases()){
+                            if(c.getAttachments().size() != 0){
+                                img.add(URL.HOST_URL_SERVER_ZHICHENG + c.getAttachments().get(0).getHref());
+                            }
+                            content.add(c.getItemcon());
+                            location.add(c.getItemaddress());
+                            if(!c.getItemtime().equals("")){
+                                time.add(c.getItemtime().substring(0,10));
+                            }
+                        }
                     }
                     ((TopListViewHolder) holder).mLoopViewPager.setDataViewList(img,content,location,time);
                 }
