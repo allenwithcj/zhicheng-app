@@ -77,6 +77,7 @@ public class SubmitOrdinaryFormRequest {
                 private String OUTADDRESS;
                 private String RENTNAME;
                 private String RENTPHONE;
+                private String HUZU;
 
                 public String getID() {
                     return ID;
@@ -228,6 +229,14 @@ public class SubmitOrdinaryFormRequest {
 
                 public void setRENTPHONE(String RENTPHONE) {
                     this.RENTPHONE = RENTPHONE;
+                }
+
+                public String getHUZU() {
+                    return HUZU;
+                }
+
+                public void setHUZU(String HUZU) {
+                    this.HUZU = HUZU;
                 }
             }
         }

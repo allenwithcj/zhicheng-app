@@ -26,7 +26,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
     private OfficialBaseGridDetailResponse mData;
     private String ZZ_RESIDENCE,GRIDNAME;
     private String RENTNAME,REMARK2,RENTPHONE;
-    private String CARD_NUM,NAME,RELATION,GENDER,MARITAL_STATUS,POLITICAL_STATUS,EDUCATION,
+    private String CARD_NUM,NAME,RELATION,HUZU,GENDER,MARITAL_STATUS,POLITICAL_STATUS,EDUCATION,
             HOBBY,REMARK1,DOMICILE,OUTADDRESS,PHONE,WORK;
     private OfficialBaseGridUpdatePresenter mOfficialBaseGridUpdatePresenter;
     private ItemViewHolder holder;
@@ -63,6 +63,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
                 ((ItemViewHolder) holder).grid_base_add_lessor_telephone.setText(mData.getIq().getQuery().getPreMsg().getRENTPHONE());
                 ((ItemViewHolder) holder).grid_base_add_name.setText(mData.getIq().getQuery().getPreMsg().getNAME());
                 ((ItemViewHolder) holder).grid_base_add_relation.setText(mData.getIq().getQuery().getPreMsg().getRENTPHONE());
+                ((ItemViewHolder) holder).grid_base_huzu_name.setText(mData.getIq().getQuery().getPreMsg().getHUZU());
                 ((ItemViewHolder) holder).grid_base_add_sex.setText(getSexString(mData.getIq().getQuery().getPreMsg().getGRIDNAME()));
                 ((ItemViewHolder) holder).grid_base_add_cardid.setText(mData.getIq().getQuery().getPreMsg().getCARD_NUM());
                 ((ItemViewHolder) holder).grid_base_add_policatial.setText(mData.getIq().getQuery().getPreMsg().getPOLITICAL_STATUS());
@@ -111,6 +112,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
         NAME = holder.grid_base_add_name.getText().toString();
         RELATION = holder.grid_base_add_relation.getText().toString();
         GENDER = sexCode(holder.grid_base_add_sex.getText().toString());
+        HUZU = holder.grid_base_huzu_name.getText().toString();
         CARD_NUM = holder.grid_base_add_cardid.getText().toString();
         POLITICAL_STATUS = holder.grid_base_add_policatial.getText().toString();
         EDUCATION = holder.grid_base_add_degree.getText().toString();
@@ -141,6 +143,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
         mFormobj.setID(id);
         mFormobj.setNAME(NAME);
         mFormobj.setRELATION(RELATION);
+        mFormobj.setHUZU(HUZU);
         mFormobj.setGENDER(GENDER);
         mFormobj.setCARD_NUM(CARD_NUM);
         mFormobj.setPOLITICAL_STATUS(POLITICAL_STATUS);
@@ -173,6 +176,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
 
         public EditText grid_base_add_name;
         public EditText grid_base_add_relation;
+        private EditText grid_base_huzu_name;
         public TextView grid_base_add_sex;
         public EditText grid_base_add_cardid;
         public TextView grid_base_add_policatial;
@@ -196,6 +200,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
 
             grid_base_add_name = (EditText) itemView.findViewById(R.id.grid_base_add_name);
             grid_base_add_relation = (EditText) itemView.findViewById(R.id.grid_base_add_relation);
+            grid_base_huzu_name = (EditText) itemView.findViewById(R.id.grid_base_huzu_name);
             grid_base_add_sex = (TextView) itemView.findViewById(R.id.input_sex);
             grid_base_add_cardid = (EditText) itemView.findViewById(R.id.grid_base_add_cardid);
             grid_base_add_policatial = (TextView) itemView.findViewById(R.id.input_political);

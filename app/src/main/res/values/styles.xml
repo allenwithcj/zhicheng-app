@@ -70,4 +70,8 @@
         <item name="android:textColor">@color/black4</item>
         <item name="android:textSize">@dimen/contact_item_header_font</item>
     </style>
+
+    <style name="Theme.Toolbar.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/black</item>
+    </style>
 </resources>

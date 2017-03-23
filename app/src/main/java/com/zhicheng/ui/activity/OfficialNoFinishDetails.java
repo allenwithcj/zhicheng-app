@@ -110,6 +110,7 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
     protected int getMenuID() {
         if(type.equals("nofinish")){
             return R.menu.official_detail;
+//            return R.menu.nofinish_action;
         }else{
             return super.getMenuID();
         }
@@ -125,6 +126,7 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_deal){
+            //处理事项
             View pop_view = getLayoutInflater().inflate(R.layout.c_deal,parentView,false);
             mBtn = (TextView) pop_view.findViewById(R.id.btnDeal);
             EditText mEdit = (EditText) pop_view.findViewById(R.id.suggestion);

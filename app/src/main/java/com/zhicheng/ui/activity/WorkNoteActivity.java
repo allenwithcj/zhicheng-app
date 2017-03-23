@@ -90,7 +90,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         PersonalLogMaRequest.IqBean iqb = new PersonalLogMaRequest.IqBean();
         iqb.setNamespace("PersonalLogMaRequest");
         PersonalLogMaRequest.IqBean.QueryBean qb = new PersonalLogMaRequest.IqBean.QueryBean();
-        qb.setType("3");
+        qb.setType("5");
         qb.setPage(start);
         iqb.setQuery(qb);
         pm.setIq(iqb);

@@ -78,6 +78,7 @@
     <string name="grid_location_close">定位关闭提醒</string>
     <string name="grid_location_message">您已进入到网格数据模块，是否开启定时定位上传服务记录您的网格基础数据录入行程?</string>
     <string name="grid_location_close_message">您的定时定位上传服务正在运行中，是否关闭?</string>
+    <string name="apply">申请</string>
 
     <string-array name="detail">
         <item>编号:</item>
