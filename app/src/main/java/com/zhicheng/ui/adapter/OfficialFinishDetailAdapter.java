@@ -202,7 +202,7 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                         ((ShowDealViewHolder) holder).Accept.setText(null);
                         ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Deal.setText(null);
+                        ((ShowDealViewHolder) holder).Deal.setText("处理中...");
                         ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     }else if(mType.equals("finished")){
                         ((ShowDealViewHolder) holder).Bao.setText(mData.getIq().getQuery().getMap().getFlowStartTime().substring(0,10));
@@ -228,18 +228,23 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         ((ShowDealViewHolder) holder).Deal.setText(null);
                         ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     }else if(mFlowStatus.equals("2")){
-                        ((ShowDealViewHolder) holder).Bao.setText(mData.getIq().getQuery().getMap().getFlowStartTime().substring(0,10));
+                        String mStartTime = mData.getIq().getQuery().getMap().getFlowStartTime();
+                        if(!mStartTime.equals("")){
+                            ((ShowDealViewHolder) holder).Bao.setText(mStartTime.substring(0,mStartTime.length()-2));
+                        }else{
+                            ((ShowDealViewHolder) holder).Bao.setText("");
+                        }
                         ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                         ((ShowDealViewHolder) holder).Accept.setText(null);
                         ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                         ((ShowDealViewHolder) holder).Deal.setText(null);
                         ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        if (!mData.getIq().getQuery().getMap().getFlowEndTime().equals("")){
-                            ((ShowDealViewHolder) holder).Complete.setText(mData.getIq().getQuery().getMap().getFlowEndTime().substring(0,10));
+                        String mEndTime = mData.getIq().getQuery().getMap().getFlowEndTime();
+                        if (!mEndTime.equals("")){
+                            ((ShowDealViewHolder) holder).Complete.setText(mEndTime.substring(0,mEndTime.length()-2));
                         }else {
                             ((ShowDealViewHolder) holder).Complete.setText("");
                         }
-                        ((ShowDealViewHolder) holder).Complete.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.red));
                         ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     }
 

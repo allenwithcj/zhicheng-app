@@ -97,7 +97,9 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                             content.add(c.getItemcon());
                             location.add(c.getItemaddress());
                             if(!c.getItemtime().equals("")){
-                                time.add(c.getItemtime().substring(0,10));
+                                if(c.getItemtime().length() > 2){
+                                    time.add(c.getItemtime().substring(0,c.getItemtime().length()-2));
+                                }
                             }
                         }
                     }
