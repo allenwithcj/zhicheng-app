@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -150,6 +149,7 @@ public abstract class BaseActivity extends RoboActionBarActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     /**
      * 是否初始化状态栏

@@ -72,6 +72,6 @@
     </style>
 
     <style name="Theme.Toolbar.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:textColorPrimary">@color/blue_text</item>
     </style>
 </resources>

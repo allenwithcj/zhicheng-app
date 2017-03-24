@@ -207,6 +207,12 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
         public TopListViewHolder(View itemView) {
             super(itemView);
             mLoopViewPager = (LoopContentPager) itemView.findViewById(R.id.mLoopContentPager);
+            mLoopViewPager.setButtonClick(new LoopContentPager.ButtonClick() {
+                @Override
+                public void onButtonClickcallBack(int position) {
+                    Toast.makeText(UIUtils.getContext(),""+position,Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

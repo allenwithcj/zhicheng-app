@@ -18,7 +18,7 @@ public interface OfficialPresenter {
     //新增工作动态
     void upDynamic(String dyn,List<String> imgs, String jFile,String mLocationSite,String GUID);
 
-    void upDeal(List<String> imgs, String jFile, String suggest, OfficialDetailResponse officialDetailResponse, String GUID);
+    void upDeal(List<String> imgs, String jFile, String suggest, OfficialDetailResponse officialDetailResponse, String GUID,String type);
 
     void cancelLoading();
 

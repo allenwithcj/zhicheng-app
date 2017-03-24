@@ -73,11 +73,11 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
     }
 
     @Override
-    public void upDeal(List<String> imgs, String jFile, String suggest,OfficialDetailResponse officialDetailResponse,String GUID) {
+    public void upDeal(List<String> imgs, String jFile, String suggest,OfficialDetailResponse officialDetailResponse,String GUID,String type) {
         if (!NetworkUtils.isConnected(UIUtils.getContext())){
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialModelImpl.upDeal(imgs,jFile,suggest,GUID,officialDetailResponse,this);
+        mOfficialModelImpl.upDeal(imgs,jFile,suggest,GUID,officialDetailResponse,type,this);
     }
 
     @Override

@@ -20,7 +20,7 @@ public interface OfficialModel {
     //新增工作动态
     void upOfficialDynamic(String dyn,List<String> imgs,String jFile,String mLocationSite,String GUID,ApiCompleteListener listener);
 
-    void upDeal(List<String> imgs, String jFile, String GUID, String suggest, OfficialDetailResponse officialDetailResponse, ApiCompleteListener listener);
+    void upDeal(List<String> imgs, String jFile, String GUID, String suggest, OfficialDetailResponse officialDetailResponse,String type, ApiCompleteListener listener);
 
     void cancelLoading();
 

@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -82,6 +83,66 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
         PhotoPicker.init(new GlideImageLoader(),null);
         filter = PhotoFilter.build();
         filter.showGif(false);
+
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(item.getItemId() == R.id.action_deal){
+                    //处理事项
+                    View pop_view = getLayoutInflater().inflate(R.layout.c_deal,parentView,false);
+                    doThing(pop_view,"4");
+
+                }else if(item.getItemId() == R.id.action_apply){
+                    View pop_view = getLayoutInflater().inflate(R.layout.c_apply,parentView,false);
+                    doThing(pop_view,"0");
+                }
+                return true;
+            }
+        });
+    }
+
+    private void doThing(View pop_view,String type) {
+
+        mBtn = (TextView) pop_view.findViewById(R.id.btnDeal);
+        EditText mEdit = (EditText) pop_view.findViewById(R.id.suggestion);
+        String guid = UUID.randomUUID().toString();
+        mBtn.setOnClickListener(v -> {
+            Gson gson = new Gson();
+            UpFileRequest uf = new UpFileRequest();
+            UpFileRequest.IqBean ufIB = new UpFileRequest.IqBean();
+            UpFileRequest.IqBean.QueryBean ufIBQB = new UpFileRequest.IqBean.QueryBean();
+            ufIBQB.setAttachmentGUID(guid);
+            ufIB.setQuery(ufIBQB);
+            ufIB.setNamespace("AttachmentUpdateRequest");
+            uf.setIq(ufIB);
+            String jFile = gson.toJson(uf);
+            if (null != mImagePath){
+                if(mImagePath.size() != 0){
+                    mOfficialDetail.upDeal(mImagePath,jFile,mEdit.getText().toString(),OfficialDetail,guid,type);
+                    mBtn.setText("处理中...");
+                    mBtn.setClickable(false);
+                }else {
+                    Toast.makeText(UIUtils.getContext(),"请选择上传图片",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        RecyclerView dealRecyclerView = (RecyclerView) pop_view.findViewById(R.id.mRecycleView);
+        dealRecyclerView.setLayoutManager(new GridLayoutManager(OfficialNoFinishDetails.this,3));
+        dealRecyclerView.setAdapter(mDealAdapter);
+        int width = getWindowManager().getDefaultDisplay().getWidth();
+        if (null != mPopupWindow){
+            mPopupWindow.dismiss();
+        }else {
+            mPopupWindow = new PopupWindow(pop_view,width - width/4, WindowManager.LayoutParams.WRAP_CONTENT,true);
+            mPopupWindow.setAnimationStyle(R.style.popwin_anim_style);
+            mPopupWindow.setOutsideTouchable(true);
+            mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+            mPopupWindow.setOnDismissListener(() -> {
+                AnimationUtils.darkBackgroundColor(getWindow(),1f);
+            });
+        }
+        mPopupWindow.showAtLocation(parentView, Gravity.CENTER,0,0);
+        AnimationUtils.darkBackgroundColor(getWindow(),0.4f);
     }
 
     @Override
@@ -109,12 +170,14 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
     @Override
     protected int getMenuID() {
         if(type.equals("nofinish")){
-            return R.menu.official_detail;
-//            return R.menu.nofinish_action;
+            //return R.menu.official_detail;
+            return R.menu.nofinish_action;
         }else{
             return super.getMenuID();
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -125,50 +188,9 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_deal){
-            //处理事项
-            View pop_view = getLayoutInflater().inflate(R.layout.c_deal,parentView,false);
-            mBtn = (TextView) pop_view.findViewById(R.id.btnDeal);
-            EditText mEdit = (EditText) pop_view.findViewById(R.id.suggestion);
-            String guid = UUID.randomUUID().toString();
-            mBtn.setOnClickListener(v -> {
-                Gson gson = new Gson();
-                UpFileRequest uf = new UpFileRequest();
-                UpFileRequest.IqBean ufIB = new UpFileRequest.IqBean();
-                UpFileRequest.IqBean.QueryBean ufIBQB = new UpFileRequest.IqBean.QueryBean();
-                ufIBQB.setAttachmentGUID(guid);
-                ufIB.setQuery(ufIBQB);
-                ufIB.setNamespace("AttachmentUpdateRequest");
-                uf.setIq(ufIB);
-                String jFile = gson.toJson(uf);
-                if (null != mImagePath){
-                    if(mImagePath.size() != 0){
-                        mOfficialDetail.upDeal(mImagePath,jFile,mEdit.getText().toString(),OfficialDetail,guid);
-                        mBtn.setText("处理中...");
-                        mBtn.setClickable(false);
-                    }else {
-                        Toast.makeText(this,"请选择上传图片",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            RecyclerView dealRecyclerView = (RecyclerView) pop_view.findViewById(R.id.mRecycleView);
-            dealRecyclerView.setLayoutManager(new GridLayoutManager(OfficialNoFinishDetails.this,3));
-            dealRecyclerView.setAdapter(mDealAdapter);
-            int width = getWindowManager().getDefaultDisplay().getWidth();
-            if (null != mPopupWindow){
-                mPopupWindow.dismiss();
-            }else {
-                mPopupWindow = new PopupWindow(pop_view,width - width/4, WindowManager.LayoutParams.WRAP_CONTENT,true);
-                mPopupWindow.setAnimationStyle(R.style.popwin_anim_style);
-                mPopupWindow.setOutsideTouchable(true);
-                mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-                mPopupWindow.setOnDismissListener(() -> {
-                    AnimationUtils.darkBackgroundColor(getWindow(),1f);
-                });
-            }
-            mPopupWindow.showAtLocation(parentView, Gravity.CENTER,0,0);
-            AnimationUtils.darkBackgroundColor(getWindow(),0.4f);
-        }
+//        if (item.getItemId() == R.id.action_deal){
+//
+//        }
         return super.onOptionsItemSelected(item);
     }
 

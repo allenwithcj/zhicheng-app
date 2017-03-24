@@ -29,14 +29,14 @@ import java.util.Map;
  * Created by Donson on 2017/1/2.
  */
 
-public class HomeFragment extends BaseFragment implements MainView
-        ,VpSwipeRefreshLayout.OnRefreshListener{
+public class HomeFragment extends BaseFragment implements MainView,
+        VpSwipeRefreshLayout.OnRefreshListener{
 
     private VpSwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private MainPresenterImpl mMainPresenterImpl;
     private HomeFragmentAdapter mHomeAdapter;
-//    private Main parentActivity;
+    //private Main parentActivity;
 
     public static HomeFragment newInstance(){
         HomeFragment fragment = new HomeFragment();

@@ -15,7 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@color/pridark"
         android:minHeight="?attr/actionBarSize"
-        android:popupTheme="@style/Theme.Toolbar.Base"
+        app:theme="@style/Theme.Toolbar.Base"
         android:elevation="@dimen/photo_margin" />
 
     <android.support.v7.widget.CardView

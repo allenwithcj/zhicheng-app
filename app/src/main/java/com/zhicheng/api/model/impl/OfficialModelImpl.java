@@ -256,7 +256,7 @@ public class OfficialModelImpl implements OfficialModel{
     }
 
     @Override
-    public void upDeal(List<String> imgs,String jFile,String suggest,String GUID,OfficialDetailResponse officialDetailResponse,ApiCompleteListener listener) {
+    public void upDeal(List<String> imgs,String jFile,String suggest,String GUID,OfficialDetailResponse officialDetailResponse,String type,ApiCompleteListener listener) {
         if (mOfficialService == null){
             mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
         }
@@ -299,7 +299,7 @@ public class OfficialModelImpl implements OfficialModel{
 //                            listener.onComplected(commonResponseResponse.body());
 //                            RequestBody json = RequestBody.create(MediaType.parse("application/json"),j);
                             if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
-                                formExportRequest(0,listener);
+                                formExportRequest(0,type,listener);
                                 BaseApplication.log_say("MainModelImpl","UpThings");
                             }else {
                                 listener.onComplected(commonResponseResponse.body());
@@ -388,7 +388,7 @@ public class OfficialModelImpl implements OfficialModel{
                 });
     }
 
-    public void formExportRequest(int requestType,ApiCompleteListener listener){
+    public void formExportRequest(int requestType, String type, ApiCompleteListener listener){
         MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,MainService.class);
         FormExportRequest feq = new FormExportRequest();
         FormExportRequest.IqBean iq = new FormExportRequest.IqBean();
@@ -429,7 +429,7 @@ public class OfficialModelImpl implements OfficialModel{
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);
                                 formNode.setIq(iq);
-                                formNodeRequest(mMainService,gson.toJson(formNode),ineedResponseResponse,requestType,listener);
+                                formNodeRequest(type,mMainService,gson.toJson(formNode),ineedResponseResponse,requestType,listener);
                                 BaseApplication.log_say("MainModelImpl","FormNodeRequest");
                             }else {
                                 listener.onComplected(ineedResponseResponse.body());
@@ -442,7 +442,7 @@ public class OfficialModelImpl implements OfficialModel{
                 });
     }
 
-    public void formNodeRequest(MainService s, String j, Response<IneedResponse> ineedResponseResponse, int requestType, ApiCompleteListener listener){
+    public void formNodeRequest(String type, MainService s, String j, Response<IneedResponse> ineedResponseResponse, int requestType, ApiCompleteListener listener){
         s.FormNodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -477,7 +477,8 @@ public class OfficialModelImpl implements OfficialModel{
                                 iq.setNamespace("FormSubnodeRequest");
                                 iq.setQuery(query);
                                 formSubnode.setIq(iq);
-                                if (mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType().equals("4")){
+                                if(type.equals("4")){
+//                                if (mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType().equals("4")){
                                     FormSendDoRequest formSend = new FormSendDoRequest();
                                     FormSendDoRequest.IqBean iq2 = new FormSendDoRequest.IqBean();
                                     FormSendDoRequest.IqBean.QueryBean query2 = new FormSendDoRequest.IqBean.QueryBean();

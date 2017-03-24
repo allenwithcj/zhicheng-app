@@ -216,11 +216,18 @@ public class LoopContentPager extends FrameLayout {
             return images.get(position);
         }
 
-        private void initView(int position){
+        private void initView(final int position){
             mViewHolder.img = (ImageView) images.get(position).findViewById(R.id.img);
             mViewHolder.mContent = (CBAlignTextView) images.get(position).findViewById(R.id.view_content);
             mViewHolder.mLocation = (TextView) images.get(position).findViewById(R.id.location);
             mViewHolder.mTime = (TextView) images.get(position).findViewById(R.id.time);
+            mViewHolder.img.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mButtonClick.onButtonClickcallBack(position);
+                }
+            });
+
         }
 
         @Override
@@ -330,4 +337,17 @@ public class LoopContentPager extends FrameLayout {
             this.mTime = mTime;
         }
     }
+
+    public interface ButtonClick {
+        public void onButtonClickcallBack(int position);
+    }
+
+    private ButtonClick mButtonClick;
+
+    public void setButtonClick(ButtonClick mButtonClick){
+        if (this.mButtonClick == null){
+            this.mButtonClick = mButtonClick;
+        }
+    }
+
 }

@@ -16,6 +16,7 @@
     <string name="bao_location">无法获取当前位置</string>
     <string name="NoFinish">待办事项</string>
     <string name="Finished">已办事项</string>
+    <string name="Sended">已发事项</string>
     <string name="FenLei">分类汇总</string>
     <string name="GridDataBase">网格数据</string>
     <string name="work">工作动态</string>
@@ -26,6 +27,7 @@
     <string name="i_content">爆料描述:</string>
     <string name="i_content_hint">请输入爆料描述…</string>
     <string name="i_deal_hint">请输入处理描述…</string>
+    <string name="i_apply_hint">请输入申请延期描述…</string>
     <string name="Bao">爆料</string>
     <string name="Accept">受理</string>
     <string name="Deal">处理</string>
@@ -60,6 +62,7 @@
     <string name="grid_base_add_grid_no">网格编号:</string>
     <string name="grid_base_add_name">姓名:</string>
     <string name="grid_base_add_relation">与户主关系:</string>
+    <string name="grid_base_huzu_name">户主姓名:</string>
     <string name="grid_base_add_sex">性别:</string>
     <string name="grid_base_add_cardid">身份证号:</string>
     <string name="grid_base_add_policatial">政治面貌:</string>
@@ -78,7 +81,10 @@
     <string name="grid_location_close">定位关闭提醒</string>
     <string name="grid_location_message">您已进入到网格数据模块，是否开启定时定位上传服务记录您的网格基础数据录入行程?</string>
     <string name="grid_location_close_message">您的定时定位上传服务正在运行中，是否关闭?</string>
-    <string name="apply">申请</string>
+    <string name="contact_no_result">没有搜索到相应结果</string>
+    <string name="contact_edit_hint">请输入关键字</string>
+    <string name="apply">申请延期</string>
+
 
     <string-array name="detail">
         <item>编号:</item>
@@ -88,7 +94,7 @@
 
     <string-array name="detail_last">
         <item>协办人:</item>
-        <item>备注:</item>
+        <item>事件备注:</item>
         <item>办理进度:</item>
     </string-array>
 
@@ -102,6 +108,9 @@
         <item>爆料内容:</item>
         <item>爆料图片:</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>
