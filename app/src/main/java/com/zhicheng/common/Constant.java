@@ -29,4 +29,8 @@ public class Constant {
     public static String LATITUDE = "";
     public static String LONGITUDE = "";
 
+    public static final String aId = "b8c5e3d2b5dd1ac41f8f3ecbdbbb34fa";
+    public static final String uKey = "d29e50b3572adc5662edfdc175022dc7";
+    public static final String _api_key= "43529be1c97dc0359847f45aeef3ad73";
+
 }

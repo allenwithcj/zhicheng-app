@@ -27,7 +27,7 @@
     <string name="i_content">爆料描述:</string>
     <string name="i_content_hint">请输入爆料描述…</string>
     <string name="i_deal_hint">请输入处理描述…</string>
-    <string name="i_apply_hint">请输入申请延期描述…</string>
+    <string name="i_apply_hint">请输入申请描述…</string>
     <string name="Bao">爆料</string>
     <string name="Accept">受理</string>
     <string name="Deal">处理</string>
@@ -83,7 +83,8 @@
     <string name="grid_location_close_message">您的定时定位上传服务正在运行中，是否关闭?</string>
     <string name="contact_no_result">没有搜索到相应结果</string>
     <string name="contact_edit_hint">请输入关键字</string>
-    <string name="apply">申请延期</string>
+    <string name="apply">申请</string>
+    <string name="file_provider">com.zhicheng.provider</string>
 
 
     <string-array name="detail">

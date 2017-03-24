@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
+import com.pgyersdk.crash.PgyCrashManager;
 import com.zhicheng.api.common.ServiceFactory;
 import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.common.database.LocalConfig;
@@ -60,6 +61,7 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         MultiDex.install(this);
+        PgyCrashManager.register(getApplicationContext());
         mActivities = new LinkedList<>();
         mBaseApplication = this;
         mainTid = Process.myTid();

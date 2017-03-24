@@ -1,7 +1,9 @@
 package com.zhicheng.ui.fragment;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -11,28 +13,37 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.pgyersdk.update.PgyUpdateManager;
+import com.pgyersdk.update.UpdateManagerListener;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.common.database.LocalConfig;
+import com.zhicheng.api.presenter.impl.CheckVersionPresenterImpl;
+import com.zhicheng.api.view.CheckVerisonView;
+import com.zhicheng.bean.http.VersionResponse;
+import com.zhicheng.bean.json.VersionRequest;
+import com.zhicheng.common.Constant;
 import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.LoginActivity;
-import com.zhicheng.ui.activity.VersionUpdateActivity;
 import com.zhicheng.ui.adapter.InfoAdapter;
 import com.zhicheng.utils.CircleImageView;
 import com.zhicheng.utils.common.UIUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
  * Created by Donson on 2017/1/2.
  */
 
-public class MainFragment extends BaseFragment{
+public class MainFragment extends BaseFragment implements CheckVerisonView{
 
     private FloatingActionButton mFab;
     private CircleImageView mCircleImageView;
@@ -41,7 +52,7 @@ public class MainFragment extends BaseFragment{
     private TextView mName;
     private TextView mOccupation;
     private TextView userpost;
-    private PopupWindow mPopupWindow;
+    private CheckVersionPresenterImpl mCheckVersionPresenterImpl;
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -62,6 +73,7 @@ public class MainFragment extends BaseFragment{
 
     @Override
     protected void initEvents() {
+        mCheckVersionPresenterImpl = new CheckVersionPresenterImpl(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.mainFragment.update");
         getActivity().registerReceiver(receiver,filter);
@@ -114,37 +126,51 @@ public class MainFragment extends BaseFragment{
 
     @Override
     protected void initData(boolean isSavedNull) {
-        mInfoAdapter.setButtonClick(() ->{
-            Intent intent = new Intent(getActivity(),VersionUpdateActivity.class);
-            startActivity(intent);
+        VersionRequest mVersionRequest = new VersionRequest();
+        mVersionRequest.setaId(Constant.aId);
+        mVersionRequest.set_api_key(Constant._api_key);
+        Gson gson = new Gson();
+        mCheckVersionPresenterImpl.getApps(gson.toJson(mVersionRequest));
 
-//            View pop_view = LayoutInflater.from(getContext()).inflate(R.layout.activity_version_dialog,null);
-//            Button btn_update = (Button)pop_view.findViewById(R.id.btn_update);
-//            Button btn_cancel = (Button)pop_view.findViewById(R.id.btn_cancel);
-//            if (null != mPopupWindow){
-//                mPopupWindow.dismiss();
-//            }else {
-//                mPopupWindow = new PopupWindow(pop_view, WindowManager.LayoutParams.WRAP_CONTENT,
-//                                WindowManager.LayoutParams.WRAP_CONTENT,true);
-//                mPopupWindow.setAnimationStyle(R.style.popwin_anim_style);
-//                mPopupWindow.setOutsideTouchable(false);
-//                mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-//                mPopupWindow.setOnDismissListener(() -> {
-//                    AnimationUtils.darkBackgroundColor(getActivity().getWindow(),1f);
-//                });
-//            }
-//            mPopupWindow.showAtLocation(mRootView,Gravity.CENTER,0,0);
-//            AnimationUtils.darkBackgroundColor(getActivity().getWindow(),0.4f);
-//
-//            btn_update.setOnClickListener(view -> {
-//
-//            });
-//
-//            btn_cancel.setOnClickListener(view -> {
-//                if(mPopupWindow.isShowing()){
-//                    mPopupWindow.dismiss();
-//                }
-//            });
+        mInfoAdapter.setButtonClick(() ->{
+            PgyUpdateManager.register(getActivity(),getString(R.string.file_provider),
+                    new UpdateManagerListener() {
+                        @Override
+                        public void onUpdateAvailable(final String result) {
+
+                            new AlertDialog.Builder(getActivity())
+                                    .setTitle("更新")
+                                    .setMessage("")
+                                    .setNegativeButton("确定",
+                                            new DialogInterface.OnClickListener() {
+
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    String url;
+                                                    JSONObject jsonData;
+                                                    try {
+                                                        jsonData = new JSONObject(result);
+                                                        if ("0".equals(jsonData.getString("code"))) {
+                                                            JSONObject jsonObject = jsonData.getJSONObject("data");
+                                                            url = jsonObject.getString("downloadURL");
+                                                            startDownloadTask(getActivity(),url);
+
+                                                        }
+
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            }).show();
+
+                        }
+
+                        @Override
+                        public void onNoUpdateAvailable() {
+                            Toast.makeText(UIUtils.getContext(),"已是最新版本",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
         });
     }
 
@@ -152,5 +178,20 @@ public class MainFragment extends BaseFragment{
     public void onDestroy() {
         super.onDestroy();
         getActivity().unregisterReceiver(receiver);
+    }
+
+    @Override
+    public void showMessage(String msg) {
+
+    }
+
+    @Override
+    public void checkResponse(Object result) {
+        if(result instanceof VersionResponse){
+            if(((VersionResponse) result).getMessage().equals("success")){
+
+            }
+        }
+
     }
 }

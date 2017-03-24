@@ -6,11 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zhicheng.R;
-import com.zhicheng.download.HttpDownManager;
 import com.zhicheng.ui.activity.ContactActivity;
 import com.zhicheng.ui.activity.OfficialSended;
 import com.zhicheng.utils.common.UIUtils;
@@ -24,8 +22,6 @@ public class InfoAdapter extends RecyclerView.Adapter {
     private static final int TYPE_HEAD = 0;
     private static final int TYPE_MIDDLE = 1;
     private static final int TYPE_LAST = 2;
-    private HttpDownManager manager;
-    private PopupWindow mPopupWindow;
 
     public interface ButtonClick{
         void onButtonClick();
@@ -38,10 +34,6 @@ public class InfoAdapter extends RecyclerView.Adapter {
         if (this.mButtonClick == null){
             this.mButtonClick = mButtonClick;
         }
-    }
-    public InfoAdapter(){
-
-        manager = HttpDownManager.getInstance();
     }
 
     @Override
