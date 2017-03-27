@@ -22,6 +22,12 @@ public class InfoAdapter extends RecyclerView.Adapter {
     private static final int TYPE_HEAD = 0;
     private static final int TYPE_MIDDLE = 1;
     private static final int TYPE_LAST = 2;
+    private boolean b;
+
+    public void setVersion(boolean b) {
+        this.b = b;
+        notifyDataSetChanged();
+    }
 
     public interface ButtonClick{
         void onButtonClick();
@@ -74,6 +80,9 @@ public class InfoAdapter extends RecyclerView.Adapter {
             }else{
                 ((InfoMiddleViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_bao_notice));
                 ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("在线更新");
+                if(b){
+                   ((InfoMiddleViewHolder) holder).mVersion_notice.setText("发现新版本");
+                }
                 ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
                      mButtonClick.onButtonClick();
                 });
@@ -127,12 +136,14 @@ public class InfoAdapter extends RecyclerView.Adapter {
 
         private ImageView mImageView;
         private TextView mTextViewMiddle;
+        private TextView mVersion_notice;
 
 
         public InfoMiddleViewHolder(View itemView) {
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.img);
             mTextViewMiddle = (TextView) itemView.findViewById(R.id.text_view_1);
+            mVersion_notice = (TextView) itemView.findViewById(R.id.version_notice);
 
         }
     }

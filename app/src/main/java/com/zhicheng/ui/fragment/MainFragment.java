@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.zhicheng.BaseApplication;
@@ -27,7 +28,6 @@ import com.zhicheng.api.common.database.LocalConfig;
 import com.zhicheng.api.presenter.impl.CheckVersionPresenterImpl;
 import com.zhicheng.api.view.CheckVerisonView;
 import com.zhicheng.bean.http.VersionResponse;
-import com.zhicheng.bean.json.VersionRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.LoginActivity;
@@ -37,6 +37,9 @@ import com.zhicheng.utils.common.UIUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -126,11 +129,10 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
 
     @Override
     protected void initData(boolean isSavedNull) {
-        VersionRequest mVersionRequest = new VersionRequest();
-        mVersionRequest.setaId(Constant.aId);
-        mVersionRequest.set_api_key(Constant._api_key);
-        Gson gson = new Gson();
-        mCheckVersionPresenterImpl.getApps(gson.toJson(mVersionRequest));
+        Map<String,String> map = new HashMap<>();
+        map.put("aId",Constant.aId);
+        map.put("_api_key",Constant._api_key);
+        mCheckVersionPresenterImpl.getApps(map);
 
         mInfoAdapter.setButtonClick(() ->{
             PgyUpdateManager.register(getActivity(),getString(R.string.file_provider),
@@ -188,10 +190,26 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
     @Override
     public void checkResponse(Object result) {
         if(result instanceof VersionResponse){
-            if(((VersionResponse) result).getMessage().equals("success")){
-
+            if(((VersionResponse) result).getCode() == 0){
+                if(((VersionResponse) result).getData() != null){
+                    if(Integer.parseInt(((VersionResponse) result).getData().getAppBuildVersion())
+                            > getCurrentVersion().versionCode){
+                        mInfoAdapter.setVersion(true);
+                    }
+                }
             }
         }
 
+    }
+
+    private PackageInfo getCurrentVersion() {
+        PackageInfo pi = null;
+        PackageManager pm = UIUtils.getContext().getPackageManager();
+        try {
+            pi = pm.getPackageInfo(UIUtils.getContext().getPackageName(),PackageManager.GET_CONFIGURATIONS);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return pi;
     }
 }
