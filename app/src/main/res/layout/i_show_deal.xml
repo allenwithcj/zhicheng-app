@@ -238,7 +238,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="@dimen/textView_padding"
-                android:text="@string/Deal" />
+                android:text="@string/Deal"
+                android:id="@+id/textView5" />
         </LinearLayout>
 
         <LinearLayout

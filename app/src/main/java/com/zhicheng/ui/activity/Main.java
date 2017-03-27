@@ -54,12 +54,14 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
             if (intent.getAction().equals("com.news.count.action")){
                 newsCount = intent.getStringExtra("news");
                 mData = new DatabaseHelper();
-                if(mData.getLocalConfig().getUserPost().contains("领导")){
+                if(mData.getLocalConfig().getUserPost().contains("领导") ||
+                        mData.getLocalConfig().getUserPost().equals("镇街单位业务员")){
                     if(!newsCount.equals("0") && newsCount != null){
                         badgeItem.setHideOnSelect(false)
                                 .setText(newsCount)
                                 .setBackgroundColorResource(R.color.red)
-                                .setBorderWidth(0);
+                                .setBorderWidth(0)
+                                .show();
                     }else{
                         badgeItem.hide();
                     }

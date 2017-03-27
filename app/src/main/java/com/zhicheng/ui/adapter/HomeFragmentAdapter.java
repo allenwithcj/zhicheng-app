@@ -108,7 +108,8 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
             }else if (holder instanceof ButtonGroupViewHolder){
                 if (mainResponses.getIq().getQuery().getData() != null){
                     //判断领导权限
-                    if(!mData.getLocalConfig().getUserPost().contains("领导")){
+                    if(!mData.getLocalConfig().getUserPost().contains("领导") &&
+                            !mData.getLocalConfig().getUserPost().equals("镇街单位业务员")){
                         if (mainResponses.getIq().getQuery().getData().getDaiBanTotal() != 0){
                             ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.VISIBLE);
                             ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setText(""+mainResponses.getIq().getQuery().getData().getDaiBanTotal());
