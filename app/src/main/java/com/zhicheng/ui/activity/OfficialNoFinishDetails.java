@@ -2,6 +2,7 @@ package com.zhicheng.ui.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,6 +65,7 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
     private TextView mBtn;
     private OfficialDetailResponse OfficialDetail;
     private String type;
+    private AlertDialog dialog;
 
     @Override
     protected void initEvents() {
@@ -87,14 +89,15 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                View deal_view = getLayoutInflater().inflate(R.layout.c_deal,parentView,false);
                 if(item.getItemId() == R.id.action_deal){
                     //处理事项
-                    View pop_view = getLayoutInflater().inflate(R.layout.c_deal,parentView,false);
-                    doThing(pop_view,"4");
+                    doThing(deal_view,"4");
 
                 }else if(item.getItemId() == R.id.action_apply){
-                    View pop_view = getLayoutInflater().inflate(R.layout.c_apply,parentView,false);
-                    doThing(pop_view,"0");
+                    //申请事项
+                    View apply_view = getLayoutInflater().inflate(R.layout.c_apply,parentView,false);
+                    doThing(apply_view,"0");
                 }
                 return true;
             }
@@ -118,8 +121,12 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
             String jFile = gson.toJson(uf);
             if (null != mImagePath){
                 if(mImagePath.size() != 0){
+                    dialog = new AlertDialog.Builder(this,R.style.dialog)
+                            .setView(R.layout.z_loading_view)
+                            .setCancelable(false)
+                            .create();
+                    dialog.show();
                     mOfficialDetail.upDeal(mImagePath,jFile,mEdit.getText().toString(),OfficialDetail,guid,type);
-                    mBtn.setText("处理中...");
                     mBtn.setClickable(false);
                 }else {
                     Toast.makeText(UIUtils.getContext(),"请选择上传图片",Toast.LENGTH_SHORT).show();
@@ -130,8 +137,9 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
         dealRecyclerView.setLayoutManager(new GridLayoutManager(OfficialNoFinishDetails.this,3));
         dealRecyclerView.setAdapter(mDealAdapter);
         int width = getWindowManager().getDefaultDisplay().getWidth();
-        if (null != mPopupWindow){
+        if (null != mPopupWindow && mPopupWindow.isShowing()){
             mPopupWindow.dismiss();
+            mPopupWindow = null;
         }else {
             mPopupWindow = new PopupWindow(pop_view,width - width/4, WindowManager.LayoutParams.WRAP_CONTENT,true);
             mPopupWindow.setAnimationStyle(R.style.popwin_anim_style);
@@ -140,9 +148,9 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
             mPopupWindow.setOnDismissListener(() -> {
                 AnimationUtils.darkBackgroundColor(getWindow(),1f);
             });
+            mPopupWindow.showAtLocation(parentView, Gravity.CENTER,0,0);
+            AnimationUtils.darkBackgroundColor(getWindow(),0.4f);
         }
-        mPopupWindow.showAtLocation(parentView, Gravity.CENTER,0,0);
-        AnimationUtils.darkBackgroundColor(getWindow(),0.4f);
     }
 
     @Override
@@ -197,10 +205,6 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
     @Override
     public void showMessage(String msg) {
         Toast.makeText(UIUtils.getContext(),msg,Toast.LENGTH_SHORT).show();
-        if (mPopupWindow != null && mPopupWindow.isShowing()){
-            mPopupWindow.dismiss();
-            mPopupWindow = null;
-        }
     }
 
     @Override
@@ -223,11 +227,17 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
             }
             mAdapter.setData((OfficialDetailResponse) result);
         }else if (result instanceof CommonResponse){
+            if (dialog != null && dialog.isShowing()){
+                dialog.dismiss();
+            }
             if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
-                showMessage("处理成功");
+                if (mPopupWindow != null && mPopupWindow.isShowing()){
+                    mPopupWindow.dismiss();
+                    mPopupWindow = null;
+                }
+                showMessage("操作成功");
                 this.finish();
             }else {
-                mBtn.setText("处理");
                 mBtn.setClickable(true);
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }

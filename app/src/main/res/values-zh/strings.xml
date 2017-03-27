@@ -30,7 +30,7 @@
     <string name="i_apply_hint">请输入申请描述…</string>
     <string name="Bao">爆料</string>
     <string name="Accept">受理</string>
-    <string name="Deal">处理</string>
+    <string name="Deal">提交处理结果</string>
     <string name="Complete">办结</string>
     <string name="i_choose">请选择</string>
     <string name="fourAddress">四至:</string>
@@ -83,8 +83,12 @@
     <string name="grid_location_close_message">您的定时定位上传服务正在运行中，是否关闭?</string>
     <string name="contact_no_result">没有搜索到相应结果</string>
     <string name="contact_edit_hint">请输入关键字</string>
-    <string name="apply">申请</string>
+    <string name="apply">申请重新派遣</string>
     <string name="file_provider">com.zhicheng.fileProvider</string>
+    <string name="version_update">更新</string>
+    <string name="find_new_version">发现新版本,是否进行下载更新?</string>
+    <string name="download">下载</string>
+    <string name="update_cancel">取消</string>
 
 
     <string-array name="detail">

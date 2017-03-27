@@ -21,6 +21,7 @@ import com.library.NoTouchBottomButton;
 import com.pgyersdk.crash.PgyCrashManager;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
+import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.ui.fragment.BaseFragment;
 import com.zhicheng.ui.fragment.CurrentMapFragment;
 import com.zhicheng.ui.fragment.HomeFragment;
@@ -44,6 +45,7 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
     private PopupWindow mPopupWindow;
     private String newsCount;
     private BadgeItem badgeItem;
+    private DatabaseHelper mData;
 
     private BroadcastReceiver receiver = new BroadcastReceiver(){
 
@@ -51,11 +53,16 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.news.count.action")){
                 newsCount = intent.getStringExtra("news");
-                if(!newsCount.equals("0") && newsCount != null){
-                    badgeItem.setHideOnSelect(false)
-                            .setText(newsCount)
-                            .setBackgroundColorResource(R.color.red)
-                            .setBorderWidth(0);
+                mData = new DatabaseHelper();
+                if(mData.getLocalConfig().getUserPost().contains("领导")){
+                    if(!newsCount.equals("0") && newsCount != null){
+                        badgeItem.setHideOnSelect(false)
+                                .setText(newsCount)
+                                .setBackgroundColorResource(R.color.red)
+                                .setBorderWidth(0);
+                    }else{
+                        badgeItem.hide();
+                    }
                 }else{
                     badgeItem.hide();
                 }
