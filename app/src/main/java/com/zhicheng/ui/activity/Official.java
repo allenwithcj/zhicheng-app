@@ -121,6 +121,7 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
         iqbQB.setPerPageNums("10");
         iqbQB.setOrderBy("");
         iqbQB.setOrderType("");
+        iqbQB.setIsReadJian("0");
         iqb.setQuery(iqbQB);
         iqb.setModel("0");
         iqb.setNamespace("ListRequest");

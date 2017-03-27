@@ -38,7 +38,7 @@
         android:theme="@style/AppTheme">
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.zhicheng.test.fileProvider"
+            android:authorities="com.zhicheng.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

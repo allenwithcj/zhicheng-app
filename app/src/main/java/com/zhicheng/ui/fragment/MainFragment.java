@@ -1,6 +1,5 @@
 package com.zhicheng.ui.fragment;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,14 +10,17 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.zhicheng.BaseApplication;
@@ -34,9 +36,6 @@ import com.zhicheng.ui.activity.LoginActivity;
 import com.zhicheng.ui.adapter.InfoAdapter;
 import com.zhicheng.utils.CircleImageView;
 import com.zhicheng.utils.common.UIUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -134,45 +133,31 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
         map.put("_api_key",Constant._api_key);
         mCheckVersionPresenterImpl.getApps(map);
 
-        mInfoAdapter.setButtonClick(() ->{
-            PgyUpdateManager.register(getActivity(),getString(R.string.file_provider),
-                    new UpdateManagerListener() {
+        mInfoAdapter.setButtonClick(() -> {
+            PgyUpdateManager.register(getActivity(), getString(R.string.file_provider), new UpdateManagerListener() {
+                @Override
+                public void onNoUpdateAvailable() {
+
+                }
+
+                @Override
+                public void onUpdateAvailable(String s) {
+                    // 将新版本信息封装到AppBean中
+                    final AppBean appBean = getAppBeanFromString(s);
+                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_version_update,null);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setView(view);
+                    builder.setPositiveButton(getActivity().getResources().getString(R.string.download), new DialogInterface.OnClickListener() {
                         @Override
-                        public void onUpdateAvailable(final String result) {
-
-                            new AlertDialog.Builder(getActivity())
-                                    .setTitle("更新")
-                                    .setMessage("")
-                                    .setNegativeButton("确定",
-                                            new DialogInterface.OnClickListener() {
-
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    String url;
-                                                    JSONObject jsonData;
-                                                    try {
-                                                        jsonData = new JSONObject(result);
-                                                        if ("0".equals(jsonData.getString("code"))) {
-                                                            JSONObject jsonObject = jsonData.getJSONObject("data");
-                                                            url = jsonObject.getString("downloadURL");
-                                                            startDownloadTask(getActivity(),url);
-
-                                                        }
-
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                }
-                                            }).show();
-
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            startDownloadTask(getActivity(),
+                                    appBean.getDownloadURL());
                         }
+                    }).setNegativeButton(getActivity().getResources().getString(R.string.update_cancel),null);
+                    builder.show();
 
-                        @Override
-                        public void onNoUpdateAvailable() {
-                            Toast.makeText(UIUtils.getContext(),"已是最新版本",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
+                }
+            });
         });
     }
 
@@ -192,7 +177,7 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
         if(result instanceof VersionResponse){
             if(((VersionResponse) result).getCode() == 0){
                 if(((VersionResponse) result).getData() != null){
-                    if(Integer.parseInt(((VersionResponse) result).getData().getAppBuildVersion())
+                    if(Integer.parseInt(((VersionResponse) result).getData().getAppVersionNo())
                             > getCurrentVersion().versionCode){
                         mInfoAdapter.setVersion(true);
                     }

@@ -70,6 +70,7 @@ public class OfficialRequest {
             private String orderType;
             private String requestType;
             private String status;
+            private String isReadJian;
 
             public String getOrderBy() {
                 return orderBy;
@@ -117,6 +118,14 @@ public class OfficialRequest {
 
             public void setStatus(String status) {
                 this.status = status;
+            }
+
+            public String getIsReadJian() {
+                return isReadJian;
+            }
+
+            public void setIsReadJian(String isReadJian) {
+                this.isReadJian = isReadJian;
             }
         }
     }

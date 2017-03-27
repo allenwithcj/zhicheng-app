@@ -83,7 +83,7 @@ public class MyNewsFragment extends BaseFragment implements OfficialView,SwipeRe
 
     @Override
     protected void initData(boolean isSavedNull) {
-        onRefresh();
+
     }
 
     @Override
@@ -114,6 +114,8 @@ public class MyNewsFragment extends BaseFragment implements OfficialView,SwipeRe
         start++;
     }
 
+
+
     private String createObj(int page){
         Gson gson = new Gson();
         OfficialRequest officialRequest = new OfficialRequest();
@@ -124,6 +126,7 @@ public class MyNewsFragment extends BaseFragment implements OfficialView,SwipeRe
         iqbQB.setPerPageNums("10");
         iqbQB.setOrderBy("");
         iqbQB.setOrderType("");
+        iqbQB.setIsReadJian("1");
         iqb.setQuery(iqbQB);
         iqb.setModel("0");
         iqb.setNamespace("ListRequest");

@@ -107,11 +107,14 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                 }
             }else if (holder instanceof ButtonGroupViewHolder){
                 if (mainResponses.getIq().getQuery().getData() != null){
-                    if (mainResponses.getIq().getQuery().getData().getDaiBanTotal() != 0){
-                        ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.VISIBLE);
-                        ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setText(""+mainResponses.getIq().getQuery().getData().getDaiBanTotal());
-                    }else {
-                        ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.GONE);
+                    //判断领导权限
+                    if(!mData.getLocalConfig().getUserPost().contains("领导")){
+                        if (mainResponses.getIq().getQuery().getData().getDaiBanTotal() != 0){
+                            ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.VISIBLE);
+                            ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setText(""+mainResponses.getIq().getQuery().getData().getDaiBanTotal());
+                        }else {
+                            ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.GONE);
+                        }
                     }
                     if(mainResponses.getIq().getQuery().getData().getNoticeTotal() != 0){
                         ((ButtonGroupViewHolder) holder).fabNotice_notice.setVisibility(View.VISIBLE);

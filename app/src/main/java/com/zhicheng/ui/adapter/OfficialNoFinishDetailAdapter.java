@@ -244,7 +244,7 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                         }else {
                             ((ShowDealViewHolder) holder).Complete.setText("");
                         }
-                        ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal_normal));
+                        ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     }
 
             }

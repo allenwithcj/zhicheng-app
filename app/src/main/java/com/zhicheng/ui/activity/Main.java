@@ -19,7 +19,6 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.library.NoTouchBottomButton;
 import com.pgyersdk.crash.PgyCrashManager;
-import com.pgyersdk.feedback.PgyFeedbackShakeManager;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.ui.fragment.BaseFragment;
@@ -244,7 +243,6 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
 
     @Override
     protected void onPause() {
-        PgyFeedbackShakeManager.unregister();
         super.onPause();
         if (mPopupWindow != null && mPopupWindow.isShowing()){
             mPopupWindow.dismiss();
@@ -281,7 +279,6 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
 
     @Override
     protected void onResume() {
-        PgyFeedbackShakeManager.register(Main.this, false);
         super.onResume();
         firstClickBack = 0;
     }
@@ -306,5 +303,6 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+        PgyCrashManager.unregister();
     }
 }
