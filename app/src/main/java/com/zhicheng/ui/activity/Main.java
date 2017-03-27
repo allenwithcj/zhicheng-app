@@ -55,7 +55,8 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
                 newsCount = intent.getStringExtra("news");
                 mData = new DatabaseHelper();
                 if(mData.getLocalConfig().getUserPost().contains("领导") ||
-                        mData.getLocalConfig().getUserPost().equals("镇街单位业务员")){
+                        mData.getLocalConfig().getUserPost().equals("镇街单位业务员") ||
+                        mData.getLocalConfig().getUserPost().equals("镇街受理员")){
                     if(!newsCount.equals("0") && newsCount != null){
                         badgeItem.setHideOnSelect(false)
                                 .setText(newsCount)

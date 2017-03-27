@@ -201,7 +201,7 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                         ((ShowDealViewHolder) holder).Accept.setText(null);
                         ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Deal.setText(null);
+                        ((ShowDealViewHolder) holder).Deal.setText("办理中...");
                         ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     }else if(mFlowStatus.equals("2")){
                         String mStartTime = mData.getIq().getQuery().getMap().getFlowStartTime();
