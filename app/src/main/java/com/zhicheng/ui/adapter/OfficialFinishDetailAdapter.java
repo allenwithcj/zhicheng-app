@@ -90,10 +90,6 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         break;
                     case 2:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        ((ShowBoxViewHolder) holder).tagContent.setText("群众");
-                        break;
-                    case 3:
-                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
                         if(mData.getIq().getQuery().getMap().getType() == 1){
                             ((ShowBoxViewHolder) holder).tagContent.setText("立案核实");
                         }else if(mData.getIq().getQuery().getMap().getType() == 2){
@@ -102,35 +98,35 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                             ((ShowBoxViewHolder) holder).tagContent.setText("结案核实");
                         }
                         break;
-                    case 4:
+                    case 3:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
                         break;
-                    case 5:
+                    case 4:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText("手机号码");
                         break;
-                    case 6:
+                    case 5:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendTime());
                         break;
-                    case 7:
+                    case 6:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[0]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
                         break;
-                    case 8:
+                    case 7:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getMap().getEventNote());
                         break;
-                    case 9:
+                    case 8:
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[2]);
                         break;
                 }
             }else if (holder instanceof ShowContentViewHolder){
-                ((ShowContentViewHolder) holder).tagContentName.setText(tags[6]);
+                ((ShowContentViewHolder) holder).tagContentName.setText(tags[5]);
                 ((ShowContentViewHolder) holder).tagBaoContent.setText(mData.getIq().getQuery().getMap().getEventDescription());
             }else if (holder instanceof ShowImageViewHolder){
-                ((ShowImageViewHolder) holder).tagImage.setText(tags[7]);
+                ((ShowImageViewHolder) holder).tagImage.setText(tags[6]);
                 int images = mData.getIq().getQuery().getAttachments().size();
                 if(images != 0){
                     if(images == 1){
@@ -232,20 +228,20 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 12;
+        return 11;
     }
 
     @Override
     public int getItemViewType(int position) {
         if(position==0){
             return TYPE_HEADER;
-        }else if(position>0 && position<7){
+        }else if(position>0 && position<6){
             return TYPE_SHOW_BOX;
-        }else if(position==7){
+        }else if(position==6){
             return TYPE_SHOW_CONTENT;
-        }else if(position==8){
+        }else if(position==7){
             return TYPE_SHOW_IMAGES;
-        }else if(position>8 && position<getItemCount()-1){
+        }else if(position>7 && position<getItemCount()-1){
             return TYPE_SHOW_BOX;
         }else{
             return TYPE_SHOW_DEAL;
