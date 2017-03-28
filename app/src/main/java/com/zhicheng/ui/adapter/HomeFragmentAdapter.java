@@ -1,6 +1,7 @@
 package com.zhicheng.ui.adapter;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -45,6 +46,9 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
 
     public HomeFragmentAdapter(){
         mData = new DatabaseHelper();
+    }
+
+    public HomeFragmentAdapter(FragmentActivity homeFragment) {
     }
 
     public void setAdapterData(CommonResponse mainResponses){
