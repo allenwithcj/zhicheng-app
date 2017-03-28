@@ -65,6 +65,7 @@ public class HomeFragment extends BaseFragment implements MainView,OfficialView,
 
     }
 
+    //查询待办事项个数
     private void fresh() {
         start = 1;
         String strEntity = createObj(start);

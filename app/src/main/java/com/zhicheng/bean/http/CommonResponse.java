@@ -10,7 +10,7 @@ public class CommonResponse {
 
 
     /**
-     * iq : {"query":{"data":{"caseReportTotal":1,"gridReportTotal":0,"cases":[{"attachments":[{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}],"itemcon":"在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集","itemaddress":"中国浙江省湖州市长兴县金莲桥弄","itemtime":"2017-03-21 09:02:54.0"}],"weekDoneTotal":0,"noticeTotal":0,"daiBanTotal":0},"errorMessage":"成功","errorCode":0},"namespace":"NewsCaseTotalResponse"}
+     * iq : {"query":{"data":{"caseReportTotal":1,"gridReportTotal":0,"cases":[{"attachments":[{"size":"83.46K","name":"(v8AMgA3ADYAMAA4ADg=)5.jpg","id":"/v8AMgA4ADkANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAx","type":"1"}],"wt00":"530","caseId":"379","caseNo":"YPT20170323010","itemcon":"易燃易爆物品","itemaddress":"中国浙江省湖州市长兴县林荫路","itemtime":"2017-03-23 14:40:04.0"},{"attachments":[{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkAOAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAOAA2","type":"1"},{"size":"33.08K","name":"image1.png","id":"/v8AMgA4ADkAOAA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAOAA3","type":"1"}],"wt00":"536","caseId":"385","caseNo":"YPT20170323016","itemcon":"长时间没有产出带来的恐慌是蛮大的。","itemaddress":"湖北省仙桃市","itemtime":"2017-03-23 04:23:29.0"},{"attachments":[{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAAy","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAAy","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA0","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA0","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANgA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA3","type":"1"},{"size":"33.08K","name":"image1.png","id":"/v8AMgA4ADkANgA4","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA4","type":"1"},{"size":"36.32K","name":"image2.png","id":"/v8AMgA4ADkANgA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA5","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANwAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAw","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA1","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA2","type":"1"}],"wt00":"529","caseId":"378","caseNo":"YPT20170323009","itemcon":"1.首页 今日爆料 需要查看详情 后台需要详情 \r\n2..flowStatus返回的数据为空 －－－(处理流程)\r\n3.网格员自己上报自己处理案件不能结案 （App端）书记和领导不能结案（办理进度）\r\n4..传阅的事项不能出现在待办事项中 \r\n5.PC端（传阅不能搜索对象","itemaddress":"湖北省仙桃市","itemtime":"2017-03-23 02:40:26.0"}],"weekDoneTotal":0,"noticeTotal":0,"daiBanTotal":0},"errorMessage":"成功","errorCode":0},"namespace":"NewsCaseTotalResponse"}
      */
 
     private IqBean iq;
@@ -25,7 +25,7 @@ public class CommonResponse {
 
     public static class IqBean {
         /**
-         * query : {"data":{"caseReportTotal":1,"gridReportTotal":0,"cases":[{"attachments":[{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}],"itemcon":"在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集","itemaddress":"中国浙江省湖州市长兴县金莲桥弄","itemtime":"2017-03-21 09:02:54.0"}],"weekDoneTotal":0,"noticeTotal":0,"daiBanTotal":0},"errorMessage":"成功","errorCode":0}
+         * query : {"data":{"caseReportTotal":1,"gridReportTotal":0,"cases":[{"attachments":[{"size":"83.46K","name":"(v8AMgA3ADYAMAA4ADg=)5.jpg","id":"/v8AMgA4ADkANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAx","type":"1"}],"wt00":"530","caseId":"379","caseNo":"YPT20170323010","itemcon":"易燃易爆物品","itemaddress":"中国浙江省湖州市长兴县林荫路","itemtime":"2017-03-23 14:40:04.0"},{"attachments":[{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkAOAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAOAA2","type":"1"},{"size":"33.08K","name":"image1.png","id":"/v8AMgA4ADkAOAA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAOAA3","type":"1"}],"wt00":"536","caseId":"385","caseNo":"YPT20170323016","itemcon":"长时间没有产出带来的恐慌是蛮大的。","itemaddress":"湖北省仙桃市","itemtime":"2017-03-23 04:23:29.0"},{"attachments":[{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAAy","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAAy","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA0","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA0","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANgA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA3","type":"1"},{"size":"33.08K","name":"image1.png","id":"/v8AMgA4ADkANgA4","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA4","type":"1"},{"size":"36.32K","name":"image2.png","id":"/v8AMgA4ADkANgA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA5","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANwAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAw","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA1","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA2","type":"1"}],"wt00":"529","caseId":"378","caseNo":"YPT20170323009","itemcon":"1.首页 今日爆料 需要查看详情 后台需要详情 \r\n2..flowStatus返回的数据为空 －－－(处理流程)\r\n3.网格员自己上报自己处理案件不能结案 （App端）书记和领导不能结案（办理进度）\r\n4..传阅的事项不能出现在待办事项中 \r\n5.PC端（传阅不能搜索对象","itemaddress":"湖北省仙桃市","itemtime":"2017-03-23 02:40:26.0"}],"weekDoneTotal":0,"noticeTotal":0,"daiBanTotal":0},"errorMessage":"成功","errorCode":0}
          * namespace : NewsCaseTotalResponse
          */
 
@@ -50,7 +50,7 @@ public class CommonResponse {
 
         public static class QueryBean {
             /**
-             * data : {"caseReportTotal":1,"gridReportTotal":0,"cases":[{"attachments":[{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}],"itemcon":"在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集","itemaddress":"中国浙江省湖州市长兴县金莲桥弄","itemtime":"2017-03-21 09:02:54.0"}],"weekDoneTotal":0,"noticeTotal":0,"daiBanTotal":0}
+             * data : {"caseReportTotal":1,"gridReportTotal":0,"cases":[{"attachments":[{"size":"83.46K","name":"(v8AMgA3ADYAMAA4ADg=)5.jpg","id":"/v8AMgA4ADkANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAx","type":"1"}],"wt00":"530","caseId":"379","caseNo":"YPT20170323010","itemcon":"易燃易爆物品","itemaddress":"中国浙江省湖州市长兴县林荫路","itemtime":"2017-03-23 14:40:04.0"},{"attachments":[{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkAOAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAOAA2","type":"1"},{"size":"33.08K","name":"image1.png","id":"/v8AMgA4ADkAOAA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAOAA3","type":"1"}],"wt00":"536","caseId":"385","caseNo":"YPT20170323016","itemcon":"长时间没有产出带来的恐慌是蛮大的。","itemaddress":"湖北省仙桃市","itemtime":"2017-03-23 04:23:29.0"},{"attachments":[{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAAy","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAAy","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA0","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA0","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANgA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA3","type":"1"},{"size":"33.08K","name":"image1.png","id":"/v8AMgA4ADkANgA4","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA4","type":"1"},{"size":"36.32K","name":"image2.png","id":"/v8AMgA4ADkANgA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA5","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANwAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAw","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA1","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA2","type":"1"}],"wt00":"529","caseId":"378","caseNo":"YPT20170323009","itemcon":"1.首页 今日爆料 需要查看详情 后台需要详情 \r\n2..flowStatus返回的数据为空 －－－(处理流程)\r\n3.网格员自己上报自己处理案件不能结案 （App端）书记和领导不能结案（办理进度）\r\n4..传阅的事项不能出现在待办事项中 \r\n5.PC端（传阅不能搜索对象","itemaddress":"湖北省仙桃市","itemtime":"2017-03-23 02:40:26.0"}],"weekDoneTotal":0,"noticeTotal":0,"daiBanTotal":0}
              * errorMessage : 成功
              * errorCode : 0
              */
@@ -87,7 +87,7 @@ public class CommonResponse {
                 /**
                  * caseReportTotal : 1
                  * gridReportTotal : 0
-                 * cases : [{"attachments":[{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}],"itemcon":"在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集","itemaddress":"中国浙江省湖州市长兴县金莲桥弄","itemtime":"2017-03-21 09:02:54.0"}]
+                 * cases : [{"attachments":[{"size":"83.46K","name":"(v8AMgA3ADYAMAA4ADg=)5.jpg","id":"/v8AMgA4ADkANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAx","type":"1"}],"wt00":"530","caseId":"379","caseNo":"YPT20170323010","itemcon":"易燃易爆物品","itemaddress":"中国浙江省湖州市长兴县林荫路","itemtime":"2017-03-23 14:40:04.0"},{"attachments":[{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkAOAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAOAA2","type":"1"},{"size":"33.08K","name":"image1.png","id":"/v8AMgA4ADkAOAA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAOAA3","type":"1"}],"wt00":"536","caseId":"385","caseNo":"YPT20170323016","itemcon":"长时间没有产出带来的恐慌是蛮大的。","itemaddress":"湖北省仙桃市","itemtime":"2017-03-23 04:23:29.0"},{"attachments":[{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAAy","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAAy","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA0","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA0","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANgA3","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA3","type":"1"},{"size":"33.08K","name":"image1.png","id":"/v8AMgA4ADkANgA4","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA4","type":"1"},{"size":"36.32K","name":"image2.png","id":"/v8AMgA4ADkANgA5","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANgA5","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANwAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAw","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA1","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA1","type":"1"},{"size":"74.67K","name":"image0.png","id":"/v8AMgA4ADkANAA2","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANAA2","type":"1"}],"wt00":"529","caseId":"378","caseNo":"YPT20170323009","itemcon":"1.首页 今日爆料 需要查看详情 后台需要详情 \r\n2..flowStatus返回的数据为空 －－－(处理流程)\r\n3.网格员自己上报自己处理案件不能结案 （App端）书记和领导不能结案（办理进度）\r\n4..传阅的事项不能出现在待办事项中 \r\n5.PC端（传阅不能搜索对象","itemaddress":"湖北省仙桃市","itemtime":"2017-03-23 02:40:26.0"}]
                  * weekDoneTotal : 0
                  * noticeTotal : 0
                  * daiBanTotal : 0
@@ -150,16 +150,46 @@ public class CommonResponse {
 
                 public static class CasesBean {
                     /**
-                     * attachments : [{"size":"5.82M","name":"IMG_20170321_085745.jpg","id":"/v8AMgA4ADkAMQAw","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw","type":"1"},{"size":"4.37M","name":"IMG_20170321_085727.jpg","id":"/v8AMgA4ADkAMQAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAx","type":"1"}]
-                     * itemcon : 在金莲桥泥桥湾小区内，一辆汽车堵在垃圾桶旁边，致使保洁人员无法对垃圾进行收集
-                     * itemaddress : 中国浙江省湖州市长兴县金莲桥弄
-                     * itemtime : 2017-03-21 09:02:54.0
+                     * attachments : [{"size":"83.46K","name":"(v8AMgA3ADYAMAA4ADg=)5.jpg","id":"/v8AMgA4ADkANwAx","href":"/servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAx","type":"1"}]
+                     * wt00 : 530
+                     * caseId : 379
+                     * caseNo : YPT20170323010
+                     * itemcon : 易燃易爆物品
+                     * itemaddress : 中国浙江省湖州市长兴县林荫路
+                     * itemtime : 2017-03-23 14:40:04.0
                      */
 
+                    private String wt00;
+                    private String caseId;
+                    private String caseNo;
                     private String itemcon;
                     private String itemaddress;
                     private String itemtime;
                     private List<AttachmentsBean> attachments;
+
+                    public String getWt00() {
+                        return wt00;
+                    }
+
+                    public void setWt00(String wt00) {
+                        this.wt00 = wt00;
+                    }
+
+                    public String getCaseId() {
+                        return caseId;
+                    }
+
+                    public void setCaseId(String caseId) {
+                        this.caseId = caseId;
+                    }
+
+                    public String getCaseNo() {
+                        return caseNo;
+                    }
+
+                    public void setCaseNo(String caseNo) {
+                        this.caseNo = caseNo;
+                    }
 
                     public String getItemcon() {
                         return itemcon;
@@ -195,10 +225,10 @@ public class CommonResponse {
 
                     public static class AttachmentsBean {
                         /**
-                         * size : 5.82M
-                         * name : IMG_20170321_085745.jpg
-                         * id : /v8AMgA4ADkAMQAw
-                         * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkAMQAw
+                         * size : 83.46K
+                         * name : (v8AMgA3ADYAMAA4ADg=)5.jpg
+                         * id : /v8AMgA4ADkANwAx
+                         * href : /servlet/mobileAttachmentServlet?type=0&attachPK=%2Fv8AMgA4ADkANwAx
                          * type : 1
                          */
 

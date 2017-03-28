@@ -18,6 +18,7 @@ import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.CallTheCounActivity;
 import com.zhicheng.ui.activity.Official;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
+import com.zhicheng.ui.activity.OfficialSendDetails;
 import com.zhicheng.ui.activity.OfficialWorkDynamic;
 import com.zhicheng.ui.activity.SearchViewActivity;
 import com.zhicheng.ui.activity.WorkNoteActivity;
@@ -218,7 +219,9 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
             mLoopViewPager.setButtonClick(new LoopContentPager.ButtonClick() {
                 @Override
                 public void onButtonClickcallBack(int position) {
-                    Toast.makeText(UIUtils.getContext(),""+position,Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(UIUtils.getContext(),OfficialSendDetails.class);
+                    intent.putExtra("detailId",mainResponses.getIq().getQuery().getData().getCases().get(position).getWt00());
+                    UIUtils.startActivity(intent);
                 }
             });
         }
