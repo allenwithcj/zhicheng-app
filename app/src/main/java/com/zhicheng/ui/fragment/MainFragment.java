@@ -189,6 +189,8 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
                     if(Integer.parseInt(((VersionResponse) result).getData().getAppVersionNo())
                             > getCurrentVersion().versionCode){
                         mInfoAdapter.setVersion(true);
+                    }else{
+                        mInfoAdapter.setVersion(false);
                     }
                 }
             }

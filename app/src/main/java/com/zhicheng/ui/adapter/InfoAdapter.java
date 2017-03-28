@@ -82,6 +82,8 @@ public class InfoAdapter extends RecyclerView.Adapter {
                 ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("在线更新");
                 if(b){
                    ((InfoMiddleViewHolder) holder).mVersion_notice.setText("发现新版本");
+                }else{
+                    ((InfoMiddleViewHolder) holder).mVersion_notice.setText("已是最新版本");
                 }
                 ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
                      mButtonClick.onButtonClick();
