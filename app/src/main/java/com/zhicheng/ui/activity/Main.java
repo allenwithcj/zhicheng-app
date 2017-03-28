@@ -1,10 +1,6 @@
 package com.zhicheng.ui.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.content.res.AppCompatResources;
@@ -17,11 +13,15 @@ import android.widget.Toast;
 import com.ashokvarma.bottomnavigation.BadgeItem;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.google.gson.Gson;
 import com.library.NoTouchBottomButton;
 import com.pgyersdk.crash.PgyCrashManager;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
-import com.zhicheng.api.common.database.DatabaseHelper;
+import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
+import com.zhicheng.api.view.OfficialView;
+import com.zhicheng.bean.http.OfficialResponse;
+import com.zhicheng.bean.json.OfficialRequest;
 import com.zhicheng.ui.fragment.BaseFragment;
 import com.zhicheng.ui.fragment.CurrentMapFragment;
 import com.zhicheng.ui.fragment.HomeFragment;
@@ -32,7 +32,7 @@ import com.zhicheng.utils.common.UIUtils;
 
 import roboguice.inject.InjectView;
 
-public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelectedListener {
+public class Main extends BaseActivity implements OfficialView, BottomNavigationBar.OnTabSelectedListener {
 
     @InjectView(R.id.bottomNavigationBar)
     private NoTouchBottomButton mBottomNavigation;
@@ -43,60 +43,63 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
     private MyNewsFragment mMyNewsFragment;
     private MainFragment mMainFragment;
     private PopupWindow mPopupWindow;
-    private String newsCount;
+//    private String newsCount;
     private BadgeItem badgeItem;
-    private DatabaseHelper mData;
+//    private DatabaseHelper mData;
 
-    private BroadcastReceiver receiver = new BroadcastReceiver(){
+    private OfficialPresenterImpl mOfficialPresenterImpl;
+    private int start;
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals("com.news.count.action")){
-                newsCount = intent.getStringExtra("news");
-                mData = new DatabaseHelper();
-                if(mData.getLocalConfig().getUserPost().contains("领导") ||
-                        mData.getLocalConfig().getUserPost().equals("镇街单位业务员") ||
-                        mData.getLocalConfig().getUserPost().equals("镇街受理员")){
-                    if(!newsCount.equals("0") && newsCount != null){
-                        badgeItem.setHideOnSelect(false)
-                                .setText(newsCount)
-                                .setBackgroundColorResource(R.color.red)
-                                .setBorderWidth(0)
-                                .show();
-                    }else{
-                        badgeItem.hide();
-                    }
-                }else{
-                    badgeItem.hide();
-                }
-            }
-        }
-    };
+//    private BroadcastReceiver receiver = new BroadcastReceiver(){
+//
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            if (intent.getAction().equals("com.news.count.action")){
+//                newsCount = intent.getStringExtra("news");
+//                mData = new DatabaseHelper();
+//                if(mData.getLocalConfig().getUserPost().contains("领导") ||
+//                        mData.getLocalConfig().getUserPost().equals("镇街单位业务员") ||
+//                        mData.getLocalConfig().getUserPost().equals("镇街受理员")){
+//                    if(!newsCount.equals("0") && newsCount != null){
+//                        badgeItem.setHideOnSelect(false)
+//                                .setText(newsCount)
+//                                .setBackgroundColorResource(R.color.red)
+//                                .setBorderWidth(0)
+//                                .show();
+//                    }else{
+//                        badgeItem.hide();
+//                    }
+//                }else{
+//                    badgeItem.hide();
+//                }
+//            }
+//        }
+//    };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        PgyCrashManager.register(this);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.news.count.action");
-        registerReceiver(receiver,intentFilter);
-        badgeItem = new BadgeItem();
-        initBottomNavigationBar();
-        if (mFragmentManager == null){
-            mFragmentManager = getSupportFragmentManager();
-        }
-        mToolbar.setNavigationIcon(AppCompatResources.getDrawable(this,R.drawable.ic_action_add));
-        BaseApplication.checkLogin();
-        PermissionUtils.requestStoragePermission(this);
-    }
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//        PgyCrashManager.register(this);
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction("com.news.count.action");
+//        registerReceiver(receiver,intentFilter);
+//        badgeItem = new BadgeItem();
+//        initBottomNavigationBar();
+//        if (mFragmentManager == null){
+//            mFragmentManager = getSupportFragmentManager();
+//        }
+//        mToolbar.setNavigationIcon(AppCompatResources.getDrawable(this,R.drawable.ic_action_add));
+//        BaseApplication.checkLogin();
+//        PermissionUtils.requestStoragePermission(this);
+//    }
 
     private void initBottomNavigationBar(){
         mBottomNavigation.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mBottomNavigation.setInActiveColor(R.color.navigationColor);
         mBottomNavigation.setActiveColor(R.color.pridark);
-
+        badgeItem.hide();
         mBottomNavigation
                     .addItem(new BottomNavigationItem(R.drawable.ic_navigation_home,"首页"))
                     .addItem(new BottomNavigationItem(R.drawable.ic_navigation_map,"地图"))
@@ -112,12 +115,42 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
 
     @Override
     protected void initEvents() {
-
+        setContentView(R.layout.activity_main);
+        PgyCrashManager.register(this);
+        badgeItem = new BadgeItem();
+        initBottomNavigationBar();
+        if (mFragmentManager == null){
+            mFragmentManager = getSupportFragmentManager();
+        }
+        mToolbar.setNavigationIcon(AppCompatResources.getDrawable(this,R.drawable.ic_action_add));
+        BaseApplication.checkLogin();
+        PermissionUtils.requestStoragePermission(this);
     }
+
+
 
     @Override
     protected void initData() {
 
+    }
+
+
+    private String createObj(int page){
+        Gson gson = new Gson();
+        OfficialRequest officialRequest = new OfficialRequest();
+        OfficialRequest.IqBean iqb = new OfficialRequest.IqBean();
+        OfficialRequest.IqBean.QueryBean iqbQB = new OfficialRequest.IqBean.QueryBean();
+        iqbQB.setRequestType("0");
+        iqbQB.setPage(String.valueOf(page));
+        iqbQB.setPerPageNums("10");
+        iqbQB.setOrderBy("");
+        iqbQB.setOrderType("");
+        iqbQB.setIsReadJian("1");
+        iqb.setQuery(iqbQB);
+        iqb.setModel("0");
+        iqb.setNamespace("ListRequest");
+        officialRequest.setIq(iqb);
+        return gson.toJson(officialRequest);
     }
 
     private void setDefaultFragment(){
@@ -289,8 +322,17 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
 
     @Override
     protected void onResume() {
+        fresh();
         super.onResume();
         firstClickBack = 0;
+    }
+
+    private void fresh() {
+        mOfficialPresenterImpl = new OfficialPresenterImpl(this);
+        start = 1;
+        String strEntity = createObj(start);
+        mOfficialPresenterImpl.loadNoFinish(strEntity,start);
+        start++;
     }
 
     private long firstClickBack = 0;
@@ -312,7 +354,45 @@ public class Main extends BaseActivity implements BottomNavigationBar.OnTabSelec
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(receiver);
+//        unregisterReceiver(receiver);
         PgyCrashManager.unregister();
+    }
+
+    @Override
+    public void showMessage(String msg) {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void refreshData(Object result) {
+        if (result instanceof OfficialResponse){
+            if(((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+                int mTotalNum = ((OfficialResponse) result).getIq().getQuery().getTotalNums();
+                if(mTotalNum != 0){
+                        badgeItem.setHideOnSelect(false)
+                                .setText(String.valueOf(mTotalNum))
+                                .setBackgroundColorResource(R.color.red)
+                                .setBorderWidth(0)
+                                .show();
+                    }else{
+                        badgeItem.hide();
+                    }
+            }
+        }
+    }
+
+    @Override
+    public void addData(Object result) {
+
     }
 }

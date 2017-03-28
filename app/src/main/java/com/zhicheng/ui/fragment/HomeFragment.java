@@ -1,6 +1,5 @@
 package com.zhicheng.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,12 +13,15 @@ import com.google.gson.Gson;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.impl.MainPresenterImpl;
+import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.MainView;
+import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.CommonResponse;
+import com.zhicheng.bean.http.OfficialResponse;
+import com.zhicheng.bean.json.OfficialRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.HomeFragmentAdapter;
 import com.zhicheng.utils.VpSwipeRefreshLayout;
-import com.zhicheng.utils.common.UIUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +31,7 @@ import java.util.Map;
  * Created by Donson on 2017/1/2.
  */
 
-public class HomeFragment extends BaseFragment implements MainView,
+public class HomeFragment extends BaseFragment implements MainView,OfficialView,
         VpSwipeRefreshLayout.OnRefreshListener{
 
     private VpSwipeRefreshLayout mSwipeRefreshLayout;
@@ -37,6 +39,9 @@ public class HomeFragment extends BaseFragment implements MainView,
     private MainPresenterImpl mMainPresenterImpl;
     private HomeFragmentAdapter mHomeAdapter;
     //private Main parentActivity;
+
+    private OfficialPresenterImpl mOfficialPresenterImpl;
+    private int start;
 
     public static HomeFragment newInstance(){
         HomeFragment fragment = new HomeFragment();
@@ -54,10 +59,37 @@ public class HomeFragment extends BaseFragment implements MainView,
 
     @Override
     public void onResume() {
+        fresh();
         super.onResume();
         mHandler.sendEmptyMessage(0);
 
     }
+
+    private void fresh() {
+        start = 1;
+        String strEntity = createObj(start);
+        mOfficialPresenterImpl.loadNoFinish(strEntity,start);
+        start++;
+    }
+
+    private String createObj(int page){
+        Gson gson = new Gson();
+        OfficialRequest officialRequest = new OfficialRequest();
+        OfficialRequest.IqBean iqb = new OfficialRequest.IqBean();
+        OfficialRequest.IqBean.QueryBean iqbQB = new OfficialRequest.IqBean.QueryBean();
+        iqbQB.setRequestType("0");
+        iqbQB.setPage(String.valueOf(page));
+        iqbQB.setPerPageNums("10");
+        iqbQB.setOrderBy("");
+        iqbQB.setOrderType("");
+        iqbQB.setIsReadJian("0");
+        iqb.setQuery(iqbQB);
+        iqb.setModel("0");
+        iqb.setNamespace("ListRequest");
+        officialRequest.setIq(iqb);
+        return gson.toJson(officialRequest);
+    }
+
 
     @Override
     public void onPause() {
@@ -79,6 +111,7 @@ public class HomeFragment extends BaseFragment implements MainView,
     @Override
     protected void initEvents() {
         mMainPresenterImpl = new MainPresenterImpl(this);
+        mOfficialPresenterImpl = new OfficialPresenterImpl(this);
         mSwipeRefreshLayout = (VpSwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -132,18 +165,26 @@ public class HomeFragment extends BaseFragment implements MainView,
         if (result instanceof CommonResponse){
             if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
                 mHomeAdapter.setAdapterData((CommonResponse) result);
-                Intent intent = new Intent();
-                intent.setAction("com.news.count.action");
-                intent.putExtra("news",String.valueOf(((CommonResponse) result).getIq().getQuery().getData().getDaiBanTotal()));
-                UIUtils.getContext().sendBroadcast(intent);
+//                Intent intent = new Intent();
+//                intent.setAction("com.news.count.action");
+//                intent.putExtra("news",String.valueOf(((CommonResponse) result).getIq().getQuery().getData().getDaiBanTotal()));
+//                UIUtils.getContext().sendBroadcast(intent);
             }else{
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }
 //            parentActivity.isTouch(true);
+        }else if (result instanceof OfficialResponse){
+            if(((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+                int nofinish_count = ((OfficialResponse) result).getIq().getQuery().getTotalNums();
+                mHomeAdapter.setCountDate(nofinish_count);
+            }
         }
     }
 
+    @Override
+    public void addData(Object result) {
 
+    }
 
 
 }

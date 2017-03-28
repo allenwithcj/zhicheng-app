@@ -40,6 +40,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
     private static final int TYPE_MODEL = 3;
     private DatabaseHelper mData;
     private CommonResponse mainResponses;
+    private int nofinish_count;
 
     public HomeFragmentAdapter(){
         mData = new DatabaseHelper();
@@ -106,18 +107,15 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                     ((TopListViewHolder) holder).mLoopViewPager.setDataViewList(img,content,location,time);
                 }
             }else if (holder instanceof ButtonGroupViewHolder){
+                if(nofinish_count != 0){
+                    ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.VISIBLE);
+                    ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setText(""+nofinish_count);
+                }else{
+                    ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.GONE);
+                }
+
                 if (mainResponses.getIq().getQuery().getData() != null){
-                    //判断领导权限
-                    if(!mData.getLocalConfig().getUserPost().contains("领导") &&
-                            !mData.getLocalConfig().getUserPost().equals("镇街单位业务员") &&
-                            !mData.getLocalConfig().getUserPost().equals("镇街受理员")){
-                        if (mainResponses.getIq().getQuery().getData().getDaiBanTotal() != 0){
-                            ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.VISIBLE);
-                            ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setText(""+mainResponses.getIq().getQuery().getData().getDaiBanTotal());
-                        }else {
-                            ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.GONE);
-                        }
-                    }
+
                     if(mainResponses.getIq().getQuery().getData().getNoticeTotal() != 0){
                         ((ButtonGroupViewHolder) holder).fabNotice_notice.setVisibility(View.VISIBLE);
                         ((ButtonGroupViewHolder) holder).fabNotice_notice.setText(""+mainResponses.getIq().getQuery().getData().getNoticeTotal());
@@ -125,7 +123,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                         ((ButtonGroupViewHolder) holder).fabNotice_notice.setVisibility(View.GONE);
                     }
                 }else {
-                    ((ButtonGroupViewHolder) holder).fabNotice_nofinish.setVisibility(View.GONE);
                     ((ButtonGroupViewHolder) holder).fabNotice_notice.setVisibility(View.GONE);
                 }
                 ((ButtonGroupViewHolder) holder).noFinish.setOnClickListener(this);
@@ -193,6 +190,12 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                 UIUtils.startActivity(new Intent(UIUtils.getContext(), WorkNoteActivity.class));
                 break;
         }
+    }
+
+    public void setCountDate(int nofinish_count) {
+        this.nofinish_count = nofinish_count;
+        notifyDataSetChanged();
+
     }
 
     class BannerViewHolder extends RecyclerView.ViewHolder {
