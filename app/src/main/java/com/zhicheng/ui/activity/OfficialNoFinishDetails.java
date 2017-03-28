@@ -92,12 +92,12 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
                 View deal_view = getLayoutInflater().inflate(R.layout.c_deal,parentView,false);
                 if(item.getItemId() == R.id.action_deal){
                     //处理事项
-                    doThing(deal_view,"4");
+                    doThing(deal_view,"0");
 
                 }else if(item.getItemId() == R.id.action_apply){
                     //申请事项
                     View apply_view = getLayoutInflater().inflate(R.layout.c_apply,parentView,false);
-                    doThing(apply_view,"0");
+                    doThing(apply_view,"4");
                 }
                 return true;
             }

@@ -17,7 +17,7 @@
     <string name="NoFinish">待办事项</string>
     <string name="Finished">已办事项</string>
     <string name="Sended">已发事项</string>
-    <string name="FenLei">分类汇总</string>
+    <string name="FenLei">事件查询</string>
     <string name="GridDataBase">网格数据</string>
     <string name="work">工作动态</string>
     <string name="Experiment">经验交流</string>

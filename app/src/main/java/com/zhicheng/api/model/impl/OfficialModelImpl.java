@@ -497,7 +497,8 @@ public class OfficialModelImpl implements OfficialModel{
                                     query2.setAttGUID(GUID);
                                     node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
                                     node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
-                                    node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
+//                                    node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
+                                    node.setType(4);
                                     node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
                                     node.setValue("Y"+ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
                                     node.setFigureID("");
@@ -565,7 +566,8 @@ public class OfficialModelImpl implements OfficialModel{
                             query.setAttGUID(GUID);
                             node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
                             node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
-                            node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
+//                            node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
+                            node.setType(0);
                             node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
                             node.setValue("Y"+ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
                             node.setFigureID("");
