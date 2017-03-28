@@ -55,6 +55,8 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
     private TextView mOccupation;
     private TextView userpost;
     private CheckVersionPresenterImpl mCheckVersionPresenterImpl;
+    private VersionResponse.DataBean mDataBean;
+    private String[] str = {"版本:","更新内容:"};
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -145,6 +147,12 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
                     // 将新版本信息封装到AppBean中
                     final AppBean appBean = getAppBeanFromString(s);
                     View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_version_update,null);
+                    TextView update_version = (TextView)view.findViewById(R.id.update_version);
+                    TextView update_content = (TextView)view.findViewById(R.id.update_content);
+                    if(mDataBean != null){
+                        update_version.setText(str[0]+mDataBean.getAppVersion());
+                        update_content.setText(str[1]+mDataBean.getAppUpdateDescription());
+                    }
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setView(view);
                     builder.setPositiveButton(getActivity().getResources().getString(R.string.download), new DialogInterface.OnClickListener() {
@@ -177,6 +185,7 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
         if(result instanceof VersionResponse){
             if(((VersionResponse) result).getCode() == 0){
                 if(((VersionResponse) result).getData() != null){
+                    mDataBean = ((VersionResponse) result).getData();
                     if(Integer.parseInt(((VersionResponse) result).getData().getAppVersionNo())
                             > getCurrentVersion().versionCode){
                         mInfoAdapter.setVersion(true);
