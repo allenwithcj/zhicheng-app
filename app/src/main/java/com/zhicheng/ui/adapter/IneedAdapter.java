@@ -50,6 +50,7 @@ public class IneedAdapter extends RecyclerView.Adapter {
     //定位信息
     private LocationClient mLocationClient = null;
     private mLocationListener mLocation;
+    private Map<String,String> map;
 
     public interface SaveEdit{
         void onSaveEdit(int position,String s);
@@ -274,7 +275,7 @@ public class IneedAdapter extends RecyclerView.Adapter {
     private class mLocationListener implements BDLocationListener{
         @Override
         public void onReceiveLocation(BDLocation bdLocation) {
-            Map<String,String> map = new HashMap<>();
+            map = new HashMap<>();
             map.put("latitude",String.valueOf(bdLocation.getLatitude()));
             map.put("longitude",String.valueOf(bdLocation.getLongitude()));
             map.put("address",bdLocation.getAddrStr());

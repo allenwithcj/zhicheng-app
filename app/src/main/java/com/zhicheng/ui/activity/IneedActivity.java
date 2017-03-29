@@ -176,6 +176,8 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 			DatabaseHelper mDataBase = new DatabaseHelper();
 			LocalConfig config = mDataBase.getLocalConfig();
 			if (config != null && config.getUserName() != null && config.getPwd() != null){
+				IneedAdapter.InputChooseEdittTextViewHolder holder = (IneedAdapter.InputChooseEdittTextViewHolder)
+						mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
 				UpThingsRequest utp = new UpThingsRequest();
 				UpThingsRequest.IqBean iqb = new UpThingsRequest.IqBean();
 				UpThingsRequest.IqBean.QueryBean iqbQB = new UpThingsRequest.IqBean.QueryBean();
@@ -191,7 +193,8 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 								String str = simpleDateFormat.format(System.currentTimeMillis());
 								method.invoke(iqbQB,str);
 							}else if(method.getName().endsWith("ZC03")){
-								method.invoke(iqbQB,mData.get(0));
+								String mLocation = holder.input_choose.getText().toString();
+								method.invoke(iqbQB,mLocation);
 							}else if(method.getName().endsWith("ZC04")){
 								method.invoke(iqbQB,mData.get(2));
 							}else if (method.getName().endsWith("ZC32")){
