@@ -81,22 +81,30 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
     }
 
     private String getSexString(String gridname) {
-        if(gridname.equals("0")){
-            return "男";
-        }else {
-            return "女";
+        if(gridname != null){
+            if(gridname.equals("0")){
+                return "男";
+            }else {
+                return "女";
+            }
+        }else{
+            return null;
         }
     }
 
     private String getMarriedString(String marital_status) {
-        if(marital_status.equals("0")){
-            return "未婚";
-        }else if(marital_status.equals("1")){
-            return "已婚";
-        }else if(marital_status.equals("2")){
-            return "离婚";
-        }else {
-            return "丧偶";
+        if(marital_status != null){
+            if(marital_status.equals("0")){
+                return "未婚";
+            }else if(marital_status.equals("1")){
+                return "已婚";
+            }else if(marital_status.equals("2")){
+                return "离婚";
+            }else {
+                return "丧偶";
+            }
+        }else{
+            return null;
         }
     }
 
