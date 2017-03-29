@@ -110,7 +110,7 @@
             android:gravity="center"
             android:padding="8dp"
             android:drawablePadding="10dp"
-            android:drawableTop="@mipmap/ic_fenlei"
+            android:drawableTop="@mipmap/ic_work"
             android:text="@string/work" />
             <TextView
                 android:id="@+id/fabNotice_work"

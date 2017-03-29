@@ -36,7 +36,7 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     }
 
     public void addAllData(List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogsBeen) {
-        this.prelogsBeen.clear();
+//        this.prelogsBeen.clear();
         this.prelogsBeen = prelogsBeen;
         this.notifyDataSetChanged();
     }

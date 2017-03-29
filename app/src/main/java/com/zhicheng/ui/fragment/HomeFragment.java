@@ -3,6 +3,7 @@ package com.zhicheng.ui.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +22,6 @@ import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.json.OfficialRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.HomeFragmentAdapter;
-import com.zhicheng.utils.VpSwipeRefreshLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,9 +32,9 @@ import java.util.Map;
  */
 
 public class HomeFragment extends BaseFragment implements MainView,OfficialView,
-        VpSwipeRefreshLayout.OnRefreshListener{
+        SwipeRefreshLayout.OnRefreshListener{
 
-    private VpSwipeRefreshLayout mSwipeRefreshLayout;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private MainPresenterImpl mMainPresenterImpl;
     private HomeFragmentAdapter mHomeAdapter;
@@ -113,7 +113,7 @@ public class HomeFragment extends BaseFragment implements MainView,OfficialView,
     protected void initEvents() {
         mMainPresenterImpl = new MainPresenterImpl(this);
         mOfficialPresenterImpl = new OfficialPresenterImpl(this);
-        mSwipeRefreshLayout = (VpSwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mHomeAdapter = new HomeFragmentAdapter();

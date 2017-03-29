@@ -425,11 +425,15 @@ public class OfficialModelImpl implements OfficialModel{
                                 FormNodeRequest.IqBean.QueryBean query = new FormNodeRequest.IqBean.QueryBean();
                                 query.setRequestType("0");
                                 query.setId(OfficialDeatail.getIq().getQuery().getId());
-                                query.setChukouID(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
+                                if(type.equals("0")){
+                                    query.setChukouID(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
+                                }else if(type.equals("4")){
+                                    query.setChukouID(ineedResponseResponse.body().getIq().getQuery().getItems().get(1).getKey());
+                                }
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);
                                 formNode.setIq(iq);
-                                formNodeRequest(type,mMainService,gson.toJson(formNode),ineedResponseResponse,requestType,listener);
+                                formNodeRequest(mMainService,gson.toJson(formNode),ineedResponseResponse,requestType,listener);
                                 BaseApplication.log_say("MainModelImpl","FormNodeRequest");
                             }else {
                                 listener.onComplected(ineedResponseResponse.body());
@@ -442,7 +446,7 @@ public class OfficialModelImpl implements OfficialModel{
                 });
     }
 
-    public void formNodeRequest(String type, MainService s, String j, Response<IneedResponse> ineedResponseResponse, int requestType, ApiCompleteListener listener){
+    public void formNodeRequest(MainService s, String j, Response<IneedResponse> ineedResponseResponse, int requestType, ApiCompleteListener listener){
         s.FormNodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -477,43 +481,7 @@ public class OfficialModelImpl implements OfficialModel{
                                 iq.setNamespace("FormSubnodeRequest");
                                 iq.setQuery(query);
                                 formSubnode.setIq(iq);
-                                if(type.equals("4")){
-//                                if (mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType().equals("4")){
-                                    FormSendDoRequest formSend = new FormSendDoRequest();
-                                    FormSendDoRequest.IqBean iq2 = new FormSendDoRequest.IqBean();
-                                    FormSendDoRequest.IqBean.QueryBean query2 = new FormSendDoRequest.IqBean.QueryBean();
-                                    List<FormSendDoRequest.IqBean.QueryBean.NodesBean> nodes = new ArrayList<FormSendDoRequest.IqBean.QueryBean.NodesBean>();
-                                    FormSendDoRequest.IqBean.QueryBean.NodesBean node = new FormSendDoRequest.IqBean.QueryBean.NodesBean();
-                                    query2.setRequestType(requestType);
-                                    query2.setTerm(OfficialDeatail.getIq().getQuery().getFormData().getFormData().getZC21().getViewValue());
-                                    query2.setTermUnit(OfficialDeatail.getIq().getQuery().getFormData().getFormData().getZC28().getViewValue());
-                                    query2.setId(OfficialDeatail.getIq().getQuery().getId());
-                                    query2.setDealType(0);
-                                    query2.setSuggestion(suggestion+"(来自Android)");
-                                    query2.setIsTrace(0);
-                                    query2.setIsWait(0);
-                                    query2.setIsReturnCurrentNode(0);
-                                    query2.setType(OfficialDeatail.getIq().getQuery().getMap().getType());
-                                    query2.setAttGUID(GUID);
-                                    node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
-                                    node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
-//                                    node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
-                                    node.setType(4);
-                                    node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
-                                    node.setValue("Y"+ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
-                                    node.setFigureID("");
-                                    node.setFigureName("");
-                                    node.setFigureType("");
-                                    node.setIsDefaultNode(false);
-                                    nodes.add(node);
-                                    query2.setNodes(nodes);
-                                    iq2.setNamespace("FormSendDoRequest");
-                                    iq2.setQuery(query2);
-                                    formSend.setIq(iq2);
-                                    formSendDoRequest(s,gson.toJson(formSend),listener);
-                                }else {
-                                    formSubnodeRequest(s,gson.toJson(formSubnode),mIneedResponse,requestType,listener);
-                                }
+                                formSubnodeRequest(s,gson.toJson(formSubnode),mIneedResponse,requestType,listener);
                                 BaseApplication.log_say("MainModelImpl","FormSubnodeRequest");
                             }else {
                                 listener.onComplected(mIneedResponse.body());

@@ -79,10 +79,19 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         refresh();
     }
 
+    //下拉加载更多
     private void refresh() {
         String strEntity = createObj(start);
         mWorkNodePresenter.loadWorkNodes(strEntity,start);
         start ++;
+    }
+
+    //加载数据
+    private void onLoadWorkNodes() {
+        start = 1;
+        String strEntity = createObj(start);
+        mWorkNodePresenter.loadWorkNodes(strEntity,start);
+        start++;
     }
 
     private String createObj(int start) {
@@ -131,6 +140,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 
     @Override
     protected void initData() {
+        onLoadWorkNodes();
         mInput.setImeOptions(EditorInfo.IME_ACTION_SEND);
         mInput.setImeActionLabel("发送",EditorInfo.IME_ACTION_SEND);
         mInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -172,8 +182,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     @Override
     protected void onResume() {
         super.onResume();
-        onLoadMore();
-
     }
 
     public void showProgress() {
@@ -235,7 +243,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
             if(((CommonResponse)result).getIq().getQuery().getErrorCode() == 0){
                 mInput.setText("");
                 mImagePath.clear();
-                onLoadMore();
+                onLoadWorkNodes();
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mInput.getWindowToken(),0);
                 showMessage("发送日志成功");
@@ -360,13 +368,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.img_content);
         }
-    }
-
-    private void onLoadMore() {
-        start = 1;
-        String strEntity = createObj(start);
-        mWorkNodePresenter.loadWorkNodes(strEntity,start);
-        start++;
     }
 
 }
