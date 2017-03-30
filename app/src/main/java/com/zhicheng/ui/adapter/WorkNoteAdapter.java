@@ -36,7 +36,6 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     }
 
     public void addAllData(List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogsBeen) {
-//        this.prelogsBeen.clear();
         this.prelogsBeen = prelogsBeen;
         this.notifyDataSetChanged();
     }
@@ -67,6 +66,7 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
         if (holder instanceof WorkNoteViewHolder) {
             String sendTime = prelogsBeen.get(position).getCd01();
             ((WorkNoteViewHolder) holder).mTextView.setText(sendTime.substring(0, sendTime.length() - 2));
+            ((WorkNoteViewHolder) holder).mSender.setText(prelogsBeen.get(position).getCd03());
             ((WorkNoteViewHolder) holder).mMiniContent.setText(prelogsBeen.get(position).getCd02());
             if (prelogsBeen.get(position).getCd04() != null) {
                 if(prelogsBeen.get(position).getCd04().size() != 0){
@@ -106,6 +106,7 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     private class WorkNoteViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mTextView;
+        private TextView mSender;
         private TextView mMiniContent;
         private TextView mImagesConts;
         private LinearLayout mItemLayout;
@@ -113,6 +114,7 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
         WorkNoteViewHolder(View itemView) {
             super(itemView);
             mTextView = (TextView) itemView.findViewById(R.id.NoteTime);
+            mSender = (TextView) itemView.findViewById(R.id.sender);
             mMiniContent = (TextView) itemView.findViewById(R.id.mini_content);
             mImagesConts = (TextView) itemView.findViewById(R.id.imagesCount);
             mItemLayout = (LinearLayout) itemView.findViewById(R.id.item_layout);

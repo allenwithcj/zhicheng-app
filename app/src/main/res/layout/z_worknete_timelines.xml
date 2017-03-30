@@ -30,12 +30,25 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/NoteTime"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/textView_padding"
-                android:gravity="center"/>
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/sender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:padding="@dimen/textView_padding"/>
+                <TextView
+                    android:id="@+id/NoteTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/textView_padding"
+                    android:singleLine="true"
+                    android:layout_alignParentRight="true"/>
+
+            </RelativeLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
