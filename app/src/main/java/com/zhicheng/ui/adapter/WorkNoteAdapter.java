@@ -14,7 +14,6 @@ import com.zhicheng.bean.http.PersonalLogMaResponse;
 import com.zhicheng.ui.activity.WorkNodeDetail;
 import com.zhicheng.utils.common.UIUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,7 +31,7 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogsBeen;
 
     public WorkNoteAdapter() {
-        prelogsBeen = new ArrayList<>();
+
     }
 
     public void addAllData(List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogsBeen) {

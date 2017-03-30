@@ -126,7 +126,11 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView,Sw
     @Override
     public void refreshData(Object result) {
         if (result instanceof OfficialWorkDynamicList){
-            mOfficialDynamicAdapter.setDataList(((OfficialWorkDynamicList) result).getIq().getQuery().getPrelogcon().getPrelogs());
+            if (((OfficialWorkDynamicList) result).getIq().getQuery().getErrorCode().equals("0")) {
+                mOfficialDynamicAdapter.setDataList(((OfficialWorkDynamicList) result).getIq().getQuery().getPrelogcon().getPrelogs());
+            }else{
+                showMessage(((OfficialWorkDynamicList) result).getIq().getQuery().getErrorMessage());
+            }
         }else if(result instanceof CommonResponse){
             if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
                 showMessage("发送动态成功");
@@ -148,10 +152,10 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView,Sw
     @Override
     public void addData(Object result) {
         if (result instanceof OfficialWorkDynamicList){
-            if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
+            if (((OfficialWorkDynamicList) result).getIq().getQuery().getErrorCode().equals("0")) {
                 mOfficialDynamicAdapter.addDataList(((OfficialWorkDynamicList) result).getIq().getQuery().getPrelogcon().getPrelogs());
             }else{
-                showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
+                showMessage(((OfficialWorkDynamicList) result).getIq().getQuery().getErrorMessage());
             }
         }
     }
