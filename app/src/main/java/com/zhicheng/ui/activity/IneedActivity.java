@@ -118,10 +118,7 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 
 	@Override
 	protected void initData() {
-		boolean location = PermissionUtils.requestLocationPermission(this);
-		if (!location){
-			showMessage("未获取到位置权限，请允许或手动定位");
-		}
+		PermissionUtils.requestLocationPermission(this);
 		mIneedAdapter.setButtonClick(() -> {
 			PermissionUtils.requestCameraPermission(this);
 			PermissionUtils.requestStoragePermission(this);

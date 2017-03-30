@@ -3,7 +3,6 @@ package com.zhicheng.utils.common;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 
 /**
@@ -29,8 +28,10 @@ public class PermissionUtils {
             //如果App的权限申请曾经被用户拒绝过，就需要在这里跟用户做出解释
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                     Manifest.permission.CAMERA)) {
-                Snackbar.make(activity.getWindow().getDecorView(),
-                        "please give me the permission", Snackbar.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.CAMERA}, CAMERA);
+                //Snackbar.make(activity.getWindow().getDecorView(),
+                  //      "please give me the permission", Snackbar.LENGTH_SHORT).show();
             } else {
                 //进行权限请求
                 ActivityCompat.requestPermissions(activity,
@@ -51,8 +52,10 @@ public class PermissionUtils {
             //如果App的权限申请曾经被用户拒绝过，就需要在这里跟用户做出解释
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                Snackbar.make(activity.getWindow().getDecorView(),
-                        "please give me the permission", Snackbar.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE);
+                //Snackbar.make(activity.getWindow().getDecorView(),
+                  //      "please give me the permission", Snackbar.LENGTH_SHORT).show();
             } else {
                 //进行权限请求
                 ActivityCompat.requestPermissions(activity,
@@ -72,8 +75,10 @@ public class PermissionUtils {
             //如果App的权限申请曾经被用户拒绝过，就需要在这里跟用户做出解释
             if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
-                Snackbar.make(activity.getWindow().getDecorView(),
-                        "please give me the permission", Snackbar.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(activity,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION);
+                //Snackbar.make(activity.getWindow().getDecorView(),
+                 //       "please give me the permission", Snackbar.LENGTH_SHORT).show();
             } else {
                 //进行权限请求
                 ActivityCompat.requestPermissions(activity,
