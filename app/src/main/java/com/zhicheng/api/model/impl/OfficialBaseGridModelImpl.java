@@ -23,7 +23,7 @@ public class OfficialBaseGridModelImpl implements OfficialBaseGridModel {
 
     @Override
     public void loadOfficial(String street,String communicate,String grid, ApiCompleteListener listener) {
-        OfficialBaseGridService mOfficialBaseGridService = ServiceFactory.createService(URL.HOST_URL_SERVER,OfficialBaseGridService.class);
+        OfficialBaseGridService mOfficialBaseGridService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialBaseGridService.class);
         mOfficialBaseGridService.getOfficialCommonData(street,communicate,grid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

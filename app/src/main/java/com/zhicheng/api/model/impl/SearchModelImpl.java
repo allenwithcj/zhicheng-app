@@ -10,10 +10,7 @@ import com.zhicheng.bean.http.SearchResponse;
 import com.zhicheng.common.URL;
 
 import java.net.UnknownHostException;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
@@ -28,7 +25,7 @@ import rx.schedulers.Schedulers;
 public class SearchModelImpl implements SearchModel {
     @Override
     public void SearchDataList(String request, ApiCompleteListener listener) {
-        SearchService mSearchService = ServiceFactory.createService(URL.HOST_URL_SERVER,SearchService.class);
+        SearchService mSearchService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,SearchService.class);
         Observable.just(request)
                 .switchMap(new Func1<String, Observable<Response<SearchResponse>>>() {
                     @Override

@@ -19,9 +19,7 @@ import com.zhicheng.common.Constant;
 import com.zhicheng.common.URL;
 import com.zhicheng.utils.common.UIUtils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +78,7 @@ public class MainModelImpl implements MainModel {
 
     @Override
     public void loadPersonal(String personal, ApiCompleteListener listener) {
-        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER,MainService.class);
+        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,MainService.class);
         mMainService.getPersonal(personal)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

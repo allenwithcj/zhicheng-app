@@ -23,7 +23,7 @@ import rx.schedulers.Schedulers;
 public class TestModelImpl implements TestModel {
     @Override
     public void loadTestList(String json, ApiCompleteListener listener) {
-        TestService mTestService = ServiceFactory.createService(URL.HOST_URL_SERVER,TestService.class);
+        TestService mTestService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,TestService.class);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"),json);
         mTestService.getTestData(body)
                 .subscribeOn(Schedulers.io())

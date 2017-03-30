@@ -139,7 +139,7 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
             PgyUpdateManager.register(getActivity(), getString(R.string.file_provider), new UpdateManagerListener() {
                 @Override
                 public void onNoUpdateAvailable() {
-
+                    Toast.makeText(getActivity(),"当前版本:"+getCurrentVersion().versionName,Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
