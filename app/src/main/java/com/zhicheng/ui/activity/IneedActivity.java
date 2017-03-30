@@ -112,7 +112,6 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 				holder.mProgressBar.setVisibility(View.GONE);
 			}
 
-//			Toast.makeText(this,"定位成功",Toast.LENGTH_SHORT).show();
         });
         mIneedAdapter.setSaveEdit((position, s) -> mData.put(2,s));
 	}
