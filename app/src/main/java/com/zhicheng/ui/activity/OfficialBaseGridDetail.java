@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhicheng.R;
+import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridDetailPresenterImpl;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridUpdatePresenterImpl;
 import com.zhicheng.api.view.OfficialBaseGridDetailView;
@@ -33,7 +34,9 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     private OfficialBaseGridDetailPresenterImpl mOfficialBaseGridDetailPresenterImpl;
     private OfficialBaseGridDeatilAdapter mAdapter;
     private String ID;
+    private String USERID;
     private AlertDialog dialog;
+    private DatabaseHelper mData;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -58,6 +61,7 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid_add_detail);
+        mData = new DatabaseHelper();
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mOfficialBaseGridUpdatePresenterImpl = new OfficialBaseGridUpdatePresenterImpl(this);
@@ -86,8 +90,14 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
 
     @Override
     protected int getMenuID() {
-        return R.menu.official_grid_update;
+        USERID  = getIntent().getStringExtra("USERID");
+        if(mData.getLocalConfig().getUserId().equals(USERID)){
+            return R.menu.official_grid_update;
+        }else{
+            return super.getMenuID();
+        }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mToolbar.setTitle("网格基础数据详情");

@@ -117,6 +117,7 @@ public class OfficialQueyResponse {
                     private String DOMICILE;
                     private String ID;
                     private String NAME;
+                    private String REPORTUSER;
 
                     public String getDOMICILE() {
                         return DOMICILE;
@@ -140,6 +141,14 @@ public class OfficialQueyResponse {
 
                     public void setNAME(String NAME) {
                         this.NAME = NAME;
+                    }
+
+                    public String getREPORTUSER() {
+                        return REPORTUSER;
+                    }
+
+                    public void setREPORTUSER(String REPORTUSER) {
+                        this.REPORTUSER = REPORTUSER;
                     }
                 }
             }

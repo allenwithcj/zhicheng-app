@@ -91,6 +91,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     @Override
     protected void initData() {
         PermissionUtils.requestLocationPermission(this);
+        mLocationDialog();
     }
 
 
@@ -122,8 +123,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             .getPreMsgcon().getPreMsgs());
             mToolbar.setTitle("网格基础数据");
         }
-        mLocationDialog();
-
     }
 
     @Override
@@ -278,6 +277,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     public void onClick(View v) {
                         Intent intent=new Intent(UIUtils.getContext(),OfficialBaseGridDetail.class);
                         intent.putExtra("ID",data.get(position).getID());
+                        intent.putExtra("USERID",data.get(position).getREPORTUSER());
                         UIUtils.startActivity(intent);
                     }
                 });
