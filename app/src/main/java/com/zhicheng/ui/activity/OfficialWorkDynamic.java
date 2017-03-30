@@ -148,7 +148,11 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView,Sw
     @Override
     public void addData(Object result) {
         if (result instanceof OfficialWorkDynamicList){
-            mOfficialDynamicAdapter.addDataList(((OfficialWorkDynamicList) result).getIq().getQuery().getPrelogcon().getPrelogs());
+            if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
+                mOfficialDynamicAdapter.addDataList(((OfficialWorkDynamicList) result).getIq().getQuery().getPrelogcon().getPrelogs());
+            }else{
+                showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
+            }
         }
     }
 
