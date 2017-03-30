@@ -425,10 +425,19 @@ public class OfficialModelImpl implements OfficialModel{
                                 FormNodeRequest.IqBean.QueryBean query = new FormNodeRequest.IqBean.QueryBean();
                                 query.setRequestType("0");
                                 query.setId(OfficialDeatail.getIq().getQuery().getId());
-                                if(type.equals("0")){
-                                    query.setChukouID(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
-                                }else if(type.equals("4")){
-                                    query.setChukouID(ineedResponseResponse.body().getIq().getQuery().getItems().get(1).getKey());
+                                List<IneedResponse.IqBean.QueryBean.ItemsBean> itemsBeens = ineedResponseResponse.body().getIq().getQuery().getItems();
+                                if(itemsBeens != null){
+                                    for(IneedResponse.IqBean.QueryBean.ItemsBean itemsBean:itemsBeens){
+                                        if(type.equals("0")){
+                                            if(itemsBean.getValue().equals("提交处置结果")){
+                                                query.setChukouID(itemsBean.getKey());
+                                            }
+                                        }else if(type.equals("4")){
+                                            if(itemsBean.getValue().equals("申请重新分配")){
+                                                query.setChukouID(itemsBean.getKey());
+                                            }
+                                        }
+                                    }
                                 }
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);
