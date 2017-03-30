@@ -50,13 +50,13 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (viewType == TYPE_ITEM_BEGIN) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_worknete_timelines_end, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_worknete_timelines_begin, parent, false);
             return new WorkNoteViewHolder(view);
         } else if (viewType == TYPE_ITEM_CONTENT) {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_worknete_timelines, parent, false);
             return new WorkNoteViewHolder(view);
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_worknete_timelines_begin, parent, false);
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_worknete_timelines_end, parent, false);
             return new WorkNoteViewHolder(view);
         }
     }
