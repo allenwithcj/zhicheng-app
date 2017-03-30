@@ -144,7 +144,7 @@ public class HomeFragment extends BaseFragment implements MainView,OfficialView,
 
     @Override
     public void showMessage(String msg) {
-        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
