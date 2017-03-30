@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -103,7 +103,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     public void showMessage(String msg) {
-        Snackbar.make(mToolbar, msg, Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -119,17 +119,25 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     @Override
     public void refreshData(Object result) {
         if (result instanceof OfficialQueyResponse){
-            mAdapter.setDataList(((OfficialQueyResponse) result).getIq().getQuery()
-            .getPreMsgcon().getPreMsgs());
-            mToolbar.setTitle("网格基础数据");
+            if(((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+                mAdapter.setDataList(((OfficialQueyResponse) result).getIq().getQuery()
+                        .getPreMsgcon().getPreMsgs());
+                mToolbar.setTitle("网格基础数据");
+            }else{
+                showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
+            }
         }
     }
 
     @Override
     public void addData(Object result) {
         if (result instanceof OfficialQueyResponse) {
-            mAdapter.addDataList(((OfficialQueyResponse) result).getIq().getQuery()
-                    .getPreMsgcon().getPreMsgs());
+            if(((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+                mAdapter.addDataList(((OfficialQueyResponse) result).getIq().getQuery()
+                        .getPreMsgcon().getPreMsgs());
+            }else{
+                showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
+            }
         }
     }
 
