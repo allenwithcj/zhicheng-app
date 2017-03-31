@@ -28,6 +28,7 @@ import com.baidu.location.LocationClient;
 import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.alarm.LocationUpReciver;
+import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridQueryPresenterImpl;
 import com.zhicheng.api.view.OfficialBaseGridQueryView;
 import com.zhicheng.bean.http.OfficialQueyResponse;
@@ -57,10 +58,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private Drawable icon;
     private LocationClient mLocationClient;
     private MyLocationListener myLocationListener;
+    private DatabaseHelper mData;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid);
+        mData = new DatabaseHelper();
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         mLocationClient = new LocationClient(this);
         BDLocationInit.getInstance().initLocation(mLocationClient);
@@ -91,7 +94,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     @Override
     protected void initData() {
         PermissionUtils.requestLocationPermission(this);
-        mLocationDialog();
+        if(mData.getLocalConfig() != null){
+            if(mData.getLocalConfig().getUserPost().equals("网格长")
+                    || mData.getLocalConfig().getUserPost().equals("网格员")){
+                mLocationDialog();
+            }
+        }
     }
 
 
@@ -144,15 +152,20 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.official_grid, menu);
-        item = menu.findItem(R.id.action_location);
-        if(mLocationClient.isStarted()){
-            icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
-        }else{
-            icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
+        if(mData.getLocalConfig() != null){
+            if(mData.getLocalConfig().getUserPost().equals("网格长")
+                    || mData.getLocalConfig().getUserPost().equals("网格员")){
+                MenuInflater inflater = getMenuInflater();
+                inflater.inflate(R.menu.official_grid, menu);
+                item = menu.findItem(R.id.action_location);
+                if(mLocationClient.isStarted()){
+                    icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
+                }else{
+                    icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
+                }
+                item.setIcon(icon);
+            }
         }
-        item.setIcon(icon);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -252,7 +265,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     class OfficialBaseGridAdapter extends RecyclerView.Adapter {
         private List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data;
-        private String[] tag = {"姓名:", "户籍地址:"};
+        private String[] tag = {"姓名:", "户主:","户籍地址:"};
 
         public OfficialBaseGridAdapter() {
 
@@ -279,7 +292,8 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if(holder instanceof ItemViewHolder){
                 ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0]+data.get(position).getNAME());
-                ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[1]+data.get(position).getDOMICILE());
+                ((ItemViewHolder) holder).grid_base_add_huzu.setText(tag[1]+data.get(position).getHUZU());
+                ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[2]+data.get(position).getDOMICILE());
                 ((ItemViewHolder) holder).Suc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -303,12 +317,14 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
         private class ItemViewHolder extends RecyclerView.ViewHolder {
             private TextView grid_base_add_name;
+            private TextView grid_base_add_huzu;
             private TextView grid_base_add_brithplace;
             private RelativeLayout Suc;
 
             public ItemViewHolder(View itemView) {
                 super(itemView);
                 grid_base_add_name = (TextView) itemView.findViewById(R.id.grid_base_add_name);
+                grid_base_add_huzu = (TextView) itemView.findViewById(R.id.grid_base_add_huzu);
                 grid_base_add_brithplace = (TextView) itemView.findViewById(R.id.grid_base_add_brithplace);
                 Suc = (RelativeLayout) itemView.findViewById(R.id.Suc);
             }

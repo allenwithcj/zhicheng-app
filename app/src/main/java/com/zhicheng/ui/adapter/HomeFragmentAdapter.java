@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.library.LoopContentPager;
 import com.library.LoopViewPager;
@@ -175,14 +174,8 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                 UIUtils.startActivity(intent);
                 break;
             case R.id.GridDataBase:
-                if(mData.getLocalConfig() != null){
-                    if(mData.getLocalConfig().getUserPost().equals("网格员")||
-                            mData.getLocalConfig().getUserPost().equals("网格长") ){
-                        UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialBaseGrid.class));
-                    }else{
-                        Toast.makeText(UIUtils.getContext(),"非网格员无此功能操作权限",Toast.LENGTH_SHORT).show();
-                    }
-                }
+                Intent mIntent = new Intent(UIUtils.getContext(), OfficialBaseGrid.class);
+                UIUtils.startActivity(mIntent);
                 break;
             case R.id.work:
                 UIUtils.startActivity(new Intent(UIUtils.getContext(),OfficialWorkDynamic.class));

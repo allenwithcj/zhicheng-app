@@ -117,6 +117,7 @@ public class OfficialQueyResponse {
                     private String DOMICILE;
                     private String ID;
                     private String NAME;
+                    private String HUZU;
                     private String REPORTUSER;
 
                     public String getDOMICILE() {
@@ -141,6 +142,14 @@ public class OfficialQueyResponse {
 
                     public void setNAME(String NAME) {
                         this.NAME = NAME;
+                    }
+
+                    public String getHUZU() {
+                        return HUZU;
+                    }
+
+                    public void setHUZU(String HUZU) {
+                        this.HUZU = HUZU;
                     }
 
                     public String getREPORTUSER() {

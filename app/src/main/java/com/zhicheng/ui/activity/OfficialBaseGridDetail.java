@@ -91,11 +91,25 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     @Override
     protected int getMenuID() {
         USERID  = getIntent().getStringExtra("USERID");
-        if(mData.getLocalConfig().getUserId().equals(USERID)){
+        if(mData.getLocalConfig().getUserPost().equals("镇街受理员")){
             return R.menu.official_grid_update;
-        }else{
+        }else if(mData.getLocalConfig().getUserPost().equals("镇街单位业务员")||
+                mData.getLocalConfig().getUserPost().equals("镇街值班长")
+                ||mData.getLocalConfig().getUserPost().equals("镇街指挥长")
+                ||mData.getLocalConfig().getUserPost().equals("镇街领导")
+                ||mData.getLocalConfig().getUserPost().equals("办公人员")){
             return super.getMenuID();
+
+        }else if(mData.getLocalConfig().getUserPost().equals("网格长")
+                || mData.getLocalConfig().getUserPost().equals("网格员")){
+            if(mData.getLocalConfig().getUserId().equals(USERID)){
+                return R.menu.official_grid_update;
+            }else{
+                return super.getMenuID();
+            }
         }
+        return super.getMenuID();
+
     }
 
     @Override
