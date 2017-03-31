@@ -264,52 +264,56 @@ public class OfficialModelImpl implements OfficialModel{
         this.suggestion = suggest;
         this.GUID = GUID;
         final MultipartBody.Builder builder = new MultipartBody.Builder();
-        Observable.from(imgs)
-                .map(s -> {
-                    File file = new File(s);
-                    builder.addFormDataPart("file",file.getName(), RequestBody.create(MultipartBody.FORM,file));
-                    return s;
-                }).last()
-                .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
-                    @Override
-                    public Observable<Response<CommonResponse>> call(String s) {
-                        RequestBody body = RequestBody.create(MediaType.parse("application/json"),jFile);
-                        return mOfficialService.UpDealFile(body,builder.build());
-                    }
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<CommonResponse>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
-                            listener.onFailed(null);
-                            return;
+        if(imgs.size() != 0){
+            Observable.from(imgs)
+                    .map(s -> {
+                        File file = new File(s);
+                        builder.addFormDataPart("file",file.getName(), RequestBody.create(MultipartBody.FORM,file));
+                        return s;
+                    }).last()
+                    .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
+                        @Override
+                        public Observable<Response<CommonResponse>> call(String s) {
+                            RequestBody body = RequestBody.create(MediaType.parse("application/json"),jFile);
+                            return mOfficialService.UpDealFile(body,builder.build());
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
-                    }
+                    }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Response<CommonResponse>>() {
+                        @Override
+                        public void onCompleted() {
 
-                    @Override
-                    public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            if (e instanceof UnknownHostException){
+                                listener.onFailed(null);
+                                return;
+                            }
+                            listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        }
+
+                        @Override
+                        public void onNext(Response<CommonResponse> commonResponseResponse) {
+                            if (commonResponseResponse.isSuccessful()){
 //                            listener.onComplected(commonResponseResponse.body());
 //                            RequestBody json = RequestBody.create(MediaType.parse("application/json"),j);
-                            if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
-                                formExportRequest(0,type,listener);
-                                BaseApplication.log_say("MainModelImpl","UpThings");
+                                if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
+                                    formExportRequest(0,type,listener);
+                                    BaseApplication.log_say("MainModelImpl","UpThings");
+                                }else {
+                                    listener.onComplected(commonResponseResponse.body());
+                                    Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                }
                             }else {
-                                listener.onComplected(commonResponseResponse.body());
-                                Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
                             }
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
                         }
-                    }
-                });
+                    });
+        }else{
+            formExportRequest(0,type,listener);
+        }
     }
 
     @Override

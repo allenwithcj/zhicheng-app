@@ -119,19 +119,30 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
             ufIB.setNamespace("AttachmentUpdateRequest");
             uf.setIq(ufIB);
             String jFile = gson.toJson(uf);
-            if (null != mImagePath){
-                if(mImagePath.size() != 0){
-                    dialog = new AlertDialog.Builder(this,R.style.dialog)
-                            .setView(R.layout.z_loading_view)
-                            .setCancelable(false)
-                            .create();
-                    dialog.show();
-                    mOfficialDetail.upDeal(mImagePath,jFile,mEdit.getText().toString(),OfficialDetail,guid,type);
-                    mBtn.setClickable(false);
-                }else {
-                    Toast.makeText(UIUtils.getContext(),"请选择上传图片",Toast.LENGTH_SHORT).show();
+            if(type.equals("0")){
+                if (null != mImagePath){
+                    if(mImagePath.size() != 0){
+                        dialog = new AlertDialog.Builder(this,R.style.dialog)
+                                .setView(R.layout.z_loading_view)
+                                .setCancelable(false)
+                                .create();
+                        dialog.show();
+                        mOfficialDetail.upDeal(mImagePath,jFile,mEdit.getText().toString(),OfficialDetail,guid,type);
+                        mBtn.setClickable(false);
+                    }else {
+                        Toast.makeText(UIUtils.getContext(),"请选择上传图片",Toast.LENGTH_SHORT).show();
+                    }
                 }
+            }else if(type.equals("4")){
+                dialog = new AlertDialog.Builder(this,R.style.dialog)
+                        .setView(R.layout.z_loading_view)
+                        .setCancelable(false)
+                        .create();
+                dialog.show();
+                mOfficialDetail.upDeal(mImagePath,jFile,mEdit.getText().toString(),OfficialDetail,guid,type);
+                mBtn.setClickable(false);
             }
+
         });
         RecyclerView dealRecyclerView = (RecyclerView) pop_view.findViewById(R.id.mRecycleView);
         dealRecyclerView.setLayoutManager(new GridLayoutManager(OfficialNoFinishDetails.this,3));
