@@ -24,15 +24,13 @@ public class OfficialFinishDetail extends BaseActivity implements OfficialView{
     private OfficialFinishDetailAdapter mAdapter;
     private OfficialPresenterImpl mOfficialDetail;
     private ViewGroup parentView;
-    private String mType;
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_selectimg);
-        mType = getIntent().getStringExtra("type");
         parentView = (ViewGroup) findViewById(android.R.id.content).getRootView();
         mRecyclerView=(RecyclerView)findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter=new OfficialFinishDetailAdapter(mType);
+        mAdapter=new OfficialFinishDetailAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mOfficialDetail = new OfficialPresenterImpl(this);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_clear));

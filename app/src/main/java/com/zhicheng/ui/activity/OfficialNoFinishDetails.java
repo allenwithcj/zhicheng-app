@@ -231,12 +231,17 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
     @Override
     public void refreshData(Object result) {
         if (result instanceof OfficialDetailResponse){
-            BaseApplication.log_say(TAG,((OfficialDetailResponse) result).getIq().getQuery().getContent());
-            this.OfficialDetail = (OfficialDetailResponse) result;
-            for (int i=0;i<((OfficialDetailResponse) result).getIq().getQuery().getAttachments().size();i++){
-                mShowPhoto.add(URL.HOST_URL_SERVER_ZHICHENG+((OfficialDetailResponse) result).getIq().getQuery().getAttachments().get(i).getHref());
+            if(((OfficialDetailResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+                BaseApplication.log_say(TAG,((OfficialDetailResponse) result).getIq().getQuery().getContent());
+                this.OfficialDetail = (OfficialDetailResponse) result;
+                for (int i=0;i<((OfficialDetailResponse) result).getIq().getQuery().getAttachments().size();i++){
+                    mShowPhoto.add(URL.HOST_URL_SERVER_ZHICHENG+((OfficialDetailResponse) result).getIq().getQuery().getAttachments().get(i).getHref());
+                }
+                mAdapter.setData((OfficialDetailResponse) result);
+            }else{
+                showMessage(((OfficialDetailResponse) result).getIq().getQuery().getErrorMessage());
             }
-            mAdapter.setData((OfficialDetailResponse) result);
+
         }else if (result instanceof CommonResponse){
             if (dialog != null && dialog.isShowing()){
                 dialog.dismiss();

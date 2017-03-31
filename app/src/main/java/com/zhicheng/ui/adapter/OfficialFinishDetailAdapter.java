@@ -34,10 +34,8 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
     private OfficialDetailResponse mData;
     private String[] tags= UIUtils.getContext().getResources().getStringArray(R.array.NoFinishDetail);
     private String[] tag_last=UIUtils.getContext().getResources().getStringArray(R.array.detail_last);
-    private String mType;
 
-    public OfficialFinishDetailAdapter(String mType){
-        this.mType = mType;
+    public OfficialFinishDetailAdapter(){
     }
 
     public void setData(OfficialDetailResponse data){

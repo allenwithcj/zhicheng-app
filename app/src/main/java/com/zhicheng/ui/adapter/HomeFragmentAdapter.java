@@ -1,7 +1,6 @@
 package com.zhicheng.ui.adapter;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 import com.library.LoopContentPager;
 import com.library.LoopViewPager;
 import com.zhicheng.R;
-import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.CallTheCounActivity;
@@ -33,21 +31,17 @@ import java.util.List;
  * Created by Donson on 2017/1/15.
  */
 
-public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.OnClickListener {
+public class HomeFragmentAdapter extends RecyclerView.Adapter{
 
     private static final int TYPE_BANNER = 0;
     private static final int TYPE_BAOLIAO = 1;
     private static final int TYPE_TODAY = 2;
     private static final int TYPE_MODEL = 3;
-    private DatabaseHelper mData;
     private CommonResponse mainResponses;
     private int nofinish_count;
 
-    public HomeFragmentAdapter(){
-        mData = new DatabaseHelper();
-    }
+    public HomeFragmentAdapter() {
 
-    public HomeFragmentAdapter(FragmentActivity homeFragment) {
     }
 
     public void setAdapterData(CommonResponse mainResponses){
@@ -82,10 +76,18 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
 
             }else if(holder instanceof WeekTodayViewHolder){
                 if (mainResponses.getIq().getQuery().getData() != null){
-                    String str = "今日新增案件<font color=#af3428>"+mainResponses.getIq().getQuery().getData().getCaseReportTotal()+"条</font>,网格基础数据<font color=#af3428>"+mainResponses.getIq().getQuery().getData().getGridReportTotal()+"条</font>,本周共办结<font color=#af3428>"+mainResponses.getIq().getQuery().getData().getWeekDoneTotal()+"条</font>案件";
+                    String str = "今日新增案件<font color=#af3428>"
+                            +mainResponses.getIq().getQuery().getData().getCaseReportTotal()
+                            +"条</font>,网格基础数据<font color=#af3428>"
+                            +mainResponses.getIq().getQuery().getData().getGridReportTotal()
+                            +"条</font>,本周共办结<font color=#af3428>"
+                            +mainResponses.getIq().getQuery().getData().getWeekDoneTotal()+"条</font>案件";
                     ((WeekTodayViewHolder) holder).todayAndWeekThings.setText(Html.fromHtml(str));
                 }else {
-                    String str = "今日新增案件<font color=#af3428>"+0+"条</font>,网格基础数据<font color=#af3428>"+0+"条</font>,本周共办结<font color=#af3428>"+0+"条</font>案件";
+                    String str = "今日新增案件<font color=#af3428>"
+                            +0+"条</font>,网格基础数据<font color=#af3428>"
+                            +0+"条</font>,本周共办结<font color=#af3428>"
+                            +0+"条</font>案件";
                     ((WeekTodayViewHolder) holder).todayAndWeekThings.setText(Html.fromHtml(str));
                 }
             }else if (holder instanceof TopListViewHolder){
@@ -129,14 +131,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
                 }else {
                     ((ButtonGroupViewHolder) holder).fabNotice_notice.setVisibility(View.GONE);
                 }
-                ((ButtonGroupViewHolder) holder).noFinish.setOnClickListener(this);
-                ((ButtonGroupViewHolder) holder).Finished.setOnClickListener(this);
-                ((ButtonGroupViewHolder) holder).FenLei.setOnClickListener(this);
-                ((ButtonGroupViewHolder) holder).GridDataBase.setOnClickListener(this);
-                ((ButtonGroupViewHolder) holder).work.setOnClickListener(this);
-                ((ButtonGroupViewHolder) holder).Experiment.setOnClickListener(this);
-                ((ButtonGroupViewHolder) holder).CallTheCoun.setOnClickListener(this);
-                ((ButtonGroupViewHolder) holder).workNote.setOnClickListener(this);
             }
         }
     }
@@ -159,37 +153,6 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
         return 4;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.noFinish:
-                UIUtils.startActivity(new Intent(UIUtils.getContext(),Official.class));
-                break;
-            case R.id.Finished:
-                UIUtils.startActivity(new Intent(UIUtils.getContext(), officialFinished.class));
-                break;
-            case R.id.FenLei:
-                Intent intent = new Intent(UIUtils.getContext(),SearchViewActivity.class);
-                intent.putExtra("fragment","classify");
-                UIUtils.startActivity(intent);
-                break;
-            case R.id.GridDataBase:
-                Intent mIntent = new Intent(UIUtils.getContext(), OfficialBaseGrid.class);
-                UIUtils.startActivity(mIntent);
-                break;
-            case R.id.work:
-                UIUtils.startActivity(new Intent(UIUtils.getContext(),OfficialWorkDynamic.class));
-                break;
-            case R.id.Experiment:
-                break;
-            case R.id.CallTheCoun:
-                UIUtils.startActivity(new Intent(UIUtils.getContext(), CallTheCounActivity.class));
-                break;
-            case R.id.workNote:
-                UIUtils.startActivity(new Intent(UIUtils.getContext(), WorkNoteActivity.class));
-                break;
-        }
-    }
 
     public void setCountDate(int nofinish_count) {
         this.nofinish_count = nofinish_count;
@@ -225,7 +188,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
         }
     }
 
-    class ButtonGroupViewHolder extends RecyclerView.ViewHolder {
+    class ButtonGroupViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView noFinish;
         private TextView fabNotice_nofinish;
@@ -256,6 +219,47 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements View.On
             fabNotice_notice = (TextView)itemView.findViewById(R.id.fabNotice_notice);
             fabNotice_notice = (TextView)itemView.findViewById(R.id.fabNotice_notice);
 
+            noFinish.setOnClickListener(this);
+            Finished.setOnClickListener(this);
+            FenLei.setOnClickListener(this);
+            GridDataBase.setOnClickListener(this);
+            work.setOnClickListener(this);
+            Experiment.setOnClickListener(this);
+            CallTheCoun.setOnClickListener(this);
+            workNote.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.noFinish:
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(),Official.class));
+                    break;
+                case R.id.Finished:
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(), officialFinished.class));
+                    break;
+                case R.id.FenLei:
+                    Intent intent = new Intent(UIUtils.getContext(),SearchViewActivity.class);
+                    intent.putExtra("fragment","classify");
+                    UIUtils.startActivity(intent);
+                    break;
+                case R.id.GridDataBase:
+                    Intent mIntent = new Intent(UIUtils.getContext(), OfficialBaseGrid.class);
+                    UIUtils.startActivity(mIntent);
+                    break;
+                case R.id.work:
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(),OfficialWorkDynamic.class));
+                    break;
+                case R.id.Experiment:
+                    break;
+                case R.id.CallTheCoun:
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(), CallTheCounActivity.class));
+                    break;
+                case R.id.workNote:
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(), WorkNoteActivity.class));
+                    break;
+            }
         }
     }
 
