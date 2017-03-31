@@ -64,7 +64,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
                 ((ItemViewHolder) holder).grid_base_add_name.setText(mData.getIq().getQuery().getPreMsg().getNAME());
                 ((ItemViewHolder) holder).grid_base_add_relation.setText(mData.getIq().getQuery().getPreMsg().getRENTPHONE());
                 ((ItemViewHolder) holder).grid_base_huzu_name.setText(mData.getIq().getQuery().getPreMsg().getHUZU());
-                ((ItemViewHolder) holder).grid_base_add_sex.setText(getSexString(mData.getIq().getQuery().getPreMsg().getGRIDNAME()));
+                ((ItemViewHolder) holder).grid_base_add_sex.setText(getSexString(mData.getIq().getQuery().getPreMsg().getGENDER()));
                 ((ItemViewHolder) holder).grid_base_add_cardid.setText(mData.getIq().getQuery().getPreMsg().getCARD_NUM());
                 ((ItemViewHolder) holder).grid_base_add_policatial.setText(mData.getIq().getQuery().getPreMsg().getPOLITICAL_STATUS());
                 ((ItemViewHolder) holder).grid_base_add_degree.setText(mData.getIq().getQuery().getPreMsg().getEDUCATION());
@@ -80,9 +80,9 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
         }
     }
 
-    private String getSexString(String gridname) {
-        if(gridname != null){
-            if(gridname.equals("0")){
+    private String getSexString(String gender) {
+        if(gender != null){
+            if(gender.equals("0")){
                 return "男";
             }else {
                 return "女";
