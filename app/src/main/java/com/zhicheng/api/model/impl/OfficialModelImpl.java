@@ -279,7 +279,7 @@ public class OfficialModelImpl implements OfficialModel{
                         }
                     }).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Response<CommonResponse>>() {
+                        .subscribe(new Subscriber<Response<CommonResponse>>() {
                         @Override
                         public void onCompleted() {
 
@@ -297,8 +297,6 @@ public class OfficialModelImpl implements OfficialModel{
                         @Override
                         public void onNext(Response<CommonResponse> commonResponseResponse) {
                             if (commonResponseResponse.isSuccessful()){
-//                            listener.onComplected(commonResponseResponse.body());
-//                            RequestBody json = RequestBody.create(MediaType.parse("application/json"),j);
                                 if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
                                     formExportRequest(0,type,listener);
                                     BaseApplication.log_say("MainModelImpl","UpThings");
@@ -547,8 +545,7 @@ public class OfficialModelImpl implements OfficialModel{
                             query.setAttGUID(GUID);
                             node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
                             node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
-//                            node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
-                            node.setType(0);
+                            node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
                             node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
                             node.setValue("Y"+ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
                             node.setFigureID("");

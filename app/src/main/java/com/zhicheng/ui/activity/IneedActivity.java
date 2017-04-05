@@ -268,16 +268,20 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 				if(mData.get(0) != null){
 					if (null != mImagePath){
 						if(mImagePath.size() != 0){
-							item.setEnabled(false);
-							dialog = new AlertDialog.Builder(this,R.style.dialog)
-									.setView(R.layout.z_loading_view)
-									.setCancelable(false)
-									.create();
-							dialog.show();
-							if (isCommon){
-								mUpThingsPresenterImpl.UpThings(5,guid,strEntity,jFile,mImagePath);
-							}else {
-								mUpThingsPresenterImpl.UpThings(3,guid,strEntity,jFile,mImagePath);
+							if(mNode.get(3) != null){
+								item.setEnabled(false);
+								dialog = new AlertDialog.Builder(this,R.style.dialog)
+										.setView(R.layout.z_loading_view)
+										.setCancelable(false)
+										.create();
+								dialog.show();
+								if (isCommon){
+									mUpThingsPresenterImpl.UpThings(5,guid,strEntity,jFile,mImagePath);
+								}else {
+									mUpThingsPresenterImpl.UpThings(3,guid,strEntity,jFile,mImagePath);
+								}
+							}else{
+								Toast.makeText(this,"请选择爆料类型",Toast.LENGTH_SHORT).show();
 							}
 						}else {
 							item.setEnabled(true);

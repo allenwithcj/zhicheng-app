@@ -1,6 +1,5 @@
 package com.zhicheng.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -30,9 +29,6 @@ import com.zhicheng.api.presenter.impl.CaseQueryPresenterImpl;
 import com.zhicheng.api.view.CaseQueryView;
 import com.zhicheng.bean.http.CaseQueryResponse;
 import com.zhicheng.bean.json.CaseQueryRequest;
-import com.zhicheng.ui.activity.OfficialFinishDetail;
-import com.zhicheng.ui.activity.OfficialNoFinishDetails;
-import com.zhicheng.utils.common.UIUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -290,27 +286,27 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 ((SearchClassifyViewHolder) holder).caseAddress.setText(tag[2]+caseList.get(position).getCaseaddress());
                 ((SearchClassifyViewHolder) holder).case_layout.setOnClickListener(view -> {
                     if(mManageState.equals("")){
-                        if(caseList.get(position).getCasetype().equals("1")){
-                            Intent intent=new Intent(UIUtils.getContext(),OfficialFinishDetail.class);
-                            intent.putExtra("detailId",caseList.get(position).getId());
-                            UIUtils.startActivity(intent);
-                        }else if(caseList.get(position).getCasetype().equals("0")){
-                            Intent intent = new Intent(UIUtils.getContext(),OfficialNoFinishDetails.class);
-                            intent.putExtra("detailId",caseList.get(position).getId());
-                            intent.putExtra("type","nofinish_query");
-                            UIUtils.startActivity(intent);
-                        }
+                        //if(caseList.get(position).getCasetype().equals("1")){
+                            //Intent intent=new Intent(UIUtils.getContext(),OfficialFinishDetail.class);
+                            //intent.putExtra("detailId",caseList.get(position).getId());
+                            //UIUtils.startActivity(intent);
+                        //}else if(caseList.get(position).getCasetype().equals("0")){
+                            //Intent intent = new Intent(UIUtils.getContext(),OfficialNoFinishDetails.class);
+                            //intent.putExtra("detailId",caseList.get(position).getId());
+                            //intent.putExtra("type","nofinish_query");
+                            //UIUtils.startActivity(intent);
+                        //}
 
-                    }else if(mManageState.equals("1")){
-                        Intent intent=new Intent(UIUtils.getContext(),OfficialFinishDetail.class);
-                        intent.putExtra("detailId",caseList.get(position).getId());
-                        UIUtils.startActivity(intent);
+                    //}else if(mManageState.equals("1")){
+                        //Intent intent=new Intent(UIUtils.getContext(),OfficialFinishDetail.class);
+                        //intent.putExtra("detailId",caseList.get(position).getId());
+                        //UIUtils.startActivity(intent);
 
-                    }else if(mManageState.equals("0")){
-                        Intent intent = new Intent(UIUtils.getContext(),OfficialNoFinishDetails.class);
-                        intent.putExtra("detailId",caseList.get(position).getId());
-                        intent.putExtra("type","nofinish_query");
-                        UIUtils.startActivity(intent);
+                    //}else if(mManageState.equals("0")){
+                        //Intent intent = new Intent(UIUtils.getContext(),OfficialNoFinishDetails.class);
+                        //intent.putExtra("detailId",caseList.get(position).getId());
+                        //intent.putExtra("type","nofinish_query");
+                        //UIUtils.startActivity(intent);
                     }
                 });
             }
