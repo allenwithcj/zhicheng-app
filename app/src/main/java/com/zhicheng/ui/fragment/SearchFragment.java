@@ -3,7 +3,6 @@ package com.zhicheng.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhicheng.R;
@@ -176,7 +176,7 @@ public class SearchFragment extends BaseFragment implements SearchView{
 
     @Override
     public void showMessage(String msg) {
-        Snackbar.make(mRootView,msg,Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
