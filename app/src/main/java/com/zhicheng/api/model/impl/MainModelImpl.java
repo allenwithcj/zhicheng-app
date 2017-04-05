@@ -17,6 +17,7 @@ import com.zhicheng.bean.json.FormSendDoRequest;
 import com.zhicheng.bean.json.FormSubnodeRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.common.URL;
+import com.zhicheng.luban.Luban;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.io.File;
@@ -31,6 +32,7 @@ import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -45,7 +47,7 @@ public class MainModelImpl implements MainModel {
 
     @Override
     public void loadMainList(String json, ApiCompleteListener listener) {
-        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,MainService.class);
+        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, MainService.class);
         mMainService.getMainData(json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -57,20 +59,20 @@ public class MainModelImpl implements MainModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
+                        if (commonResponseResponse.isSuccessful()) {
                             listener.onComplected(commonResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                         }
                     }
                 });
@@ -78,7 +80,7 @@ public class MainModelImpl implements MainModel {
 
     @Override
     public void loadPersonal(String personal, ApiCompleteListener listener) {
-        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,MainService.class);
+        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, MainService.class);
         mMainService.getPersonal(personal)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -91,92 +93,127 @@ public class MainModelImpl implements MainModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<BaseResponse> mainResponseResponse) {
-                        if (mainResponseResponse.isSuccessful()){
+                        if (mainResponseResponse.isSuccessful()) {
                             listener.onComplected(mainResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(mainResponseResponse.code(),mainResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(mainResponseResponse.code(), mainResponseResponse.message()));
                         }
                     }
                 });
     }
 
     @Override
-    public void UpThings(int requestType,String GUID,String j,String jFile,List<String> imgs, ApiCompleteListener listener) {
-        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,MainService.class);
+    public void UpThings(int requestType, String GUID, String j, String jFile, List<String> imgs, ApiCompleteListener listener) {
+        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, MainService.class);
         final MultipartBody.Builder builder = new MultipartBody.Builder();
         this.GUID = GUID;
-        Observable.from(imgs)
-                .map(s -> {
-                    File file = new File(s);
-                    builder.addFormDataPart("file",file.getName(),RequestBody.create(MultipartBody.FORM,file));
-                    return s;
-                }).last()
-                .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
-                    @Override
-                    public Observable<Response<CommonResponse>> call(String s) {
-                        RequestBody body = RequestBody.create(MediaType.parse("application/json"),jFile);
-                        return mMainService.UpFile(body,builder.build());
-                    }
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<CommonResponse>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
-                            listener.onFailed(null);
-                            return;
+        //图片压缩
+        List<File> mFiles = new ArrayList<>();
+        for (int i = 0; i < imgs.size(); i++) {
+            mFiles.add(new File(imgs.get(i)));
+        }
+        if (mFiles.size() > 0) {
+            Luban.get(UIUtils.getContext())
+                    .load(mFiles)
+                    .putGear(Luban.THIRD_GEAR)
+                    .asList()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError(new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            throwable.printStackTrace();
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
-                    }
+                    })
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<File>>>() {
+                        @Override
+                        public Observable<? extends List<File>> call(Throwable throwable) {
+                            return Observable.empty();
+                        }
+                    }).subscribe(new Action1<List<File>>() {
+                @Override
+                public void call(List<File> files) {
+                    if (files.size() > 0) {
+                        List<String> imgs = new ArrayList<String>();
+                        for (int i = 0; i < files.size(); i++) {
+                            imgs.add(files.get(i).getAbsolutePath());
+                        }
+                        if (imgs.size() > 0) {
+                            Observable.from(imgs)
+                                    .map(s -> {
+                                        File file = new File(s);
+                                        builder.addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file));
+                                        return s;
+                                    }).last()
+                                    .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
+                                        @Override
+                                        public Observable<Response<CommonResponse>> call(String s) {
+                                            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jFile);
+                                            return mMainService.UpFile(body, builder.build());
+                                        }
+                                    }).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Subscriber<Response<CommonResponse>>() {
+                                        @Override
+                                        public void onCompleted() {
 
-                    @Override
-                    public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
-//                            listener.onComplected(commonResponseResponse.body());
-//                            RequestBody json = RequestBody.create(MediaType.parse("application/json"),j);
-                            if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == (0)){
-                                upThings(mMainService,j,requestType,listener);
-                            }else {
-                                listener.onComplected(commonResponseResponse.body());
-                                Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
-                            }
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            if (e instanceof UnknownHostException) {
+                                                listener.onFailed(null);
+                                                return;
+                                            }
+                                            listener.onFailed(new BaseResponse(404, e.getMessage()));
+                                        }
+
+                                        @Override
+                                        public void onNext(Response<CommonResponse> commonResponseResponse) {
+                                            if (commonResponseResponse.isSuccessful()) {
+                                                if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == (0)) {
+                                                    upThings(mMainService, j, requestType, listener);
+                                                } else {
+                                                    listener.onComplected(commonResponseResponse.body());
+                                                    Toast.makeText(UIUtils.getContext(), commonResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
+                                                }
+                                            } else {
+                                                listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
+                                            }
+                                        }
+                                    });
+
                         }
                     }
-                });
-
+                }
+            });
+        }
     }
 
     @Override
-    public void upSimpleFile(String guid,List<String> imgs,String json, ApiCompleteListener listener) {
-        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,MainService.class);
+    public void upSimpleFile(String guid, List<String> imgs, String json, ApiCompleteListener listener) {
+        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, MainService.class);
         final MultipartBody.Builder builder = new MultipartBody.Builder();
         Observable.from(imgs)
                 .map(s -> {
                     File file = new File(s);
-                    builder.addFormDataPart("file",file.getName(),RequestBody.create(MultipartBody.FORM,file));
+                    builder.addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file));
                     return s;
                 }).last()
                 .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
                     @Override
                     public Observable<Response<CommonResponse>> call(String s) {
-                        RequestBody body = RequestBody.create(MediaType.parse("application/json"),json);
-                        return mMainService.UpFile(body,builder.build());
+                        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
+                        return mMainService.UpFile(body, builder.build());
                     }
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -188,24 +225,24 @@ public class MainModelImpl implements MainModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
-                            if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
+                        if (commonResponseResponse.isSuccessful()) {
+                            if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0) {
                                 listener.onComplected(commonResponseResponse.body());
-                            }else {
+                            } else {
                                 listener.onComplected(commonResponseResponse.body());
-                                Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(UIUtils.getContext(), commonResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                             }
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                         }
                     }
                 });
@@ -216,7 +253,7 @@ public class MainModelImpl implements MainModel {
 
     }
 
-    private void upThings(MainService s,String j,int requestType,ApiCompleteListener listener){
+    private void upThings(MainService s, String j, int requestType, ApiCompleteListener listener) {
         s.UpThings(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -228,35 +265,35 @@ public class MainModelImpl implements MainModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
+                        if (commonResponseResponse.isSuccessful()) {
 //                            listener.onComplected(commonResponseResponse.body());
-                            if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
-                                formExportRequest(requestType,listener);
-                                BaseApplication.log_say("MainModelImpl","FormExportRequest");
-                            }else if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == -1){
+                            if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0) {
+                                formExportRequest(requestType, listener);
+                                BaseApplication.log_say("MainModelImpl", "FormExportRequest");
+                            } else if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == -1) {
                                 BaseApplication.checkLogin();
-                            }else {
+                            } else {
                                 listener.onComplected(commonResponseResponse.body());
-                                Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(UIUtils.getContext(), commonResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                             }
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                         }
                     }
                 });
     }
 
-    public void formExportRequest(int requestType,ApiCompleteListener listener){
-        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,MainService.class);
+    public void formExportRequest(int requestType, ApiCompleteListener listener) {
+        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, MainService.class);
         FormExportRequest feq = new FormExportRequest();
         FormExportRequest.IqBean iq = new FormExportRequest.IqBean();
         FormExportRequest.IqBean.QueryBean query = new FormExportRequest.IqBean.QueryBean();
@@ -276,17 +313,17 @@ public class MainModelImpl implements MainModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<IneedResponse> ineedResponseResponse) {
-                        if (ineedResponseResponse.isSuccessful()){
-                            if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")){
+                        if (ineedResponseResponse.isSuccessful()) {
+                            if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")) {
                                 FormNodeRequest formNode = new FormNodeRequest();
                                 FormNodeRequest.IqBean iq = new FormNodeRequest.IqBean();
                                 FormNodeRequest.IqBean.QueryBean query = new FormNodeRequest.IqBean.QueryBean();
@@ -296,20 +333,20 @@ public class MainModelImpl implements MainModel {
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);
                                 formNode.setIq(iq);
-                                formNodeRequest(mMainService,gson.toJson(formNode),requestType,listener);
-                                BaseApplication.log_say("MainModelImpl","FormNodeRequest");
-                            }else {
+                                formNodeRequest(mMainService, gson.toJson(formNode), requestType, listener);
+                                BaseApplication.log_say("MainModelImpl", "FormNodeRequest");
+                            } else {
                                 listener.onComplected(ineedResponseResponse.body());
-                                Toast.makeText(UIUtils.getContext(),ineedResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(UIUtils.getContext(), ineedResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                             }
-                        }else {
-                            listener.onFailed(new BaseResponse(ineedResponseResponse.code(),ineedResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(ineedResponseResponse.code(), ineedResponseResponse.message()));
                         }
                     }
                 });
     }
 
-    public void formNodeRequest(MainService s,String j,int requestType,ApiCompleteListener listener){
+    public void formNodeRequest(MainService s, String j, int requestType, ApiCompleteListener listener) {
         s.FormNodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -320,17 +357,17 @@ public class MainModelImpl implements MainModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<IneedResponse> ineedResponseResponse) {
-                        if (ineedResponseResponse.isSuccessful()){
-                            if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")){
+                        if (ineedResponseResponse.isSuccessful()) {
+                            if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")) {
                                 FormSubnodeRequest formSubnode = new FormSubnodeRequest();
                                 FormSubnodeRequest.IqBean iq = new FormSubnodeRequest.IqBean();
                                 FormSubnodeRequest.IqBean.QueryBean query = new FormSubnodeRequest.IqBean.QueryBean();
@@ -344,7 +381,7 @@ public class MainModelImpl implements MainModel {
                                 iq.setNamespace("FormSubnodeRequest");
                                 iq.setQuery(query);
                                 formSubnode.setIq(iq);
-                                if (ineedResponseResponse.body().getIq().getQuery().getNodes().get(0).getType().equals("4")){
+                                if (ineedResponseResponse.body().getIq().getQuery().getNodes().get(0).getType().equals("4")) {
                                     FormSendDoRequest formSend = new FormSendDoRequest();
                                     FormSendDoRequest.IqBean iq2 = new FormSendDoRequest.IqBean();
                                     FormSendDoRequest.IqBean.QueryBean query2 = new FormSendDoRequest.IqBean.QueryBean();
@@ -372,23 +409,23 @@ public class MainModelImpl implements MainModel {
                                     iq2.setNamespace("FormSendDoRequest");
                                     iq2.setQuery(query2);
                                     formSend.setIq(iq2);
-                                    formSendDoRequest(s,gson.toJson(formSend),listener);
-                                }else {
-                                    formSubnodeRequest(s,gson.toJson(formSubnode),requestType,listener);
+                                    formSendDoRequest(s, gson.toJson(formSend), listener);
+                                } else {
+                                    formSubnodeRequest(s, gson.toJson(formSubnode), requestType, listener);
                                 }
-                                BaseApplication.log_say("MainModelImpl","FormSubnodeRequest");
-                            }else {
+                                BaseApplication.log_say("MainModelImpl", "FormSubnodeRequest");
+                            } else {
                                 listener.onComplected(ineedResponseResponse.body());
-                                Toast.makeText(UIUtils.getContext(),ineedResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(UIUtils.getContext(), ineedResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                             }
-                        }else {
-                            listener.onFailed(new BaseResponse(ineedResponseResponse.code(),ineedResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(ineedResponseResponse.code(), ineedResponseResponse.message()));
                         }
                     }
                 });
     }
 
-    public void formSubnodeRequest(MainService s,String j,int requestType,ApiCompleteListener listener){
+    public void formSubnodeRequest(MainService s, String j, int requestType, ApiCompleteListener listener) {
         s.FormSubnodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -400,16 +437,16 @@ public class MainModelImpl implements MainModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<IneedResponse> ineedResponseResponse) {
-                        if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")){
+                        if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")) {
                             FormSendDoRequest formSend = new FormSendDoRequest();
                             FormSendDoRequest.IqBean iq = new FormSendDoRequest.IqBean();
                             FormSendDoRequest.IqBean.QueryBean query = new FormSendDoRequest.IqBean.QueryBean();
@@ -426,7 +463,7 @@ public class MainModelImpl implements MainModel {
                             node.setId(ineedResponseResponse.body().getIq().getQuery().getId());
                             node.setType(0);
                             node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
-                            node.setValue("Y"+ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
+                            node.setValue("Y" + ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
                             node.setFigureID("");
                             node.setFigureName("");
                             node.setFigureType("");
@@ -436,16 +473,16 @@ public class MainModelImpl implements MainModel {
                             iq.setNamespace("FormSendDoRequest");
                             iq.setQuery(query);
                             formSend.setIq(iq);
-                            formSendDoRequest(s,gson.toJson(formSend),listener);
-                        }else {
+                            formSendDoRequest(s, gson.toJson(formSend), listener);
+                        } else {
                             listener.onComplected(ineedResponseResponse.body());
-                            Toast.makeText(UIUtils.getContext(),ineedResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(UIUtils.getContext(), ineedResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
     }
 
-    private void formSendDoRequest(MainService s,String j,ApiCompleteListener listener){
+    private void formSendDoRequest(MainService s, String j, ApiCompleteListener listener) {
         s.FormSendDoRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -457,19 +494,19 @@ public class MainModelImpl implements MainModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
+                        if (commonResponseResponse.isSuccessful()) {
                             listener.onComplected(commonResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                         }
                     }
                 });

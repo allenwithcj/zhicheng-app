@@ -268,8 +268,6 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 				if(mData.get(0) != null){
 					if (null != mImagePath){
 						if(mImagePath.size() != 0){
-							if(mNode.get(3) != null){
-								item.setEnabled(false);
 								dialog = new AlertDialog.Builder(this,R.style.dialog)
 										.setView(R.layout.z_loading_view)
 										.setCancelable(false)
@@ -280,11 +278,8 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 								}else {
 									mUpThingsPresenterImpl.UpThings(3,guid,strEntity,jFile,mImagePath);
 								}
-							}else{
-								Toast.makeText(this,"请选择爆料类型",Toast.LENGTH_SHORT).show();
-							}
+
 						}else {
-							item.setEnabled(true);
 							Toast.makeText(this,"请选择上传图片",Toast.LENGTH_SHORT).show();
 						}
 					}
@@ -293,7 +288,6 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 				}
 			}else {
 				BaseApplication.checkLogin();
-				item.setEnabled(true);
 				Snackbar.make(mToolbar,"重连成功，请重新上报",Snackbar.LENGTH_SHORT).show();
 			}
 		}
@@ -335,7 +329,6 @@ public class IneedActivity extends BaseActivity implements UpThingsView{
 				showMessage("上报成功");
 				this.finish();
 			}else {
-				mMenu.findItem(R.id.action_send).setEnabled(true);
 				showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
 			}
 		}
