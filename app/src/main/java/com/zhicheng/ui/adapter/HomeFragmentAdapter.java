@@ -14,6 +14,7 @@ import com.zhicheng.R;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.CallTheCounActivity;
+import com.zhicheng.ui.activity.ExperienceActivity;
 import com.zhicheng.ui.activity.Official;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
 import com.zhicheng.ui.activity.OfficialSendDetails;
@@ -252,6 +253,8 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter{
                     UIUtils.startActivity(new Intent(UIUtils.getContext(),OfficialWorkDynamic.class));
                     break;
                 case R.id.Experiment:
+                    ExperienceActivity.actionStart
+                            (URL.HOST_URL_SERVER_ZHICHENG+"/mdp/html/BLOG/listUI.html");
                     break;
                 case R.id.CallTheCoun:
                     UIUtils.startActivity(new Intent(UIUtils.getContext(), CallTheCounActivity.class));

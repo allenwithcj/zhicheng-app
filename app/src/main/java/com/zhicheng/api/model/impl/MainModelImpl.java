@@ -124,7 +124,7 @@ public class MainModelImpl implements MainModel {
         if (mFiles.size() > 0) {
             Luban.get(UIUtils.getContext())
                     .load(mFiles)
-                    .putGear(Luban.THIRD_GEAR)
+                    .putGear(Luban.FIRST_GEAR)
                     .asList()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

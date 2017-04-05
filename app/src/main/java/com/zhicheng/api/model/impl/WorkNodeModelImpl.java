@@ -14,10 +14,12 @@ import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.PersonalLogMaResponse;
 import com.zhicheng.bean.json.PersonalLogMaRequest;
 import com.zhicheng.common.URL;
+import com.zhicheng.luban.Luban;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.io.File;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -27,6 +29,7 @@ import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -72,50 +75,88 @@ public class WorkNodeModelImpl implements WorkNodeModel {
         OfficialService mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
 
         final MultipartBody.Builder builder = new MultipartBody.Builder();
-        Observable.from(imgs)
-                .map(s -> {
-                    File file = new File(s);
-                    builder.addFormDataPart("file",file.getName(), RequestBody.create(MultipartBody.FORM,file));
-                    return s;
-                }).last()
-                .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
-                    @Override
-                    public Observable<Response<CommonResponse>> call(String s) {
-                        RequestBody body = RequestBody.create(MediaType.parse("application/json"),jFile);
-                        return mOfficialService.UpDealFile(body,builder.build());
-                    }
-                }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<CommonResponse>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
-                            listener.onFailed(null);
-                            return;
+        //图片压缩
+        List<File> mFiles = new ArrayList<>();
+        for (int i = 0; i < imgs.size(); i++) {
+            mFiles.add(new File(imgs.get(i)));
+        }
+        if (mFiles.size() > 0) {
+            Luban.get(UIUtils.getContext())
+                    .load(mFiles)
+                    .putGear(Luban.FIRST_GEAR)
+                    .asList()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError(new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            throwable.printStackTrace();
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
-                    }
+                    })
+                    .onErrorResumeNext(new Func1<Throwable, Observable<? extends List<File>>>() {
+                        @Override
+                        public Observable<? extends List<File>> call(Throwable throwable) {
+                            return Observable.empty();
+                        }
+                    }).subscribe(new Action1<List<File>>() {
+                @Override
+                public void call(List<File> files) {
+                    if (files.size() > 0) {
+                        List<String> imgs = new ArrayList<String>();
+                        for (int i = 0; i < files.size(); i++) {
+                            imgs.add(files.get(i).getAbsolutePath());
+                        }
+                        if (imgs.size() > 0) {
+                            Observable.from(imgs)
+                                    .map(s -> {
+                                        File file = new File(s);
+                                        builder.addFormDataPart("file",file.getName(), RequestBody.create(MultipartBody.FORM,file));
+                                        return s;
+                                    }).last()
+                                    .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
+                                        @Override
+                                        public Observable<Response<CommonResponse>> call(String s) {
+                                            RequestBody body = RequestBody.create(MediaType.parse("application/json"),jFile);
+                                            return mOfficialService.UpDealFile(body,builder.build());
+                                        }
+                                    }).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new Subscriber<Response<CommonResponse>>() {
+                                        @Override
+                                        public void onCompleted() {
 
-                    @Override
-                    public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
-                            if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
-                                personalLogMaRequest(nodes,attGUID,GUID,listener);
-                                BaseApplication.log_say("MainModelImpl","UpThings");
-                            }else {
-                                listener.onComplected(commonResponseResponse.body());
-                                Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
-                            }
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable e) {
+                                            if (e instanceof UnknownHostException){
+                                                listener.onFailed(null);
+                                                return;
+                                            }
+                                            listener.onFailed(new BaseResponse(404,e.getMessage()));
+                                        }
+
+                                        @Override
+                                        public void onNext(Response<CommonResponse> commonResponseResponse) {
+                                            if (commonResponseResponse.isSuccessful()){
+                                                if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
+                                                    personalLogMaRequest(nodes,attGUID,GUID,listener);
+                                                    BaseApplication.log_say("MainModelImpl","UpThings");
+                                                }else {
+                                                    listener.onComplected(commonResponseResponse.body());
+                                                    Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                                }
+                                            }else {
+                                                listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                                            }
+                                        }
+                                    });
                         }
                     }
-                });
+                }
+            });
+        }
+
     }
 
     private void personalLogMaRequest(String nodes, String attGuid,String guid,  ApiCompleteListener listener) {

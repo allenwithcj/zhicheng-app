@@ -106,10 +106,6 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView,Sw
         if (dialog != null && dialog.isShowing()){
             dialog.dismiss();
         }
-        if (mPopupWindow != null && mPopupWindow.isShowing()){
-            mPopupWindow.dismiss();
-            mPopupWindow = null;
-        }
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
     }
 
@@ -133,7 +129,12 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView,Sw
             }
         }else if(result instanceof CommonResponse){
             if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
+                mImagePath.clear();
                 showMessage("发送动态成功");
+                if (mPopupWindow != null && mPopupWindow.isShowing()){
+                    mPopupWindow.dismiss();
+                    mPopupWindow = null;
+                }
                 fresh();
             }else {
                 mBtn.setText("处理");
