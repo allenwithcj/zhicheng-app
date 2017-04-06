@@ -2,6 +2,8 @@ package com.zhicheng.ui.activity;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +12,7 @@ import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -17,8 +20,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.zhicheng.R;
@@ -34,8 +39,12 @@ import com.zhicheng.module.imageloader.GlideImageLoader;
 import com.zhicheng.ui.adapter.WorkNoteAdapter;
 import com.zhicheng.utils.common.PermissionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import cc.dagger.photopicker.PhotoPicker;
@@ -69,6 +78,11 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     private RecyclerView picRecyclerView;
     private DealAdapter mDealAdapter;
     private AlertDialog dialog;
+
+    private DrawerLayout mDrawerLayout;
+    private LinearLayout date_layout;
+    private TextView date_txt;
+    private EditText sender;
 
     public WorkNoteActivity getInstance(){
         return instance;
@@ -119,6 +133,10 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         emoji = (ImageView) findViewById(R.id.emoji);
         more = (ImageView) findViewById(R.id.more);
         moreTools = (LinearLayout) findViewById(R.id.moreTools);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        date_layout = (LinearLayout) findViewById(R.id.date_layout);
+        date_txt = (TextView) findViewById(R.id.Date);
+        sender = (EditText) findViewById(R.id.sender);
 
         mDealAdapter = new DealAdapter();
         mImagePath = new ArrayList<>();
@@ -129,6 +147,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         mInput.setOnClickListener(this);
         emoji.setOnClickListener(this);
         more.setOnClickListener(this);
+        date_layout.setOnClickListener(this);
 
         mLLM = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true);
         mRecyclerView.setLayoutManager(mLLM);
@@ -209,9 +228,29 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     }
 
     @Override
+    protected int getMenuID() {
+        return R.menu.menu_worknode_search;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         mToolbar.setTitle("工作日志");
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_filter) {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            }else {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+            return true;
+        }else if(item.getItemId() == android.R.id.home){
+            finish();
+        }
+        return true;
     }
 
     @Override
@@ -281,6 +320,21 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                 }else {
                     moreTools.setVisibility(View.GONE);
                 }
+                break;
+            case R.id.date_layout:
+                //时间选择器
+                TimePickerView pvTime = new TimePickerView.Builder(this, new TimePickerView.OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+                        date_txt.setText(sdf.format(date));
+                    }
+                }).build();
+                pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+                pvTime.show();
+                break;
+            case R.id.btn_search:
+
                 break;
         }
     }
