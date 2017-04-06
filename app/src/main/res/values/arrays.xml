@@ -29,6 +29,27 @@
         <item>丧偶</item>
     </string-array>
 
+    <string-array name="classification">
+        <item>常住人口</item>
+        <item>县类流动人口</item>
+        <item>县外流入人口</item>
+    </string-array>
+
+    <string-array name="remark">
+        <item>低保户</item>
+        <item>奖抚</item>
+        <item>特抚</item>
+        <item>其他</item>
+        <item>吸毒</item>
+        <item>社区矫正</item>
+        <item>残疾</item>
+        <item>肇事精神患者</item>
+        <item>是否退伍军</item>
+        <item>90岁以上老人</item>
+        <item>空巢老人</item>
+        <item>优抚对象</item>
+    </string-array>
+
     <string-array name="grid_add">
         <item>网格编号:</item>
         <item>居住地:</item>

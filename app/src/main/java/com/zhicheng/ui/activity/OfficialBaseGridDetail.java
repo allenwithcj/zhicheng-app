@@ -54,6 +54,10 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
                     holder.grid_base_add_degree.setText(value);
                 }else if(type.equals(Constant.TYPE_MARRIED)){
                     holder.grid_base_add_married.setText(value);
+                }else if(type.equals(Constant.TYPE_CLASSIFICATION)){
+                    holder.grid_base_add_rkfl.setText(value);
+                }else if(type.equals(Constant.TYPE_REMARK)){
+                    holder.grid_base_add_lessor_remark.setText(value);
                 }
             }
         }

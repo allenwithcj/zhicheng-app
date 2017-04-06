@@ -19,12 +19,13 @@ public class Constant {
     public static final String TYPE_POLICATIAL ="policatial";
     public static final String TYPE_DEGREE ="degree";
     public static final String TYPE_MARRIED ="married";
+    public static final String TYPE_CLASSIFICATION ="classification";
+    public static final String TYPE_REMARK ="remark";
 
     public static String LOG_OPERATE_TYPE = "";
 
     public static final String ALARM_ACTION ="com.location.alarm.action";
     public static final int LOCATION_UP_TIME = 5*60*1000;//5分钟
-    public static final int TIME = 2*60*1000;//2分钟
 
     public static String LATITUDE = "";
     public static String LONGITUDE = "";

@@ -1,5 +1,6 @@
 package com.zhicheng.api.model.impl;
 
+import com.zhicheng.BaseApplication;
 import com.zhicheng.api.ApiCompleteListener;
 import com.zhicheng.api.common.ServiceFactory;
 import com.zhicheng.api.common.service.OfficailBaseGridDetailService;
@@ -38,6 +39,7 @@ public class OfficialBaseGridDetailModelImpl implements OfficialBaseGridDetailMo
                             listener.onFailed(null);
                             return;
                         }
+                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404,e.getMessage()));
                     }
 

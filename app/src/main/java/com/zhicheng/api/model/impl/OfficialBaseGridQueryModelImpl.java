@@ -40,6 +40,7 @@ public class OfficialBaseGridQueryModelImpl implements OfficialBaseGridQueryMode
                             listener.onFailed(null);
                             return;
                         }
+                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404,e.getMessage()));
                     }
 

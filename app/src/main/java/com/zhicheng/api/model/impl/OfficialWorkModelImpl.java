@@ -7,19 +7,13 @@ import com.zhicheng.api.common.service.OfficialDynamicService;
 import com.zhicheng.api.model.OfficialWorkModel;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.CommonResponse;
-import com.zhicheng.bean.http.OfficialResponse;
-import com.zhicheng.bean.http.OfficialWorkDynamicList;
 import com.zhicheng.common.URL;
-import com.zhicheng.ui.activity.OfficialWorkDynamic;
 
 import java.net.UnknownHostException;
 
 import retrofit2.Response;
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -46,6 +40,7 @@ public class OfficialWorkModelImpl implements OfficialWorkModel {
                             listener.onFailed(null);
                             return;
                         }
+                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404,e.getMessage()));
                     }
 

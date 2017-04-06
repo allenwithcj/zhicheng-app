@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.zhicheng.R;
+import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.presenter.impl.WorkNodePresenterImpl;
 import com.zhicheng.api.view.WorkNodeView;
 import com.zhicheng.bean.http.CommonResponse;
@@ -50,10 +51,12 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
     private String Uid,work,sender,content;
     private String sendTime;
     private PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean prelogsBean;
+    private DatabaseHelper mData;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_worknote_detail);
+        mData = new DatabaseHelper();
         prelogsBean = getIntent().getParcelableExtra("prelogsBeen");
         mWorkNodePresenterImpl = new WorkNodePresenterImpl(this);
         publicationunit = (TextView) findViewById(R.id.publicationunit);
@@ -137,7 +140,12 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
 
     @Override
     protected int getMenuID() {
-        return R.menu.official_grid_operate;
+        if(mData.getLocalConfig() != null){
+            if(mData.getLocalConfig().getUserName().equals(sender)){
+                return R.menu.official_grid_operate;
+            }
+        }
+        return super.getMenuID();
     }
 
     @Override

@@ -179,7 +179,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
         public TextView grid_base_add_grid_no;
 
         public EditText grid_base_add_lessor;
-        public EditText grid_base_add_lessor_remark;
+        public TextView grid_base_add_lessor_remark;
         public EditText grid_base_add_lessor_telephone;
 
         public EditText grid_base_add_name;
@@ -196,11 +196,12 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
         public EditText grid_base_add_hobby;
         public EditText grid_base_add_remark;
         public EditText grid_base_add_outaddress;
+        public TextView grid_base_add_rkfl;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             grid_base_add_lessor = (EditText) itemView.findViewById(R.id.grid_base_add_lessor);
-            grid_base_add_lessor_remark = (EditText) itemView.findViewById(R.id.grid_base_add_lessor_remark);
+            grid_base_add_lessor_remark = (TextView) itemView.findViewById(R.id.grid_base_add_lessor_remark);
             grid_base_add_lessor_telephone = (EditText) itemView.findViewById(R.id.grid_base_add_lessor_telephone);
 
             grid_base_add_residence = (EditText) itemView.findViewById(R.id.grid_base_add_residence);
@@ -220,41 +221,42 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
             grid_base_add_hobby = (EditText) itemView.findViewById(R.id.grid_base_add_hobby);
             grid_base_add_remark = (EditText) itemView.findViewById(R.id.grid_base_add_remark);
             grid_base_add_outaddress = (EditText)itemView.findViewById(R.id.grid_base_add_outaddress);
+            grid_base_add_rkfl = (TextView) itemView.findViewById(R.id.input_rkfl);
 
-            grid_base_add_sex.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mList = UIUtils.getContext().getResources().getStringArray(R.array.sex);
-                    type = Constant.TYPE_SEX;
-                    myIntent(mList,type);
-                }
+            grid_base_add_sex.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.sex);
+                type = Constant.TYPE_SEX;
+                myIntent(mList, type);
             });
 
-            grid_base_add_policatial.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mList = UIUtils.getContext().getResources().getStringArray(R.array.political_status);
-                    type = Constant.TYPE_POLICATIAL;
-                    myIntent(mList,type);
-                }
+            grid_base_add_policatial.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.political_status);
+                type = Constant.TYPE_POLICATIAL;
+                myIntent(mList, type);
             });
 
-            grid_base_add_degree.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mList = UIUtils.getContext().getResources().getStringArray(R.array.degree_of_educatio);
-                    type = Constant.TYPE_DEGREE;
-                    myIntent(mList,type);
-                }
+            grid_base_add_degree.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.degree_of_educatio);
+                type = Constant.TYPE_DEGREE;
+                myIntent(mList, type);
             });
 
-            grid_base_add_married.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mList = UIUtils.getContext().getResources().getStringArray(R.array.married);
-                    type = Constant.TYPE_MARRIED;
-                    myIntent(mList,type);
-                }
+            grid_base_add_married.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.married);
+                type = Constant.TYPE_MARRIED;
+                myIntent(mList, type);
+            });
+
+            grid_base_add_rkfl.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.classification);
+                type = Constant.TYPE_CLASSIFICATION;
+                myIntent(mList, type);
+            });
+
+            grid_base_add_lessor_remark.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.remark);
+                type = Constant.TYPE_REMARK;
+                myIntent(mList, type);
             });
 
         }
@@ -273,7 +275,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
         } else if(str.equals("女")){
             return "1";
         }
-        return "";
+        return null;
     }
 
     private String marriedCode(String str) {
@@ -285,9 +287,8 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
             return "2";
         } else if(str.equals("丧偶")){
             return "3";
-        }else{
-            return "";
         }
+        return null;
     }
 
 }
