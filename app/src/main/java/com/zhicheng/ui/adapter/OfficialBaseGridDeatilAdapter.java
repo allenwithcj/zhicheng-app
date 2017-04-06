@@ -27,7 +27,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
     private String ZZ_RESIDENCE,GRIDNAME;
     private String RENTNAME,REMARK2,RENTPHONE;
     private String CARD_NUM,NAME,RELATION,HUZU,GENDER,MARITAL_STATUS,POLITICAL_STATUS,EDUCATION,
-            HOBBY,REMARK1,DOMICILE,OUTADDRESS,PHONE,WORK;
+            HOBBY,REMARK1,DOMICILE,OUTADDRESS,PHONE,WORK,SORT;
     private OfficialBaseGridUpdatePresenter mOfficialBaseGridUpdatePresenter;
     private ItemViewHolder holder;
     private String[] mList;
@@ -75,7 +75,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
                 ((ItemViewHolder) holder).grid_base_add_hobby.setText(mData.getIq().getQuery().getPreMsg().getHOBBY());
                 ((ItemViewHolder) holder).grid_base_add_remark.setText(mData.getIq().getQuery().getPreMsg().getREMARK1());
                 ((ItemViewHolder) holder).grid_base_add_outaddress.setText(mData.getIq().getQuery().getPreMsg().getOUTADDRESS());
-
+                ((ItemViewHolder) holder).grid_base_add_rkfl.setText(mData.getIq().getQuery().getPreMsg().getSORT());
             }
         }
     }
@@ -131,6 +131,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
         HOBBY = holder.grid_base_add_hobby.getText().toString();
         REMARK1 = holder.grid_base_add_remark.getText().toString();
         OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
+        SORT = holder.grid_base_add_rkfl.getText().toString();
 
         RENTNAME = holder.grid_base_add_lessor.getText().toString();
         REMARK2 = holder.grid_base_add_lessor_remark.getText().toString();

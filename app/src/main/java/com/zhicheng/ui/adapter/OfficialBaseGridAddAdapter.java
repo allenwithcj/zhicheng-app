@@ -30,7 +30,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
     private String ZZ_RESIDENCE, GRIDNAME;
     private String RENTNAME, REMARK2, RENTPHONE;
     private String CARD_NUM, NAME, RELATION,HUZUNAME, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
-            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK;
+            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK,SORT;
 
     private OfficialBaseGridAddPresenter mOfficialBaseGridAddPresenter;
     private ItemViewHolder holder;
@@ -89,6 +89,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         HOBBY = holder.grid_base_add_hobby.getText().toString();
         REMARK1 = holder.grid_base_add_remark.getText().toString();
         OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
+        SORT = holder.grid_base_add_rkfl.getText().toString();
 
         RENTNAME = holder.grid_base_add_lessor.getText().toString();
         REMARK2 = holder.grid_base_add_lessor_remark.getText().toString();
@@ -125,6 +126,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             mFormobj.setHOBBY(HOBBY);
             mFormobj.setREMARK1(REMARK1);
             mFormobj.setOUTADDRESS(OUTADDRESS);
+            mFormobj.setSORT(SORT);
 
             irIqQB.setFormobj(mFormobj);
             lrIq.setNamespace("PersonMsgMaRequest");

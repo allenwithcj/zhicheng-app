@@ -3,7 +3,6 @@ package com.zhicheng.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,11 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.Gson;
@@ -60,8 +61,10 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     private Button btn_cancel,btn_confirm;
     private LinearLayout date_layout;
     private TextView date_txt;
+    private EditText sender;
     private String mCaseTime = "";
     private String mManageState = "";
+    private String mCaseName = "";
 
 
     @Override
@@ -95,7 +98,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         mCaseQueryPresenterImpl = new CaseQueryPresenterImpl(this);
         //主内容RecyclerView
         mSearchClassifyAdapter = new SearchClassifyAdapter();
-        mLinearLayoutManager = new LinearLayoutManager(getContext());
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mainContent.setLayoutManager(mLinearLayoutManager);
         mainContent.setAdapter(mSearchClassifyAdapter);
         mainContent.addOnScrollListener(new RecyclerViewScrollDetector());
@@ -110,6 +113,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         btn_confirm = (Button)mRootView.findViewById(R.id.btn_confirm);
         date_layout = (LinearLayout)mRootView.findViewById(R.id.date_layout);
         date_txt = (TextView)mRootView.findViewById(R.id.Date);
+        sender = (EditText)mRootView.findViewById(R.id.sender);
 
 
         btn_cancel.setOnClickListener(this);
@@ -139,7 +143,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
     @Override
     public void showMessage(String msg) {
-        Snackbar.make(mRootView,msg,Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -157,6 +161,8 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         if(result instanceof CaseQueryResponse){
             if(((CaseQueryResponse) result).getIq().getQuery().getErrorCode() == 0){
                 mSearchClassifyAdapter.addAllDate(((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getCases());
+            }else{
+                showMessage(((CaseQueryResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
     }
@@ -166,15 +172,13 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         if(result instanceof CaseQueryResponse){
             if(((CaseQueryResponse) result).getIq().getQuery().getErrorCode() == 0){
                 mSearchClassifyAdapter.addDataList(((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getCases());
+            }else{
+                showMessage(((CaseQueryResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
     }
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -202,12 +206,12 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
     private void refresh() {
         start = 1;
-        String entity = createObj(start,mCaseTime,mManageState);
+        String entity = createObj(start,mCaseTime,mManageState,mCaseName);
         mCaseQueryPresenterImpl.caseQuery(entity,start);
         start ++;
     }
 
-    private String createObj(int page,String caseTime,String manageSate){
+    private String createObj(int page,String caseTime,String manageSate,String mCaseName){
         CaseQueryRequest caseQueryRequest = new CaseQueryRequest();
         CaseQueryRequest.IqBean iq = new CaseQueryRequest.IqBean();
         CaseQueryRequest.IqBean.QueryBean qb = new CaseQueryRequest.IqBean.QueryBean();
@@ -215,6 +219,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         qb.setCaseTime(caseTime);
         qb.setManageStatus(manageSate);
         qb.setPageNum(page);
+        qb.setCaseName(mCaseName);
         iq.setQuery(qb);
         caseQueryRequest.setIq(iq);
         Gson gson = new Gson();
@@ -239,14 +244,17 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             case R.id.btn_cancel:
                 mCaseTime = "";
                 mManageState = "";
+                mCaseName = "";
                 date_txt.setText("");
+                sender.setText("");
                 allThings.setChecked(true);
                 mDrawerLayout.closeDrawer(GravityCompat.START);
-                onRefresh();
+                refresh();
                 break;
             case R.id.btn_confirm:
+                mCaseName = sender.getText().toString();
                 mDrawerLayout.closeDrawer(GravityCompat.START);
-                onRefresh();
+                refresh();
                 break;
 
             case R.id.date_layout:
@@ -358,13 +366,13 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mSearchClassifyAdapter.getItemCount()) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem != -1 && lastVisibleItem + 1 == mSearchClassifyAdapter.getItemCount()) {
                 onLoadMore();
             }
         }
 
         private void onLoadMore() {
-            String entity = createObj(start,mCaseTime,mManageState);
+            String entity = createObj(start,mCaseTime,mManageState,mCaseName);
             mCaseQueryPresenterImpl.caseQuery(entity,start);
             start ++;
         }

@@ -78,6 +78,7 @@ public class SubmitOrdinaryFormRequest {
                 private String RENTNAME;
                 private String RENTPHONE;
                 private String HUZU;
+                private String SORT;
 
                 public String getID() {
                     return ID;
@@ -237,6 +238,14 @@ public class SubmitOrdinaryFormRequest {
 
                 public void setHUZU(String HUZU) {
                     this.HUZU = HUZU;
+                }
+
+                public String getSORT() {
+                    return SORT;
+                }
+
+                public void setSORT(String SORT) {
+                    this.SORT = SORT;
                 }
             }
         }

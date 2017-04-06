@@ -9,7 +9,7 @@
         android:orientation="vertical"
         android:background="@color/headView"
         android:layout_width="match_parent"
-        android:layout_height="170dp"></LinearLayout>
+        android:layout_height="170dp"/>
 
     <LinearLayout
         android:id="@+id/type_layout"
@@ -82,7 +82,6 @@
                 android:textColor="@color/radiobutton_textcolor" />
         </RadioGroup>
     </LinearLayout>
-
     <View
         android:id="@+id/line1"
         android:layout_below="@+id/type_layout"
@@ -91,8 +90,47 @@
         android:background="@color/gray_text" />
 
     <LinearLayout
-        android:id="@+id/date_layout"
+        android:id="@+id/sender_layout"
         android:layout_below="@+id/line1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/patrol_heading"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:text="送办人" />
+
+        <EditText
+            android:id="@+id/sender"
+            android:layout_width="0dp"
+            android:layout_weight="3.5"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/textView_padding"
+            android:layout_margin="@dimen/photo_margin"
+            android:layout_gravity="center"
+            android:textSize="@dimen/content_size"
+            android:textStyle="normal"
+            android:hint="请输入姓名"
+            android:background="@null"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+    <View
+        android:id="@+id/line2"
+        android:layout_below="@+id/sender_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_text" />
+
+    <LinearLayout
+        android:id="@+id/date_layout"
+        android:layout_below="@+id/line2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -117,9 +155,9 @@
             android:padding="@dimen/textView_padding"
             android:layout_margin="@dimen/photo_margin"
             android:layout_gravity="center"
-            android:gravity="center"
             android:textSize="@dimen/content_size"
             android:textStyle="normal"
+            android:hint="请选择时间"
             android:textColor="@color/black"/>
 
         <ImageView
@@ -128,8 +166,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_marginRight="10dp"
-            android:background="@drawable/patrol_next_arrow"
-            />
+            android:background="@drawable/patrol_next_arrow"/>
     </LinearLayout>
 
     <View
