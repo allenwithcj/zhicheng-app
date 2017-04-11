@@ -32,6 +32,7 @@ import com.zhicheng.api.view.CaseQueryView;
 import com.zhicheng.bean.http.CaseQueryResponse;
 import com.zhicheng.bean.json.CaseQueryRequest;
 import com.zhicheng.holder.itemsprovider.Line;
+import com.zhicheng.ui.activity.GridNameActivity;
 import com.zhicheng.ui.activity.OfficialFinishDetail;
 import com.zhicheng.ui.activity.OfficialNoFinishDetails;
 import com.zhicheng.utils.common.UIUtils;
@@ -275,7 +276,8 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 pvTime.show();
                 break;
             case R.id.grid_layout:
-
+                Intent intent = new Intent(getActivity(), GridNameActivity.class);
+                UIUtils.startActivity(intent);
                 break;
         }
     }

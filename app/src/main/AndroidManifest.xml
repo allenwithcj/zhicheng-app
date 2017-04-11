@@ -206,6 +206,10 @@
             android:name=".ui.activity.ExperienceActivity"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
+        <activity
+            android:name=".ui.activity.GridNameActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
     </application>
 
 </manifest>
