@@ -45,9 +45,8 @@ import java.util.Map;
  * Created by Donson on 2017/1/2.
  */
 
-public class MainFragment extends BaseFragment implements CheckVerisonView{
+public class MainFragment extends BaseFragment implements CheckVerisonView {
 
-    private FloatingActionButton mFab;
     private CircleImageView mCircleImageView;
     private RecyclerView mRecyclerView;
     private InfoAdapter mInfoAdapter;
@@ -56,7 +55,8 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
     private TextView userpost;
     private CheckVersionPresenterImpl mCheckVersionPresenterImpl;
     private VersionResponse.DataBean mDataBean;
-    private String[] str = {"版本:","更新内容:"};
+    private String[] str = {"版本:", "更新内容:"};
+    private TextView title_name;
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -64,7 +64,7 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
         }
     };
 
-    public static MainFragment newInstance(){
+    public static MainFragment newInstance() {
         Bundle args = new Bundle();
         MainFragment fragment = new MainFragment();
         return fragment;
@@ -72,7 +72,7 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
 
     @Override
     protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.activity_main_info,container,false);
+        mRootView = inflater.inflate(R.layout.activity_main_info, container, false);
     }
 
     @Override
@@ -80,48 +80,31 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
         mCheckVersionPresenterImpl = new CheckVersionPresenterImpl(this);
         IntentFilter filter = new IntentFilter();
         filter.addAction("com.mainFragment.update");
-        getActivity().registerReceiver(receiver,filter);
+        getActivity().registerReceiver(receiver, filter);
+        title_name = (TextView)mRootView.findViewById(R.id.title_name);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
         mCircleImageView = (CircleImageView) mRootView.findViewById(R.id.circleImg);
-        mFab = (FloatingActionButton) mRootView.findViewById(R.id.fab);
         mName = (TextView) mRootView.findViewById(R.id.name);
         mOccupation = (TextView) mRootView.findViewById(R.id.occupation);
         userpost = (TextView) mRootView.findViewById(R.id.userpost);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mInfoAdapter = new InfoAdapter();
         mRecyclerView.setAdapter(mInfoAdapter);
-        mFab.setOnClickListener(v -> {
-            DatabaseHelper mDatabase = new DatabaseHelper();
-            LocalConfig config = mDatabase.getLocalConfig();
-            if (config != null && config.getUserName() != null && config.getPwd() != null){
-                //详细个人信息
-                mDatabase.deleteLocalConfig();
-                SharedPreferences.Editor sp = getContext().getSharedPreferences("cookies",0).edit();
-                sp.clear();
-                sp.apply();
-                mName.setText("未登录");
-                mOccupation.setText("无权限");
-                userpost.setText("无权限");
-                Toast.makeText(getContext(),"账号注销成功",Toast.LENGTH_SHORT).show();
-                BaseApplication.checkLogin();
-            }else {
-                UIUtils.startActivity(new Intent(UIUtils.getContext(), LoginActivity.class));
-            }
-        });
+        title_name.setText(getResources().getString(R.string.mine));
         checkLogin();
     }
 
-    private void checkLogin(){
+    private void checkLogin() {
         DatabaseHelper mDataBase = new DatabaseHelper();
         LocalConfig lc = mDataBase.getLocalConfig();
-        if (lc != null && lc.getUserName() != null && !lc.getUserName().isEmpty()){
+        if (lc != null && lc.getUserName() != null && !lc.getUserName().isEmpty()) {
             Glide.with(this)
                     .load(URL.HOST_URL_SERVER_ZHICHENG + mDataBase.getLocalConfig().getHeadUrl())
                     .into(mCircleImageView);
             mName.setText(lc.getUserName());
-            mOccupation.setText(lc.getDepartment());
+            mOccupation.setText(lc.getDepartment()+":");
             userpost.setText(lc.getUserPost());
-        }else{
+        } else {
             mName.setText("未登录");
             mOccupation.setText("无权限");
             userpost.setText("无权限");
@@ -130,28 +113,28 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
 
     @Override
     protected void initData(boolean isSavedNull) {
-        Map<String,String> map = new HashMap<>();
-        map.put("aId",Constant.aId);
-        map.put("_api_key",Constant._api_key);
+        Map<String, String> map = new HashMap<>();
+        map.put("aId", Constant.aId);
+        map.put("_api_key", Constant._api_key);
         mCheckVersionPresenterImpl.getApps(map);
 
         mInfoAdapter.setButtonClick(() -> {
             PgyUpdateManager.register(getActivity(), getString(R.string.file_provider), new UpdateManagerListener() {
                 @Override
                 public void onNoUpdateAvailable() {
-                    Toast.makeText(getActivity(),"当前版本:"+getCurrentVersion().versionName,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "当前版本:" + getCurrentVersion().versionName, Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onUpdateAvailable(String s) {
                     // 将新版本信息封装到AppBean中
                     final AppBean appBean = getAppBeanFromString(s);
-                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_version_update,null);
-                    TextView update_version = (TextView)view.findViewById(R.id.update_version);
-                    TextView update_content = (TextView)view.findViewById(R.id.update_content);
-                    if(mDataBean != null){
-                        update_version.setText(str[0]+mDataBean.getAppVersion());
-                        update_content.setText(str[1]+mDataBean.getAppUpdateDescription());
+                    View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_version_update, null);
+                    TextView update_version = (TextView) view.findViewById(R.id.update_version);
+                    TextView update_content = (TextView) view.findViewById(R.id.update_content);
+                    if (mDataBean != null) {
+                        update_version.setText(str[0] + mDataBean.getAppVersion());
+                        update_content.setText(str[1] + mDataBean.getAppUpdateDescription());
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setView(view);
@@ -161,7 +144,7 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
                             startDownloadTask(getActivity(),
                                     appBean.getDownloadURL());
                         }
-                    }).setNegativeButton(getActivity().getResources().getString(R.string.update_cancel),null);
+                    }).setNegativeButton(getActivity().getResources().getString(R.string.update_cancel), null);
                     builder.show();
 
                 }
@@ -182,14 +165,14 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
 
     @Override
     public void checkResponse(Object result) {
-        if(result instanceof VersionResponse){
-            if(((VersionResponse) result).getCode() == 0){
-                if(((VersionResponse) result).getData() != null){
+        if (result instanceof VersionResponse) {
+            if (((VersionResponse) result).getCode() == 0) {
+                if (((VersionResponse) result).getData() != null) {
                     mDataBean = ((VersionResponse) result).getData();
-                    if(Integer.parseInt(((VersionResponse) result).getData().getAppVersionNo())
-                            > getCurrentVersion().versionCode){
+                    if (Integer.parseInt(((VersionResponse) result).getData().getAppVersionNo())
+                            > getCurrentVersion().versionCode) {
                         mInfoAdapter.setVersion(true);
-                    }else{
+                    } else {
                         mInfoAdapter.setVersion(false);
                     }
                 }
@@ -202,7 +185,7 @@ public class MainFragment extends BaseFragment implements CheckVerisonView{
         PackageInfo pi = null;
         PackageManager pm = UIUtils.getContext().getPackageManager();
         try {
-            pi = pm.getPackageInfo(UIUtils.getContext().getPackageName(),PackageManager.GET_CONFIGURATIONS);
+            pi = pm.getPackageInfo(UIUtils.getContext().getPackageName(), PackageManager.GET_CONFIGURATIONS);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }

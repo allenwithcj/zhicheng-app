@@ -23,61 +23,61 @@ import java.util.List;
  * Created by Donson on 2017/1/4.
  */
 
-public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListener {
+public class OfficialPresenterImpl implements OfficialPresenter, ApiCompleteListener {
 
     private OfficialModelImpl mOfficialModelImpl;
     private OfficialView mOfficialView;
     private int start;
 
-    public OfficialPresenterImpl(OfficialView view){
+    public OfficialPresenterImpl(OfficialView view) {
         this.mOfficialView = view;
         this.mOfficialModelImpl = new OfficialModelImpl();
     }
 
     @Override
-    public void loadNoFinish(String j,int start) {
+    public void loadNoFinish(String j, int start) {
         this.start = start;
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mOfficialView.hideProgress();
         }
         mOfficialView.showProgress();
-        mOfficialModelImpl.loadOfficial(j,this);
+        mOfficialModelImpl.loadOfficial(j, this);
     }
 
     @Override
     public void loadDetail(String js) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialModelImpl.loadOfficialDetail(js,this);
+        mOfficialModelImpl.loadOfficialDetail(js, this);
     }
 
     @Override
-    public void loadDynamic(String dyn,int start) {
+    public void loadDynamic(String dyn, int start) {
         this.start = start;
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mOfficialView.hideProgress();
         }
         mOfficialView.showProgress();
-        mOfficialModelImpl.loadOfficialDynamic(dyn,this);
+        mOfficialModelImpl.loadOfficialDynamic(dyn, this);
     }
 
     @Override
-    public void upDynamic(String dyn, List<String> imgs, String jFile,String mLocationSite,String GUID) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+    public void upDynamic(String dyn, List<String> imgs, String jFile, String mLocationSite, String GUID) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialModelImpl.upOfficialDynamic(dyn,imgs,jFile,mLocationSite,GUID,this);
+        mOfficialModelImpl.upOfficialDynamic(dyn, imgs, jFile, mLocationSite, GUID, this);
     }
 
     @Override
-    public void upDeal(List<String> imgs, String jFile, String suggest,OfficialDetailResponse officialDetailResponse,String GUID,String type) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+    public void upDeal(List<String> imgs, String jFile, String suggest, OfficialDetailResponse officialDetailResponse, String GUID, String type) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialModelImpl.upDeal(imgs,jFile,suggest,GUID,officialDetailResponse,type,this);
+        mOfficialModelImpl.upDeal(imgs, jFile, suggest, GUID, officialDetailResponse, type, this);
     }
 
     @Override
@@ -87,51 +87,51 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
 
     @Override
     public void LoadNotice(String n) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mOfficialView.hideProgress();
         }
         mOfficialView.showProgress();
-        mOfficialModelImpl.loadNotice(n,this);
+        mOfficialModelImpl.loadNotice(n, this);
     }
 
     @Override
     public void queryMewsDetail(String js) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialModelImpl.queryNewsDetail(js,this);
+        mOfficialModelImpl.queryNewsDetail(js, this);
     }
 
     @Override
     public void onComplected(Object result) {
-        if (result instanceof OfficialResponse){
-            if (start == 1){
+        if (result instanceof OfficialResponse) {
+            if (start == 1) {
                 mOfficialView.refreshData(result);
-            }else {
+            } else {
                 mOfficialView.addData(result);
             }
         }
-        if (result instanceof OfficialWorkDynamicList){
-            if (start == 1){
+        if (result instanceof OfficialWorkDynamicList) {
+            if (start == 1) {
                 mOfficialView.refreshData(result);
-            }else {
+            } else {
                 mOfficialView.addData(result);
             }
         }
-        if (result instanceof OfficialDetailResponse){
+        if (result instanceof OfficialDetailResponse) {
             mOfficialView.refreshData(result);
         }
-        if (result instanceof OfficialDealResponse){
+        if (result instanceof OfficialDealResponse) {
             mOfficialView.refreshData(result);
         }
-        if (result instanceof CommonResponse){
+        if (result instanceof CommonResponse) {
             mOfficialView.refreshData(result);
         }
-        if (result instanceof NoticeResponse){
+        if (result instanceof NoticeResponse) {
             mOfficialView.refreshData(result);
         }
-        if(result instanceof AnnoucementDetailsResponse){
+        if (result instanceof AnnoucementDetailsResponse) {
             mOfficialView.refreshData(result);
         }
         mOfficialView.hideProgress();
@@ -140,7 +140,7 @@ public class OfficialPresenterImpl implements OfficialPresenter,ApiCompleteListe
     @Override
     public void onFailed(BaseResponse msg) {
         mOfficialView.hideProgress();
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mOfficialView.showMessage(msg.getMsg());

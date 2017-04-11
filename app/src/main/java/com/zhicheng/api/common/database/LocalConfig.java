@@ -9,7 +9,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Donson on 2017/2/14.
  */
 
-public class LocalConfig extends RealmObject{
+public class LocalConfig extends RealmObject {
 
     @PrimaryKey
     private long id;

@@ -64,6 +64,7 @@
         </LinearLayout>
 
         <include layout="@layout/z_line" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -383,7 +384,9 @@
                 android:textSize="@dimen/content_size"
                 android:padding="@dimen/textView_padding" />
         </LinearLayout>
-            <include layout="@layout/z_line" />
+
+        <include layout="@layout/z_line" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

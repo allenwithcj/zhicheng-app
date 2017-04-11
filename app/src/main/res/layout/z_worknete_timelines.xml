@@ -5,6 +5,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <com.library.TimeLineMarker
         android:id="@+id/timeLine"
         android:layout_width="0dp"
@@ -16,7 +17,8 @@
         app:beginLine="@color/navigationColor"
         app:endLine="@color/navigationColor"
         app:markerSize="18dp"
-        app:marker="@drawable/i_cycle"/>
+        app:marker="@drawable/i_cycle" />
+
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -25,39 +27,45 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="6dp"
         app:cardElevation="2dp">
+
         <LinearLayout
             android:id="@+id/item_layout"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/sender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:padding="@dimen/textView_padding"/>
+                    android:padding="@dimen/textView_padding" />
+
                 <TextView
                     android:id="@+id/NoteTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/textView_padding"
                     android:singleLine="true"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_alignParentRight="true" />
 
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
-                android:background="@color/navigationColor"/>
+                android:background="@color/navigationColor" />
+
             <TextView
                 android:id="@+id/mini_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
 
             <TextView
                 android:id="@+id/imagesCount"
@@ -65,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/blue_text"
                 android:gravity="right"
-                android:padding="@dimen/textView_padding"/>
+                android:padding="@dimen/textView_padding" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

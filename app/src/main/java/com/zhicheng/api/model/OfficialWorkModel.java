@@ -12,7 +12,7 @@ public interface OfficialWorkModel {
      */
     void loadWorkDynamic(String work, ApiCompleteListener listener);
 
-    void upWorkDynamic(String work,ApiCompleteListener listener);
+    void upWorkDynamic(String work, ApiCompleteListener listener);
 
     void cancelLoading();
 }

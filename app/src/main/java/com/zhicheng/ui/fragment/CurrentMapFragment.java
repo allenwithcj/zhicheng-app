@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -37,7 +38,7 @@ import java.util.List;
  * Created by Donson on 2017/2/27.
  */
 
-public class CurrentMapFragment extends BaseFragment{
+public class CurrentMapFragment extends BaseFragment {
 
     private MapView mMapView;
     private BaiduMap mBaiduMap;//地图管理器
@@ -48,8 +49,9 @@ public class CurrentMapFragment extends BaseFragment{
     //定位信息
     private LocationClient mLocationClient = null;
     private LocationListener mLocation;
+    private TextView title_name;
 
-    public static CurrentMapFragment newInstance(){
+    public static CurrentMapFragment newInstance() {
         CurrentMapFragment fragment = new CurrentMapFragment();
 
         return fragment;
@@ -57,14 +59,15 @@ public class CurrentMapFragment extends BaseFragment{
 
     @Override
     protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.activity_main_current_map,container,false);
+        mRootView = inflater.inflate(R.layout.activity_main_current_map, container, false);
     }
 
     @Override
     protected void initEvents() {
         PermissionUtils.requestLocationPermission(getActivity());
+        title_name = (TextView)mRootView.findViewById(R.id.title_name);
         mMapView = (MapView) mRootView.findViewById(R.id.map);
-        request_location = (ImageButton)mRootView.findViewById(R.id.request_location);
+        request_location = (ImageButton) mRootView.findViewById(R.id.request_location);
         mBaiduMap = mMapView.getMap();
         mBaiduMap.setMyLocationEnabled(true);
         mLocationClient = new LocationClient(getContext());
@@ -76,12 +79,14 @@ public class CurrentMapFragment extends BaseFragment{
         //mark覆盖物拖拽监听器
         mBaiduMap.setOnMarkerDragListener(new MyOnMarkerDragListener());
 
+        title_name.setText(getResources().getString(R.string.map));
+
         request_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mLocationClient != null && mLocationClient.isStarted()){
+                if (mLocationClient != null && mLocationClient.isStarted()) {
                     mLocationClient.requestLocation();
-                }else if(mLocationClient != null && !mLocationClient.isStarted()){
+                } else if (mLocationClient != null && !mLocationClient.isStarted()) {
                     mLocationClient.start();
                 }
             }
@@ -92,9 +97,9 @@ public class CurrentMapFragment extends BaseFragment{
 
     @Override
     protected void initData(boolean isSavedNull) {
-        if(mLocationClient !=null && mLocationClient.isStarted()){
+        if (mLocationClient != null && mLocationClient.isStarted()) {
             mLocationClient.requestLocation();
-        }else if(mLocationClient !=null && !mLocationClient.isStarted()){
+        } else if (mLocationClient != null && !mLocationClient.isStarted()) {
             mLocationClient.start();
         }
 
@@ -115,7 +120,7 @@ public class CurrentMapFragment extends BaseFragment{
 
             if (isFirst) {
                 //isFirst = false;
-                mLatLng = new LatLng(bdLocation.getLatitude(),bdLocation.getLongitude());
+                mLatLng = new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude());
                 mBaiduMap.clear();
                 mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(mLatLng));
                 //添加覆盖物
@@ -126,9 +131,9 @@ public class CurrentMapFragment extends BaseFragment{
                         .icon(bitmap)
                         .draggable(true)
                         .animateType(MarkerOptions.MarkerAnimateType.drop);
-                mMarker = (Marker)(mBaiduMap.addOverlay(markerOptions));
+                mMarker = (Marker) (mBaiduMap.addOverlay(markerOptions));
                 setPopupTipsInfo(mMarker);
-                MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newLatLngZoom(mLatLng,18.0f);
+                MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newLatLngZoom(mLatLng, 18.0f);
                 mBaiduMap.animateMapStatus(mapStatusUpdate);
             }
 
@@ -144,7 +149,7 @@ public class CurrentMapFragment extends BaseFragment{
         }
     }
 
-    class MyOnMarkerDragListener implements BaiduMap.OnMarkerDragListener{
+    class MyOnMarkerDragListener implements BaiduMap.OnMarkerDragListener {
 
         @Override
         public void onMarkerDrag(Marker marker) {
@@ -183,11 +188,11 @@ public class CurrentMapFragment extends BaseFragment{
                 ReverseGeoCodeResult.AddressComponent addressComponent = reverseGeoCodeResult.getAddressDetail();
                 StringBuilder sb = new StringBuilder();
                 List<PoiInfo> poiInfos = reverseGeoCodeResult.getPoiList();
-                if(poiInfos != null){
-                    sb.append("\nPoilist size:"+poiInfos.size());
-                    for(PoiInfo p:poiInfos){
-                        sb.append("\n\taddress:"+p.address);
-                        sb.append("name:"+p.name+" postCode:"+p.postCode);
+                if (poiInfos != null) {
+                    sb.append("\nPoilist size:" + poiInfos.size());
+                    for (PoiInfo p : poiInfos) {
+                        sb.append("\n\taddress:" + p.address);
+                        sb.append("name:" + p.name + " postCode:" + p.postCode);
                     }
                 }
                 Button button = new Button(getActivity());
@@ -225,7 +230,7 @@ public class CurrentMapFragment extends BaseFragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mLocationClient.isStarted()){
+        if (mLocationClient.isStarted()) {
             mLocationClient.stop();
         }
         mBaiduMap.clear();

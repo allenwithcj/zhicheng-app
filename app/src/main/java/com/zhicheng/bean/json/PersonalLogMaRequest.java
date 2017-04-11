@@ -46,7 +46,7 @@ public class PersonalLogMaRequest {
             this.namespace = namespace;
         }
 
-        public static class QueryBean{
+        public static class QueryBean {
             private String type;
             private String con;
             private String id;

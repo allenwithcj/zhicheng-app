@@ -34,11 +34,11 @@ public class FractionTranslateLayout extends RelativeLayout {
         super.onSizeChanged(w, h, oldw, oldh);
     }
 
-    public float getFractionX(){
+    public float getFractionX() {
         return fractionX;
     }
 
-    public void setFractionX(float xFraction){
+    public void setFractionX(float xFraction) {
         this.fractionX = xFraction;
         float xFra;
 
@@ -47,16 +47,16 @@ public class FractionTranslateLayout extends RelativeLayout {
         // the layout is off screen to the left, if xFraction is 0, then the
         // layout is exactly on the screen, and if xFraction is 1, then the
         // layout is completely offscreen to the right.
-        if (screenWidth > 0){
+        if (screenWidth > 0) {
             xFra = xFraction * screenWidth;
-        }else {
+        } else {
             xFra = 0;
         }
         setX(xFra);
 
         if (xFraction == 1 || xFraction == -1) {
             setAlpha(0);
-        } else if (xFraction < 1 /* enter */|| xFraction > -1 /* exit */) {
+        } else if (xFraction < 1 /* enter */ || xFraction > -1 /* exit */) {
             if (getAlpha() != 1) {
                 setAlpha(1);
             }

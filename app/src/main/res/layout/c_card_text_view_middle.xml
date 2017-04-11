@@ -38,8 +38,7 @@
             android:padding="@dimen/textView_padding"
             android:textColor="@color/text_color"
             android:gravity="center_vertical"
-            android:text="Hello World"
-            android:id="@+id/text_view_1"/>
+            android:id="@+id/text_view_1" />
 
         <TextView
             android:id="@+id/version_notice"
@@ -50,7 +49,7 @@
             android:textColor="@color/red"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:textSize="@dimen/badge_text_size"/>
+            android:textSize="@dimen/badge_text_size" />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

@@ -25,20 +25,20 @@ import me.codeboy.android.aligntextview.CBAlignTextView;
  */
 
 public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
-    private static final int TYPE_HEADER=0;
-    private static final int TYPE_SHOW_BOX=1;
-    private static final int TYPE_SHOW_CONTENT=2;
-    private static final int TYPE_SHOW_IMAGES=3;
-    private static final int TYPE_SHOW_DEAL=4;
+    private static final int TYPE_HEADER = 0;
+    private static final int TYPE_SHOW_BOX = 1;
+    private static final int TYPE_SHOW_CONTENT = 2;
+    private static final int TYPE_SHOW_IMAGES = 3;
+    private static final int TYPE_SHOW_DEAL = 4;
 
     private OfficialDetailResponse mData;
-    private String[] tags= UIUtils.getContext().getResources().getStringArray(R.array.NoFinishDetail);
-    private String[] tag_last=UIUtils.getContext().getResources().getStringArray(R.array.detail_last);
+    private String[] tags = UIUtils.getContext().getResources().getStringArray(R.array.NoFinishDetail);
+    private String[] tag_last = UIUtils.getContext().getResources().getStringArray(R.array.detail_last);
 
-    public OfficialFinishDetailAdapter(){
+    public OfficialFinishDetailAdapter() {
     }
 
-    public void setData(OfficialDetailResponse data){
+    public void setData(OfficialDetailResponse data) {
         this.mData = data;
         this.notifyDataSetChanged();
     }
@@ -46,20 +46,20 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if (viewType == TYPE_HEADER){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_header,parent,false);
+        if (viewType == TYPE_HEADER) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_header, parent, false);
             return new HeaderViewHolder(view);
-        }else if (viewType == TYPE_SHOW_BOX){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_box,parent,false);
+        } else if (viewType == TYPE_SHOW_BOX) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_box, parent, false);
             return new ShowBoxViewHolder(view);
-        }else if (viewType == TYPE_SHOW_CONTENT){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_content,parent,false);
+        } else if (viewType == TYPE_SHOW_CONTENT) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_content, parent, false);
             return new ShowContentViewHolder(view);
-        }else if (viewType == TYPE_SHOW_IMAGES){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_image,parent,false);
+        } else if (viewType == TYPE_SHOW_IMAGES) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_image, parent, false);
             return new ShowImageViewHolder(view);
-        }else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_deal,parent,false);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_show_deal, parent, false);
             return new ShowDealViewHolder(view);
         }
 
@@ -67,12 +67,12 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (mData != null){
-            if (holder instanceof HeaderViewHolder){
+        if (mData != null) {
+            if (holder instanceof HeaderViewHolder) {
                 ((HeaderViewHolder) holder).NumberId.setText(mData.getIq().getQuery().getTitle());
-                if(mData.getIq().getQuery().getReplies() != null){
+                if (mData.getIq().getQuery().getReplies() != null) {
                     ((HeaderViewHolder) holder).replies.setVisibility(View.VISIBLE);
-                    ((HeaderViewHolder) holder).replies.setText(mData.getIq().getQuery().getReplies().size()+"条回复");
+                    ((HeaderViewHolder) holder).replies.setText(mData.getIq().getQuery().getReplies().size() + "条回复");
                     ((HeaderViewHolder) holder).replies.setOnClickListener(view -> {
                         List<OfficialDetailResponse.IqBean.QueryBean.RepliesBean> mRepliesBeanList = mData.getIq().getQuery().getReplies();
                         Intent intent = new Intent(holder.itemView.getContext(), ReplyActivity.class);
@@ -80,32 +80,32 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         UIUtils.startActivity(intent);
                     });
                 }
-            }else if (holder instanceof ShowBoxViewHolder){
-                switch (position){
+            } else if (holder instanceof ShowBoxViewHolder) {
+                switch (position) {
                     case 1:
-                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
+                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position - 1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getMap().getReportChannel());
                         break;
                     case 2:
-                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
-                        if(mData.getIq().getQuery().getMap().getType() == 1){
+                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position - 1]);
+                        if (mData.getIq().getQuery().getMap().getType() == 1) {
                             ((ShowBoxViewHolder) holder).tagContent.setText("立案核实");
-                        }else if(mData.getIq().getQuery().getMap().getType() == 2){
+                        } else if (mData.getIq().getQuery().getMap().getType() == 2) {
                             ((ShowBoxViewHolder) holder).tagContent.setText("事件处置");
-                        }else if(mData.getIq().getQuery().getMap().getType() == 3){
+                        } else if (mData.getIq().getQuery().getMap().getType() == 3) {
                             ((ShowBoxViewHolder) holder).tagContent.setText("结案核实");
                         }
                         break;
                     case 3:
-                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
+                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position - 1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendUser());
                         break;
                     case 4:
-                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
+                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position - 1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText("手机号码");
                         break;
                     case 5:
-                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position-1]);
+                        ((ShowBoxViewHolder) holder).tagName.setText(tags[position - 1]);
                         ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getSendTime());
                         break;
                     case 6:
@@ -120,67 +120,67 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                         ((ShowBoxViewHolder) holder).tagName.setText(tag_last[2]);
                         break;
                 }
-            }else if (holder instanceof ShowContentViewHolder){
+            } else if (holder instanceof ShowContentViewHolder) {
                 ((ShowContentViewHolder) holder).tagContentName.setText(tags[5]);
                 ((ShowContentViewHolder) holder).tagBaoContent.setText(mData.getIq().getQuery().getMap().getEventDescription());
-            }else if (holder instanceof ShowImageViewHolder){
+            } else if (holder instanceof ShowImageViewHolder) {
                 ((ShowImageViewHolder) holder).tagImage.setText(tags[6]);
                 int images = mData.getIq().getQuery().getAttachments().size();
-                if(images != 0){
-                    if(images == 1){
+                if (images != 0) {
+                    if (images == 1) {
                         Glide.with(holder.itemView.getContext())
-                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(0).getHref())
                                 .placeholder(R.drawable.glide_loading)
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
-                    }else if(images == 2){
+                    } else if (images == 2) {
                         Glide.with(holder.itemView.getContext())
-                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(0).getHref())
                                 .placeholder(R.drawable.glide_loading)
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
                         Glide.with(holder.itemView.getContext())
-                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(1).getHref())
                                 .placeholder(R.drawable.glide_loading)
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img2);
-                    }else if(images == 3){
+                    } else if (images == 3) {
                         Glide.with(holder.itemView.getContext())
-                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(0).getHref())
                                 .placeholder(R.drawable.glide_loading)
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
                         Glide.with(holder.itemView.getContext())
-                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(1).getHref())
                                 .placeholder(R.drawable.glide_loading)
                                 .error(R.drawable.glide_failed)
                                 .centerCrop()
                                 .into(((ShowImageViewHolder) holder).img2);
                         Glide.with(holder.itemView.getContext())
-                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(2).getHref())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(2).getHref())
                                 .placeholder(R.drawable.glide_loading)
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img3);
-                    }else{
+                    } else {
                         Glide.with(holder.itemView.getContext())
-                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(0).getHref())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(0).getHref())
                                 .placeholder(R.drawable.glide_loading)
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
                         Glide.with(holder.itemView.getContext())
-                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(1).getHref())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(1).getHref())
                                 .placeholder(R.drawable.glide_loading)
                                 .error(R.drawable.glide_failed)
                                 .centerCrop()
                                 .into(((ShowImageViewHolder) holder).img2);
                         Glide.with(holder.itemView.getContext())
-                                .load(URL.HOST_URL_SERVER_ZHICHENG+mData.getIq().getQuery().getAttachments().get(2).getHref())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(2).getHref())
                                 .placeholder(R.drawable.glide_loading)
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
@@ -188,36 +188,35 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
                     }
 
                 }
-            }else if (holder instanceof ShowDealViewHolder) {
+            } else if (holder instanceof ShowDealViewHolder) {
                 String mFlowStatus = mData.getIq().getQuery().getMap().getFlowStatus();
-                    if(mFlowStatus.equals("1")){
-                        ((ShowDealViewHolder) holder).Bao.setText(null);
-                        ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Accept.setText(null);
-                        ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Deal.setText("办理中...");
-                        ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                    }else if(mFlowStatus.equals("2")){
-                        String mStartTime = mData.getIq().getQuery().getMap().getFlowStartTime();
-                        if(!mStartTime.equals("")){
-                            ((ShowDealViewHolder) holder).Bao.setText(mStartTime.substring(0,mStartTime.length()-2));
-                        }else{
-                            ((ShowDealViewHolder) holder).Bao.setText("");
-                        }
-                        ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Accept.setText(null);
-                        ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        ((ShowDealViewHolder) holder).Deal.setText(null);
-                        ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                        String mEndTime = mData.getIq().getQuery().getMap().getFlowEndTime();
-                        if (!mEndTime.equals("")){
-                            ((ShowDealViewHolder) holder).Complete.setText(mEndTime.substring(0,mEndTime.length()-2));
-                        }else {
-                            ((ShowDealViewHolder) holder).Complete.setText("");
-                        }
-                        ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                if (mFlowStatus.equals("1")) {
+                    ((ShowDealViewHolder) holder).Bao.setText(null);
+                    ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Accept.setText(null);
+                    ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Deal.setText("办理中...");
+                    ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                } else if (mFlowStatus.equals("2")) {
+                    String mStartTime = mData.getIq().getQuery().getMap().getFlowStartTime();
+                    if (!mStartTime.equals("")) {
+                        ((ShowDealViewHolder) holder).Bao.setText(mStartTime.substring(0, mStartTime.length() - 2));
+                    } else {
+                        ((ShowDealViewHolder) holder).Bao.setText("");
                     }
-
+                    ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Accept.setText(null);
+                    ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    ((ShowDealViewHolder) holder).Deal.setText(null);
+                    ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                    String mEndTime = mData.getIq().getQuery().getMap().getFlowEndTime();
+                    if (!mEndTime.equals("")) {
+                        ((ShowDealViewHolder) holder).Complete.setText(mEndTime.substring(0, mEndTime.length() - 2));
+                    } else {
+                        ((ShowDealViewHolder) holder).Complete.setText("");
+                    }
+                    ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
+                }
 
 
             }
@@ -231,17 +230,17 @@ public class OfficialFinishDetailAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if(position==0){
+        if (position == 0) {
             return TYPE_HEADER;
-        }else if(position>0 && position<6){
+        } else if (position > 0 && position < 6) {
             return TYPE_SHOW_BOX;
-        }else if(position==6){
+        } else if (position == 6) {
             return TYPE_SHOW_CONTENT;
-        }else if(position==7){
+        } else if (position == 7) {
             return TYPE_SHOW_IMAGES;
-        }else if(position>7 && position<getItemCount()-1){
+        } else if (position > 7 && position < getItemCount() - 1) {
             return TYPE_SHOW_BOX;
-        }else{
+        } else {
             return TYPE_SHOW_DEAL;
         }
 

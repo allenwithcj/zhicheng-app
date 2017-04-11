@@ -19,18 +19,19 @@ import com.zhicheng.ui.adapter.OfficialFinishDetailAdapter;
  * Created by IBM on 2017/2/10.
  */
 
-public class OfficialFinishDetail extends BaseActivity implements OfficialView{
+public class OfficialFinishDetail extends BaseActivity implements OfficialView {
     private RecyclerView mRecyclerView;
     private OfficialFinishDetailAdapter mAdapter;
     private OfficialPresenterImpl mOfficialDetail;
     private ViewGroup parentView;
+
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_selectimg);
         parentView = (ViewGroup) findViewById(android.R.id.content).getRootView();
-        mRecyclerView=(RecyclerView)findViewById(R.id.mRecycleView);
+        mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter=new OfficialFinishDetailAdapter();
+        mAdapter = new OfficialFinishDetailAdapter();
         mRecyclerView.setAdapter(mAdapter);
         mOfficialDetail = new OfficialPresenterImpl(this);
         mToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_action_clear));
@@ -60,7 +61,7 @@ public class OfficialFinishDetail extends BaseActivity implements OfficialView{
 
     @Override
     public void showMessage(String msg) {
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -75,8 +76,8 @@ public class OfficialFinishDetail extends BaseActivity implements OfficialView{
 
     @Override
     public void refreshData(Object result) {
-        if (result instanceof OfficialDetailResponse){
-            BaseApplication.log_say(TAG,((OfficialDetailResponse) result).getIq().getQuery().getContent());
+        if (result instanceof OfficialDetailResponse) {
+            BaseApplication.log_say(TAG, ((OfficialDetailResponse) result).getIq().getQuery().getContent());
             mAdapter.setData((OfficialDetailResponse) result);
         }
     }

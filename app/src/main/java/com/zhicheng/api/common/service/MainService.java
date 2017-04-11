@@ -24,6 +24,7 @@ import rx.Observable;
 public interface MainService {
     @GET("api.php")
     Observable<Response<BaseResponse>> getPersonal(@Query("personal") String personal);
+
     //首页
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")
@@ -35,11 +36,11 @@ public interface MainService {
 
     @Multipart
     @POST("/servlet/uploadAttachmentServlet")
-    Observable<Response<CommonResponse>> UpSimpleFile(@Part("json")RequestBody rBody,@Part("file")MultipartBody body);
+    Observable<Response<CommonResponse>> UpSimpleFile(@Part("json") RequestBody rBody, @Part("file") MultipartBody body);
 
     @Multipart
     @POST("/servlet/uploadAttachmentServlet")
-    Observable<Response<CommonResponse>> UpFile(@Part("json")RequestBody rBody,@Part("file")MultipartBody body);
+    Observable<Response<CommonResponse>> UpFile(@Part("json") RequestBody rBody, @Part("file") MultipartBody body);
 
     //表单处理出口列表请求
     @FormUrlEncoded

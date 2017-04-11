@@ -32,7 +32,7 @@ public class AnimationUtils {
      * @param mWindow
      * @param bgColor 背景明暗程度
      */
-    public static void darkBackgroundColor(Window mWindow, Float bgColor){
+    public static void darkBackgroundColor(Window mWindow, Float bgColor) {
         WindowManager.LayoutParams lp = mWindow.getAttributes();
         lp.alpha = bgColor;
         mWindow.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);

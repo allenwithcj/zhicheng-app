@@ -4,7 +4,7 @@ package com.zhicheng.bean.http;
  * Created by Donson on 2017/2/14.
  */
 
-public class LoginResponse{
+public class LoginResponse {
 
     /**
      * iq : {"namespace":"LoginResponse","query":{"userID":"7494","userName":"叶思阳","department":"雉城指挥中心","userPost":"镇街受理员","headUrl":"/UserUploadFile/photo/photo.png&isMobile=true","logoUrl":"","feVersion":"65","errorCode":"0","errorMessage":"登陆成功","accessToken":"5b7610a6e5475410f76ca3d6fa6181f2","imid":"","imtoken":""}}

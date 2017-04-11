@@ -19,7 +19,6 @@ import java.util.List;
 
 /**
  * Created by Donson on 2017/1/19.
- *
  */
 
 public class WorkNoteAdapter extends RecyclerView.Adapter {
@@ -68,15 +67,15 @@ public class WorkNoteAdapter extends RecyclerView.Adapter {
             ((WorkNoteViewHolder) holder).mSender.setText(prelogsBeen.get(position).getCd03());
             ((WorkNoteViewHolder) holder).mMiniContent.setText(prelogsBeen.get(position).getCd02());
             if (prelogsBeen.get(position).getCd04() != null) {
-                if(prelogsBeen.get(position).getCd04().size() != 0){
+                if (prelogsBeen.get(position).getCd04().size() != 0) {
                     ((WorkNoteViewHolder) holder).mImagesConts
-                            .setText(prelogsBeen.get(position).getCd04().size()+"张图片 >");
+                            .setText(prelogsBeen.get(position).getCd04().size() + "张图片 >");
                 }
             }
             ((WorkNoteViewHolder) holder).mItemLayout.setOnClickListener(view -> {
                 Intent intent = new Intent(holder.itemView.getContext(), WorkNodeDetail.class);
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("prelogsBeen",prelogsBeen.get(position));
+                bundle.putParcelable("prelogsBeen", prelogsBeen.get(position));
                 intent.putExtras(bundle);
                 UIUtils.startActivity(intent);
             });

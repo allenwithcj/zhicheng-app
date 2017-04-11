@@ -42,36 +42,36 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
 
     private List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> mOfficialDynamicDetail;
 
-    public OfficialDynamicAdapter(){
+    public OfficialDynamicAdapter() {
         mOfficialDynamicDetail = new ArrayList<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean>();
     }
 
-    public OfficialDynamicAdapter(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> mOfficialDynamicDetail){
+    public OfficialDynamicAdapter(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> mOfficialDynamicDetail) {
         this.mOfficialDynamicDetail = mOfficialDynamicDetail;
     }
 
-    public void addDataList(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> data){
+    public void addDataList(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> data) {
         int page = data.size();
         this.mOfficialDynamicDetail.addAll(data);
-        this.notifyItemRangeInserted(page,data.size());
+        this.notifyItemRangeInserted(page, data.size());
     }
 
-    public void setDataList(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> mData){
+    public void setDataList(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> mData) {
         this.mOfficialDynamicDetail = mData;
         this.notifyDataSetChanged();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_official_dynamic,parent,false);
+        View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_official_dynamic, parent, false);
         return new OfficialDynamicHolder(root);
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
-        if (holder instanceof OfficialDynamicHolder){
-            if (mOfficialDynamicDetail.get(position).getIMG() != null){
+        if (holder instanceof OfficialDynamicHolder) {
+            if (mOfficialDynamicDetail.get(position).getIMG() != null) {
                 Glide.with(holder.itemView.getContext())
                         .load(R.drawable.profle)
                         .into(((OfficialDynamicHolder) holder).img);
@@ -80,42 +80,42 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
             ((OfficialDynamicHolder) holder).content.setText(mOfficialDynamicDetail.get(position).getCOUNT());
             ((OfficialDynamicHolder) holder).location.setText(mOfficialDynamicDetail.get(position).getLOCATION());
             String sendTime = mOfficialDynamicDetail.get(position).getDATETIME();
-            if(!TextUtils.isEmpty(sendTime)){
-                ((OfficialDynamicHolder) holder).time.setText(sendTime.substring(0,sendTime.length()-2));
+            if (!TextUtils.isEmpty(sendTime)) {
+                ((OfficialDynamicHolder) holder).time.setText(sendTime.substring(0, sendTime.length() - 2));
             }
             ((OfficialDynamicHolder) holder).more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int[] location = new int[2];
                     v.getLocationOnScreen(location);
-                    if (mPop != null){
+                    if (mPop != null) {
                         mPop.dismiss();
                         mPop = null;
                     }
-                    if (pop_view == null){
-                        pop_view = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.item_popwindow_official,null);
+                    if (pop_view == null) {
+                        pop_view = LayoutInflater.from(holder.itemView.getContext()).inflate(R.layout.item_popwindow_official, null);
                     }
-                    mPop = new PopupWindow(pop_view,280,80,true);
+                    mPop = new PopupWindow(pop_view, 280, 80, true);
                     mPop.setAnimationStyle(R.anim.popup_enter);
                     pop_view.setOnTouchListener((v1, event) -> {
-                        if (mPop != null && mPop.isShowing()){
+                        if (mPop != null && mPop.isShowing()) {
                             mPop.dismiss();
                             mPop = null;
                         }
                         return false;
                     });
-                    mPop.showAtLocation(v, Gravity.NO_GRAVITY,location[0]-mPop.getWidth()-20,location[1]-20);
-                    if (praise == null || comment == null){
+                    mPop.showAtLocation(v, Gravity.NO_GRAVITY, location[0] - mPop.getWidth() - 20, location[1] - 20);
+                    if (praise == null || comment == null) {
                         praise = (TextView) pop_view.findViewById(R.id.praise);
                         comment = (TextView) pop_view.findViewById(R.id.comment);
                     }
                     praise.setOnClickListener(v1 -> {
-                        Snackbar.make(holder.itemView,"赞",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(holder.itemView, "赞", Snackbar.LENGTH_SHORT).show();
                         //处理过程
                         mPop.dismiss();
                     });
                     comment.setOnClickListener(v1 -> {
-                        Snackbar.make(holder.itemView,"评论",Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(holder.itemView, "评论", Snackbar.LENGTH_SHORT).show();
                         //处理过程
                         mPop.dismiss();
                     });
@@ -150,36 +150,36 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
             location = (TextView) itemView.findViewById(R.id.location);
             time = (TextView) itemView.findViewById(R.id.time);
             more = (ImageButton) itemView.findViewById(R.id.more);
-            GridLayoutManager mGridLayoutManager = new GridLayoutManager(itemView.getContext(),3);
+            GridLayoutManager mGridLayoutManager = new GridLayoutManager(itemView.getContext(), 3);
             mImageRecycler.setLayoutManager(mGridLayoutManager);
         }
     }
 
-    private class ImageRecyclerAdapter extends RecyclerView.Adapter{
+    private class ImageRecyclerAdapter extends RecyclerView.Adapter {
 
         List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean.IMGBean> imgs;
 
-        ImageRecyclerAdapter(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean.IMGBean> imgs){
+        ImageRecyclerAdapter(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean.IMGBean> imgs) {
             this.imgs = imgs;
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view,parent,false);
+            View root = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view, parent, false);
             return new imgViewHolder(root);
         }
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-            if (holder instanceof imgViewHolder){
+            if (holder instanceof imgViewHolder) {
                 Glide.with(holder.itemView.getContext())
-                        .load(URL.HOST_URL_SERVER_ZHICHENG+imgs.get(position).getHref())
+                        .load(URL.HOST_URL_SERVER_ZHICHENG + imgs.get(position).getHref())
                         .placeholder(R.drawable.glide_loading)
                         .error(R.drawable.glide_failed)
                         .into(((imgViewHolder) holder).mImageView);
                 ArrayList<String> paths = new ArrayList<String>();
-                for(int i = 0;i<imgs.size();i++){
-                    paths.add(URL.HOST_URL_SERVER_ZHICHENG+imgs.get(i).getHref());
+                for (int i = 0; i < imgs.size(); i++) {
+                    paths.add(URL.HOST_URL_SERVER_ZHICHENG + imgs.get(i).getHref());
                 }
                 ((imgViewHolder) holder).mImageView.setOnClickListener(view -> {
                     PhotoPicker.preview()
@@ -192,13 +192,13 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
 
         @Override
         public int getItemCount() {
-            if (imgs.size() > 9){
+            if (imgs.size() > 9) {
                 return 9;
             }
             return imgs.size();
         }
 
-        class imgViewHolder extends RecyclerView.ViewHolder{
+        class imgViewHolder extends RecyclerView.ViewHolder {
 
             private ImageView mImageView;
 

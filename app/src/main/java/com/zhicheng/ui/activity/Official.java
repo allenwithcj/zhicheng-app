@@ -25,7 +25,7 @@ import java.util.List;
  * Created by Donson on 2017/1/4.
  */
 
-public class Official extends BaseActivity implements OfficialView,SwipeRefreshLayout.OnRefreshListener{
+public class Official extends BaseActivity implements OfficialView, SwipeRefreshLayout.OnRefreshListener {
 
     private int start;
 
@@ -64,7 +64,7 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
 
     @Override
     public void showMessage(String msg) {
-        Toast.makeText(UIUtils.getContext(),msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(UIUtils.getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -79,16 +79,16 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
 
     @Override
     public void refreshData(Object result) {
-        if (result instanceof OfficialResponse){
-            if(((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+        if (result instanceof OfficialResponse) {
+            if (((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 mNoFinishAdapter.setDataList(((OfficialResponse) result).getIq().getQuery().getTable());
                 int num = ((OfficialResponse) result).getIq().getQuery().getTotalNums();
-                if (num != 0){
-                    mToolbar.setTitle("待办事项("+num+")");
-                }else {
+                if (num != 0) {
+                    mToolbar.setTitle("待办事项(" + num + ")");
+                } else {
                     mToolbar.setTitle("待办事项(0)");
                 }
-            }else{
+            } else {
                 showMessage(((OfficialResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
@@ -96,18 +96,18 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
 
     @Override
     public void addData(Object result) {
-        if (result instanceof OfficialResponse){
-            if(((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+        if (result instanceof OfficialResponse) {
+            if (((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 mNoFinishAdapter.addDataList(((OfficialResponse) result).getIq().getQuery().getTable());
-            }else{
+            } else {
                 showMessage(((OfficialResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
     }
 
-    public void onLoadMore(){
+    public void onLoadMore() {
         String strEntity = createObj(start);
-        mOfficialPresenterImpl.loadNoFinish(strEntity,start);
+        mOfficialPresenterImpl.loadNoFinish(strEntity, start);
         start++;
     }
 
@@ -115,11 +115,11 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
     public void onRefresh() {
         start = 1;
         String strEntity = createObj(start);
-        mOfficialPresenterImpl.loadNoFinish(strEntity,start);
+        mOfficialPresenterImpl.loadNoFinish(strEntity, start);
         start++;
     }
 
-    private String createObj(int page){
+    private String createObj(int page) {
         Gson gson = new Gson();
         OfficialRequest officialRequest = new OfficialRequest();
         OfficialRequest.IqBean iqb = new OfficialRequest.IqBean();
@@ -138,43 +138,43 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
     }
 
 
-    private class NoFinishAdapter extends RecyclerView.Adapter{
+    private class NoFinishAdapter extends RecyclerView.Adapter {
 
         private List<List<OfficialResponse.IqBean.QueryBean.TableBean.TableRowsBean>> data;
-        private String[] tag = {"编号:","描述:","发起时间:"};
+        private String[] tag = {"编号:", "描述:", "发起时间:"};
 
-        public NoFinishAdapter(){
+        public NoFinishAdapter() {
 
         }
 
-        public void addDataList(OfficialResponse.IqBean.QueryBean.TableBean data){
+        public void addDataList(OfficialResponse.IqBean.QueryBean.TableBean data) {
             int page = this.data.size();
             this.data.addAll(data.getTableRows());
-            this.notifyItemRangeInserted(page,data.getTableRows().size());
+            this.notifyItemRangeInserted(page, data.getTableRows().size());
         }
 
-        public void setDataList(OfficialResponse.IqBean.QueryBean.TableBean data){
+        public void setDataList(OfficialResponse.IqBean.QueryBean.TableBean data) {
             this.data = data.getTableRows();
             this.notifyDataSetChanged();
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(Official.this).inflate(R.layout.activity_home_nofinsh,parent,false);
+            View view = LayoutInflater.from(Official.this).inflate(R.layout.activity_home_nofinsh, parent, false);
             return new noFinishViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-            if (holder instanceof noFinishViewHolder){
-                if (data != null){
-                    ((noFinishViewHolder) holder).NumberId.setText(tag[0]+data.get(position).get(1).getValue());
-                    ((noFinishViewHolder) holder).desc.setText(tag[1]+data.get(position).get(4).getValue());
-                    ((noFinishViewHolder) holder).deal.setText(tag[2]+data.get(position).get(3).getValue());
+            if (holder instanceof noFinishViewHolder) {
+                if (data != null) {
+                    ((noFinishViewHolder) holder).NumberId.setText(tag[0] + data.get(position).get(1).getValue());
+                    ((noFinishViewHolder) holder).desc.setText(tag[1] + data.get(position).get(4).getValue());
+                    ((noFinishViewHolder) holder).deal.setText(tag[2] + data.get(position).get(3).getValue());
                     ((noFinishViewHolder) holder).noSuc.setOnClickListener(v -> {
-                        Intent intent = new Intent(UIUtils.getContext(),OfficialNoFinishDetails.class);
-                        intent.putExtra("detailId",data.get(position).get(0).getValue());
-                        intent.putExtra("type","nofinish");
+                        Intent intent = new Intent(UIUtils.getContext(), OfficialNoFinishDetails.class);
+                        intent.putExtra("detailId", data.get(position).get(0).getValue());
+                        intent.putExtra("type", "nofinish");
                         UIUtils.startActivity(intent);
                     });
                 }
@@ -183,7 +183,7 @@ public class Official extends BaseActivity implements OfficialView,SwipeRefreshL
 
         @Override
         public int getItemCount() {
-            if (data != null){
+            if (data != null) {
                 return data.size();
             }
             return 0;

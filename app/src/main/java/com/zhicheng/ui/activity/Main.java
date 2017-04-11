@@ -3,7 +3,6 @@ package com.zhicheng.ui.activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.content.res.AppCompatResources;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,79 +35,33 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
 
     @InjectView(R.id.bottomNavigationBar)
     private NoTouchBottomButton mBottomNavigation;
-    private BaseFragment currentFragment;
     private FragmentManager mFragmentManager = getSupportFragmentManager();
     private HomeFragment mHomeFragment;
     private CurrentMapFragment mCurrentMapFragment;
     private MyNewsFragment mMyNewsFragment;
     private MainFragment mMainFragment;
     private PopupWindow mPopupWindow;
-//    private String newsCount;
     private BadgeItem badgeItem;
-//    private DatabaseHelper mData;
 
     private OfficialPresenterImpl mOfficialPresenterImpl;
     private int start;
 
-//    private BroadcastReceiver receiver = new BroadcastReceiver(){
-//
-//        @Override
-//        public void onReceive(Context context, Intent intent) {
-//            if (intent.getAction().equals("com.news.count.action")){
-//                newsCount = intent.getStringExtra("news");
-//                mData = new DatabaseHelper();
-//                if(mData.getLocalConfig().getUserPost().contains("领导") ||
-//                        mData.getLocalConfig().getUserPost().equals("镇街单位业务员") ||
-//                        mData.getLocalConfig().getUserPost().equals("镇街受理员")){
-//                    if(!newsCount.equals("0") && newsCount != null){
-//                        badgeItem.setHideOnSelect(false)
-//                                .setText(newsCount)
-//                                .setBackgroundColorResource(R.color.red)
-//                                .setBorderWidth(0)
-//                                .show();
-//                    }else{
-//                        badgeItem.hide();
-//                    }
-//                }else{
-//                    badgeItem.hide();
-//                }
-//            }
-//        }
-//    };
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//        PgyCrashManager.register(this);
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction("com.news.count.action");
-//        registerReceiver(receiver,intentFilter);
-//        badgeItem = new BadgeItem();
-//        initBottomNavigationBar();
-//        if (mFragmentManager == null){
-//            mFragmentManager = getSupportFragmentManager();
-//        }
-//        mToolbar.setNavigationIcon(AppCompatResources.getDrawable(this,R.drawable.ic_action_add));
-//        BaseApplication.checkLogin();
-//        PermissionUtils.requestStoragePermission(this);
-//    }
-
-    private void initBottomNavigationBar(){
+    private void initBottomNavigationBar() {
         mBottomNavigation.setMode(BottomNavigationBar.MODE_FIXED);
         mBottomNavigation.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC);
         mBottomNavigation.setInActiveColor(R.color.navigationColor);
-        mBottomNavigation.setActiveColor(R.color.pridark);
+        mBottomNavigation.setActiveColor(R.color.red);
         badgeItem.hide();
         mBottomNavigation
-                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_home,"首页"))
-                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_map,"地图"))
-                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_report,"爆料"))
-                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_contact,"消息")
-                    .setBadgeItem(badgeItem))
-                    .addItem(new BottomNavigationItem(R.drawable.ic_navigation_info,"我的"))
-                    .setFirstSelectedPosition(0)
-                    .initialise();
+                .addItem(new BottomNavigationItem(R.drawable.nav_home, getResources().getString(R.string.homepage)))
+                .addItem(new BottomNavigationItem(R.drawable.nav_map, getResources().getString(R.string.map)))
+                .addItem(new BottomNavigationItem(R.drawable.nav_brokethenews, getResources().getString(R.string.baoliao)))
+                .addItem(new BottomNavigationItem(R.drawable.nav_notification, getResources().getString(R.string.news))
+                        .setBadgeItem(badgeItem))
+                .addItem(new BottomNavigationItem(R.drawable.nav_mine, getResources().getString(R.string.mine)))
+                .setFirstSelectedPosition(0)
+                .initialise();
         setDefaultFragment();
         mBottomNavigation.setTabSelectedListener(this);
     }
@@ -119,14 +72,12 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
         PgyCrashManager.register(this);
         badgeItem = new BadgeItem();
         initBottomNavigationBar();
-        if (mFragmentManager == null){
+        if (mFragmentManager == null) {
             mFragmentManager = getSupportFragmentManager();
         }
-        mToolbar.setNavigationIcon(AppCompatResources.getDrawable(this,R.drawable.ic_action_add));
         BaseApplication.checkLogin();
         PermissionUtils.requestStoragePermission(this);
     }
-
 
 
     @Override
@@ -135,7 +86,7 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
     }
 
 
-    private String createObj(int page){
+    private String createObj(int page) {
         Gson gson = new Gson();
         OfficialRequest officialRequest = new OfficialRequest();
         OfficialRequest.IqBean iqb = new OfficialRequest.IqBean();
@@ -153,55 +104,41 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
         return gson.toJson(officialRequest);
     }
 
-    private void setDefaultFragment(){
+    private void setDefaultFragment() {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         hideAllFragments(ft);
         mHomeFragment = HomeFragment.newInstance();
-        ft.add(R.id.main_content,mHomeFragment);
+        ft.add(R.id.main_content, mHomeFragment);
         ft.commit();
     }
 
-    private void hideAllFragments(FragmentTransaction ft){
-        if (mHomeFragment != null){
+    private void hideAllFragments(FragmentTransaction ft) {
+        if (mHomeFragment != null) {
             ft.hide(mHomeFragment);
         }
-        if (mCurrentMapFragment != null){
+        if (mCurrentMapFragment != null) {
             ft.hide(mCurrentMapFragment);
         }
-        if (mMyNewsFragment != null){
+        if (mMyNewsFragment != null) {
             ft.hide(mMyNewsFragment);
         }
-        if (mMainFragment != null){
+        if (mMainFragment != null) {
             ft.hide(mMainFragment);
         }
     }
 
-    @Override
-    protected int getMenuID() {
-        return R.menu.menu_empty;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        int menuId = getMenuID();
-        getMenuInflater().inflate(menuId, menu);
-//        currentFragment.onCreateOptionsMenu(menu, getMenuInflater());
-        mToolbar.setTitle("");
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home){
-            mBottomNavigation.selectTab(2,true);
+        if (id == android.R.id.home) {
+            mBottomNavigation.selectTab(2, true);
             return true;
         }
-        if (id == R.id.action_location){
-            UIUtils.startActivity(new Intent(this,LcationMapTEST.class));
+        if (id == R.id.action_location) {
+            UIUtils.startActivity(new Intent(this, LcationMapTEST.class));
             return true;
         }
-//        currentFragment.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
 
@@ -209,20 +146,20 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
     public void onTabSelected(int position) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         hideAllFragments(ft);
-        switch (position){
+        switch (position) {
             case 0:
-                if (mHomeFragment == null){
+                if (mHomeFragment == null) {
                     mHomeFragment = HomeFragment.newInstance();
-                    ft.add(R.id.main_content,mHomeFragment);
-                }else {
+                    ft.add(R.id.main_content, mHomeFragment);
+                } else {
                     ft.show(mHomeFragment);
                 }
                 break;
             case 1:
-                if (mCurrentMapFragment == null){
+                if (mCurrentMapFragment == null) {
                     mCurrentMapFragment = CurrentMapFragment.newInstance();
-                    ft.add(R.id.main_content,mCurrentMapFragment);
-                }else {
+                    ft.add(R.id.main_content, mCurrentMapFragment);
+                } else {
                     ft.show(mCurrentMapFragment);
                 }
                 break;
@@ -260,23 +197,23 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
 //                });
 //                mPopupWindow.showAtLocation(parentView, Gravity.CENTER,0,0);
 //                AnimationUtils.darkBackgroundColor(getWindow(),0.4f);
-                Intent intent = new Intent(Main.this,IneedActivity.class);
-                intent.putExtra("upType","common");
-                startActivityForResult(intent,0);
+                Intent intent = new Intent(Main.this, IneedActivity.class);
+                intent.putExtra("upType", "common");
+                startActivityForResult(intent, 0);
                 break;
             case 3:
-                if (mMyNewsFragment == null){
+                if (mMyNewsFragment == null) {
                     mMyNewsFragment = MyNewsFragment.newInstance();
                     ft.add(R.id.main_content, mMyNewsFragment);
-                }else {
+                } else {
                     ft.show(mMyNewsFragment);
                 }
                 break;
             case 4:
-                if (mMainFragment == null){
+                if (mMainFragment == null) {
                     mMainFragment = MainFragment.newInstance();
-                    ft.add(R.id.main_content,mMainFragment);
-                }else {
+                    ft.add(R.id.main_content, mMainFragment);
+                } else {
                     ft.show(mMainFragment);
                 }
                 break;
@@ -287,7 +224,7 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
     @Override
     protected void onPause() {
         super.onPause();
-        if (mPopupWindow != null && mPopupWindow.isShowing()){
+        if (mPopupWindow != null && mPopupWindow.isShowing()) {
             mPopupWindow.dismiss();
             mPopupWindow = null;
         }
@@ -306,14 +243,14 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 200){
+        if (resultCode == 200) {
             mBottomNavigation.selectTab(0);
             FragmentTransaction ft = mFragmentManager.beginTransaction();
             hideAllFragments(ft);
-            if (mHomeFragment == null){
+            if (mHomeFragment == null) {
                 mHomeFragment = HomeFragment.newInstance();
-                ft.add(R.id.main_content,mHomeFragment);
-            }else {
+                ft.add(R.id.main_content, mHomeFragment);
+            } else {
                 ft.show(mHomeFragment);
             }
             ft.commit();
@@ -331,19 +268,20 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
         mOfficialPresenterImpl = new OfficialPresenterImpl(this);
         start = 1;
         String strEntity = createObj(start);
-        mOfficialPresenterImpl.loadNoFinish(strEntity,start);
+        mOfficialPresenterImpl.loadNoFinish(strEntity, start);
         start++;
     }
 
     private long firstClickBack = 0;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
-            if (firstClickBack != 0 && System.currentTimeMillis() - firstClickBack < 1500){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (firstClickBack != 0 && System.currentTimeMillis() - firstClickBack < 1500) {
                 BaseApplication.quiteApplication();
                 return true;
-            }else {
-                Toast.makeText(this,"再点一次退出本应用",Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "再点一次退出本应用", Toast.LENGTH_SHORT).show();
                 firstClickBack = System.currentTimeMillis();
                 return true;
             }
@@ -354,7 +292,6 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unregisterReceiver(receiver);
         PgyCrashManager.unregister();
     }
 
@@ -375,18 +312,18 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
 
     @Override
     public void refreshData(Object result) {
-        if (result instanceof OfficialResponse){
-            if(((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+        if (result instanceof OfficialResponse) {
+            if (((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 int mTotalNum = ((OfficialResponse) result).getIq().getQuery().getTotalNums();
-                if(mTotalNum != 0){
-                        badgeItem.setHideOnSelect(false)
-                                .setText(String.valueOf(mTotalNum))
-                                .setBackgroundColorResource(R.color.red)
-                                .setBorderWidth(0)
-                                .show();
-                    }else{
-                        badgeItem.hide();
-                    }
+                if (mTotalNum != 0) {
+                    badgeItem.setHideOnSelect(false)
+                            .setText(String.valueOf(mTotalNum))
+                            .setBackgroundColorResource(R.color.red)
+                            .setBorderWidth(0)
+                            .show();
+                } else {
+                    badgeItem.hide();
+                }
             }
         }
     }

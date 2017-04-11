@@ -46,7 +46,7 @@ import java.util.List;
  * Created by Donson on 2017/1/5.
  */
 
-public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQueryView,SwipeRefreshLayout.OnRefreshListener {
+public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQueryView, SwipeRefreshLayout.OnRefreshListener {
     private int start;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
@@ -82,9 +82,9 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mLocationClient.isStarted()){
+                if (mLocationClient.isStarted()) {
                     mLocationDialog();
-                }else{
+                } else {
                     finish();
                 }
             }
@@ -94,9 +94,9 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     @Override
     protected void initData() {
         PermissionUtils.requestLocationPermission(this);
-        if(mData.getLocalConfig() != null){
-            if(mData.getLocalConfig().getUserPost().equals("网格长")
-                    || mData.getLocalConfig().getUserPost().equals("网格员")){
+        if (mData.getLocalConfig() != null) {
+            if (mData.getLocalConfig().getUserPost().equals("网格长")
+                    || mData.getLocalConfig().getUserPost().equals("网格员")) {
                 mLocationDialog();
             }
         }
@@ -126,12 +126,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     public void refreshData(Object result) {
-        if (result instanceof OfficialQueyResponse){
-            if(((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+        if (result instanceof OfficialQueyResponse) {
+            if (((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 mAdapter.setDataList(((OfficialQueyResponse) result).getIq().getQuery()
                         .getPreMsgcon().getPreMsgs());
                 mToolbar.setTitle("网格基础数据");
-            }else{
+            } else {
                 showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
@@ -140,10 +140,10 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     @Override
     public void addData(Object result) {
         if (result instanceof OfficialQueyResponse) {
-            if(((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+            if (((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 mAdapter.addDataList(((OfficialQueyResponse) result).getIq().getQuery()
                         .getPreMsgcon().getPreMsgs());
-            }else{
+            } else {
                 showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
@@ -152,15 +152,15 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if(mData.getLocalConfig() != null){
-            if(mData.getLocalConfig().getUserPost().equals("网格长")
-                    || mData.getLocalConfig().getUserPost().equals("网格员")){
+        if (mData.getLocalConfig() != null) {
+            if (mData.getLocalConfig().getUserPost().equals("网格长")
+                    || mData.getLocalConfig().getUserPost().equals("网格员")) {
                 MenuInflater inflater = getMenuInflater();
                 inflater.inflate(R.menu.official_grid, menu);
                 item = menu.findItem(R.id.action_location);
-                if(mLocationClient.isStarted()){
+                if (mLocationClient.isStarted()) {
                     icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
-                }else{
+                } else {
                     icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
                 }
                 item.setIcon(icon);
@@ -175,27 +175,27 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             Intent intent = new Intent();
             intent.setClass(this, OfficialBaseGridAdd.class);
             startActivity(intent);
-        }else if(item.getItemId() == R.id.action_location){
+        } else if (item.getItemId() == R.id.action_location) {
             mLocationDialog();
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void mLocationDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.item_grid_location_switch,null);
+        View view = LayoutInflater.from(this).inflate(R.layout.item_grid_location_switch, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(view);
         TextView mLocation_title = (TextView) view.findViewById(R.id.mLocation_title);
         TextView mLocation_message = (TextView) view.findViewById(R.id.mLocation_message);
         builder.setCancelable(false);
-        Intent intent = new Intent(OfficialBaseGrid.this,LocationUpReciver.class);
+        Intent intent = new Intent(OfficialBaseGrid.this, LocationUpReciver.class);
         intent.setAction(Constant.ALARM_ACTION);
-        PendingIntent mPendingIntent = PendingIntent.getBroadcast(OfficialBaseGrid.this,0,intent,0);
-        AlarmManager mArm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        if(mLocationClient.isStarted()){
+        PendingIntent mPendingIntent = PendingIntent.getBroadcast(OfficialBaseGrid.this, 0, intent, 0);
+        AlarmManager mArm = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        if (mLocationClient.isStarted()) {
             mLocation_title.setText(getResources().getString(R.string.grid_location_close));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    null,null,getResources().getDrawable(R.drawable.ic_location_on_red_24dp),null);
+                    null, null, getResources().getDrawable(R.drawable.ic_location_on_red_24dp), null);
             mLocation_message.setText(getResources().getString(R.string.grid_location_close_message));
             builder.setPositiveButton("关闭上传", new DialogInterface.OnClickListener() {
                 @Override
@@ -204,18 +204,19 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     mLocationClient.stop();
                     icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
                     item.setIcon(icon);
-                    if(mArm != null){
+                    if (mArm != null) {
                         mArm.cancel(mPendingIntent);
                         mPendingIntent.cancel();
-                        new NotificationUtils(OfficialBaseGrid.this,1).clear();
+                        new NotificationUtils(OfficialBaseGrid.this, 1).clear();
                     }
                     finish();
                 }
-            }).setNegativeButton("取消",null).show();;
-        }else{
+            }).setNegativeButton("取消", null).show();
+            ;
+        } else {
             mLocation_title.setText(getResources().getString(R.string.grid_location_open));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    null,null,getResources().getDrawable(R.drawable.ic_location_on_black_24dp),null);
+                    null, null, getResources().getDrawable(R.drawable.ic_location_on_black_24dp), null);
             mLocation_message.setText(getResources().getString(R.string.grid_location_message));
             builder.setPositiveButton("开启上传", new DialogInterface.OnClickListener() {
                 @Override
@@ -224,9 +225,9 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
                     item.setIcon(icon);
                     mArm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                            SystemClock.elapsedRealtime(),Constant.LOCATION_UP_TIME, mPendingIntent);
+                            SystemClock.elapsedRealtime(), Constant.LOCATION_UP_TIME, mPendingIntent);
                 }
-            }).setNegativeButton("取消",null).show();
+            }).setNegativeButton("取消", null).show();
         }
     }
 
@@ -236,9 +237,9 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         super.onDestroy();
     }
 
-    public void onLoadMore(){
+    public void onLoadMore() {
         String strEntity = createObj(start);
-        mOfficialBaseGridQueryPresenterImpl.query(strEntity,start);
+        mOfficialBaseGridQueryPresenterImpl.query(strEntity, start);
         start++;
     }
 
@@ -265,7 +266,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     class OfficialBaseGridAdapter extends RecyclerView.Adapter {
         private List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data;
-        private String[] tag = {"姓名:", "户主:","户籍地址:"};
+        private String[] tag = {"姓名:", "户主:", "户籍地址:"};
 
         public OfficialBaseGridAdapter() {
 
@@ -290,16 +291,16 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(holder instanceof ItemViewHolder){
-                ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0]+data.get(position).getNAME());
-                ((ItemViewHolder) holder).grid_base_add_huzu.setText(tag[1]+data.get(position).getHUZU());
-                ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[2]+data.get(position).getDOMICILE());
+            if (holder instanceof ItemViewHolder) {
+                ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0] + data.get(position).getNAME());
+                ((ItemViewHolder) holder).grid_base_add_huzu.setText(tag[1] + data.get(position).getHUZU());
+                ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[2] + data.get(position).getDOMICILE());
                 ((ItemViewHolder) holder).Suc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent=new Intent(UIUtils.getContext(),OfficialBaseGridDetail.class);
-                        intent.putExtra("ID",data.get(position).getID());
-                        intent.putExtra("USERID",data.get(position).getREPORTUSER());
+                        Intent intent = new Intent(UIUtils.getContext(), OfficialBaseGridDetail.class);
+                        intent.putExtra("ID", data.get(position).getID());
+                        intent.putExtra("USERID", data.get(position).getREPORTUSER());
                         UIUtils.startActivity(intent);
                     }
                 });
@@ -309,7 +310,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
         @Override
         public int getItemCount() {
-            if (data != null){
+            if (data != null) {
                 return data.size();
             }
             return 0;
@@ -361,10 +362,10 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            if(mLocationClient.isStarted()){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mLocationClient.isStarted()) {
                 mLocationDialog();
-            }else{
+            } else {
                 finish();
             }
         }

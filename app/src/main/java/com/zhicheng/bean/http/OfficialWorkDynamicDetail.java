@@ -14,10 +14,9 @@ import java.util.List;
  * 图片或其他媒体类内容
  * 赞
  * 评论人昵称
- *
  */
 
-public class OfficialWorkDynamicDetail{
+public class OfficialWorkDynamicDetail {
 
     private String img;
     private String name;
@@ -27,7 +26,8 @@ public class OfficialWorkDynamicDetail{
     private String location;
     private String time;
 
-    public OfficialWorkDynamicDetail(){}
+    public OfficialWorkDynamicDetail() {
+    }
 
     public String getImg() {
         return img;

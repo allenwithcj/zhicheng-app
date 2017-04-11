@@ -13,10 +13,11 @@ public class ClassifyResponse extends BaseResponse {
     private String mOrigin;
     private String upTime;
 
-    public ClassifyResponse(){}
+    public ClassifyResponse() {
+    }
 
-    public ClassifyResponse(int code,String msg){
-        super(code,msg);
+    public ClassifyResponse(int code, String msg) {
+        super(code, msg);
     }
 
     public String getmTitleImage() {

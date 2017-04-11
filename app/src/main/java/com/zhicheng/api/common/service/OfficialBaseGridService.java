@@ -13,5 +13,5 @@ import rx.Observable;
 
 public interface OfficialBaseGridService {
     @GET("api.php")
-    Observable<Response<OfficialBaseGridResponse>> getOfficialCommonData(@Query("street") String street,@Query("communicate") String communicate,@Query("grid") String grid);
+    Observable<Response<OfficialBaseGridResponse>> getOfficialCommonData(@Query("street") String street, @Query("communicate") String communicate, @Query("grid") String grid);
 }

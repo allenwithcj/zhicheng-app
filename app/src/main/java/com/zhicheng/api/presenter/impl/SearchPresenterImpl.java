@@ -14,30 +14,30 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by Donson on 2017/1/17.
  */
 
-public class SearchPresenterImpl implements SearchPresenter,ApiCompleteListener {
+public class SearchPresenterImpl implements SearchPresenter, ApiCompleteListener {
 
     private SearchModelImpl mSearchModel;
     private SearchView mSearchView;
 
-    public SearchPresenterImpl(SearchView mSearchView){
+    public SearchPresenterImpl(SearchView mSearchView) {
         this.mSearchView = mSearchView;
         mSearchModel = new SearchModelImpl();
     }
 
     @Override
     public void getSearchResult(String request) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mSearchView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mSearchModel.SearchDataList(request,this);
+        mSearchModel.SearchDataList(request, this);
     }
 
     @Override
     public void SearchBaoClassify(String p1) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mSearchView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mSearchModel.SearchBaoClassifyList(p1,this);
+        mSearchModel.SearchBaoClassifyList(p1, this);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class SearchPresenterImpl implements SearchPresenter,ApiCompleteListener 
 
     @Override
     public void onFailed(BaseResponse msg) {
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mSearchView.showMessage(msg.getMsg());

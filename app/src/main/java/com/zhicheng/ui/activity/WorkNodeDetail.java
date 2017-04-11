@@ -44,11 +44,11 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
     private TextView mini_content;
     private LinearLayout btn_layout;
     private RecyclerView mRecyclerView;
-    private Button update,delete;
+    private Button update, delete;
     private boolean b = false;
     private WorkNodePresenterImpl mWorkNodePresenterImpl;
     private AlertDialog dialog;
-    private String Uid,work,sender,content;
+    private String Uid, work, sender, content;
     private String sendTime;
     private PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean prelogsBean;
     private DatabaseHelper mData;
@@ -67,27 +67,27 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         btn_layout = (LinearLayout) findViewById(R.id.btn_layout);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.imgs);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mRecyclerView.setAdapter(new ImageAdapter(prelogsBean.getCd04()));
 
-        update = (Button)findViewById(R.id.update);
-        delete = (Button)findViewById(R.id.delete);
-        if(prelogsBean != null){
+        update = (Button) findViewById(R.id.update);
+        delete = (Button) findViewById(R.id.delete);
+        if (prelogsBean != null) {
             Uid = prelogsBean.getCd00();
             work = prelogsBean.getCd05();
             sender = prelogsBean.getCd03();
             sendTime = prelogsBean.getCd01();
             content = prelogsBean.getCd02();
-            publicationunit.setText("单位:"+work);
-            NoteTime.setText("发表时间:"+sendTime.substring(0,sendTime.length()-2));
-            publicationpeople.setText("发表人:"+sender);
+            publicationunit.setText("单位:" + work);
+            NoteTime.setText("发表时间:" + sendTime.substring(0, sendTime.length() - 2));
+            publicationpeople.setText("发表人:" + sender);
             content_txt.setText("日志内容:");
             mini_content.setText(content);
         }
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
 
         update.setOnClickListener(view -> {
-            dialog = new AlertDialog.Builder(this,R.style.dialog)
+            dialog = new AlertDialog.Builder(this, R.style.dialog)
                     .setView(R.layout.z_loading_view)
                     .setCancelable(false)
                     .create();
@@ -107,7 +107,7 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         });
 
         delete.setOnClickListener(view -> {
-            dialog = new AlertDialog.Builder(this,R.style.dialog)
+            dialog = new AlertDialog.Builder(this, R.style.dialog)
                     .setView(R.layout.z_loading_view)
                     .setCancelable(false)
                     .create();
@@ -140,8 +140,8 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
 
     @Override
     protected int getMenuID() {
-        if(mData.getLocalConfig() != null){
-            if(mData.getLocalConfig().getUserName().equals(sender)){
+        if (mData.getLocalConfig() != null) {
+            if (mData.getLocalConfig().getUserName().equals(sender)) {
                 return R.menu.official_grid_operate;
             }
         }
@@ -151,11 +151,11 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_operate) {
-            if(b){
+            if (b) {
                 item.setTitle("修改");
                 btn_layout.setVisibility(View.GONE);
                 b = false;
-            }else{
+            } else {
                 item.setTitle("取消");
                 btn_layout.setVisibility(View.VISIBLE);
                 b = true;
@@ -166,10 +166,10 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
 
     @Override
     public void showMessage(String msg) {
-        if (dialog != null && dialog.isShowing()){
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -182,18 +182,18 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
 
     @Override
     public void refreshData(Object result) {
-        if(result instanceof CommonResponse){
-            if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
-                if(Constant.LOG_OPERATE_TYPE.equals("update")){
+        if (result instanceof CommonResponse) {
+            if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
+                if (Constant.LOG_OPERATE_TYPE.equals("update")) {
                     showMessage("修改成功");
-                }else if(Constant.LOG_OPERATE_TYPE.equals("delete")){
+                } else if (Constant.LOG_OPERATE_TYPE.equals("delete")) {
                     showMessage("删除成功");
                 }
                 finish();
-            }else{
-                if(Constant.LOG_OPERATE_TYPE.equals("update")){
+            } else {
+                if (Constant.LOG_OPERATE_TYPE.equals("update")) {
                     showMessage("修改失败");
-                }else if(Constant.LOG_OPERATE_TYPE.equals("delete")){
+                } else if (Constant.LOG_OPERATE_TYPE.equals("delete")) {
                     showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
                 }
             }
@@ -205,18 +205,18 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
 
     }
 
-    private class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder>{
+    private class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
 
         private List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean.Cd04Bean> mImagePath;
 
-        public ImageAdapter(List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean.Cd04Bean> data){
+        public ImageAdapter(List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean.Cd04Bean> data) {
             this.mImagePath = data;
             notifyDataSetChanged();
         }
 
         @Override
         public ImageAdapter.ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view, parent, false);
             return new ImageViewHolder(view);
         }
 
@@ -230,21 +230,21 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
                     .thumbnail((float) 0.3)
                     .into(holder.mImageView);
             ArrayList<String> paths = new ArrayList<String>();
-            for(int i = 0;i<mImagePath.size();i++){
-                paths.add(URL.HOST_URL_SERVER_ZHICHENG+mImagePath.get(i).getHref());
+            for (int i = 0; i < mImagePath.size(); i++) {
+                paths.add(URL.HOST_URL_SERVER_ZHICHENG + mImagePath.get(i).getHref());
             }
             holder.mImageView.setOnClickListener(view -> {
                 PhotoPicker.preview()
-                            .paths(paths)
-                            .currentItem(position)
-                            .start((Activity) holder.itemView.getContext());
-                });
+                        .paths(paths)
+                        .currentItem(position)
+                        .start((Activity) holder.itemView.getContext());
+            });
         }
 
 
         @Override
         public int getItemCount() {
-            if(mImagePath != null){
+            if (mImagePath != null) {
                 return mImagePath.size();
             }
             return 0;

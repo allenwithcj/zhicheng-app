@@ -28,10 +28,10 @@ import java.util.List;
  */
 
 public class CallTheCounActivity extends BaseActivity implements OfficialView
-        ,SwipeRefreshLayout.OnRefreshListener,ApiCompleteListener{
+        , SwipeRefreshLayout.OnRefreshListener, ApiCompleteListener {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private OfficialPresenterImpl mOfficialPresenterImpl ;
+    private OfficialPresenterImpl mOfficialPresenterImpl;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private NoticeAdapter mNoticeAdapter;
@@ -60,7 +60,7 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
 
     @Override
     public void showMessage(String msg) {
-        Snackbar.make(mToolbar,msg,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mToolbar, msg, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -75,12 +75,12 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
 
     @Override
     public void refreshData(Object result) {
-        if (result instanceof NoticeResponse){
+        if (result instanceof NoticeResponse) {
             mNoticeAdapter.setDataList(((NoticeResponse) result).getIq().getQuery().getTable());
             int num = ((NoticeResponse) result).getIq().getQuery().getTotalNums();
-            if (num != 0){
-                mToolbar.setTitle("通知公告("+num+")");
-            }else {
+            if (num != 0) {
+                mToolbar.setTitle("通知公告(" + num + ")");
+            } else {
                 mToolbar.setTitle("通知公告");
             }
         }
@@ -89,7 +89,7 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
     @Override
     public void addData(Object result) {
 
-        if (result instanceof NoticeResponse){
+        if (result instanceof NoticeResponse) {
             mNoticeAdapter.addDataList(((NoticeResponse) result).getIq().getQuery().getTable());
         }
     }
@@ -97,9 +97,9 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
 
     @Override
     public void onRefresh() {
-        OfficialRequest mOfficialRequest=new OfficialRequest();
+        OfficialRequest mOfficialRequest = new OfficialRequest();
         OfficialRequest.IqBean iq = new OfficialRequest.IqBean();
-        OfficialRequest.IqBean.QueryBean query=new OfficialRequest.IqBean.QueryBean();
+        OfficialRequest.IqBean.QueryBean query = new OfficialRequest.IqBean.QueryBean();
         query.setPage("1");
         query.setOrderBy("");
         query.setOrderType("");
@@ -108,8 +108,8 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
         iq.setQuery(query);
         iq.setNamespace("ListRequest");
         mOfficialRequest.setIq(iq);
-        Gson gson=new Gson();
-        String g=gson.toJson(mOfficialRequest);
+        Gson gson = new Gson();
+        String g = gson.toJson(mOfficialRequest);
         mOfficialPresenterImpl.LoadNotice(g);
     }
 
@@ -123,42 +123,42 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
 
     }
 
-    private class NoticeAdapter extends RecyclerView.Adapter{
+    private class NoticeAdapter extends RecyclerView.Adapter {
         private List<List<NoticeResponse.IqBean.QueryBean.TableBean.TableRowsBean>> data;
-        private String [] tag={"标题:","送办人:","时间:"};
+        private String[] tag = {"标题:", "送办人:", "时间:"};
 
         public NoticeAdapter() {
 
         }
 
-        public void addDataList(NoticeResponse.IqBean.QueryBean.TableBean data){
-            int page=this.data.size();
+        public void addDataList(NoticeResponse.IqBean.QueryBean.TableBean data) {
+            int page = this.data.size();
             this.data.addAll(data.getTableRows());
-            this.notifyItemRangeInserted(page,data.getTableRows().size());
+            this.notifyItemRangeInserted(page, data.getTableRows().size());
         }
 
-        public void setDataList(NoticeResponse.IqBean.QueryBean.TableBean data){
+        public void setDataList(NoticeResponse.IqBean.QueryBean.TableBean data) {
             this.data = data.getTableRows();
             this.notifyDataSetChanged();
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view= LayoutInflater.from(CallTheCounActivity.this).inflate(R.layout.activity_home_notice,parent,false);
+            View view = LayoutInflater.from(CallTheCounActivity.this).inflate(R.layout.activity_home_notice, parent, false);
             return new NoticeViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-            if (holder instanceof NoticeViewHolder){
-                if (data!=null){
-                    ((NoticeViewHolder) holder).notice_title.setText(tag[0]+data.get(position).get(4).getValue());
-                    ((NoticeViewHolder) holder).notice_time.setText(tag[2]+data.get(position).get(6).getValue());
+            if (holder instanceof NoticeViewHolder) {
+                if (data != null) {
+                    ((NoticeViewHolder) holder).notice_title.setText(tag[0] + data.get(position).get(4).getValue());
+                    ((NoticeViewHolder) holder).notice_time.setText(tag[2] + data.get(position).get(6).getValue());
                     ((NoticeViewHolder) holder).noSuc.setOnClickListener(view -> {
                         //查询公告附件
-                        Intent intent = new Intent(CallTheCounActivity.this,CallTheCounDetailActivity.class);
-                        intent.putExtra("id",data.get(position).get(0).getValue());
+                        Intent intent = new Intent(CallTheCounActivity.this, CallTheCounDetailActivity.class);
+                        intent.putExtra("id", data.get(position).get(0).getValue());
                         UIUtils.startActivity(intent);
 
                     });
@@ -168,14 +168,14 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
 
         @Override
         public int getItemCount() {
-            if (data != null){
+            if (data != null) {
                 return data.size();
             }
             return 0;
         }
     }
 
-    private class NoticeViewHolder extends RecyclerView.ViewHolder{
+    private class NoticeViewHolder extends RecyclerView.ViewHolder {
 
         private TextView notice_title;
         private TextView notice_time;
@@ -183,9 +183,9 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
 
         public NoticeViewHolder(View itemView) {
             super(itemView);
-            notice_title=(TextView)itemView.findViewById(R.id.notice_title);
-            notice_time=(TextView)itemView.findViewById(R.id.notice_time);
-            noSuc = (LinearLayout)itemView.findViewById(R.id.noSuc);
+            notice_title = (TextView) itemView.findViewById(R.id.notice_title);
+            notice_time = (TextView) itemView.findViewById(R.id.notice_time);
+            noSuc = (LinearLayout) itemView.findViewById(R.id.noSuc);
         }
     }
 

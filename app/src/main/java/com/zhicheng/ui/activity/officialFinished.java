@@ -31,8 +31,8 @@ public class officialFinished extends BaseActivity {
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_fragment);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
-        mFragmentTabItem = (TabLayout)findViewById(R.id.fragment_tab_item);
-        mViewPager = (ViewPager)findViewById(R.id.view_pager);
+        mFragmentTabItem = (TabLayout) findViewById(R.id.fragment_tab_item);
+        mViewPager = (ViewPager) findViewById(R.id.view_pager);
     }
 
     @Override
@@ -47,10 +47,10 @@ public class officialFinished extends BaseActivity {
         mTitles = Arrays.asList(titles);
         //设置滑动
         mFragmentTabItem.setTabMode(TabLayout.MODE_FIXED);
-        for(String title : titles){
+        for (String title : titles) {
             mFragmentTabItem.addTab(mFragmentTabItem.newTab().setText(title));
         }
-        adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(),fragmentList,mTitles);
+        adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, mTitles);
         mViewPager.setAdapter(adapter);
         mFragmentTabItem.setupWithViewPager(mViewPager);
 

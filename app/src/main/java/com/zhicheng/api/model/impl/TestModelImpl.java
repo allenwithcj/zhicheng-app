@@ -23,8 +23,8 @@ import rx.schedulers.Schedulers;
 public class TestModelImpl implements TestModel {
     @Override
     public void loadTestList(String json, ApiCompleteListener listener) {
-        TestService mTestService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,TestService.class);
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"),json);
+        TestService mTestService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, TestService.class);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
         mTestService.getTestData(body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -36,19 +36,19 @@ public class TestModelImpl implements TestModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<String> json) {
-                        if (json.isSuccessful()){
+                        if (json.isSuccessful()) {
                             listener.onComplected(json.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(json.code(),json.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(json.code(), json.message()));
                         }
                     }
                 });

@@ -14,23 +14,23 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by Donson on 2016/12/30.
  */
 
-public class TestPresenterImpl implements TestPresenter,ApiCompleteListener {
+public class TestPresenterImpl implements TestPresenter, ApiCompleteListener {
     private TestModel mTestModel;
     private TestView mTestView;
 
-    public TestPresenterImpl(TestView view){
+    public TestPresenterImpl(TestView view) {
         mTestView = view;
         mTestModel = new TestModelImpl();
     }
 
     @Override
     public void loadTest(String json) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mTestView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mTestView.hideProgress();
         }
         mTestView.showProgress();
-        mTestModel.loadTestList(json,this);
+        mTestModel.loadTestList(json, this);
     }
 
     /**
@@ -53,7 +53,7 @@ public class TestPresenterImpl implements TestPresenter,ApiCompleteListener {
     @Override
     public void onFailed(BaseResponse msg) {
         mTestView.hideProgress();
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mTestView.showMessage(msg.getMsg());

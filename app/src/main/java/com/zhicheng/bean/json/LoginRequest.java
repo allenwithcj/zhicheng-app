@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by Donson on 2017/2/14.
  */
 
-public class LoginRequest implements Serializable{
+public class LoginRequest implements Serializable {
 
     /**
      * iq : {"namespace":"LoginRequest","model":3,"mobileVersion":"6.0.1","version":"1.4.0","resolution":"1080,1776","query":{"name":"liuting","password":"MTIz\n","token":"d07967277557452fa866fdbcf45afb4d","languageType":"0","deviceId":"02:00:00:00:00:00"}}
@@ -91,7 +91,7 @@ public class LoginRequest implements Serializable{
             /**
              * name : liuting
              * password : MTIz
-
+             * <p>
              * token : d07967277557452fa866fdbcf45afb4d
              * languageType : 0
              * deviceId : 02:00:00:00:00:00

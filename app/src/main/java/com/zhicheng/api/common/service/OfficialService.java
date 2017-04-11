@@ -41,6 +41,7 @@ public interface OfficialService {
 
     /**
      * 工作动态获取
+     *
      * @param rBody 手动构建
      * @return OfficialWorkDynamicList
      */
@@ -51,6 +52,7 @@ public interface OfficialService {
 
     /**
      * 新增工作动态
+     *
      * @param rBody 手动构建
      * @return 通用响应
      */
@@ -62,6 +64,7 @@ public interface OfficialService {
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")
     Observable<Response<NoticeResponse>> getNotice(@Field("json") String rBody);
+
     //通知详情
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")

@@ -31,7 +31,7 @@ public class PermissionUtils {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.CAMERA}, CAMERA);
                 //Snackbar.make(activity.getWindow().getDecorView(),
-                  //      "please give me the permission", Snackbar.LENGTH_SHORT).show();
+                //      "please give me the permission", Snackbar.LENGTH_SHORT).show();
             } else {
                 //进行权限请求
                 ActivityCompat.requestPermissions(activity,
@@ -55,7 +55,7 @@ public class PermissionUtils {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE);
                 //Snackbar.make(activity.getWindow().getDecorView(),
-                  //      "please give me the permission", Snackbar.LENGTH_SHORT).show();
+                //      "please give me the permission", Snackbar.LENGTH_SHORT).show();
             } else {
                 //进行权限请求
                 ActivityCompat.requestPermissions(activity,
@@ -78,7 +78,7 @@ public class PermissionUtils {
                 ActivityCompat.requestPermissions(activity,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION);
                 //Snackbar.make(activity.getWindow().getDecorView(),
-                 //       "please give me the permission", Snackbar.LENGTH_SHORT).show();
+                //       "please give me the permission", Snackbar.LENGTH_SHORT).show();
             } else {
                 //进行权限请求
                 ActivityCompat.requestPermissions(activity,

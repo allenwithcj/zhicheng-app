@@ -14,6 +14,7 @@
     <color name="login_bg">#1fa2d1</color>
     <color name="login_edit_normal">#69aca9a9</color>
     <color name="red">#d23f31</color>
+    <color name="light_red">#d5403b</color>
     <color name="black">#000</color>
     <color name="albumback">#fff</color>
     <color name="none_color">#21ffffff</color>

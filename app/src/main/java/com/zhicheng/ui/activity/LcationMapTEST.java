@@ -30,7 +30,7 @@ public class LcationMapTEST extends BaseActivity {
         setContentView(R.layout.activity_main_locationmap);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction ft = manager.beginTransaction();
-        ft.add(R.id.bdMap,new MapFragment());
+        ft.add(R.id.bdMap, new MapFragment());
         ft.commit();
     }
 

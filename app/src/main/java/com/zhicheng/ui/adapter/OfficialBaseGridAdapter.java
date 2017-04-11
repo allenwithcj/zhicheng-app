@@ -29,20 +29,20 @@ public class OfficialBaseGridAdapter extends RecyclerView.Adapter {
     private OfficialBaseGridResponse mData;
     private OnButtonClickListener mButtonClick;
 
-    public OfficialBaseGridAdapter(){
+    public OfficialBaseGridAdapter() {
     }
 
-    public interface OnButtonClickListener{
+    public interface OnButtonClickListener {
         void OnButtonClick(TextView v);
     }
 
-    public void setOnButtonClickListener(OnButtonClickListener listener){
-        if (this.mButtonClick == null){
+    public void setOnButtonClickListener(OnButtonClickListener listener) {
+        if (this.mButtonClick == null) {
             this.mButtonClick = listener;
         }
     }
 
-    public void setData(OfficialBaseGridResponse mData){
+    public void setData(OfficialBaseGridResponse mData) {
         this.mData = mData;
         this.notifyDataSetChanged();
     }
@@ -50,34 +50,34 @@ public class OfficialBaseGridAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if (viewType == TYPE_HEADER){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_grid_header,parent,false);
+        if (viewType == TYPE_HEADER) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_grid_header, parent, false);
             return new HeaderViewHolder(view);
-        }else if (viewType == TYPE_CONTENT){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_grid_content,parent,false);
+        } else if (viewType == TYPE_CONTENT) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_grid_content, parent, false);
             return new ContentViewHolder(view);
-        }else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_grid_bottom,parent,false);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.i_grid_bottom, parent, false);
             return new BottomViewHolder(view);
         }
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof HeaderViewHolder){
+        if (holder instanceof HeaderViewHolder) {
 
-        }else if (holder instanceof ContentViewHolder){
+        } else if (holder instanceof ContentViewHolder) {
             ((ContentViewHolder) holder).img.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_arrow_drop_down_black_24dp));
-            switch (position){
+            switch (position) {
                 case 1:
                     ((ContentViewHolder) holder).tagName.setText("所在社区");
                     ((ContentViewHolder) holder).input.setOnClickListener(v -> {
-                        Intent intent = new Intent(UIUtils.getContext(),SearchViewActivity.class);
-                        intent.putExtra("fragment","Search");
-                        intent.putExtra("action","communicate");
+                        Intent intent = new Intent(UIUtils.getContext(), SearchViewActivity.class);
+                        intent.putExtra("fragment", "Search");
+                        intent.putExtra("action", "communicate");
                         UIUtils.startActivity(intent);
                     });
-                    if (mData != null && mData.getCode() == 1){
+                    if (mData != null && mData.getCode() == 1) {
                         ((ContentViewHolder) holder).input.setText(mData.getCommunicate());
                         ((ContentViewHolder) holder).FourAddress.setText(mData.getFourAddressCommunity());
                         ((ContentViewHolder) holder).AllAcreage.setText(mData.getAcreageCommunity());
@@ -87,16 +87,16 @@ public class OfficialBaseGridAdapter extends RecyclerView.Adapter {
                 case 2:
                     ((ContentViewHolder) holder).tagName.setText("所在网格");
                     ((ContentViewHolder) holder).input.setOnClickListener(v -> {
-                        if (mData.getCommunicate() == null){
-                            Toast.makeText(holder.itemView.getContext(),"请选择所在社区",Toast.LENGTH_SHORT).show();
-                        }else {
-                            Intent intent = new Intent(UIUtils.getContext(),SearchViewActivity.class);
-                            intent.putExtra("fragment","Search");
-                            intent.putExtra("action","grid");
+                        if (mData.getCommunicate() == null) {
+                            Toast.makeText(holder.itemView.getContext(), "请选择所在社区", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent intent = new Intent(UIUtils.getContext(), SearchViewActivity.class);
+                            intent.putExtra("fragment", "Search");
+                            intent.putExtra("action", "grid");
                             UIUtils.startActivity(intent);
                         }
                     });
-                    if (mData != null && mData.getCode() == 2){
+                    if (mData != null && mData.getCode() == 2) {
                         ((ContentViewHolder) holder).input.setText(mData.getGrid());
                         ((ContentViewHolder) holder).FourAddress.setText(mData.getFourAddressGrid());
                         ((ContentViewHolder) holder).AllAcreage.setText(mData.getAcreageGrid());
@@ -104,33 +104,33 @@ public class OfficialBaseGridAdapter extends RecyclerView.Adapter {
                     }
                     break;
             }
-        }else if (holder instanceof BottomViewHolder){
-                ((BottomViewHolder) holder).belongBuild.setOnClickListener(v -> {
-                    if (mData.getGrid() == null){
-                        Toast.makeText(holder.itemView.getContext(),"请选择所在网格",Toast.LENGTH_SHORT).show();
-                    }else {
-                        Intent intent = new Intent(UIUtils.getContext(),SearchViewActivity.class);
-                        intent.putExtra("action","build");
-                        UIUtils.startActivity(intent);
-                    }
-                });
-            if (mButtonClick != null){
+        } else if (holder instanceof BottomViewHolder) {
+            ((BottomViewHolder) holder).belongBuild.setOnClickListener(v -> {
+                if (mData.getGrid() == null) {
+                    Toast.makeText(holder.itemView.getContext(), "请选择所在网格", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(UIUtils.getContext(), SearchViewActivity.class);
+                    intent.putExtra("action", "build");
+                    UIUtils.startActivity(intent);
+                }
+            });
+            if (mButtonClick != null) {
                 mButtonClick.OnButtonClick(((BottomViewHolder) holder).belongBuild);
             }
-                ((BottomViewHolder) holder).addPersonal.setOnClickListener(v -> {
-                    if (mData.getTypeBuild() == null){
-                        Toast.makeText(holder.itemView.getContext(),"请选择楼栋",Toast.LENGTH_SHORT).show();
-                    }else {
-                        Intent intent = new Intent(UIUtils.getContext(),OfficialBaseGridDetail.class);
-                        intent.putExtra("typeBuild",mData.getTypeBuild());
-                        intent.putExtra("layerBuild",mData.getLayerBuild());
-                        intent.putExtra("oneLayerBuild",mData.getOneLayerBuild());
-                        intent.putExtra("unitNum",mData.getUnitNum());
-                        intent.putExtra("url","http://nuoche.xiaoyouqiao.com/appapi/build.html");
-                        intent.putExtra("title","楼栋详情");
-                        UIUtils.startActivity(intent);
-                    }
-                });
+            ((BottomViewHolder) holder).addPersonal.setOnClickListener(v -> {
+                if (mData.getTypeBuild() == null) {
+                    Toast.makeText(holder.itemView.getContext(), "请选择楼栋", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(UIUtils.getContext(), OfficialBaseGridDetail.class);
+                    intent.putExtra("typeBuild", mData.getTypeBuild());
+                    intent.putExtra("layerBuild", mData.getLayerBuild());
+                    intent.putExtra("oneLayerBuild", mData.getOneLayerBuild());
+                    intent.putExtra("unitNum", mData.getUnitNum());
+                    intent.putExtra("url", "http://nuoche.xiaoyouqiao.com/appapi/build.html");
+                    intent.putExtra("title", "楼栋详情");
+                    UIUtils.startActivity(intent);
+                }
+            });
 
         }
     }
@@ -142,11 +142,11 @@ public class OfficialBaseGridAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0){
+        if (position == 0) {
             return TYPE_HEADER;
-        }else if (position == 1 || position == 2){
+        } else if (position == 1 || position == 2) {
             return TYPE_CONTENT;
-        }else {
+        } else {
             return TYPE_BOTTOM;
         }
     }

@@ -1,7 +1,6 @@
 package com.zhicheng.bean.http;
 
 
-
 /**
  * Created by Donson on 2016/12/30.
  */
@@ -10,9 +9,10 @@ public class BaseResponse {
     private int code;
     private String msg;
 
-    public BaseResponse(){}
+    public BaseResponse() {
+    }
 
-    public BaseResponse(int code,String msg){
+    public BaseResponse(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

@@ -14,15 +14,17 @@ public interface OfficialPresenter {
     void loadDetail(String js);
 
     //工作动态
-    void loadDynamic(String dyn,int start);
-    //新增工作动态
-    void upDynamic(String dyn,List<String> imgs, String jFile,String mLocationSite,String GUID);
+    void loadDynamic(String dyn, int start);
 
-    void upDeal(List<String> imgs, String jFile, String suggest, OfficialDetailResponse officialDetailResponse, String GUID,String type);
+    //新增工作动态
+    void upDynamic(String dyn, List<String> imgs, String jFile, String mLocationSite, String GUID);
+
+    void upDeal(List<String> imgs, String jFile, String suggest, OfficialDetailResponse officialDetailResponse, String GUID, String type);
 
     void cancelLoading();
 
     void LoadNotice(String n);
+
     //查询通知公告详情
     void queryMewsDetail(String js);
 }

@@ -22,7 +22,7 @@ import rx.schedulers.Schedulers;
 public class OfficialBaseGridUpdateModelImpl implements OfficialBaseGridUpdateModel {
     @Override
     public void updateDate(String json, ApiCompleteListener listener) {
-        OfficialBaseGridUpdateService mOfficialBaseGridUpdateService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialBaseGridUpdateService.class);
+        OfficialBaseGridUpdateService mOfficialBaseGridUpdateService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialBaseGridUpdateService.class);
         mOfficialBaseGridUpdateService.updateDate(json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -34,19 +34,19 @@ public class OfficialBaseGridUpdateModelImpl implements OfficialBaseGridUpdateMo
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
+                        if (commonResponseResponse.isSuccessful()) {
                             listener.onComplected(commonResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                         }
                     }
                 });

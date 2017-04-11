@@ -21,11 +21,11 @@ public class TimeLineMarker extends View {
     private Drawable mMarkerDrawable;
 
     public TimeLineMarker(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public TimeLineMarker(Context context, AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public TimeLineMarker(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -33,34 +33,34 @@ public class TimeLineMarker extends View {
         init(attrs);
     }
 
-    private void init(AttributeSet attrs){
-        final TypedArray a = getContext().obtainStyledAttributes(attrs,R.styleable.TimeLineMarker,0,0);
-        mMarkerSize = a.getDimensionPixelSize(R.styleable.TimeLineMarker_markerSize,mMarkerSize);
-        mLineSize = a.getDimensionPixelSize(R.styleable.TimeLineMarker_LineSize,mLineSize);
+    private void init(AttributeSet attrs) {
+        final TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TimeLineMarker, 0, 0);
+        mMarkerSize = a.getDimensionPixelSize(R.styleable.TimeLineMarker_markerSize, mMarkerSize);
+        mLineSize = a.getDimensionPixelSize(R.styleable.TimeLineMarker_LineSize, mLineSize);
         mBeginLines = a.getDrawable(R.styleable.TimeLineMarker_beginLine);
         mEndLines = a.getDrawable(R.styleable.TimeLineMarker_endLine);
         mMarkerDrawable = a.getDrawable(R.styleable.TimeLineMarker_marker);
         a.recycle();
-        if (mBeginLines != null){
+        if (mBeginLines != null) {
             mBeginLines.setCallback(this);
         }
-        if (mEndLines != null){
+        if (mEndLines != null) {
             mEndLines.setCallback(this);
         }
-        if (mMarkerDrawable != null){
+        if (mMarkerDrawable != null) {
             mMarkerDrawable.setCallback(this);
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (mBeginLines != null){
+        if (mBeginLines != null) {
             mBeginLines.draw(canvas);
         }
-        if (mEndLines != null){
+        if (mEndLines != null) {
             mEndLines.draw(canvas);
         }
-        if (mMarkerDrawable != null){
+        if (mMarkerDrawable != null) {
             mMarkerDrawable.draw(canvas);
         }
         super.onDraw(canvas);

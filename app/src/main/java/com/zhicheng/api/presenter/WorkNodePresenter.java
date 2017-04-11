@@ -9,9 +9,9 @@ import java.util.List;
  */
 
 public interface WorkNodePresenter {
-    void loadWorkNodes(String s,int start);
+    void loadWorkNodes(String s, int start);
 
-    void sendWorkNodes(String jFile,List<String> imgs,String nodes,String attGUID, String GUID, ApiCompleteListener listener);
+    void sendWorkNodes(String jFile, List<String> imgs, String nodes, String attGUID, String GUID, ApiCompleteListener listener);
 
     void updateWorkNodes(String s);
 

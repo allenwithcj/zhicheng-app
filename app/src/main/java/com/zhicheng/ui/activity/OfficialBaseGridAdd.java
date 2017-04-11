@@ -33,22 +33,22 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            OfficialBaseGridAddAdapter.ItemViewHolder holder = (OfficialBaseGridAddAdapter.ItemViewHolder)mRecyclerView
+            OfficialBaseGridAddAdapter.ItemViewHolder holder = (OfficialBaseGridAddAdapter.ItemViewHolder) mRecyclerView
                     .getChildViewHolder(mRecyclerView.getChildAt(0));
-            if (intent.getAction().equals("com.grid.type")){
+            if (intent.getAction().equals("com.grid.type")) {
                 String value = intent.getStringExtra("value");
                 String type = intent.getStringExtra("type");
-                if(type.equals(Constant.TYPE_SEX)){
+                if (type.equals(Constant.TYPE_SEX)) {
                     holder.grid_base_add_sex.setText(value);
-                }else if(type.equals(Constant.TYPE_POLICATIAL)){
+                } else if (type.equals(Constant.TYPE_POLICATIAL)) {
                     holder.grid_base_add_policatial.setText(value);
-                }else if(type.equals(Constant.TYPE_DEGREE)){
+                } else if (type.equals(Constant.TYPE_DEGREE)) {
                     holder.grid_base_add_degree.setText(value);
-                }else if(type.equals(Constant.TYPE_MARRIED)){
+                } else if (type.equals(Constant.TYPE_MARRIED)) {
                     holder.grid_base_add_married.setText(value);
-                }else if(type.equals(Constant.TYPE_CLASSIFICATION)){
+                } else if (type.equals(Constant.TYPE_CLASSIFICATION)) {
                     holder.grid_base_add_rkfl.setText(value);
-                }else if(type.equals(Constant.TYPE_REMARK)){
+                } else if (type.equals(Constant.TYPE_REMARK)) {
                     holder.grid_base_add_lessor_remark.setText(value);
                 }
             }
@@ -64,7 +64,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
         IntentFilter mFilter = new IntentFilter("com.grid.type");
-        registerReceiver(receiver,mFilter);
+        registerReceiver(receiver, mFilter);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
     }
 
@@ -87,9 +87,9 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_submit:
-                dialog = new AlertDialog.Builder(this,R.style.dialog)
+                dialog = new AlertDialog.Builder(this, R.style.dialog)
                         .setView(R.layout.z_loading_view)
                         .setCancelable(false)
                         .create();
@@ -102,19 +102,19 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
 
     @Override
     public void showMessage(String msg) {
-        if (dialog != null && dialog.isShowing()){
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void addDateResponse(Object result) {
-        if(result instanceof CommonResponse){
-            if(((CommonResponse)result).getIq().getQuery().getErrorCode() == 0){
+        if (result instanceof CommonResponse) {
+            if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
                 showMessage("新增成功");
                 this.finish();
-            }else{
+            } else {
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }
         }

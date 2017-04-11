@@ -8,14 +8,7 @@
     android:layout_height="match_parent"
     tools:context="com.zhicheng.ui.activity.Main">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        app:titleTextColor="@color/pridark"
-        android:layout_height="?attr/actionBarSize"
-        android:minHeight="?attr/actionBarSize"
-        android:elevation="@dimen/photo_margin" />
+    <include layout="@layout/activity_toolbar" />
 
     <FrameLayout
         android:layout_width="match_parent"

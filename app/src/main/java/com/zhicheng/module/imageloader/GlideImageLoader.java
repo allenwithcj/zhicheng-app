@@ -18,7 +18,7 @@ import cc.dagger.photopicker.PhotoPickerImageLoader;
  * Created by Donson on 2017/2/14.
  */
 
-public class GlideImageLoader extends PhotoPickerImageLoader{
+public class GlideImageLoader extends PhotoPickerImageLoader {
 
     @Override
     public ImageView onCreateGridItemView(Context context) {
@@ -75,7 +75,7 @@ public class GlideImageLoader extends PhotoPickerImageLoader{
 
     @Override
     public void loadPreviewItemView(ImageView view, String imagePath, int width, int height) {
-        if (imagePath.contains("http")){
+        if (imagePath.contains("http")) {
             Glide.with(view.getContext())
                     .load(imagePath)
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE) //缓存原始数据
@@ -83,7 +83,7 @@ public class GlideImageLoader extends PhotoPickerImageLoader{
 //                    .override(width, height)
                     .crossFade()
                     .into(view);
-        }else {
+        } else {
             Glide.with(view.getContext())
                     .load(Uri.fromFile(new File(imagePath)))
                     .diskCacheStrategy(DiskCacheStrategy.NONE) //不缓存到SD卡

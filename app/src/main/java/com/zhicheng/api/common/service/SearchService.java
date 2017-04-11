@@ -21,7 +21,7 @@ import rx.Observable;
 
 public interface SearchService {
     @GET("api.php")
-    Observable<Response<SearchResponse>> getSearchList(@Query("search")String request);
+    Observable<Response<SearchResponse>> getSearchList(@Query("search") String request);
 
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")

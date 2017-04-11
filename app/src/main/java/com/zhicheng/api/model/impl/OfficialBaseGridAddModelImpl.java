@@ -22,7 +22,7 @@ import rx.schedulers.Schedulers;
 public class OfficialBaseGridAddModelImpl implements OfficialBaseGridAddModel {
     @Override
     public void addDate(String json, ApiCompleteListener listener) {
-        OfficialbaseGridAddService mOfficialBaseGridAddService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialbaseGridAddService.class);
+        OfficialbaseGridAddService mOfficialBaseGridAddService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialbaseGridAddService.class);
         mOfficialBaseGridAddService.addDate(json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -34,22 +34,22 @@ public class OfficialBaseGridAddModelImpl implements OfficialBaseGridAddModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
+                        if (commonResponseResponse.isSuccessful()) {
                             listener.onComplected(commonResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                         }
                     }
                 });
-        }
+    }
 
 }

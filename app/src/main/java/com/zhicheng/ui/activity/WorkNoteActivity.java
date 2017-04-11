@@ -55,7 +55,7 @@ import cc.dagger.photopicker.picker.PhotoFilter;
  */
 
 public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
-        SwipeRefreshLayout.OnRefreshListener,View.OnClickListener,ApiCompleteListener{
+        SwipeRefreshLayout.OnRefreshListener, View.OnClickListener, ApiCompleteListener {
 
     private int start;
     public static WorkNoteActivity instance;
@@ -84,7 +84,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     private TextView date_txt;
     private EditText sender;
 
-    public WorkNoteActivity getInstance(){
+    public WorkNoteActivity getInstance() {
         return instance;
     }
 
@@ -96,15 +96,15 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     //下拉加载更多
     private void refresh() {
         String strEntity = createObj(start);
-        mWorkNodePresenter.loadWorkNodes(strEntity,start);
-        start ++;
+        mWorkNodePresenter.loadWorkNodes(strEntity, start);
+        start++;
     }
 
     //加载数据
     private void onLoadWorkNodes() {
         start = 1;
         String strEntity = createObj(start);
-        mWorkNodePresenter.loadWorkNodes(strEntity,start);
+        mWorkNodePresenter.loadWorkNodes(strEntity, start);
         start++;
     }
 
@@ -140,7 +140,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 
         mDealAdapter = new DealAdapter();
         mImagePath = new ArrayList<>();
-        PhotoPicker.init(new GlideImageLoader(),null);
+        PhotoPicker.init(new GlideImageLoader(), null);
         filter = PhotoFilter.build();
         filter.showGif(false);
         voice.setOnClickListener(this);
@@ -149,7 +149,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         more.setOnClickListener(this);
         date_layout.setOnClickListener(this);
 
-        mLLM = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,true);
+        mLLM = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         mRecyclerView.setLayoutManager(mLLM);
         mWorkNoteAdapter = new WorkNoteAdapter();
         mRecyclerView.setAdapter(mWorkNoteAdapter);
@@ -161,7 +161,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     protected void initData() {
         onLoadWorkNodes();
         mInput.setImeOptions(EditorInfo.IME_ACTION_SEND);
-        mInput.setImeActionLabel("发送",EditorInfo.IME_ACTION_SEND);
+        mInput.setImeActionLabel("发送", EditorInfo.IME_ACTION_SEND);
         mInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         mInput.setSingleLine(false);
         mInput.setMaxLines(5);
@@ -171,24 +171,24 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                     || actionId == EditorInfo.IME_ACTION_DONE
                     || (event != null
                     && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
-                    && event.getAction() == KeyEvent.ACTION_DOWN)){
-                dialog = new AlertDialog.Builder(this,R.style.dialog)
+                    && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                dialog = new AlertDialog.Builder(this, R.style.dialog)
                         .setView(R.layout.z_loading_view)
                         .setCancelable(false)
                         .create();
                 dialog.show();
-                if (mInput.getText().toString().isEmpty()){
+                if (mInput.getText().toString().isEmpty()) {
                     dialog.dismiss();
-                    Snackbar.make(mToolbar,"工作日志不能为空", Snackbar.LENGTH_SHORT).show();
-                }else {
-                        if(mImagePath.size() != 0){
-                            GUID = UUID.randomUUID().toString();
-                            send_content = mInput.getText().toString();
-                            sendMessage(mImagePath,GUID,send_content);
-                        }else{
-                            dialog.dismiss();
-                            Toast.makeText(this,"工作日志图片不能为空", Toast.LENGTH_SHORT).show();
-                        }
+                    Snackbar.make(mToolbar, "工作日志不能为空", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    if (mImagePath.size() != 0) {
+                        GUID = UUID.randomUUID().toString();
+                        send_content = mInput.getText().toString();
+                        sendMessage(mImagePath, GUID, send_content);
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(this, "工作日志图片不能为空", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
                 return true;
@@ -223,7 +223,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         ufIB.setNamespace("AttachmentUpdateRequest");
         uf.setIq(ufIB);
         String jFile = gson.toJson(uf);
-        mWorkNodePresenter.sendWorkNodes(jFile,mImagePath,content,attGUID,GUID,this);
+        mWorkNodePresenter.sendWorkNodes(jFile, mImagePath, content, attGUID, GUID, this);
 
     }
 
@@ -241,13 +241,13 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_filter) {
-            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
                 mDrawerLayout.closeDrawer(GravityCompat.START);
-            }else {
+            } else {
                 mDrawerLayout.openDrawer(GravityCompat.START);
             }
             return true;
-        }else if(item.getItemId() == android.R.id.home){
+        } else if (item.getItemId() == android.R.id.home) {
             finish();
         }
         return true;
@@ -257,40 +257,40 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     protected void onPause() {
         super.onPause();
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mInput.getWindowToken(),0);
+        imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
     }
 
 
     @Override
     public void showMessage(String msg) {
-        if (dialog != null && dialog.isShowing()){
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
-        Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void refreshData(Object result) {
-        if(result instanceof PersonalLogMaResponse){
+        if (result instanceof PersonalLogMaResponse) {
             //查询工作日志返回
-            if(((PersonalLogMaResponse)result).getIq().getQuery().getErrorCode().equals("0")){
-                List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogList = ((PersonalLogMaResponse)result).getIq().getQuery().getPrelogcon().getPrelogs();
+            if (((PersonalLogMaResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
+                List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogList = ((PersonalLogMaResponse) result).getIq().getQuery().getPrelogcon().getPrelogs();
                 mWorkNoteAdapter.addAllData(prelogList);
             }
             //发送工作日志返回
-         }else if(result instanceof CommonResponse){
-            if(((CommonResponse)result).getIq().getQuery().getErrorCode() == 0){
+        } else if (result instanceof CommonResponse) {
+            if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
                 mInput.setText("");
                 mImagePath.clear();
                 onLoadWorkNodes();
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mInput.getWindowToken(),0);
+                imm.hideSoftInputFromWindow(mInput.getWindowToken(), 0);
                 showMessage("发送日志成功");
                 mRecyclerView.smoothScrollToPosition(0);
-                if (moreTools.getVisibility() == View.VISIBLE){
+                if (moreTools.getVisibility() == View.VISIBLE) {
                     moreTools.setVisibility(View.GONE);
                 }
-            }else{
+            } else {
                 showMessage("发送日志失败");
             }
         }
@@ -299,8 +299,8 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     @Override
     public void addData(Object result) {
         //查询工作日志返回
-        if(((PersonalLogMaResponse)result).getIq().getQuery().getErrorCode().equals("0")){
-            List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogList = ((PersonalLogMaResponse)result).getIq().getQuery().getPrelogcon().getPrelogs();
+        if (((PersonalLogMaResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
+            List<PersonalLogMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogList = ((PersonalLogMaResponse) result).getIq().getQuery().getPrelogcon().getPrelogs();
             mWorkNoteAdapter.addDataList(prelogList);
         }
     }
@@ -308,16 +308,16 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     //新增
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.more:
-                if (moreTools.getVisibility() == View.GONE){
+                if (moreTools.getVisibility() == View.GONE) {
                     moreTools.setVisibility(View.VISIBLE);
                     picRecyclerView = (RecyclerView) findViewById(R.id.picRecycleView);
                     LinearLayoutManager mLayoutManager = new LinearLayoutManager(WorkNoteActivity.this);
                     mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
                     picRecyclerView.setLayoutManager(mLayoutManager);
                     picRecyclerView.setAdapter(mDealAdapter);
-                }else {
+                } else {
                     moreTools.setVisibility(View.GONE);
                 }
                 break;
@@ -338,12 +338,13 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                 break;
         }
     }
+
     //新增
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PhotoPicker.REQUEST_SELECTED){
-            if (resultCode == RESULT_OK){
+        if (requestCode == PhotoPicker.REQUEST_SELECTED) {
+            if (resultCode == RESULT_OK) {
                 List<String> mData = data.getStringArrayListExtra(PhotoPicker.EXTRA_RESULT);
                 mImagePath = (ArrayList<String>) mData;
                 mDealAdapter.addData(mData);
@@ -362,29 +363,29 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     }
 
 
-    private class DealAdapter extends RecyclerView.Adapter{
+    private class DealAdapter extends RecyclerView.Adapter {
 
         private List<String> mData;
 
-        public DealAdapter(){
+        public DealAdapter() {
             mData = new ArrayList<>();
         }
 
-        public void addData(List<String> d){
+        public void addData(List<String> d) {
             this.mData = d;
             this.notifyDataSetChanged();
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view, parent, false);
             return new DealViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-            if (holder instanceof DealViewHolder){
-                if (position == mData.size()){
+            if (holder instanceof DealViewHolder) {
+                if (position == mData.size()) {
                     Glide.with(holder.itemView.getContext())
                             .load(R.mipmap.icon_addpic_unfocused)
                             .into(((DealViewHolder) holder).mImageView);
@@ -400,7 +401,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                                 .selectedPaths(mImagePath) // 已选择的照片地址
                                 .start(WorkNoteActivity.this); // 从Fragment、Activity中启动
                     });
-                }else {
+                } else {
                     Glide.with(holder.itemView.getContext())
                             .load("file://" + mData.get(position))
                             .into(((DealViewHolder) holder).mImageView);
@@ -410,7 +411,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 
         @Override
         public int getItemCount() {
-            return mData.size()+1;
+            return mData.size() + 1;
         }
     }
 

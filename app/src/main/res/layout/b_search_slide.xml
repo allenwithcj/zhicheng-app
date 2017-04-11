@@ -7,9 +7,9 @@
     <LinearLayout
         android:id="@+id/bg_layout"
         android:orientation="vertical"
-        android:background="@color/headView"
+        android:background="@color/red"
         android:layout_width="match_parent"
-        android:layout_height="170dp"/>
+        android:layout_height="170dp" />
 
     <LinearLayout
         android:id="@+id/type_layout"
@@ -82,6 +82,7 @@
                 android:textColor="@color/radiobutton_textcolor" />
         </RadioGroup>
     </LinearLayout>
+
     <View
         android:id="@+id/line1"
         android:layout_below="@+id/type_layout"
@@ -119,21 +120,22 @@
             android:textStyle="normal"
             android:hint="请输入姓名"
             android:background="@null"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
     </LinearLayout>
+
     <View
         android:id="@+id/line2"
         android:layout_below="@+id/sender_layout"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_text" />
-
     <LinearLayout
         android:id="@+id/date_layout"
-        android:layout_below="@+id/line2"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line2"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:layout_width="0dp"
@@ -144,8 +146,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:drawablePadding="5dp"
-            android:text="时间"
-            android:id="@+id/textView" />
+            android:text="时间"/>
 
         <TextView
             android:id="@+id/Date"
@@ -158,7 +159,7 @@
             android:textSize="@dimen/content_size"
             android:textStyle="normal"
             android:hint="请选择时间"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black" />
 
         <ImageView
             android:layout_width="30dp"
@@ -166,14 +167,61 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_marginRight="10dp"
-            android:background="@drawable/patrol_next_arrow"/>
+            android:background="@drawable/patrol_next_arrow" />
     </LinearLayout>
-
     <View
+        android:id="@+id/line3"
         android:layout_below="@+id/date_layout"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_text" />
+    <LinearLayout
+        android:id="@+id/grid_layout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line3"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/patrol_heading"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:text="@string/grid"/>
+
+        <TextView
+            android:id="@+id/grid_name"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/textView_padding"
+            android:layout_margin="@dimen/photo_margin"
+            android:layout_gravity="center"
+            android:textSize="@dimen/content_size"
+            android:textStyle="normal"
+            android:hint="请选择所属网格"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/patrol_next_arrow" />
+    </LinearLayout>
+    <View
+        android:id="@+id/line4"
+        android:layout_below="@+id/grid_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_text" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -187,7 +235,7 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:background="@color/blue_text"
+            android:background="@color/red"
             android:text="重置"
             android:textColor="@color/white" />
 
@@ -198,6 +246,6 @@
             android:layout_weight="1"
             android:background="@drawable/shape_patrol_corners_blue_confirm"
             android:text="确定"
-            android:textColor="@color/blue_text" />
+            android:textColor="@color/red" />
     </LinearLayout>
 </RelativeLayout>

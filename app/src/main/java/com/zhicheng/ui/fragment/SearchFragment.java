@@ -35,50 +35,51 @@ import rx.functions.Func1;
  * Created by Donson on 2017/1/17.
  */
 
-public class SearchFragment extends BaseFragment implements SearchView{
+public class SearchFragment extends BaseFragment implements SearchView {
 
     private SearchPresenterImpl mSearchPresenterImpl;
     private EditText mAutoComplete;
     private ArrayAdapter<String> mAdapter;
     private ListView mListView;
     private OpenFragment mOpenFragment;
+
     //接口
-    public interface OpenFragment{
-        void onOpenFragment(SearchFragment fragment,String s,ArrayList<String> node);
+    public interface OpenFragment {
+        void onOpenFragment(SearchFragment fragment, String s, ArrayList<String> node);
     }
 
-    public void setOpenFragment(OpenFragment fragment){
-        if (this.mOpenFragment != null){
+    public void setOpenFragment(OpenFragment fragment) {
+        if (this.mOpenFragment != null) {
             this.mOpenFragment = null;
         }
         this.mOpenFragment = fragment;
     }
 
-    public static SearchFragment newInstance(String request){
+    public static SearchFragment newInstance(String request) {
         SearchFragment fragment = new SearchFragment();
         Bundle b = new Bundle();
-        b.putString("request",request);
+        b.putString("request", request);
         fragment.setArguments(b);
         return fragment;
     }
 
-    public static SearchFragment newInstance(){
+    public static SearchFragment newInstance() {
         SearchFragment fragment = new SearchFragment();
         return fragment;
     }
 
-    public static SearchFragment newInstance(boolean isShowSearch,String f1){
+    public static SearchFragment newInstance(boolean isShowSearch, String f1) {
         SearchFragment fragment = new SearchFragment();
         Bundle b = new Bundle();
-        b.putBoolean("isShowSearch",isShowSearch);
-        b.putString("parentPoint",f1);
+        b.putBoolean("isShowSearch", isShowSearch);
+        b.putString("parentPoint", f1);
         fragment.setArguments(b);
         return fragment;
     }
 
     @Override
     protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.z_search_view,container,false);
+        mRootView = inflater.inflate(R.layout.z_search_view, container, false);
     }
 
     @Override
@@ -86,16 +87,16 @@ public class SearchFragment extends BaseFragment implements SearchView{
         mAutoComplete = (EditText) mRootView.findViewById(R.id.autoText);
         mListView = (ListView) mRootView.findViewById(R.id.searchList);
         mSearchPresenterImpl = new SearchPresenterImpl(this);
-        mAdapter = new ArrayAdapter<String>(getContext(),R.layout.text_view);
+        mAdapter = new ArrayAdapter<String>(getContext(), R.layout.text_view);
         mListView.setAdapter(mAdapter);
     }
 
     @Override
     protected void initData(boolean isSavedNull) {
-        if (!getArguments().getBoolean("isShowSearch",true)){
+        if (!getArguments().getBoolean("isShowSearch", true)) {
             mAutoComplete.setVisibility(View.GONE);
             Gson gson = new Gson();
-            if (getArguments().getString("parentPoint","").equals("")){
+            if (getArguments().getString("parentPoint", "").equals("")) {
                 CaseItemRequest request = new CaseItemRequest();
                 CaseItemRequest.IqBean iq = new CaseItemRequest.IqBean();
                 CaseItemRequest.IqBean.QueryBean query = new CaseItemRequest.IqBean.QueryBean();
@@ -104,7 +105,7 @@ public class SearchFragment extends BaseFragment implements SearchView{
                 iq.setQuery(query);
                 request.setIq(iq);
                 mSearchPresenterImpl.SearchBaoClassify(gson.toJson(request));
-            }else {
+            } else {
                 CaseItemRequest request = new CaseItemRequest();
                 CaseItemRequest.IqBean iq = new CaseItemRequest.IqBean();
                 CaseItemRequest.IqBean.QueryBean query = new CaseItemRequest.IqBean.QueryBean();
@@ -115,7 +116,7 @@ public class SearchFragment extends BaseFragment implements SearchView{
                 mSearchPresenterImpl.SearchBaoClassify(gson.toJson(request));
             }
         }
-        if (getArguments() != null && getArguments().getBoolean("isShowSearch",true)){
+        if (getArguments() != null && getArguments().getBoolean("isShowSearch", true)) {
             Observable.create(subscriber -> {
                 mSearchPresenterImpl.getSearchResult(getArguments().getString("request"));
                 mAutoComplete.addTextChangedListener(new TextWatcher() {
@@ -135,7 +136,7 @@ public class SearchFragment extends BaseFragment implements SearchView{
                     }
                 });
             }).subscribeOn(AndroidSchedulers.mainThread())
-                    .debounce(100,TimeUnit.MILLISECONDS,AndroidSchedulers.mainThread())
+                    .debounce(100, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                     .switchMap(new Func1<Object, Observable<String>>() {
                         @Override
                         public Observable<String> call(Object o) {
@@ -160,14 +161,14 @@ public class SearchFragment extends BaseFragment implements SearchView{
                     });
             mListView.setOnItemClickListener((parent, view, position, id) -> {
                 Intent intent = new Intent();
-                if (!getArguments().getString("request").isEmpty()){
-                    if (getArguments().getString("request","").equals("communicate")){
+                if (!getArguments().getString("request").isEmpty()) {
+                    if (getArguments().getString("request", "").equals("communicate")) {
                         intent.setAction("com.search.communicate.result");
-                    }else if (getArguments().getString("request","").equals("grid")){
+                    } else if (getArguments().getString("request", "").equals("grid")) {
                         intent.setAction("com.search.grid.result");
                     }
                 }
-                intent.putExtra("item",parent.getItemAtPosition(position).toString());
+                intent.putExtra("item", parent.getItemAtPosition(position).toString());
                 getActivity().sendBroadcast(intent);
                 getActivity().finish();
             });
@@ -176,25 +177,25 @@ public class SearchFragment extends BaseFragment implements SearchView{
 
     @Override
     public void showMessage(String msg) {
-        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void updateView(Object result) {
-        if (result instanceof SearchResponse){
+        if (result instanceof SearchResponse) {
             List<String> list = new ArrayList<String>();
             mAdapter.clear();
-            for (int i=0;i<((SearchResponse) result).getDataList().size();i++){
-                if (((SearchResponse) result).getDataList().get(i).contains(mAutoComplete.getText().toString())){
+            for (int i = 0; i < ((SearchResponse) result).getDataList().size(); i++) {
+                if (((SearchResponse) result).getDataList().get(i).contains(mAutoComplete.getText().toString())) {
                     list.add(((SearchResponse) result).getDataList().get(i));
                 }
             }
             mAdapter.addAll(list);
             mAdapter.notifyDataSetChanged();
-        }else if (result instanceof SearchBaoClassifyResponse){
+        } else if (result instanceof SearchBaoClassifyResponse) {
             List<String> list = new ArrayList<>();
             List<ArrayList<String>> nodePoint = new ArrayList<>();
-            for (SearchBaoClassifyResponse.IqBean.QueryBean.ItemsBean s : ((SearchBaoClassifyResponse) result).getIq().getQuery().getItems()){
+            for (SearchBaoClassifyResponse.IqBean.QueryBean.ItemsBean s : ((SearchBaoClassifyResponse) result).getIq().getQuery().getItems()) {
                 list.add(s.getSecondName());
                 ArrayList<String> node = new ArrayList<>();
                 node.add(s.getId());
@@ -210,7 +211,7 @@ public class SearchFragment extends BaseFragment implements SearchView{
             mAdapter.clear();
             mAdapter.addAll(list);
             mListView.setOnItemClickListener((parent, view, position, id) -> {
-                mOpenFragment.onOpenFragment(this,nodePoint.get(position).get(0),nodePoint.get(position));
+                mOpenFragment.onOpenFragment(this, nodePoint.get(position).get(0), nodePoint.get(position));
             });
         }
     }
@@ -219,7 +220,7 @@ public class SearchFragment extends BaseFragment implements SearchView{
     public void onPause() {
         super.onPause();
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mAutoComplete.getWindowToken(),0);
+        imm.hideSoftInputFromWindow(mAutoComplete.getWindowToken(), 0);
     }
 
     @Override

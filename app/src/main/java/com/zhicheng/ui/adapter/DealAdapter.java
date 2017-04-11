@@ -27,27 +27,27 @@ public class DealAdapter extends RecyclerView.Adapter {
     private Activity activity;
     private PhotoFilter filter;
 
-    public DealAdapter(Activity activity,PhotoFilter filter){
+    public DealAdapter(Activity activity, PhotoFilter filter) {
         mData = new ArrayList<>();
         this.activity = activity;
         this.filter = filter;
     }
 
-    public void addData(List<String> d){
+    public void addData(List<String> d) {
         this.mData = d;
         this.notifyDataSetChanged();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view, parent, false);
         return new DealViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof DealViewHolder){
-            if (position == mData.size()){
+        if (holder instanceof DealViewHolder) {
+            if (position == mData.size()) {
                 Glide.with(holder.itemView.getContext())
                         .load(R.mipmap.icon_addpic_unfocused)
                         .into(((DealViewHolder) holder).mImageView);
@@ -63,7 +63,7 @@ public class DealAdapter extends RecyclerView.Adapter {
                             .selectedPaths(new ArrayList<>()) // 已选择的照片地址
                             .start(activity); // 从Fragment、Activity中启动
                 });
-            }else {
+            } else {
                 Glide.with(holder.itemView.getContext())
                         .load("file://" + mData.get(position))
                         .into(((DealViewHolder) holder).mImageView);

@@ -23,13 +23,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null){
+        if (savedInstanceState != null) {
             boolean isSupportHidden = savedInstanceState.getBoolean(STATE_SAVE_IS_HIDDEN);
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            if (isSupportHidden){
+            if (isSupportHidden) {
                 ft.hide(this);
-            }else {
+            } else {
                 ft.show(this);
             }
             ft.commit();
@@ -39,16 +39,16 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(STATE_SAVE_IS_HIDDEN,isHidden());
+        outState.putBoolean(STATE_SAVE_IS_HIDDEN, isHidden());
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        initRootView(inflater,container,savedInstanceState);
+        initRootView(inflater, container, savedInstanceState);
         initEvents();
         initData(savedInstanceState == null);
-        BaseApplication.log_say("sss","onCreateView");
+        BaseApplication.log_say("sss", "onCreateView");
         return mRootView;
     }
 
@@ -66,6 +66,7 @@ public abstract class BaseFragment extends Fragment {
 
     /**
      * 加载数据
+     *
      * @param isSavedNull
      */
     protected abstract void initData(boolean isSavedNull);

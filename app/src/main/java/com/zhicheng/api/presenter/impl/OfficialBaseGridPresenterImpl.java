@@ -19,12 +19,12 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by Donson on 2017/1/6.
  */
 
-public class OfficialBaseGridPresenterImpl implements OfficialBaseGridPresenter,ApiCompleteListener {
+public class OfficialBaseGridPresenterImpl implements OfficialBaseGridPresenter, ApiCompleteListener {
 
     private OfficialBaseGridView mOfficialBaseGridView;
     private OfficialBaseGridModel mOfficialBaseGridModel;
 
-    public OfficialBaseGridPresenterImpl(OfficialBaseGridView view){
+    public OfficialBaseGridPresenterImpl(OfficialBaseGridView view) {
         this.mOfficialBaseGridView = view;
         mOfficialBaseGridModel = new OfficialBaseGridModelImpl();
     }
@@ -32,7 +32,7 @@ public class OfficialBaseGridPresenterImpl implements OfficialBaseGridPresenter,
 
     @Override
     public void onComplected(Object result) {
-        if (result instanceof OfficialBaseGridResponse){
+        if (result instanceof OfficialBaseGridResponse) {
             mOfficialBaseGridView.refreshData(result);
         }
         mOfficialBaseGridView.hideProgress();
@@ -41,38 +41,38 @@ public class OfficialBaseGridPresenterImpl implements OfficialBaseGridPresenter,
     @Override
     public void onFailed(BaseResponse msg) {
         mOfficialBaseGridView.hideProgress();
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mOfficialBaseGridView.showMessage(msg.getMsg());
     }
 
     @Override
-    public void loadOfficialBaseGrid(String street,String communicate,String grid) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+    public void loadOfficialBaseGrid(String street, String communicate, String grid) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialBaseGridView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mOfficialBaseGridView.hideProgress();
         }
         mOfficialBaseGridView.showProgress();
-        mOfficialBaseGridModel.loadOfficial(street,communicate,grid,this);
+        mOfficialBaseGridModel.loadOfficial(street, communicate, grid, this);
     }
 
-    public void loadOfficialBaseGrid(String street,String communicate) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+    public void loadOfficialBaseGrid(String street, String communicate) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialBaseGridView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mOfficialBaseGridView.hideProgress();
         }
         mOfficialBaseGridView.showProgress();
-        mOfficialBaseGridModel.loadOfficial(street,communicate,this);
+        mOfficialBaseGridModel.loadOfficial(street, communicate, this);
     }
 
     public void loadOfficialBaseGrid(String street) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialBaseGridView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mOfficialBaseGridView.hideProgress();
         }
         mOfficialBaseGridView.showProgress();
-        mOfficialBaseGridModel.loadOfficial(street,this);
+        mOfficialBaseGridModel.loadOfficial(street, this);
     }
 
     @Override

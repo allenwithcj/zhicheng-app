@@ -20,35 +20,35 @@ import rx.Observable;
  * Created by Donson on 2017/1/17.
  */
 
-public class SearchViewActivity extends BaseActivity{
+public class SearchViewActivity extends BaseActivity {
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.z_search_view_activity);
-        if (getIntent().getStringExtra("fragment").equals("Search")){
+        if (getIntent().getStringExtra("fragment").equals("Search")) {
             SearchFragment searchFragment;
             String isClassify = getIntent().getStringExtra("isClassify");
-            if (null != isClassify && isClassify.equals("true")){
-                searchFragment = SearchFragment.newInstance(false,"");
-                searchFragment.setOpenFragment((fragment,s,type) -> {
-                    SearchFragment newFragment = SearchFragment.newInstance(false,s);
+            if (null != isClassify && isClassify.equals("true")) {
+                searchFragment = SearchFragment.newInstance(false, "");
+                searchFragment.setOpenFragment((fragment, s, type) -> {
+                    SearchFragment newFragment = SearchFragment.newInstance(false, s);
                     newFragment.setOpenFragment((fragment1, s1, type1) -> {
-                        openFragment(fragment,newFragment,type1);
+                        openFragment(fragment, newFragment, type1);
                     });
-                    openFragment(fragment,newFragment,type);
+                    openFragment(fragment, newFragment, type);
                 });
-            }else {
+            } else {
                 searchFragment = SearchFragment.newInstance(getIntent().getStringExtra("action"));
             }
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();
-            ft.add(R.id.searchView,searchFragment);
+            ft.add(R.id.searchView, searchFragment);
             ft.commit();
-        }else {
+        } else {
             SearchClassifyFragment searchClassifyFragment = SearchClassifyFragment.newInstance();
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction ft = manager.beginTransaction();
-            ft.add(R.id.searchView,searchClassifyFragment);
+            ft.add(R.id.searchView, searchClassifyFragment);
             ft.commit();
         }
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
@@ -59,18 +59,18 @@ public class SearchViewActivity extends BaseActivity{
 
     }
 
-    private void openFragment(SearchFragment oldFragment,SearchFragment fragment,ArrayList<String> node){
+    private void openFragment(SearchFragment oldFragment, SearchFragment fragment, ArrayList<String> node) {
         FragmentManager manager = getSupportFragmentManager();
-        if (manager.getBackStackEntryCount() == 0){
+        if (manager.getBackStackEntryCount() == 0) {
             FragmentTransaction ft = manager.beginTransaction();
             ft.hide(oldFragment);
-            ft.add(R.id.searchView,fragment);
+            ft.add(R.id.searchView, fragment);
             ft.addToBackStack(null);
             ft.commit();
-        }else {
+        } else {
             Intent intent = new Intent();
             intent.setAction("com.search.classify.bao");
-            intent.putStringArrayListExtra("node",node);
+            intent.putStringArrayListExtra("node", node);
             this.sendBroadcast(intent);
             this.finish();
         }

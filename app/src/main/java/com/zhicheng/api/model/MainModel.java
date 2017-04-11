@@ -27,18 +27,19 @@ public interface MainModel {
      * @param personal
      * @param listener
      */
-    void loadPersonal(String personal,ApiCompleteListener listener);
+    void loadPersonal(String personal, ApiCompleteListener listener);
 
     /**
      * 事项上报
      *
-     * @param j json数据
-     * @param imgs 图片数据
+     * @param j     json数据
+     * @param imgs  图片数据
      * @param jFile 文件附带json
      */
-    void UpThings(int requestType,String GUID,String j,String jFile,List<String> imgs, ApiCompleteListener listener);
+    void UpThings(int requestType, String GUID, String j, String jFile, List<String> imgs, ApiCompleteListener listener);
 
-    void upSimpleFile(String guid,List<String> imgs,String json,ApiCompleteListener listener);
+    void upSimpleFile(String guid, List<String> imgs, String json, ApiCompleteListener listener);
+
     void cancelLoading();
 
 }

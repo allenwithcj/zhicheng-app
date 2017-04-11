@@ -39,7 +39,7 @@ import cc.dagger.photopicker.picker.PhotoFilter;
  * Created by Donson on 2017/2/28.
  */
 
-public class DealActivity extends BaseActivity implements UpThingsView{
+public class DealActivity extends BaseActivity implements UpThingsView {
 
     private RecyclerView mRecyclerView;
     private DealAdapter mDealAdapter;
@@ -60,11 +60,11 @@ public class DealActivity extends BaseActivity implements UpThingsView{
         mEdit = (EditText) findViewById(R.id.suggestion);
         guid = UUID.randomUUID().toString();
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(this,3));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mDealAdapter = new DealAdapter();
         mRecyclerView.setAdapter(mDealAdapter);
         mUpThingsPresenter = new UpThingsPresenterImpl(this);
-        PhotoPicker.init(new GlideImageLoader(),null);
+        PhotoPicker.init(new GlideImageLoader(), null);
         filter = PhotoFilter.build();
         filter.showGif(false);
     }
@@ -87,43 +87,43 @@ public class DealActivity extends BaseActivity implements UpThingsView{
             ufIB.setNamespace("AttachmentUpdateRequest");
             uf.setIq(ufIB);
             String jFile = gson.toJson(uf);
-            if (null != mImagePath){
-                dialog = new AlertDialog.Builder(this,R.style.dialog)
+            if (null != mImagePath) {
+                dialog = new AlertDialog.Builder(this, R.style.dialog)
                         .setView(R.layout.z_loading_view)
                         .setCancelable(false)
                         .create();
                 dialog.show();
-                mUpThingsPresenter.UpSimpleFile(guid,mImagePath,jFile);
+                mUpThingsPresenter.UpSimpleFile(guid, mImagePath, jFile);
                 mData.addAll(mImagePath);
                 mBtn.setClickable(false);
-            }else {
-                Snackbar.make(mToolbar,"请选择上传图片",Snackbar.LENGTH_SHORT).show();
+            } else {
+                Snackbar.make(mToolbar, "请选择上传图片", Snackbar.LENGTH_SHORT).show();
             }
         });
     }
 
     @Override
     public void showMessage(String msg) {
-        if (dialog != null && dialog.isShowing()){
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
         mBtn.setClickable(true);
-        Toast.makeText(UIUtils.getContext(),msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(UIUtils.getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void UpThings(Object result) {
-        if (result instanceof CommonResponse){
-            if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
-                if (dialog != null && dialog.isShowing()){
+        if (result instanceof CommonResponse) {
+            if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
+                if (dialog != null && dialog.isShowing()) {
                     dialog.dismiss();
                 }
                 mBtn.setClickable(true);
                 Intent intent = new Intent();
-                intent.putStringArrayListExtra("mData",mData);
-                this.setResult(RESULT_OK,intent);
+                intent.putStringArrayListExtra("mData", mData);
+                this.setResult(RESULT_OK, intent);
                 this.finish();
-            }else {
+            } else {
                 mBtn.setClickable(false);
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }
@@ -132,13 +132,13 @@ public class DealActivity extends BaseActivity implements UpThingsView{
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && mData.size() < 4){
-            if (dialog != null && dialog.isShowing()){
+        if (keyCode == KeyEvent.KEYCODE_BACK && mData.size() < 4) {
+            if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
             Intent intent = new Intent();
-            intent.putStringArrayListExtra("mData",null);
-            setResult(RESULT_OK,intent);
+            intent.putStringArrayListExtra("mData", null);
+            setResult(RESULT_OK, intent);
             this.finish();
             return true;
         }
@@ -148,8 +148,8 @@ public class DealActivity extends BaseActivity implements UpThingsView{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PhotoPicker.REQUEST_SELECTED){
-            if (resultCode == RESULT_OK){
+        if (requestCode == PhotoPicker.REQUEST_SELECTED) {
+            if (resultCode == RESULT_OK) {
                 List<String> mData = data.getStringArrayListExtra(PhotoPicker.EXTRA_RESULT);
                 mImagePath = (ArrayList<String>) mData;
                 mDealAdapter.addData(mData);
@@ -157,29 +157,29 @@ public class DealActivity extends BaseActivity implements UpThingsView{
         }
     }
 
-    private class DealAdapter extends RecyclerView.Adapter{
+    private class DealAdapter extends RecyclerView.Adapter {
 
         private List<String> mData;
 
-        public DealAdapter(){
+        public DealAdapter() {
             mData = new ArrayList<>();
         }
 
-        public void addData(List<String> d){
+        public void addData(List<String> d) {
             this.mData = d;
             this.notifyDataSetChanged();
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view,parent,false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view, parent, false);
             return new DealViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-            if (holder instanceof DealViewHolder){
-                if (position == mData.size()){
+            if (holder instanceof DealViewHolder) {
+                if (position == mData.size()) {
                     Glide.with(holder.itemView.getContext())
                             .load(R.mipmap.icon_addpic_unfocused)
                             .into(((DealViewHolder) holder).mImageView);
@@ -195,7 +195,7 @@ public class DealActivity extends BaseActivity implements UpThingsView{
                                 .selectedPaths(mImagePath) // 已选择的照片地址
                                 .start(DealActivity.this); // 从Fragment、Activity中启动
                     });
-                }else {
+                } else {
                     Glide.with(holder.itemView.getContext())
                             .load("file://" + mData.get(position))
                             .into(((DealViewHolder) holder).mImageView);
@@ -205,7 +205,7 @@ public class DealActivity extends BaseActivity implements UpThingsView{
 
         @Override
         public int getItemCount() {
-            return mData.size()+1;
+            return mData.size() + 1;
         }
     }
 

@@ -36,7 +36,7 @@ import java.util.List;
  * Created by Donson on 2017/1/15.
  */
 
-public class ContactActivity extends BaseActivity implements ContactView,OnRecyclerViewListener,SwipeRefreshLayout.OnRefreshListener{
+public class ContactActivity extends BaseActivity implements ContactView, OnRecyclerViewListener, SwipeRefreshLayout.OnRefreshListener {
     private int start;
 
     private SwipeRefreshLayout swipeRefresh;
@@ -54,12 +54,12 @@ public class ContactActivity extends BaseActivity implements ContactView,OnRecyc
     protected void initEvents() {
         setContentView(R.layout.activity_main_contact);
         mContactPresenterImpl = new ContactPresenterImpl(this);
-        swipeRefresh = (SwipeRefreshLayout)findViewById(R.id.swipeRefresh);
-        mRecyclerView = (RecyclerView)findViewById(R.id.mRecyclerview);
-        mSideBar = (SideBar)findViewById(R.id.sideBar);
-        mClearEditText = (ClearEditText)findViewById(R.id.mClearEditText);
-        touch_anno = (TextView)findViewById(R.id.touch_anno);
-        mNoResult = (TextView)findViewById(R.id.noResult);
+        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        mRecyclerView = (RecyclerView) findViewById(R.id.mRecyclerview);
+        mSideBar = (SideBar) findViewById(R.id.sideBar);
+        mClearEditText = (ClearEditText) findViewById(R.id.mClearEditText);
+        touch_anno = (TextView) findViewById(R.id.touch_anno);
+        mNoResult = (TextView) findViewById(R.id.noResult);
         mSideBar.setmTextDialog(touch_anno);
 
         mRecyclerView.setHasFixedSize(true);
@@ -111,25 +111,25 @@ public class ContactActivity extends BaseActivity implements ContactView,OnRecyc
 
     private void mFilterData(String s) {
         List<Contacts> mSortContactsList = new ArrayList<>();
-        if(s.isEmpty()){
+        if (s.isEmpty()) {
             mSortContactsList = contactsList;
             mNoResult.setVisibility(View.GONE);
-        }else{
+        } else {
             mSortContactsList.clear();
-            if(contactsList != null){
-                for(Contacts contacts : contactsList){
-                    if(contacts.getName().toUpperCase().indexOf(s.toUpperCase()) != -1 ||
+            if (contactsList != null) {
+                for (Contacts contacts : contactsList) {
+                    if (contacts.getName().toUpperCase().indexOf(s.toUpperCase()) != -1 ||
                             PinyinUtils.getPingYin(contacts.getName()).toUpperCase()
-                                    .startsWith(s.toUpperCase())){
+                                    .startsWith(s.toUpperCase())) {
                         mSortContactsList.add(contacts);
                     }
                 }
-                if(mSortContactsList.size() == 0){
+                if (mSortContactsList.size() == 0) {
                     mNoResult.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     mNoResult.setVisibility(View.GONE);
                 }
-                Collections.sort(mSortContactsList,new PinyinComparator());
+                Collections.sort(mSortContactsList, new PinyinComparator());
             }
         }
         mAdapter.updateDate(mSortContactsList);
@@ -158,12 +158,12 @@ public class ContactActivity extends BaseActivity implements ContactView,OnRecyc
 
     @Override
     public void refreshData(Object result) {
-        if(result instanceof AddressBookResponse){
-            if(((AddressBookResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+        if (result instanceof AddressBookResponse) {
+            if (((AddressBookResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 List<AddressBookResponse.IqBean.QueryBean.ItemsBean> itemList = ((AddressBookResponse) result).getIq().getQuery().getItems();
                 contactsList = new ArrayList<>();
                 contactsList.clear();
-                for(AddressBookResponse.IqBean.QueryBean.ItemsBean item: itemList){
+                for (AddressBookResponse.IqBean.QueryBean.ItemsBean item : itemList) {
                     Contacts mContacts = new Contacts();
                     mContacts.setId(item.getId());
                     mContacts.setName(item.getName());
@@ -176,8 +176,8 @@ public class ContactActivity extends BaseActivity implements ContactView,OnRecyc
                     mContacts.setTel(item.getTel());
                     mContacts.setPhone(item.getPhone());
                     mContacts.setEmail(item.getEmail());
-                    String pinyin = PinyinUtils.getPingYin(item.getName()).substring(0,1).toUpperCase();
-                    if(pinyin.matches("[A-Z]")){
+                    String pinyin = PinyinUtils.getPingYin(item.getName()).substring(0, 1).toUpperCase();
+                    if (pinyin.matches("[A-Z]")) {
                         mContacts.setLetter(pinyin);
                     }
                     contactsList.add(mContacts);
@@ -195,10 +195,10 @@ public class ContactActivity extends BaseActivity implements ContactView,OnRecyc
 
     @Override
     public void onItemClick(int position) {
-        if(!contactsList.get(position).getType().equals("1")){
+        if (!contactsList.get(position).getType().equals("1")) {
             Intent intent = new Intent(this, ContactMultilevelActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putSerializable("contacts",contactsList.get(position));
+            bundle.putSerializable("contacts", contactsList.get(position));
             intent.putExtras(bundle);
             UIUtils.startActivity(intent);
         }
@@ -218,7 +218,7 @@ public class ContactActivity extends BaseActivity implements ContactView,OnRecyc
     private void refresh() {
         start = 1;
         String strEntity = createObj(start);
-        mContactPresenterImpl.loadContacts(strEntity,start);
+        mContactPresenterImpl.loadContacts(strEntity, start);
         start++;
     }
 
@@ -266,7 +266,7 @@ public class ContactActivity extends BaseActivity implements ContactView,OnRecyc
 
     private void onLoadMore() {
         String entity = createObj(start);
-        mContactPresenterImpl.loadContacts(entity,start);
+        mContactPresenterImpl.loadContacts(entity, start);
         start++;
     }
 }

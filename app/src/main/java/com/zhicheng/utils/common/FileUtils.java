@@ -324,10 +324,10 @@ public class FileUtils {
      * Base64
      * utf-8 default
      */
-    public static String getBase64Pwd(String pwd){
+    public static String getBase64Pwd(String pwd) {
         String encodePwd = null;
         try {
-            encodePwd = Base64.encodeToString(pwd.getBytes("utf-8"),Base64.DEFAULT);
+            encodePwd = Base64.encodeToString(pwd.getBytes("utf-8"), Base64.DEFAULT);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

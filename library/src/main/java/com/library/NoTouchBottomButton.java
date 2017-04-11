@@ -31,7 +31,7 @@ public class NoTouchBottomButton extends BottomNavigationBar {
         return !isTouch;
     }
 
-    public void setTouch(boolean t){
+    public void setTouch(boolean t) {
         this.isTouch = true;
     }
 }

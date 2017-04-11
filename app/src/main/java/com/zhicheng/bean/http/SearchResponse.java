@@ -11,10 +11,11 @@ public class SearchResponse extends BaseResponse {
     private List<String> DataList;
     private List<ClassifyResponse> classifyResponses;
 
-    public SearchResponse(){}
+    public SearchResponse() {
+    }
 
-    public SearchResponse(int code,String msg){
-        super(code,msg);
+    public SearchResponse(int code, String msg) {
+        super(code, msg);
     }
 
     public List<String> getDataList() {

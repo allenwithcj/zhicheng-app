@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/noSuc"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/recycle_touch_bg"
+    android:paddingLeft="@dimen/textView_padding"
+    android:orientation="vertical"
+    android:paddingRight="@dimen/textView_padding">
+
+    <TextView
+        android:id="@+id/attrmentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/textView_padding"
+        android:paddingLeft="@dimen/textView_padding" />
+
+
+</LinearLayout>

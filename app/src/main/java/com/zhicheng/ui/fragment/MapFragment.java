@@ -55,7 +55,7 @@ public class MapFragment extends BaseFragment {
 //    private LocationClient mLocationClient = null;
 //    private LocationListener mLocation;
 
-    public static MapFragment newInstance(){
+    public static MapFragment newInstance() {
         MapFragment fragment = new MapFragment();
 
         return fragment;
@@ -63,7 +63,7 @@ public class MapFragment extends BaseFragment {
 
     @Override
     protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.activity_main_map,container,false);
+        mRootView = inflater.inflate(R.layout.activity_main_map, container, false);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class MapFragment extends BaseFragment {
         mSearchView = (SearchView) mRootView.findViewById(R.id.search);
         mFab = (FloatingActionButton) mRootView.findViewById(R.id.fab_location);
         mBaiduMap = mTextureMapView.getMap();
-        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(30.994140,119.9015525)));
+        mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(new LatLng(30.994140, 119.9015525)));
         mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(19));
         location = new ArrayList<>();
 //        mLocationClient = new LocationClient(getContext());
@@ -89,9 +89,9 @@ public class MapFragment extends BaseFragment {
         geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
             @Override
             public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
-                if (geoCodeResult == null || geoCodeResult.error != SearchResult.ERRORNO.NO_ERROR){
-                    Toast.makeText(getContext(),"未找到该地址",Toast.LENGTH_SHORT).show();
-                }else {
+                if (geoCodeResult == null || geoCodeResult.error != SearchResult.ERRORNO.NO_ERROR) {
+                    Toast.makeText(getContext(), "未找到该地址", Toast.LENGTH_SHORT).show();
+                } else {
                     mBaiduMap.setMapStatus(MapStatusUpdateFactory.newLatLng(geoCodeResult.getLocation()));
                     mBaiduMap.clear();
                     BitmapDescriptor bitmap = BitmapDescriptorFactory
@@ -106,9 +106,9 @@ public class MapFragment extends BaseFragment {
 
             @Override
             public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
-                if (result == null ||  result.error != SearchResult.ERRORNO.NO_ERROR) {
-                    Toast.makeText(getContext(),"未找到该地址",Toast.LENGTH_SHORT).show();
-                }else {
+                if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+                    Toast.makeText(getContext(), "未找到该地址", Toast.LENGTH_SHORT).show();
+                } else {
                     mSearchView.setQueryHint(result.getAddress());
                     location.clear();
                     location.add(String.valueOf(result.getLocation().latitude));
@@ -119,10 +119,10 @@ public class MapFragment extends BaseFragment {
             }
         });
         mFab.setOnClickListener(v -> {
-            if (location != null && location.size() > 0){
+            if (location != null && location.size() > 0) {
                 Intent intent = new Intent();
                 intent.setAction("com.MapFragment.Location");
-                intent.putStringArrayListExtra("location",location);
+                intent.putStringArrayListExtra("location", location);
                 getActivity().sendBroadcast(intent);
                 getActivity().finish();
             }

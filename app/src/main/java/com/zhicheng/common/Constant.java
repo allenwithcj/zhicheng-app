@@ -15,23 +15,23 @@ public class Constant {
     public static final int MAIN_INEED_MODE = 2;
     public static final int MAIN_INFO_MODE = 3;
 
-    public static final String TYPE_SEX ="sex";
-    public static final String TYPE_POLICATIAL ="policatial";
-    public static final String TYPE_DEGREE ="degree";
-    public static final String TYPE_MARRIED ="married";
-    public static final String TYPE_CLASSIFICATION ="classification";
-    public static final String TYPE_REMARK ="remark";
+    public static final String TYPE_SEX = "sex";
+    public static final String TYPE_POLICATIAL = "policatial";
+    public static final String TYPE_DEGREE = "degree";
+    public static final String TYPE_MARRIED = "married";
+    public static final String TYPE_CLASSIFICATION = "classification";
+    public static final String TYPE_REMARK = "remark";
 
     public static String LOG_OPERATE_TYPE = "";
 
-    public static final String ALARM_ACTION ="com.location.alarm.action";
-    public static final int LOCATION_UP_TIME = 5*60*1000;//5分钟
+    public static final String ALARM_ACTION = "com.location.alarm.action";
+    public static final int LOCATION_UP_TIME = 5 * 60 * 1000;//5分钟
 
     public static String LATITUDE = "";
     public static String LONGITUDE = "";
 
     public static final String aId = "b8c5e3d2b5dd1ac41f8f3ecbdbbb34fa";
     public static final String uKey = "d29e50b3572adc5662edfdc175022dc7";
-    public static final String _api_key= "43529be1c97dc0359847f45aeef3ad73";
+    public static final String _api_key = "43529be1c97dc0359847f45aeef3ad73";
 
 }

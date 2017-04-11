@@ -15,33 +15,33 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by Donson on 2017/1/2.
  */
 
-public class MainPresenterImpl implements MainPresenter,ApiCompleteListener {
+public class MainPresenterImpl implements MainPresenter, ApiCompleteListener {
     private MainModel mMainModel;
     private MainView mMainView;
 
-    public MainPresenterImpl(MainView view){
+    public MainPresenterImpl(MainView view) {
         this.mMainView = view;
         this.mMainModel = new MainModelImpl();
     }
 
     @Override
     public void loadMain(String json) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mMainView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mMainView.hideProgress();
         }
         mMainView.showProgress();
-        mMainModel.loadMainList(json,this);
+        mMainModel.loadMainList(json, this);
     }
 
     @Override
     public void loadPersonal(String personal) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mMainView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mMainView.hideProgress();
         }
         mMainView.showProgress();
-        mMainModel.loadPersonal(personal,this);
+        mMainModel.loadPersonal(personal, this);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class MainPresenterImpl implements MainPresenter,ApiCompleteListener {
 
     @Override
     public void onComplected(Object result) {
-        if (result instanceof CommonResponse){
+        if (result instanceof CommonResponse) {
             mMainView.refreshData(result);
         }
         mMainView.hideProgress();
@@ -60,7 +60,7 @@ public class MainPresenterImpl implements MainPresenter,ApiCompleteListener {
     @Override
     public void onFailed(BaseResponse msg) {
         mMainView.hideProgress();
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mMainView.showMessage(msg.getMsg());

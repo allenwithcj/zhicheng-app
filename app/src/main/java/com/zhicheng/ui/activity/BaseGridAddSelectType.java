@@ -32,8 +32,8 @@ public class BaseGridAddSelectType extends BaseActivity {
                 type = getIntent().getStringExtra("type");
                 Intent intent = new Intent();
                 intent.setAction("com.grid.type");
-                intent.putExtra("value",mList[i]);
-                intent.putExtra("type",type);
+                intent.putExtra("value", mList[i]);
+                intent.putExtra("type", type);
                 sendBroadcast(intent);
                 finish();
 
@@ -48,20 +48,20 @@ public class BaseGridAddSelectType extends BaseActivity {
     }
 
 
-
     @Override
     protected void initData() {
     }
 
-    class MyAdapter extends BaseAdapter{
+    class MyAdapter extends BaseAdapter {
         private String[] mList;
+
         public MyAdapter(String[] mList) {
             this.mList = mList;
         }
 
         @Override
         public int getCount() {
-            if(mList != null){
+            if (mList != null) {
                 return mList.length;
             }
             return 0;
@@ -80,13 +80,13 @@ public class BaseGridAddSelectType extends BaseActivity {
         @Override
         public View getView(int i, View convertView, ViewGroup viewGroup) {
             ViewHolder holder = null;
-            if(convertView == null){
-                convertView = LayoutInflater.from(BaseGridAddSelectType.this).inflate(R.layout.activity_base_grid_select_item,null);
+            if (convertView == null) {
+                convertView = LayoutInflater.from(BaseGridAddSelectType.this).inflate(R.layout.activity_base_grid_select_item, null);
                 holder = new ViewHolder();
-                holder.mText = (TextView)convertView.findViewById(R.id.mText);
+                holder.mText = (TextView) convertView.findViewById(R.id.mText);
                 convertView.setTag(holder);
-            }else{
-                holder  = (ViewHolder)convertView.getTag();
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
             holder.mText.setText(mList[i]);
 
@@ -94,7 +94,7 @@ public class BaseGridAddSelectType extends BaseActivity {
         }
     }
 
-     public final class ViewHolder{
+    public final class ViewHolder {
         public TextView mText;
     }
 }

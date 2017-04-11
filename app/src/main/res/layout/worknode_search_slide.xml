@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/bg_layout"
+        android:orientation="vertical"
+        android:background="@color/red"
+        android:layout_width="match_parent"
+        android:layout_height="170dp" />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_below="@+id/bg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_text" />
+
+    <LinearLayout
+        android:id="@+id/sender_layout"
+        android:layout_below="@+id/line1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/patrol_heading"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:text="送办人" />
+
+        <EditText
+            android:id="@+id/sender"
+            android:layout_width="0dp"
+            android:layout_weight="3.5"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/textView_padding"
+            android:layout_margin="@dimen/photo_margin"
+            android:layout_gravity="center"
+            android:textSize="@dimen/content_size"
+            android:textStyle="normal"
+            android:hint="请输入姓名"
+            android:background="@null"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_below="@+id/sender_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_text" />
+
+    <LinearLayout
+        android:id="@+id/date_layout"
+        android:layout_below="@+id/line2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/patrol_heading"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:text="时间"
+            android:id="@+id/textView" />
+
+        <TextView
+            android:id="@+id/Date"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/textView_padding"
+            android:layout_margin="@dimen/photo_margin"
+            android:layout_gravity="center"
+            android:textSize="@dimen/content_size"
+            android:textStyle="normal"
+            android:hint="请选择时间"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/patrol_next_arrow" />
+    </LinearLayout>
+
+    <View
+        android:layout_below="@+id/date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@color/red"
+            android:text="@string/search"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

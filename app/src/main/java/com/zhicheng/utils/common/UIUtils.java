@@ -60,10 +60,10 @@ public class UIUtils {
         context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_dialog_title)));
     }
 
-    public static String urlEncoder(String j){
+    public static String urlEncoder(String j) {
         String s = null;
         try {
-            s = URLEncoder.encode(j,"utf-8");
+            s = URLEncoder.encode(j, "utf-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

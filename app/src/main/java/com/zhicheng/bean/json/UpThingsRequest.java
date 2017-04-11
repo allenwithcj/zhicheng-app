@@ -481,6 +481,7 @@ public class UpThingsRequest {
             public void setSbldlistbysgt(String sbldlistbysgt) {
                 this.sbldlistbysgt = sbldlistbysgt;
             }
+
             public String getYjlistbysgt() {
                 return yjlistbysgt;
             }

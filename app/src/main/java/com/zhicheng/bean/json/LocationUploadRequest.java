@@ -64,5 +64,5 @@ public class LocationUploadRequest {
                 this.latitude = latitude;
             }
         }
-     }
     }
+}

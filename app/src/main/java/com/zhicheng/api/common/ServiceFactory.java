@@ -67,7 +67,7 @@ public class ServiceFactory {
 
     private static final Interceptor REQUEST_INTERCEPTOR = chain -> {
         Request.Builder request = chain.request().newBuilder();
-        HashSet<String> preferences = (HashSet<String>) UIUtils.getContext().getSharedPreferences("cookies",Context.MODE_PRIVATE).getStringSet("cookie",new HashSet<>());
+        HashSet<String> preferences = (HashSet<String>) UIUtils.getContext().getSharedPreferences("cookies", Context.MODE_PRIVATE).getStringSet("cookie", new HashSet<>());
         int maxStale = DEFAULT_MAX_STALE_ONLINE;
         //向服务期请求数据缓存1个小时
         CacheControl tempCacheControl = new CacheControl.Builder()
@@ -76,8 +76,8 @@ public class ServiceFactory {
                 .noCache()
                 .build();
         request.cacheControl(tempCacheControl);
-        for (String cookie : preferences){
-            request.addHeader("Cookie",cookie);
+        for (String cookie : preferences) {
+            request.addHeader("Cookie", cookie);
             BaseApplication.log_say("OkHttp", "Adding Header: " + cookie);
         }
         return chain.proceed(request.build());
@@ -86,14 +86,14 @@ public class ServiceFactory {
     private static final Interceptor RESPONSE_INTERCEPTOR = chain -> {
         Request request = chain.request();
         Response originalResponse = chain.proceed(request);
-        if (originalResponse.header("Set-Cookie") != null && !originalResponse.header("Set-Cookie").isEmpty()){
+        if (originalResponse.header("Set-Cookie") != null && !originalResponse.header("Set-Cookie").isEmpty()) {
             HashSet<String> cookies = new HashSet<>();
-            for (String header : originalResponse.headers("Set-Cookie")){
+            for (String header : originalResponse.headers("Set-Cookie")) {
                 cookies.add(header);
             }
             SharedPreferences sp = UIUtils.getContext().getSharedPreferences("cookies", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
-            editor.putStringSet("cookie",cookies);
+            editor.putStringSet("cookie", cookies);
             editor.commit();
         }
         int maxAge;
@@ -114,7 +114,7 @@ public class ServiceFactory {
     private static final Interceptor LoggingInterceptor = chain -> {
         Request request = chain.request();
         long t1 = System.nanoTime();
-        Log.i("okhttp:", String.format("Sending request %s on %s%n%s%s", request.url(), chain.connection(), request.headers(),request.body()));
+        Log.i("okhttp:", String.format("Sending request %s on %s%n%s%s", request.url(), chain.connection(), request.headers(), request.body()));
         Response response = chain.proceed(request);
         long t2 = System.nanoTime();
         Log.i("okhttp:", String.format("Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));

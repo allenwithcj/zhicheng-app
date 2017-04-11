@@ -24,10 +24,11 @@ public class OfficialBaseGridResponse extends BaseResponse {
     private String oneLayerBuild;
     private String unitNum;
 
-    public OfficialBaseGridResponse(){}
+    public OfficialBaseGridResponse() {
+    }
 
-    public OfficialBaseGridResponse(int code,String msg){
-        super(code,msg);
+    public OfficialBaseGridResponse(int code, String msg) {
+        super(code, msg);
     }
 
     public String getFourAddressCommunity() {

@@ -9,5 +9,6 @@ import com.zhicheng.bean.http.LoginResponse;
 
 public interface ApiCompleteListener {
     void onComplected(Object result);
+
     void onFailed(BaseResponse msg);
 }

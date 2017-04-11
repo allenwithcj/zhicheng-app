@@ -26,7 +26,7 @@ import rx.schedulers.Schedulers;
 public class LoginModelImpl implements LoginModel {
     @Override
     public void login(String lq, ApiCompleteListener listener) {
-        LoginService mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,LoginService.class);
+        LoginService mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, LoginService.class);
         mLoginService.loginRequest(lq)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -38,19 +38,19 @@ public class LoginModelImpl implements LoginModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<LoginResponse> loginResponseResponse) {
-                        if (loginResponseResponse.isSuccessful()){
+                        if (loginResponseResponse.isSuccessful()) {
                             listener.onComplected(loginResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(loginResponseResponse.code(),loginResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(loginResponseResponse.code(), loginResponseResponse.message()));
                         }
                     }
                 });

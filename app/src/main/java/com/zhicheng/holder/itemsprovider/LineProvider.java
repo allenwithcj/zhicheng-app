@@ -14,11 +14,11 @@ import me.drakeet.multitype.ItemViewProvider;
  * Created by Donson on 2017/1/9.
  */
 
-public class LineProvider extends ItemViewProvider<Line,LineProvider.ViewHolder> {
+public class LineProvider extends ItemViewProvider<Line, LineProvider.ViewHolder> {
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View root = inflater.inflate(R.layout.z_line,parent,false);
+        View root = inflater.inflate(R.layout.z_line, parent, false);
         return new ViewHolder(root);
     }
 
@@ -27,7 +27,7 @@ public class LineProvider extends ItemViewProvider<Line,LineProvider.ViewHolder>
 
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View itemView) {
             super(itemView);
         }

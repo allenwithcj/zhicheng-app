@@ -17,23 +17,23 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by Donson on 2016/12/30.
  */
 
-public class OfficialDynamicPresenterImpl implements OfficialDynamicPresenter,ApiCompleteListener {
+public class OfficialDynamicPresenterImpl implements OfficialDynamicPresenter, ApiCompleteListener {
     private OfficialWorkModelImpl mModel;
     private OfficialView mView;
 
-    public OfficialDynamicPresenterImpl(OfficialView view){
+    public OfficialDynamicPresenterImpl(OfficialView view) {
         mView = view;
         mModel = new OfficialWorkModelImpl();
     }
 
     @Override
     public void loadWork(String s) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mView.hideProgress();
         }
         mView.showProgress();
-        mModel.loadWorkDynamic(s,this);
+        mModel.loadWorkDynamic(s, this);
     }
 
     /**
@@ -55,7 +55,7 @@ public class OfficialDynamicPresenterImpl implements OfficialDynamicPresenter,Ap
     @Override
     public void onFailed(BaseResponse msg) {
         mView.hideProgress();
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mView.showMessage(msg.getMsg());

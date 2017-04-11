@@ -10,7 +10,7 @@ public interface SearchModel {
 
     void SearchDataList(String request, ApiCompleteListener listener);
 
-    void SearchBaoClassifyList(String p1,ApiCompleteListener listener);
+    void SearchBaoClassifyList(String p1, ApiCompleteListener listener);
 
     void cancelSearch();
 }

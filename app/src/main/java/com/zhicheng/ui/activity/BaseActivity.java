@@ -34,7 +34,7 @@ public abstract class BaseActivity extends RoboActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = this;
-        ((BaseApplication)UIUtils.getContext()).addActivity(this);
+        ((BaseApplication) UIUtils.getContext()).addActivity(this);
         initSystemBar(activity);
         init();
     }
@@ -52,7 +52,7 @@ public abstract class BaseActivity extends RoboActionBarActivity {
         activity = null;
     }
 
-    private void init(){
+    private void init() {
         initEvents();
         initData();
 
@@ -73,13 +73,14 @@ public abstract class BaseActivity extends RoboActionBarActivity {
      *
      * @return
      */
-    public Toolbar getToolbar(){
+    public Toolbar getToolbar() {
         return mToolbar;
     }
-    private void initSystemBar(BaseActivity activity){
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-                setTranslucentStatus(activity,true);
+
+    private void initSystemBar(BaseActivity activity) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                setTranslucentStatus(activity, true);
             }
             SystemBarTintManager tintManager = new SystemBarTintManager(activity);
             tintManager.setStatusBarTintEnabled(true);
@@ -92,7 +93,7 @@ public abstract class BaseActivity extends RoboActionBarActivity {
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        if (null != mToolbar){
+        if (null != mToolbar) {
             setSupportActionBar(mToolbar);
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -100,14 +101,14 @@ public abstract class BaseActivity extends RoboActionBarActivity {
     }
 
     @TargetApi(19)
-    protected void setTranslucentStatus(Activity activity,boolean on){
+    protected void setTranslucentStatus(Activity activity, boolean on) {
         Window win = activity.getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
 
         final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on){
+        if (on) {
             winParams.flags |= bits;
-        }else {
+        } else {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
@@ -119,10 +120,10 @@ public abstract class BaseActivity extends RoboActionBarActivity {
      *
      * @return ID
      */
-    protected int getStatusColor(){
-        if (SPUtils.getPrefBoolean(Constant.THEME_MODEL,false)){
+    protected int getStatusColor() {
+        if (SPUtils.getPrefBoolean(Constant.THEME_MODEL, false)) {
             return R.color.colorPrimaryDarkNight;
-        }else {
+        } else {
             return R.color.colorPrimaryDark;
         }
     }
@@ -135,13 +136,13 @@ public abstract class BaseActivity extends RoboActionBarActivity {
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(getMenuID(),menu);
+        getMenuInflater().inflate(getMenuID(), menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
                 return true;
@@ -157,7 +158,7 @@ public abstract class BaseActivity extends RoboActionBarActivity {
      *
      * @return
      */
-    protected boolean isInitSystemBar(){
+    protected boolean isInitSystemBar() {
         return true;
     }
 
@@ -166,7 +167,7 @@ public abstract class BaseActivity extends RoboActionBarActivity {
      *
      * @return
      */
-    protected boolean isShowMenu(){
+    protected boolean isShowMenu() {
         return true;
     }
 
@@ -176,7 +177,7 @@ public abstract class BaseActivity extends RoboActionBarActivity {
      *
      * @return ID
      */
-    protected int getMenuID(){
+    protected int getMenuID() {
         return R.menu.menu_empty;
     }
 
@@ -186,6 +187,6 @@ public abstract class BaseActivity extends RoboActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((BaseApplication)UIUtils.getContext()).removeActivity(this);
+        ((BaseApplication) UIUtils.getContext()).removeActivity(this);
     }
 }

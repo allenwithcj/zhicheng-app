@@ -11,7 +11,6 @@ import okhttp3.RequestBody;
 public interface LoginModel {
     /**
      * 登陆
-     *
      */
     void login(String lq, ApiCompleteListener listener);
 }

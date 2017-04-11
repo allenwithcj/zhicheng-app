@@ -13,7 +13,8 @@
         android:lines="3"
         android:paddingTop="@dimen/small_textView_padding"
         android:paddingLeft="@dimen/small_textView_padding"
-        android:layout_toRightOf="@+id/img"/>
+        android:layout_toRightOf="@+id/img" />
+
     <TextView
         android:id="@+id/location"
         android:layout_width="match_parent"
@@ -23,7 +24,8 @@
         android:paddingLeft="@dimen/small_textView_padding"
         android:layout_below="@+id/view_content"
         android:lines="1"
-        android:layout_toRightOf="@+id/img"/>
+        android:layout_toRightOf="@+id/img" />
+
     <TextView
         android:id="@+id/time"
         android:layout_width="match_parent"
@@ -32,7 +34,7 @@
         android:paddingLeft="@dimen/small_textView_padding"
         android:layout_below="@+id/location"
         android:lines="1"
-        android:layout_toRightOf="@+id/img"/>
+        android:layout_toRightOf="@+id/img" />
 
     <ImageView
         android:id="@+id/img"

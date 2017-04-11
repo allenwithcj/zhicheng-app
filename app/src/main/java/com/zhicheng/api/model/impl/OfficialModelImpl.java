@@ -48,7 +48,7 @@ import rx.schedulers.Schedulers;
  * Created by Donson on 2017/1/4.
  */
 
-public class OfficialModelImpl implements OfficialModel{
+public class OfficialModelImpl implements OfficialModel {
     OfficialService mOfficialService;
     private Gson gson = new Gson();
     private String GUID;
@@ -57,8 +57,8 @@ public class OfficialModelImpl implements OfficialModel{
 
     @Override
     public void loadOfficial(String nofinish, ApiCompleteListener listener) {
-        if (mOfficialService == null){
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
+        if (mOfficialService == null) {
+            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
         }
         mOfficialService.getOfficial(nofinish)
                 .subscribeOn(Schedulers.io())
@@ -71,20 +71,20 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<OfficialResponse> officialResponseResponse) {
-                        if (officialResponseResponse.isSuccessful()){
+                        if (officialResponseResponse.isSuccessful()) {
                             listener.onComplected(officialResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(officialResponseResponse.code(),officialResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(officialResponseResponse.code(), officialResponseResponse.message()));
                         }
                     }
                 });
@@ -92,8 +92,8 @@ public class OfficialModelImpl implements OfficialModel{
 
     @Override
     public void loadOfficialDetail(String j, ApiCompleteListener listener) {
-        if (mOfficialService == null){
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
+        if (mOfficialService == null) {
+            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
         }
         mOfficialService.getOfficialDetail(j)
                 .subscribeOn(Schedulers.io())
@@ -106,20 +106,20 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<OfficialDetailResponse> officialDetailResponseResponse) {
-                        if (officialDetailResponseResponse.isSuccessful()){
+                        if (officialDetailResponseResponse.isSuccessful()) {
                             listener.onComplected(officialDetailResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(officialDetailResponseResponse.code(),officialDetailResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(officialDetailResponseResponse.code(), officialDetailResponseResponse.message()));
                         }
                     }
                 });
@@ -128,8 +128,8 @@ public class OfficialModelImpl implements OfficialModel{
     //工作动态获取
     @Override
     public void loadOfficialDynamic(String dyn, ApiCompleteListener listener) {
-        if (mOfficialService == null){
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
+        if (mOfficialService == null) {
+            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
         }
         mOfficialService.getOfficialWorkDynamic(dyn)
                 .subscribeOn(Schedulers.io())
@@ -142,29 +142,30 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<OfficialWorkDynamicList> officialWorkDynamicListResponse) {
-                        if (officialWorkDynamicListResponse.isSuccessful()){
+                        if (officialWorkDynamicListResponse.isSuccessful()) {
                             listener.onComplected(officialWorkDynamicListResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(officialWorkDynamicListResponse.code(),officialWorkDynamicListResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(officialWorkDynamicListResponse.code(), officialWorkDynamicListResponse.message()));
                         }
                     }
                 });
     }
+
     //新增工作动态
     @Override
-    public void upOfficialDynamic(String jFile,List<String> imgs,String content,String mLocationSite,String GUID, ApiCompleteListener listener) {
-        if (mOfficialService == null){
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
+    public void upOfficialDynamic(String jFile, List<String> imgs, String content, String mLocationSite, String GUID, ApiCompleteListener listener) {
+        if (mOfficialService == null) {
+            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
         }
 
         final MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -203,14 +204,14 @@ public class OfficialModelImpl implements OfficialModel{
                             Observable.from(imgs)
                                     .map(s -> {
                                         File file = new File(s);
-                                        builder.addFormDataPart("file",file.getName(), RequestBody.create(MultipartBody.FORM,file));
+                                        builder.addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file));
                                         return s;
                                     }).last()
                                     .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
                                         @Override
                                         public Observable<Response<CommonResponse>> call(String s) {
-                                            RequestBody body = RequestBody.create(MediaType.parse("application/json"),jFile);
-                                            return mOfficialService.UpDealFile(body,builder.build());
+                                            RequestBody body = RequestBody.create(MediaType.parse("application/json"), jFile);
+                                            return mOfficialService.UpDealFile(body, builder.build());
                                         }
                                     }).subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -222,25 +223,25 @@ public class OfficialModelImpl implements OfficialModel{
 
                                         @Override
                                         public void onError(Throwable e) {
-                                            if (e instanceof UnknownHostException){
+                                            if (e instanceof UnknownHostException) {
                                                 listener.onFailed(null);
                                                 return;
                                             }
-                                            listener.onFailed(new BaseResponse(404,e.getMessage()));
+                                            listener.onFailed(new BaseResponse(404, e.getMessage()));
                                         }
 
                                         @Override
                                         public void onNext(Response<CommonResponse> commonResponseResponse) {
-                                            if (commonResponseResponse.isSuccessful()){
-                                                if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
-                                                    personalDynamicRequest(mOfficialService,content,mLocationSite,GUID,listener);
-                                                    BaseApplication.log_say("MainModelImpl","UpThings");
-                                                }else {
+                                            if (commonResponseResponse.isSuccessful()) {
+                                                if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0) {
+                                                    personalDynamicRequest(mOfficialService, content, mLocationSite, GUID, listener);
+                                                    BaseApplication.log_say("MainModelImpl", "UpThings");
+                                                } else {
                                                     listener.onComplected(commonResponseResponse.body());
-                                                    Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                                    Toast.makeText(UIUtils.getContext(), commonResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                                                 }
-                                            }else {
-                                                listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                                            } else {
+                                                listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                                             }
                                         }
                                     });
@@ -253,8 +254,8 @@ public class OfficialModelImpl implements OfficialModel{
 
     }
 
-    private void personalDynamicRequest(OfficialService mOfficialService, String content,String mLocationSite, String guid, ApiCompleteListener listener) {
-        PersonalDynamicRequest mPersonalDynamicRequest  = new PersonalDynamicRequest();
+    private void personalDynamicRequest(OfficialService mOfficialService, String content, String mLocationSite, String guid, ApiCompleteListener listener) {
+        PersonalDynamicRequest mPersonalDynamicRequest = new PersonalDynamicRequest();
         PersonalDynamicRequest.IqBean iqb = new PersonalDynamicRequest.IqBean();
         PersonalDynamicRequest.IqBean.QueryBean qb = new PersonalDynamicRequest.IqBean.QueryBean();
         iqb.setNamespace("PersonalDynamicRequest");
@@ -277,20 +278,20 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> mcCommonResponse) {
-                        if (mcCommonResponse.isSuccessful()){
+                        if (mcCommonResponse.isSuccessful()) {
                             listener.onComplected(mcCommonResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(mcCommonResponse.code(),mcCommonResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(mcCommonResponse.code(), mcCommonResponse.message()));
                         }
                     }
                 });
@@ -299,15 +300,15 @@ public class OfficialModelImpl implements OfficialModel{
     }
 
     @Override
-    public void upDeal(List<String> imgs,String jFile,String suggest,String GUID,OfficialDetailResponse officialDetailResponse,String type,ApiCompleteListener listener) {
-        if (mOfficialService == null){
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
+    public void upDeal(List<String> imgs, String jFile, String suggest, String GUID, OfficialDetailResponse officialDetailResponse, String type, ApiCompleteListener listener) {
+        if (mOfficialService == null) {
+            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
         }
         this.OfficialDeatail = officialDetailResponse;
         this.suggestion = suggest;
         this.GUID = GUID;
         final MultipartBody.Builder builder = new MultipartBody.Builder();
-        if(imgs.size() != 0){
+        if (imgs.size() != 0) {
             //图片压缩
             List<File> mFiles = new ArrayList<>();
             for (int i = 0; i < imgs.size(); i++) {
@@ -343,14 +344,14 @@ public class OfficialModelImpl implements OfficialModel{
                                 Observable.from(imgs)
                                         .map(s -> {
                                             File file = new File(s);
-                                            builder.addFormDataPart("file",file.getName(), RequestBody.create(MultipartBody.FORM,file));
+                                            builder.addFormDataPart("file", file.getName(), RequestBody.create(MultipartBody.FORM, file));
                                             return s;
                                         }).last()
                                         .flatMap(new Func1<String, Observable<Response<CommonResponse>>>() {
                                             @Override
                                             public Observable<Response<CommonResponse>> call(String s) {
-                                                RequestBody body = RequestBody.create(MediaType.parse("application/json"),jFile);
-                                                return mOfficialService.UpDealFile(body,builder.build());
+                                                RequestBody body = RequestBody.create(MediaType.parse("application/json"), jFile);
+                                                return mOfficialService.UpDealFile(body, builder.build());
                                             }
                                         }).subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())
@@ -362,25 +363,25 @@ public class OfficialModelImpl implements OfficialModel{
 
                                             @Override
                                             public void onError(Throwable e) {
-                                                if (e instanceof UnknownHostException){
+                                                if (e instanceof UnknownHostException) {
                                                     listener.onFailed(null);
                                                     return;
                                                 }
-                                                listener.onFailed(new BaseResponse(404,e.getMessage()));
+                                                listener.onFailed(new BaseResponse(404, e.getMessage()));
                                             }
 
                                             @Override
                                             public void onNext(Response<CommonResponse> commonResponseResponse) {
-                                                if (commonResponseResponse.isSuccessful()){
-                                                    if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0){
-                                                        formExportRequest(0,type,listener);
-                                                        BaseApplication.log_say("MainModelImpl","UpThings");
-                                                    }else {
+                                                if (commonResponseResponse.isSuccessful()) {
+                                                    if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0) {
+                                                        formExportRequest(0, type, listener);
+                                                        BaseApplication.log_say("MainModelImpl", "UpThings");
+                                                    } else {
                                                         listener.onComplected(commonResponseResponse.body());
-                                                        Toast.makeText(UIUtils.getContext(),commonResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                                        Toast.makeText(UIUtils.getContext(), commonResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                                                     }
-                                                }else {
-                                                    listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                                                } else {
+                                                    listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                                                 }
                                             }
                                         });
@@ -390,8 +391,8 @@ public class OfficialModelImpl implements OfficialModel{
                     }
                 });
             }
-        }else{
-            formExportRequest(0,type,listener);
+        } else {
+            formExportRequest(0, type, listener);
         }
     }
 
@@ -403,8 +404,8 @@ public class OfficialModelImpl implements OfficialModel{
     @Override
     public void loadNotice(String n, ApiCompleteListener listener) {
 
-        if (mOfficialService == null){
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
+        if (mOfficialService == null) {
+            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
         }
         mOfficialService.getNotice(n)
                 .subscribeOn(Schedulers.io())
@@ -417,21 +418,21 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
 
                     }
 
                     @Override
                     public void onNext(Response<NoticeResponse> noticeResponseResponse) {
-                        if (noticeResponseResponse.isSuccessful()){
+                        if (noticeResponseResponse.isSuccessful()) {
                             listener.onComplected(noticeResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(noticeResponseResponse.code(),noticeResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(noticeResponseResponse.code(), noticeResponseResponse.message()));
                         }
                     }
                 });
@@ -439,8 +440,8 @@ public class OfficialModelImpl implements OfficialModel{
 
     @Override
     public void queryNewsDetail(String j, ApiCompleteListener listener) {
-        if (mOfficialService == null){
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialService.class);
+        if (mOfficialService == null) {
+            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
         }
         mOfficialService.queryNewsDetail(j)
                 .subscribeOn(Schedulers.io())
@@ -453,28 +454,28 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
 
                     }
 
                     @Override
                     public void onNext(Response<AnnoucementDetailsResponse> mAnnoucementDetailsResponseResponse) {
-                        if (mAnnoucementDetailsResponseResponse.isSuccessful()){
+                        if (mAnnoucementDetailsResponseResponse.isSuccessful()) {
                             listener.onComplected(mAnnoucementDetailsResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(mAnnoucementDetailsResponseResponse.code(),mAnnoucementDetailsResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(mAnnoucementDetailsResponseResponse.code(), mAnnoucementDetailsResponseResponse.message()));
                         }
                     }
                 });
     }
 
-    public void formExportRequest(int requestType, String type, ApiCompleteListener listener){
-        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,MainService.class);
+    public void formExportRequest(int requestType, String type, ApiCompleteListener listener) {
+        MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, MainService.class);
         FormExportRequest feq = new FormExportRequest();
         FormExportRequest.IqBean iq = new FormExportRequest.IqBean();
         FormExportRequest.IqBean.QueryBean query = new FormExportRequest.IqBean.QueryBean();
@@ -494,31 +495,31 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<IneedResponse> ineedResponseResponse) {
-                        if (ineedResponseResponse.isSuccessful()){
-                            if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")){
+                        if (ineedResponseResponse.isSuccessful()) {
+                            if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")) {
                                 FormNodeRequest formNode = new FormNodeRequest();
                                 FormNodeRequest.IqBean iq = new FormNodeRequest.IqBean();
                                 FormNodeRequest.IqBean.QueryBean query = new FormNodeRequest.IqBean.QueryBean();
                                 query.setRequestType("0");
                                 query.setId(OfficialDeatail.getIq().getQuery().getId());
                                 List<IneedResponse.IqBean.QueryBean.ItemsBean> itemsBeens = ineedResponseResponse.body().getIq().getQuery().getItems();
-                                if(itemsBeens != null){
-                                    for(IneedResponse.IqBean.QueryBean.ItemsBean itemsBean:itemsBeens){
-                                        if(type.equals("0")){
-                                            if(itemsBean.getValue().equals("提交处置结果")){
+                                if (itemsBeens != null) {
+                                    for (IneedResponse.IqBean.QueryBean.ItemsBean itemsBean : itemsBeens) {
+                                        if (type.equals("0")) {
+                                            if (itemsBean.getValue().equals("提交处置结果")) {
                                                 query.setChukouID(itemsBean.getKey());
                                             }
-                                        }else if(type.equals("4")){
-                                            if(itemsBean.getValue().equals("申请重新分配")){
+                                        } else if (type.equals("4")) {
+                                            if (itemsBean.getValue().equals("申请重新分配")) {
                                                 query.setChukouID(itemsBean.getKey());
                                             }
                                         }
@@ -527,20 +528,20 @@ public class OfficialModelImpl implements OfficialModel{
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);
                                 formNode.setIq(iq);
-                                formNodeRequest(mMainService,gson.toJson(formNode),ineedResponseResponse,requestType,listener);
-                                BaseApplication.log_say("MainModelImpl","FormNodeRequest");
-                            }else {
+                                formNodeRequest(mMainService, gson.toJson(formNode), ineedResponseResponse, requestType, listener);
+                                BaseApplication.log_say("MainModelImpl", "FormNodeRequest");
+                            } else {
                                 listener.onComplected(ineedResponseResponse.body());
-                                Toast.makeText(UIUtils.getContext(),ineedResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(UIUtils.getContext(), ineedResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                             }
-                        }else {
-                            listener.onFailed(new BaseResponse(ineedResponseResponse.code(),ineedResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(ineedResponseResponse.code(), ineedResponseResponse.message()));
                         }
                     }
                 });
     }
 
-    public void formNodeRequest(MainService s, String j, Response<IneedResponse> ineedResponseResponse, int requestType, ApiCompleteListener listener){
+    public void formNodeRequest(MainService s, String j, Response<IneedResponse> ineedResponseResponse, int requestType, ApiCompleteListener listener) {
         s.FormNodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -551,17 +552,17 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<IneedResponse> mIneedResponse) {
-                        if (mIneedResponse.isSuccessful()){
-                            if (mIneedResponse.body().getIq().getQuery().getErrorCode().equals("0")){
+                        if (mIneedResponse.isSuccessful()) {
+                            if (mIneedResponse.body().getIq().getQuery().getErrorCode().equals("0")) {
                                 FormSubnodeRequest formSubnode = new FormSubnodeRequest();
                                 FormSubnodeRequest.IqBean iq = new FormSubnodeRequest.IqBean();
                                 FormSubnodeRequest.IqBean.QueryBean query = new FormSubnodeRequest.IqBean.QueryBean();
@@ -575,20 +576,20 @@ public class OfficialModelImpl implements OfficialModel{
                                 iq.setNamespace("FormSubnodeRequest");
                                 iq.setQuery(query);
                                 formSubnode.setIq(iq);
-                                formSubnodeRequest(s,gson.toJson(formSubnode),mIneedResponse,requestType,listener);
-                                BaseApplication.log_say("MainModelImpl","FormSubnodeRequest");
-                            }else {
+                                formSubnodeRequest(s, gson.toJson(formSubnode), mIneedResponse, requestType, listener);
+                                BaseApplication.log_say("MainModelImpl", "FormSubnodeRequest");
+                            } else {
                                 listener.onComplected(mIneedResponse.body());
-                                Toast.makeText(UIUtils.getContext(),mIneedResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                                Toast.makeText(UIUtils.getContext(), mIneedResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                             }
-                        }else {
-                            listener.onFailed(new BaseResponse(mIneedResponse.code(),mIneedResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(mIneedResponse.code(), mIneedResponse.message()));
                         }
                     }
                 });
     }
 
-    public void formSubnodeRequest(MainService s, String j, Response<IneedResponse> mIneedResponse, int requestType, ApiCompleteListener listener){
+    public void formSubnodeRequest(MainService s, String j, Response<IneedResponse> mIneedResponse, int requestType, ApiCompleteListener listener) {
         s.FormSubnodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -600,16 +601,16 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<IneedResponse> ineedResponseResponse) {
-                        if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")){
+                        if (ineedResponseResponse.body().getIq().getQuery().getErrorCode().equals("0")) {
                             FormSendDoRequest formSend = new FormSendDoRequest();
                             FormSendDoRequest.IqBean iq = new FormSendDoRequest.IqBean();
                             FormSendDoRequest.IqBean.QueryBean query = new FormSendDoRequest.IqBean.QueryBean();
@@ -620,7 +621,7 @@ public class OfficialModelImpl implements OfficialModel{
                             query.setTermUnit(OfficialDeatail.getIq().getQuery().getFormData().getFormData().getZC28().getViewValue());
                             query.setId(OfficialDeatail.getIq().getQuery().getId());
                             query.setDealType(0);
-                            query.setSuggestion(suggestion+"(来自Android)");
+                            query.setSuggestion(suggestion + "(来自Android)");
                             query.setIsTrace(0);
                             query.setIsWait(0);
                             query.setIsReturnCurrentNode(0);
@@ -630,7 +631,7 @@ public class OfficialModelImpl implements OfficialModel{
                             node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
                             node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
                             node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
-                            node.setValue("Y"+ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
+                            node.setValue("Y" + ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
                             node.setFigureID("");
                             node.setFigureName("");
                             node.setFigureType("");
@@ -640,17 +641,17 @@ public class OfficialModelImpl implements OfficialModel{
                             iq.setNamespace("FormSendDoRequest");
                             iq.setQuery(query);
                             formSend.setIq(iq);
-                            formSendDoRequest(s,gson.toJson(formSend),listener);
-                            BaseApplication.log_say("MainModelImpl","FormSendDoRequest");
-                        }else {
+                            formSendDoRequest(s, gson.toJson(formSend), listener);
+                            BaseApplication.log_say("MainModelImpl", "FormSendDoRequest");
+                        } else {
                             listener.onComplected(ineedResponseResponse.body());
-                            Toast.makeText(UIUtils.getContext(),ineedResponseResponse.body().getIq().getQuery().getErrorMessage(),Toast.LENGTH_LONG).show();
+                            Toast.makeText(UIUtils.getContext(), ineedResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
                 });
     }
 
-    private void formSendDoRequest(MainService s,String j,ApiCompleteListener listener){
+    private void formSendDoRequest(MainService s, String j, ApiCompleteListener listener) {
         s.FormSendDoRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -662,19 +663,19 @@ public class OfficialModelImpl implements OfficialModel{
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
+                        if (commonResponseResponse.isSuccessful()) {
                             listener.onComplected(commonResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                         }
                     }
                 });

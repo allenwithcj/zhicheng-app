@@ -15,7 +15,7 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by hp on 2017/3/1.
  */
 
-public class OfficialBaseGridAddPresenterImpl implements OfficialBaseGridAddPresenter,ApiCompleteListener {
+public class OfficialBaseGridAddPresenterImpl implements OfficialBaseGridAddPresenter, ApiCompleteListener {
     private OfficialBaseGridAddView mOfficialBaseGridAddView;
     private OfficialBaseGridAddModel mOfficialBaseGridAddModel;
 
@@ -27,14 +27,14 @@ public class OfficialBaseGridAddPresenterImpl implements OfficialBaseGridAddPres
 
     @Override
     public void onComplected(Object result) {
-        if (result instanceof CommonResponse){
+        if (result instanceof CommonResponse) {
             mOfficialBaseGridAddView.addDateResponse(result);
         }
     }
 
     @Override
     public void onFailed(BaseResponse msg) {
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mOfficialBaseGridAddView.showMessage(msg.getMsg());
@@ -43,9 +43,9 @@ public class OfficialBaseGridAddPresenterImpl implements OfficialBaseGridAddPres
 
     @Override
     public void addDate(String rBody) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialBaseGridAddView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialBaseGridAddModel.addDate(rBody,this);
+        mOfficialBaseGridAddModel.addDate(rBody, this);
     }
 }

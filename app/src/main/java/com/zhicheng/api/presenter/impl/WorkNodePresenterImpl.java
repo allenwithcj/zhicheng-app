@@ -17,7 +17,7 @@ import java.util.List;
  * Created by hp on 2017/3/2.
  */
 
-public class WorkNodePresenterImpl implements WorkNodePresenter,ApiCompleteListener {
+public class WorkNodePresenterImpl implements WorkNodePresenter, ApiCompleteListener {
     private WorkNodeView mWorkNodeView;
     private WorkNodeModelImpl mWorkNodeModelImpl;
     private int start;
@@ -28,38 +28,38 @@ public class WorkNodePresenterImpl implements WorkNodePresenter,ApiCompleteListe
     }
 
     @Override
-    public void loadWorkNodes(String s,int start) {
+    public void loadWorkNodes(String s, int start) {
         this.start = start;
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mWorkNodeView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mWorkNodeView.hideProgress();
         }
         mWorkNodeView.showProgress();
-        mWorkNodeModelImpl.loadWorkNodes(s,this);
+        mWorkNodeModelImpl.loadWorkNodes(s, this);
     }
 
     @Override
-    public void sendWorkNodes(String jFile,List<String> imgs, String nodes,String attGUID,String GUID, ApiCompleteListener listener) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+    public void sendWorkNodes(String jFile, List<String> imgs, String nodes, String attGUID, String GUID, ApiCompleteListener listener) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mWorkNodeView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mWorkNodeModelImpl.sendWorkNodes(jFile,imgs,nodes,attGUID,GUID,this);
+        mWorkNodeModelImpl.sendWorkNodes(jFile, imgs, nodes, attGUID, GUID, this);
     }
 
     @Override
     public void updateWorkNodes(String s) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mWorkNodeView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mWorkNodeModelImpl.updateWorkNodes(s,this);
+        mWorkNodeModelImpl.updateWorkNodes(s, this);
     }
 
     @Override
     public void deleteWorkNodes(String s) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mWorkNodeView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mWorkNodeModelImpl.deleteWorkNodes(s,this);
+        mWorkNodeModelImpl.deleteWorkNodes(s, this);
     }
 
     @Override
@@ -69,13 +69,13 @@ public class WorkNodePresenterImpl implements WorkNodePresenter,ApiCompleteListe
 
     @Override
     public void onComplected(Object result) {
-        if (result instanceof CommonResponse){
+        if (result instanceof CommonResponse) {
             mWorkNodeView.refreshData(result);
         }
-        if (result instanceof PersonalLogMaResponse){
-            if (start == 1){
+        if (result instanceof PersonalLogMaResponse) {
+            if (start == 1) {
                 mWorkNodeView.refreshData(result);
-            }else {
+            } else {
                 mWorkNodeView.addData(result);
             }
         }
@@ -86,7 +86,7 @@ public class WorkNodePresenterImpl implements WorkNodePresenter,ApiCompleteListe
     @Override
     public void onFailed(BaseResponse msg) {
         mWorkNodeView.hideProgress();
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mWorkNodeView.showMessage(msg.getMsg());

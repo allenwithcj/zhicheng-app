@@ -6,7 +6,7 @@ package com.zhicheng.api.presenter;
 
 public interface OfficialBaseGridPresenter {
 
-    void loadOfficialBaseGrid(String street,String communicate,String grid);
+    void loadOfficialBaseGrid(String street, String communicate, String grid);
 
     void cancelLoading();
 }

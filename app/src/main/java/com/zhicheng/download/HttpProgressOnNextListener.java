@@ -6,9 +6,10 @@ package com.zhicheng.download;
 
 public abstract class HttpProgressOnNextListener<T> {
     /**
-    * 成功后回调方法
-    * @param t
-    */
+     * 成功后回调方法
+     *
+     * @param t
+     */
     public abstract void onNext(T t);
 
     /**
@@ -24,6 +25,7 @@ public abstract class HttpProgressOnNextListener<T> {
 
     /**
      * 下载进度
+     *
      * @param readLength
      * @param countLength
      */
@@ -32,23 +34,24 @@ public abstract class HttpProgressOnNextListener<T> {
     /**
      * 失败或者错误方法
      * 主动调用，更加灵活
+     *
      * @param e
      */
-    public  void onError(Throwable e){
+    public void onError(Throwable e) {
 
     }
 
     /**
      * 暂停下载
      */
-    public void onPuase(){
+    public void onPuase() {
 
     }
 
     /**
      * 停止下载销毁
      */
-    public void onStop(){
+    public void onStop() {
 
     }
 }

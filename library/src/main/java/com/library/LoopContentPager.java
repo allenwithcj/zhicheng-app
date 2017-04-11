@@ -50,7 +50,7 @@ public class LoopContentPager extends FrameLayout {
 
 
     public LoopContentPager(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public LoopContentPager(Context context, AttributeSet attrs) {
@@ -58,7 +58,7 @@ public class LoopContentPager extends FrameLayout {
         init();
     }
 
-    private void init(){
+    private void init() {
         mViewPager = new ViewPager(getContext());
         ViewGroup.LayoutParams params = new ViewPager.LayoutParams();
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -70,7 +70,7 @@ public class LoopContentPager extends FrameLayout {
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         lp.gravity = Gravity.BOTTOM;
         mLinearLayout.setLayoutParams(lp);
-        mLinearLayout.setPadding(10,10,10,10);
+        mLinearLayout.setPadding(10, 10, 10, 10);
         mLinearLayout.setGravity(Gravity.RIGHT);
         mLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
         addView(mLinearLayout);
@@ -81,18 +81,18 @@ public class LoopContentPager extends FrameLayout {
         initEvents();
     }
 
-    private void setContentImages(List<View> images){
-        for (int i=0;i< DataNum;i++){
-            View view = LayoutInflater.from(getContext()).inflate(R.layout.viewpager_content,null);
+    private void setContentImages(List<View> images) {
+        for (int i = 0; i < DataNum; i++) {
+            View view = LayoutInflater.from(getContext()).inflate(R.layout.viewpager_content, null);
             ViewGroup.LayoutParams params = mViewPager.getLayoutParams();
             view.setLayoutParams(params);
             images.add(view);
         }
     }
 
-    private void initEvents(){
+    private void initEvents() {
         mViewPager.setAdapter(adapter);
-        mViewPager.setCurrentItem(Integer.MAX_VALUE/2);
+        mViewPager.setCurrentItem(Integer.MAX_VALUE / 2);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -106,12 +106,12 @@ public class LoopContentPager extends FrameLayout {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                switch (state){
+                switch (state) {
                     case ViewPager.SCROLL_STATE_DRAGGING:
                         mHandler.sendEmptyMessage(PAUSE);
                         break;
                     case ViewPager.SCROLL_STATE_IDLE:
-                        mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE,CHANGE_DURATION);
+                        mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE, CHANGE_DURATION);
                         break;
                 }
             }
@@ -119,15 +119,15 @@ public class LoopContentPager extends FrameLayout {
         mViewPager.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
+                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         mHandler.sendEmptyMessage(PAUSE);
                         break;
                     case MotionEvent.ACTION_UP:
-                        mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE,CHANGE_DURATION);
+                        mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE, CHANGE_DURATION);
                         break;
                     case MotionEvent.ACTION_CANCEL:
-                        mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE,CHANGE_DURATION);
+                        mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE, CHANGE_DURATION);
                         break;
                 }
                 return false;
@@ -139,7 +139,8 @@ public class LoopContentPager extends FrameLayout {
 
     private class mPagerAdapter extends PagerAdapter {
 
-        public mPagerAdapter(){}
+        public mPagerAdapter() {
+        }
 
         @Override
         public int getCount() {
@@ -154,20 +155,20 @@ public class LoopContentPager extends FrameLayout {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             position %= images.size();
-            if (position < 0){
-                position = position+images.size();
+            if (position < 0) {
+                position = position + images.size();
             }
             ViewParent vp = images.get(position).getParent();
-            if (vp!=null){
-                ViewGroup parent = (ViewGroup)vp;
+            if (vp != null) {
+                ViewGroup parent = (ViewGroup) vp;
                 parent.removeView(images.get(position));
             }
-            if (mDataViewList != null){
-                if (mViewHolder == null){
+            if (mDataViewList != null) {
+                if (mViewHolder == null) {
                     mViewHolder = new ViewHolder();
                 }
                 initView(position);
-                if(mDataViewList.getImgs().size() == 3){
+                if (mDataViewList.getImgs().size() == 3) {
                     Glide.with(getContext())
                             .load(mDataViewList.getImgs().get(position))
                             .placeholder(R.drawable.welcome)
@@ -177,8 +178,8 @@ public class LoopContentPager extends FrameLayout {
                     mViewHolder.mContent.setText(mDataViewList.getmContents().get(position));
                     mViewHolder.mLocation.setText(mDataViewList.getmLocation().get(position));
                     mViewHolder.mTime.setText(mDataViewList.getmTime().get(position));
-                }else if(mDataViewList.getImgs().size() == 2){
-                    if(position == 0){
+                } else if (mDataViewList.getImgs().size() == 2) {
+                    if (position == 0) {
                         Glide.with(getContext())
                                 .load(mDataViewList.getImgs().get(0))
                                 .placeholder(R.drawable.welcome)
@@ -188,7 +189,7 @@ public class LoopContentPager extends FrameLayout {
                         mViewHolder.mContent.setText(mDataViewList.getmContents().get(0));
                         mViewHolder.mLocation.setText(mDataViewList.getmLocation().get(0));
                         mViewHolder.mTime.setText(mDataViewList.getmTime().get(0));
-                    }else if(position == 1){
+                    } else if (position == 1) {
                         Glide.with(getContext())
                                 .load(mDataViewList.getImgs().get(1))
                                 .placeholder(R.drawable.welcome)
@@ -199,7 +200,7 @@ public class LoopContentPager extends FrameLayout {
                         mViewHolder.mLocation.setText(mDataViewList.getmLocation().get(1));
                         mViewHolder.mTime.setText(mDataViewList.getmTime().get(1));
                     }
-                }else if(mDataViewList.getImgs().size() == 1){
+                } else if (mDataViewList.getImgs().size() == 1) {
                     Glide.with(getContext())
                             .load(mDataViewList.getImgs().get(0))
                             .placeholder(R.drawable.welcome)
@@ -216,7 +217,7 @@ public class LoopContentPager extends FrameLayout {
             return images.get(position);
         }
 
-        private void initView(final int position){
+        private void initView(final int position) {
             mViewHolder.img = (ImageView) images.get(position).findViewById(R.id.img);
             mViewHolder.mContent = (CBAlignTextView) images.get(position).findViewById(R.id.view_content);
             mViewHolder.mLocation = (TextView) images.get(position).findViewById(R.id.location);
@@ -235,43 +236,45 @@ public class LoopContentPager extends FrameLayout {
 //            super.destroyItem(container, position, object);
         }
     }
-    private void controlViewPagerSpeed(){
+
+    private void controlViewPagerSpeed() {
         try {
             Field field = ViewPager.class.getDeclaredField("mScroller");
             field.setAccessible(true);
-            FixScroller mScroller = new FixScroller(mViewPager.getContext(),new AccelerateInterpolator());
+            FixScroller mScroller = new FixScroller(mViewPager.getContext(), new AccelerateInterpolator());
             mScroller.setDuration(500);
-            field.set(mViewPager,mScroller);
-        }catch (Exception e){
+            field.set(mViewPager, mScroller);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void setDataViewList(List<String> imgs,List<String> content,List<String> location,List<String> time){
-        mDataViewList = new DataViewList(imgs,content,location,time);
+
+    public void setDataViewList(List<String> imgs, List<String> content, List<String> location, List<String> time) {
+        mDataViewList = new DataViewList(imgs, content, location, time);
         adapter.notifyDataSetChanged();
     }
 
-    private class imageHandler extends Handler{
+    private class imageHandler extends Handler {
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (this.hasMessages(PAUSE)){
+            if (this.hasMessages(PAUSE)) {
                 this.removeMessages(PAUSE);
-            }else if (this.hasMessages(UPDATE_IMAGE)){
+            } else if (this.hasMessages(UPDATE_IMAGE)) {
                 this.removeMessages(UPDATE_IMAGE);
             }
 
-            switch (msg.what){
+            switch (msg.what) {
                 case PAUSE:
                     this.removeMessages(UPDATE_IMAGE);
                     break;
                 case UPDATE_IMAGE:
-                    mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1,true);
-                    mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE,CHANGE_DURATION);
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
+                    mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE, CHANGE_DURATION);
                     break;
                 case MotionEvent.ACTION_CANCEL:
-                    mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE,CHANGE_DURATION);
+                    mHandler.sendEmptyMessageDelayed(UPDATE_IMAGE, CHANGE_DURATION);
                     break;
             }
         }
@@ -283,22 +286,22 @@ public class LoopContentPager extends FrameLayout {
         TextView mLocation;
         TextView mTime;
 
-        public ViewHolder(){
+        public ViewHolder() {
 
         }
     }
 
-    class DataViewList{
+    class DataViewList {
 
         private List<String> imgs;
         private List<String> mContents;
         private List<String> mLocation;
         private List<String> mTime;
 
-        public DataViewList(){
+        public DataViewList() {
         }
 
-        public DataViewList(List<String> imgs,List<String> content,List<String> location,List<String> time){
+        public DataViewList(List<String> imgs, List<String> content, List<String> location, List<String> time) {
             this.imgs = imgs;
             this.mContents = content;
             this.mLocation = location;
@@ -344,8 +347,8 @@ public class LoopContentPager extends FrameLayout {
 
     private ButtonClick mButtonClick;
 
-    public void setButtonClick(ButtonClick mButtonClick){
-        if (this.mButtonClick == null){
+    public void setButtonClick(ButtonClick mButtonClick) {
+        if (this.mButtonClick == null) {
             this.mButtonClick = mButtonClick;
         }
     }

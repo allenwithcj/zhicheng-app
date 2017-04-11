@@ -11,7 +11,7 @@ import okhttp3.MultipartBody;
  */
 
 public interface UpThingsPresenter {
-    void UpThings(int requestType,String GUID,String j,String jFile,List<String> imgs);
+    void UpThings(int requestType, String GUID, String j, String jFile, List<String> imgs);
 
-    void UpSimpleFile(String guid,List<String> imgs,String json);
+    void UpSimpleFile(String guid, List<String> imgs, String json);
 }

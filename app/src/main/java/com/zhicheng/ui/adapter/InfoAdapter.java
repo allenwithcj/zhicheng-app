@@ -20,8 +20,7 @@ import com.zhicheng.utils.common.UIUtils;
 public class InfoAdapter extends RecyclerView.Adapter {
 
     private static final int TYPE_HEAD = 0;
-    private static final int TYPE_MIDDLE = 1;
-    private static final int TYPE_LAST = 2;
+    private static final int TYPE_LAST = 1;
     private boolean b;
 
     public void setVersion(boolean b) {
@@ -29,15 +28,15 @@ public class InfoAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public interface ButtonClick{
+    public interface ButtonClick {
         void onButtonClick();
     }
 
 
     private ButtonClick mButtonClick;
 
-    public void setButtonClick(ButtonClick mButtonClick){
-        if (this.mButtonClick == null){
+    public void setButtonClick(ButtonClick mButtonClick) {
+        if (this.mButtonClick == null) {
             this.mButtonClick = mButtonClick;
         }
     }
@@ -45,56 +44,52 @@ public class InfoAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if (viewType == TYPE_HEAD){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.c_card_text_view,parent,false);
+        if (viewType == TYPE_HEAD) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.c_card_text_view, parent, false);
             return new InfoHeadViewHolder(view);
-        }else if (viewType == TYPE_MIDDLE){
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.c_card_text_view_middle,parent,false);
-            return new InfoMiddleViewHolder(view);
-        }else{
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.c_card_text_view_last,parent,false);
+        } else{
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.c_card_text_view_last, parent, false);
             return new InfoLastViewHolder(view);
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof InfoHeadViewHolder){
-            if (position == 0){
-                ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_news));
+        if (holder instanceof InfoHeadViewHolder) {
+            if (position == 0) {
+                ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.contact));
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("通讯录");
                 ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(view -> {
                     UIUtils.startActivity(new Intent(UIUtils.getContext(), ContactActivity.class));
                 });
-            }else{
-                ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_night_mode));
-                ((InfoHeadViewHolder) holder).mTextViewHead.setText("夜间模式");
-            }
-        }else if (holder instanceof InfoMiddleViewHolder){
-            if(position == 1){
-                ((InfoMiddleViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_bao_notice));
-                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("我的爆料");
-                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
+            }else if(position == 1){
+                ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.baoliao));
+                ((InfoHeadViewHolder) holder).mTextViewHead.setText("我的爆料");
+                ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(view -> {
                     UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialSended.class));
                 });
-            }else{
-                ((InfoMiddleViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_bao_notice));
-                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setText("在线更新");
-                if(b){
-                   ((InfoMiddleViewHolder) holder).mVersion_notice.setText("发现新版本");
-                }else{
-                    ((InfoMiddleViewHolder) holder).mVersion_notice.setText("已是最新版本");
+            }else if(position == 2){
+                ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.news));
+                ((InfoHeadViewHolder) holder).mTextViewHead.setText("通知推送");
+            }else if(position == 3){
+                ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.night));
+                ((InfoHeadViewHolder) holder).mTextViewHead.setText("夜间模式");
+
+            }else if(position == 4){
+                ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.refresh));
+                ((InfoHeadViewHolder) holder).mTextViewHead.setText("在线更新");
+                if (b) {
+                    ((InfoHeadViewHolder) holder).mVersion_notice.setText("发现新版本");
+                } else {
+                    ((InfoHeadViewHolder) holder).mVersion_notice.setText("已是最新版本");
                 }
-                ((InfoMiddleViewHolder) holder).mTextViewMiddle.setOnClickListener(view -> {
-                     mButtonClick.onButtonClick();
+                ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(view -> {
+                    mButtonClick.onButtonClick();
                 });
             }
-        }else if (holder instanceof InfoLastViewHolder){
-            if (position == 2){
-                ((InfoLastViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_send_news));
-                ((InfoLastViewHolder) holder).mTextViewLast.setText("通知推送");
-            }else {
-                ((InfoLastViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.ic_main_config));
+        } else if (holder instanceof InfoLastViewHolder) {
+            if(position == 5){
+                ((InfoLastViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.set));
                 ((InfoLastViewHolder) holder).mTextViewLast.setText("设置");
             }
         }
@@ -107,18 +102,10 @@ public class InfoAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0){
-            return TYPE_HEAD;
-        }else if (position == 1){
-            return TYPE_MIDDLE;
-        }else if (position == 2){
+        if (position == 5) {
             return TYPE_LAST;
-        }else if(position == 3){
+        } else {
             return TYPE_HEAD;
-        }else if(position == 4){
-            return TYPE_MIDDLE;
-        }else {
-            return TYPE_LAST;
         }
     }
 
@@ -126,29 +113,17 @@ public class InfoAdapter extends RecyclerView.Adapter {
 
         private ImageView mImageView;
         private TextView mTextViewHead;
+        private TextView mVersion_notice;
 
         public InfoHeadViewHolder(View itemView) {
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.img);
             mTextViewHead = (TextView) itemView.findViewById(R.id.text_view_1);
-
-        }
-    }
-    private class InfoMiddleViewHolder extends RecyclerView.ViewHolder {
-
-        private ImageView mImageView;
-        private TextView mTextViewMiddle;
-        private TextView mVersion_notice;
-
-
-        public InfoMiddleViewHolder(View itemView) {
-            super(itemView);
-            mImageView = (ImageView) itemView.findViewById(R.id.img);
-            mTextViewMiddle = (TextView) itemView.findViewById(R.id.text_view_1);
             mVersion_notice = (TextView) itemView.findViewById(R.id.version_notice);
 
         }
     }
+
     private class InfoLastViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mImageView;

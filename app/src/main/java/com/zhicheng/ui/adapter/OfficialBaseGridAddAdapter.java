@@ -29,8 +29,8 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
     private DatabaseHelper mDataBase;
     private String ZZ_RESIDENCE, GRIDNAME;
     private String RENTNAME, REMARK2, RENTPHONE;
-    private String CARD_NUM, NAME, RELATION,HUZUNAME, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
-            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK,SORT;
+    private String CARD_NUM, NAME, RELATION, HUZUNAME, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
+            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT;
 
     private OfficialBaseGridAddPresenter mOfficialBaseGridAddPresenter;
     private ItemViewHolder holder;
@@ -95,10 +95,10 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         REMARK2 = holder.grid_base_add_lessor_remark.getText().toString();
         RENTPHONE = holder.grid_base_add_lessor_telephone.getText().toString();
 
-        if(GENDER.equals("") || MARITAL_STATUS.equals("")){
+        if (GENDER.equals("") || MARITAL_STATUS.equals("")) {
             dialog.dismiss();
-            Toast.makeText(UIUtils.getContext(),"性别和婚姻选项不能为空",Toast.LENGTH_SHORT).show();
-        }else{
+            Toast.makeText(UIUtils.getContext(), "性别和婚姻选项不能为空", Toast.LENGTH_SHORT).show();
+        } else {
             SubmitOrdinaryFormRequest mSf = new SubmitOrdinaryFormRequest();
             SubmitOrdinaryFormRequest.IqBean lrIq = new SubmitOrdinaryFormRequest.IqBean();
             SubmitOrdinaryFormRequest.IqBean.QueryBean irIqQB = new SubmitOrdinaryFormRequest.IqBean.QueryBean();
@@ -236,7 +236,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
     private String sexCode(String str) {
         if (str.equals("男")) {
             return "0";
-        } else if(str.equals("女")){
+        } else if (str.equals("女")) {
             return "1";
         }
         return null;
@@ -249,7 +249,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             return "1";
         } else if (str.equals("离婚")) {
             return "2";
-        } else if(str.equals("丧偶")){
+        } else if (str.equals("丧偶")) {
             return "3";
         }
         return null;

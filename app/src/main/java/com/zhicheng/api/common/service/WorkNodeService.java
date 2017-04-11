@@ -25,7 +25,6 @@ public interface WorkNodeService {
     Observable<Response<CommonResponse>> updateWorkNode(@Field("json") String rBody);
 
 
-
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")
     Observable<Response<PersonalLogMaResponse>> loadWorkNode(@Field("json") String rBody);

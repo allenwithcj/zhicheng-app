@@ -5,15 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/bg_input_edit">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="@color/navigationColor"/>
+        android:background="@color/navigationColor" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
+
         <ImageView
             android:id="@+id/voice"
             android:layout_width="wrap_content"
@@ -21,7 +24,8 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_action_voice"
-            android:layout_marginLeft="@dimen/textView_padding"/>
+            android:layout_marginLeft="@dimen/textView_padding" />
+
         <android.support.v7.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -30,10 +34,12 @@
             android:layout_marginBottom="@dimen/textView_padding"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp">
+
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:inputType="text"/>
+                android:inputType="text" />
+
             <EditText
                 android:id="@+id/inputNote"
                 android:layout_width="match_parent"
@@ -43,8 +49,9 @@
                 android:paddingRight="4dp"
                 android:background="@null"
                 android:scrollbars="vertical"
-                android:scrollbarSize="1dp"/>
+                android:scrollbarSize="1dp" />
         </android.support.v7.widget.CardView>
+
         <ImageView
             android:id="@+id/emoji"
             android:layout_width="wrap_content"
@@ -52,18 +59,21 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_action_emoji" />
+
         <ImageView
             android:id="@+id/more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_action_more"/>
+            android:src="@drawable/ic_action_more" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2px"
-        android:background="@color/text_color"/>
+        android:background="@color/text_color" />
+
     <LinearLayout
         android:id="@+id/moreTools"
         android:layout_width="match_parent"
@@ -71,6 +81,7 @@
         android:orientation="horizontal"
         android:padding="@dimen/textView_padding"
         android:visibility="gone">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/picRecycleView"
             android:layout_width="match_parent"
@@ -78,7 +89,6 @@
             android:layout_gravity="center_horizontal"
             android:clipToPadding="false"
             android:scrollbars="none"
-            android:overScrollMode="never">
-        </android.support.v7.widget.RecyclerView>
+            android:overScrollMode="never"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
 </LinearLayout>

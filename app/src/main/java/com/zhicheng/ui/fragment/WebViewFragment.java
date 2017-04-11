@@ -25,7 +25,7 @@ import com.zhicheng.R;
  * Created by Donson on 2017/1/14.
  */
 
-public class WebViewFragment extends BaseFragment implements View.OnClickListener{
+public class WebViewFragment extends BaseFragment implements View.OnClickListener {
 
     private WebView mWebView;
     private ImageButton btnBack;
@@ -35,18 +35,18 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
     private boolean showClose = false;
     private String mUrl;
 
-    public static WebViewFragment newInstance(String url,String title){
+    public static WebViewFragment newInstance(String url, String title) {
         WebViewFragment fragment = new WebViewFragment();
         Bundle b = new Bundle();
-        b.putString("url",url);
-        b.putString("title",title);
+        b.putString("url", url);
+        b.putString("title", title);
         fragment.setArguments(b);
         return fragment;
     }
 
     @Override
     protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.webview_content,container,false);
+        mRootView = inflater.inflate(R.layout.webview_content, container, false);
     }
 
     @Override
@@ -71,37 +71,38 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    private void initWebView(){
+    private void initWebView() {
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.addJavascriptInterface(new JsInterface(),"JsBridge");
+        mWebView.addJavascriptInterface(new JsInterface(), "JsBridge");
         //启用缓存
         mWebView.getSettings().setAppCacheEnabled(true);
         //启用缓存模式
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        mWebView.setWebChromeClient(new WebChromeClient(){});
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebChromeClient(new WebChromeClient() {
+        });
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
             }
         });
-        if (showClose){
+        if (showClose) {
             btnClose.setVisibility(View.GONE);
         }
     }
 
-    public void isShowClose(){
+    public void isShowClose() {
         showClose = true;
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.webView_back:
-                if (getFragmentManager().getBackStackEntryCount() == 0){
+                if (getFragmentManager().getBackStackEntryCount() == 0) {
                     getActivity().finish();
-                }else {
+                } else {
                     getFragmentManager().popBackStack();
                 }
                 break;
@@ -109,7 +110,7 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
                 getActivity().finish();
                 break;
             case R.id.webView_more:
-                Intent intent= new Intent();
+                Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 Uri content_url = Uri.parse(mUrl);
                 intent.setData(content_url);
@@ -118,14 +119,15 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
         }
     }
 
-    public class JsInterface{
+    public class JsInterface {
         @JavascriptInterface
-        public void toastMessage(String msg){
-            Snackbar.make(mWebView,msg,Snackbar.LENGTH_SHORT).show();
+        public void toastMessage(String msg) {
+            Snackbar.make(mWebView, msg, Snackbar.LENGTH_SHORT).show();
         }
+
         @SuppressWarnings("ResourceType")
         @JavascriptInterface
-        public void nextPage(String url,String name){
+        public void nextPage(String url, String name) {
             FragmentManager mFragmentManage = getFragmentManager();
             FragmentTransaction ft = mFragmentManage.beginTransaction();
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
@@ -133,7 +135,7 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
                     R.animator.fragment_slide_right_in, R.animator.fragment_slide_left_out,
                     R.animator.fragment_slide_left_in, R.animator.fragment_slide_right_out);
             ft.hide(WebViewFragment.this);
-            ft.add(R.id.webView_content,WebViewFragment.newInstance(url,name));
+            ft.add(R.id.webView_content, WebViewFragment.newInstance(url, name));
             ft.addToBackStack(null);
             ft.commit();
         }
@@ -143,7 +145,7 @@ public class WebViewFragment extends BaseFragment implements View.OnClickListene
     public void onPause() {
         super.onPause();
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mWebView.getWindowToken(),0);
+        imm.hideSoftInputFromWindow(mWebView.getWindowToken(), 0);
     }
 
     @Override

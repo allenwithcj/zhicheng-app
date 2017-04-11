@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -17,6 +19,7 @@ import com.zhicheng.api.view.MainView;
 import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.OfficialResponse;
+import com.zhicheng.bean.http.OfficialWorkDynamicList;
 import com.zhicheng.bean.json.OfficialRequest;
 import com.zhicheng.ui.adapter.HomeFragmentAdapter;
 
@@ -28,19 +31,19 @@ import java.util.Map;
  * Created by Donson on 2017/1/2.
  */
 
-public class HomeFragment extends BaseFragment implements MainView,OfficialView,
-        SwipeRefreshLayout.OnRefreshListener{
+public class HomeFragment extends BaseFragment implements MainView, OfficialView,
+        SwipeRefreshLayout.OnRefreshListener {
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private MainPresenterImpl mMainPresenterImpl;
     private HomeFragmentAdapter mHomeAdapter;
-    //private Main parentActivity;
 
     private OfficialPresenterImpl mOfficialPresenterImpl;
     private int start;
+    private TextView title_name;
 
-    public static HomeFragment newInstance(){
+    public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         return fragment;
     }
@@ -55,11 +58,11 @@ public class HomeFragment extends BaseFragment implements MainView,OfficialView,
     private void fresh() {
         start = 1;
         String strEntity = createObj(start);
-        mOfficialPresenterImpl.loadNoFinish(strEntity,start);
+        mOfficialPresenterImpl.loadNoFinish(strEntity, start);
         start++;
     }
 
-    private String createObj(int page){
+    private String createObj(int page) {
         Gson gson = new Gson();
         OfficialRequest officialRequest = new OfficialRequest();
         OfficialRequest.IqBean iqb = new OfficialRequest.IqBean();
@@ -90,19 +93,21 @@ public class HomeFragment extends BaseFragment implements MainView,OfficialView,
 
     @Override
     protected void initRootView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.recycle_content,container,false);
+        mRootView = inflater.inflate(R.layout.recycle_content, container, false);
     }
 
     @Override
     protected void initEvents() {
         mMainPresenterImpl = new MainPresenterImpl(this);
         mOfficialPresenterImpl = new OfficialPresenterImpl(this);
+        title_name = (TextView) mRootView.findViewById(R.id.title_name);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
         mRecyclerView = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mHomeAdapter = new HomeFragmentAdapter();
         mRecyclerView.setAdapter(mHomeAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        title_name.setText(getResources().getString(R.string.app_name));
     }
 
 
@@ -111,30 +116,30 @@ public class HomeFragment extends BaseFragment implements MainView,OfficialView,
 
     }
 
+
+
+
+
     @Override
     public void onRefresh() {
         Gson gson = new Gson();
-        Map<String,Object> map = new HashMap<>();
-        Map<String,Object> map1 = new HashMap<>();
-        map1.put("namespace","NewsCaseTotalRequest");
-        map1.put("query",new HashMap<>());
-        map.put("iq",map1);
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map1 = new HashMap<>();
+        map1.put("namespace", "NewsCaseTotalRequest");
+        map1.put("query", new HashMap<>());
+        map.put("iq", map1);
         String json = gson.toJson(map);
-        BaseApplication.log_say(TAG,json);
+        BaseApplication.log_say(TAG, json);
         mMainPresenterImpl.loadMain(json);
     }
 
     @Override
     public void showMessage(String msg) {
-        Toast.makeText(getActivity(),msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showProgress() {
-//        if (parentActivity == null){
-//            parentActivity = (Main) getActivity();
-//        }
-//        parentActivity.isTouch(false);
         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
     }
 
@@ -145,19 +150,14 @@ public class HomeFragment extends BaseFragment implements MainView,OfficialView,
 
     @Override
     public void refreshData(Object result) {
-        if (result instanceof CommonResponse){
-            if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
+        if (result instanceof CommonResponse) {
+            if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
                 mHomeAdapter.setAdapterData((CommonResponse) result);
-//                Intent intent = new Intent();
-//                intent.setAction("com.news.count.action");
-//                intent.putExtra("news",String.valueOf(((CommonResponse) result).getIq().getQuery().getData().getDaiBanTotal()));
-//                UIUtils.getContext().sendBroadcast(intent);
-            }else{
+            } else {
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }
-//            parentActivity.isTouch(true);
-        }else if (result instanceof OfficialResponse){
-            if(((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+        } else if (result instanceof OfficialResponse) {
+            if (((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 int nofinish_count = ((OfficialResponse) result).getIq().getQuery().getTotalNums();
                 mHomeAdapter.setCountDate(nofinish_count);
             }

@@ -12,7 +12,7 @@ public class FixScroller extends Scroller {
 
     private int mDuration = 1500;
 
-    public void setDuration(int du){
+    public void setDuration(int du) {
         this.mDuration = du;
     }
 
@@ -26,7 +26,7 @@ public class FixScroller extends Scroller {
 
     @Override
     public void startScroll(int startX, int startY, int dx, int dy) {
-        super.startScroll(startX, startY, dx, dy,mDuration);
+        super.startScroll(startX, startY, dx, dy, mDuration);
     }
 
     @Override

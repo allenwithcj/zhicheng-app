@@ -3298,7 +3298,7 @@ public class OfficialDetailResponse {
                 }
             }
 
-            public static class RepliesBean implements Serializable{
+            public static class RepliesBean implements Serializable {
                 /**
                  * id : 1224
                  * nodeName : 镇街受理员立案

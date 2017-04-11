@@ -25,7 +25,7 @@ import rx.schedulers.Schedulers;
 public class SearchModelImpl implements SearchModel {
     @Override
     public void SearchDataList(String request, ApiCompleteListener listener) {
-        SearchService mSearchService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,SearchService.class);
+        SearchService mSearchService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, SearchService.class);
         Observable.just(request)
                 .switchMap(new Func1<String, Observable<Response<SearchResponse>>>() {
                     @Override
@@ -43,19 +43,19 @@ public class SearchModelImpl implements SearchModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<SearchResponse> searchResponseResponse) {
-                        if (searchResponseResponse.isSuccessful()){
+                        if (searchResponseResponse.isSuccessful()) {
                             listener.onComplected(searchResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(searchResponseResponse.code(),searchResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(searchResponseResponse.code(), searchResponseResponse.message()));
                         }
                     }
                 });
@@ -63,7 +63,7 @@ public class SearchModelImpl implements SearchModel {
 
     @Override
     public void SearchBaoClassifyList(String p1, ApiCompleteListener listener) {
-        SearchService mSearchService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,SearchService.class);
+        SearchService mSearchService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, SearchService.class);
         mSearchService.getBaoClassifyList(p1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -75,19 +75,19 @@ public class SearchModelImpl implements SearchModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<SearchBaoClassifyResponse> searchBaoClassifyResponseResponse) {
-                        if (searchBaoClassifyResponseResponse.isSuccessful()){
+                        if (searchBaoClassifyResponseResponse.isSuccessful()) {
                             listener.onComplected(searchBaoClassifyResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(searchBaoClassifyResponseResponse.code(),searchBaoClassifyResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(searchBaoClassifyResponseResponse.code(), searchBaoClassifyResponseResponse.message()));
                         }
                     }
                 });

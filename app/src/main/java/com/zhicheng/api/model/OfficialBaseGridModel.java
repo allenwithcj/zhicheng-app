@@ -8,11 +8,11 @@ import com.zhicheng.api.ApiCompleteListener;
 
 public interface OfficialBaseGridModel {
 
-    void loadOfficial(String street,String communicate,String grid, ApiCompleteListener listener);
+    void loadOfficial(String street, String communicate, String grid, ApiCompleteListener listener);
 
-    void loadOfficial(String street,String communicate,ApiCompleteListener listener);
+    void loadOfficial(String street, String communicate, ApiCompleteListener listener);
 
-    void loadOfficial(String street,ApiCompleteListener listener);
+    void loadOfficial(String street, ApiCompleteListener listener);
 
     void cancelLoading();
 

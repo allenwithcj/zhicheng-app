@@ -17,34 +17,34 @@ import okhttp3.RequestBody;
  * Created by Donson on 2017/2/14.
  */
 
-public class LoginPresenterImpl implements LoginPresenter,ApiCompleteListener {
+public class LoginPresenterImpl implements LoginPresenter, ApiCompleteListener {
 
     private LoginView mLoginView;
     private LoginModel mLoginModel;
 
-    public LoginPresenterImpl(LoginView lv){
+    public LoginPresenterImpl(LoginView lv) {
         mLoginModel = new LoginModelImpl();
         mLoginView = lv;
     }
 
     @Override
     public void login(String rb) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mLoginView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mLoginModel.login(rb,this);
+        mLoginModel.login(rb, this);
     }
 
     @Override
     public void onComplected(Object result) {
-        if (result instanceof LoginResponse){
+        if (result instanceof LoginResponse) {
             mLoginView.loginResponse(result);
         }
     }
 
     @Override
     public void onFailed(BaseResponse msg) {
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mLoginView.showMessage(msg.getMsg());

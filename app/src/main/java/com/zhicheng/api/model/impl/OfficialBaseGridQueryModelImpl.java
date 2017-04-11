@@ -24,7 +24,7 @@ import rx.schedulers.Schedulers;
 public class OfficialBaseGridQueryModelImpl implements OfficialBaseGridQueryModel {
     @Override
     public void query(String json, ApiCompleteListener listener) {
-        OfficialBaseGridQueryService mOfficialBaseGridQueryService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialBaseGridQueryService.class);
+        OfficialBaseGridQueryService mOfficialBaseGridQueryService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialBaseGridQueryService.class);
         mOfficialBaseGridQueryService.query(json)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -36,20 +36,20 @@ public class OfficialBaseGridQueryModelImpl implements OfficialBaseGridQueryMode
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<OfficialQueyResponse> officialQueyResponseResponse) {
-                        if (officialQueyResponseResponse.isSuccessful()){
+                        if (officialQueyResponseResponse.isSuccessful()) {
                             listener.onComplected(officialQueyResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(officialQueyResponseResponse.code(),officialQueyResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(officialQueyResponseResponse.code(), officialQueyResponseResponse.message()));
                         }
                     }
                 });
@@ -58,7 +58,7 @@ public class OfficialBaseGridQueryModelImpl implements OfficialBaseGridQueryMode
 
     @Override
     public void loadDetail(String j, ApiCompleteListener listener) {
-        OfficialBaseGridQueryService mOfficialBaseGridQueryService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialBaseGridQueryService.class);
+        OfficialBaseGridQueryService mOfficialBaseGridQueryService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialBaseGridQueryService.class);
         mOfficialBaseGridQueryService.queryDetail(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,20 +70,20 @@ public class OfficialBaseGridQueryModelImpl implements OfficialBaseGridQueryMode
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<OfficialBaseGridDetailResponse> officialBaseGridDetailResponseResponse) {
-                        if (officialBaseGridDetailResponseResponse.isSuccessful()){
+                        if (officialBaseGridDetailResponseResponse.isSuccessful()) {
                             listener.onComplected(officialBaseGridDetailResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(officialBaseGridDetailResponseResponse.code(),officialBaseGridDetailResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(officialBaseGridDetailResponseResponse.code(), officialBaseGridDetailResponseResponse.message()));
                         }
                     }
                 });

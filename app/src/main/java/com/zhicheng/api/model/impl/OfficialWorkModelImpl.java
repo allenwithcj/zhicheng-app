@@ -24,7 +24,7 @@ public class OfficialWorkModelImpl implements OfficialWorkModel {
 
     @Override
     public void loadWorkDynamic(String work, ApiCompleteListener listener) {
-        OfficialDynamicService officialDynamicService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialDynamicService.class);
+        OfficialDynamicService officialDynamicService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialDynamicService.class);
         officialDynamicService.getWorkDy(work)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -36,20 +36,20 @@ public class OfficialWorkModelImpl implements OfficialWorkModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
+                        if (commonResponseResponse.isSuccessful()) {
                             listener.onComplected(commonResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                         }
                     }
                 });
@@ -57,7 +57,7 @@ public class OfficialWorkModelImpl implements OfficialWorkModel {
 
     @Override
     public void upWorkDynamic(String work, ApiCompleteListener listener) {
-        OfficialDynamicService officialDynamicService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,OfficialDynamicService.class);
+        OfficialDynamicService officialDynamicService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialDynamicService.class);
         officialDynamicService.upWorkDy(work)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,20 +69,20 @@ public class OfficialWorkModelImpl implements OfficialWorkModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException){
+                        if (e instanceof UnknownHostException) {
                             listener.onFailed(null);
                             return;
                         }
                         BaseApplication.checkLogin();
-                        listener.onFailed(new BaseResponse(404,e.getMessage()));
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
-                        if (commonResponseResponse.isSuccessful()){
+                        if (commonResponseResponse.isSuccessful()) {
                             listener.onComplected(commonResponseResponse.body());
-                        }else {
-                            listener.onFailed(new BaseResponse(commonResponseResponse.code(),commonResponseResponse.message()));
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
                         }
                     }
                 });

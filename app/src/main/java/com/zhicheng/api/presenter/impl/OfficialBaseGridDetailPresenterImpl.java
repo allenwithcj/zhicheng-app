@@ -15,7 +15,7 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by hp on 2017/3/2.
  */
 
-public class OfficialBaseGridDetailPresenterImpl implements OfficialBaseGridDetailPresenter,ApiCompleteListener {
+public class OfficialBaseGridDetailPresenterImpl implements OfficialBaseGridDetailPresenter, ApiCompleteListener {
     private OfficialBaseGridDetailView mOfficialBaseGridDetailView;
     private OfficialBaseGridDetailModel mOfficialBaseGridDetailModel;
 
@@ -26,10 +26,10 @@ public class OfficialBaseGridDetailPresenterImpl implements OfficialBaseGridDeta
 
     @Override
     public void loadDetail(String rBody) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialBaseGridDetailView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialBaseGridDetailModel.loadDetail(rBody,this);
+        mOfficialBaseGridDetailModel.loadDetail(rBody, this);
     }
 
     @Override
@@ -39,14 +39,14 @@ public class OfficialBaseGridDetailPresenterImpl implements OfficialBaseGridDeta
 
     @Override
     public void onComplected(Object result) {
-        if(result instanceof OfficialBaseGridDetailResponse){
+        if (result instanceof OfficialBaseGridDetailResponse) {
             mOfficialBaseGridDetailView.refreshData(result);
         }
     }
 
     @Override
     public void onFailed(BaseResponse msg) {
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mOfficialBaseGridDetailView.showMessage(msg.getMsg());

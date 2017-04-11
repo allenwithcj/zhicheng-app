@@ -52,6 +52,7 @@ public class BaseApplication extends Application {
     private static int mainTid;
     //activity集合 管理所有Activity
     private static List<BaseActivity> mActivities;
+
     static {
         RoboGuice.setUseAnnotationDatabases(false);
     }
@@ -83,7 +84,7 @@ public class BaseApplication extends Application {
      *
      * @return
      */
-    public static Context getApplication(){
+    public static Context getApplication() {
         return mBaseApplication;
     }
 
@@ -92,7 +93,7 @@ public class BaseApplication extends Application {
      *
      * @return
      */
-    public static int getMainTid(){
+    public static int getMainTid() {
         return mainTid;
     }
 
@@ -101,7 +102,7 @@ public class BaseApplication extends Application {
      *
      * @param mBaseActivity
      */
-    public void addActivity(BaseActivity mBaseActivity){
+    public void addActivity(BaseActivity mBaseActivity) {
         mActivities.add(mBaseActivity);
     }
 
@@ -110,33 +111,33 @@ public class BaseApplication extends Application {
      *
      * @param mBaseActivity
      */
-    public void removeActivity(BaseActivity mBaseActivity){
+    public void removeActivity(BaseActivity mBaseActivity) {
         mActivities.remove(mBaseActivity);
     }
 
     /**
      * 结束当前所有Activity
      */
-    public static void clearAllActivity(){
+    public static void clearAllActivity() {
         ListIterator<BaseActivity> iterator = mActivities.listIterator();
         BaseActivity activity;
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             activity = iterator.next();
-            if (activity != null){
+            if (activity != null) {
                 activity.finish();
             }
         }
     }
 
-    public static void quiteApplication(){
+    public static void quiteApplication() {
         clearAllActivity();
         System.exit(0);
     }
 
-    public static void checkLogin(){
+    public static void checkLogin() {
         DatabaseHelper mDataBase = new DatabaseHelper();
         LocalConfig config = mDataBase.getLocalConfig();
-        if (config != null && config.getUserName() != null && config.getPwd() != null){
+        if (config != null && config.getUserName() != null && config.getPwd() != null) {
             LoginRequest.IqBean.QueryBean irIqQB = new LoginRequest.IqBean.QueryBean();
             LoginRequest.IqBean lrIq = new LoginRequest.IqBean();
             LoginRequest lr = new LoginRequest();
@@ -157,7 +158,7 @@ public class BaseApplication extends Application {
                     .flatMap(new Func1<String, Observable<Response<LoginResponse>>>() {
                         @Override
                         public Observable<Response<LoginResponse>> call(String s) {
-                            LoginService mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,LoginService.class);
+                            LoginService mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, LoginService.class);
 
                             return mLoginService.loginRequest(s);
                         }
@@ -172,36 +173,35 @@ public class BaseApplication extends Application {
 
                         @Override
                         public void onError(Throwable e) {
-                            if (e instanceof UnknownHostException){
-                                Toast.makeText(getApplication(),"",Toast.LENGTH_SHORT).show();
+                            if (e instanceof UnknownHostException) {
+                                Toast.makeText(getApplication(), "", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            Toast.makeText(getApplication(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onNext(Response<LoginResponse> loginResponseResponse) {
-                            if (loginResponseResponse.isSuccessful()){
-                                if (loginResponseResponse.body() != null){
+                            if (loginResponseResponse.isSuccessful()) {
+                                if (loginResponseResponse.body() != null) {
                                     LoginResponse lr = loginResponseResponse.body();
-                                    BaseApplication.log_say(TAG,lr.getIq().getQuery().getErrorMessage());
+                                    BaseApplication.log_say(TAG, lr.getIq().getQuery().getErrorMessage());
 //                                  Toast.makeText(getApplication(),"欢迎回来",Toast.LENGTH_SHORT).show();
                                 }
-                            }else {
-                                Toast.makeText(getApplication(),loginResponseResponse.message(),Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getApplication(), loginResponseResponse.message(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
-        }else {
+        } else {
             UIUtils.startActivity(new Intent(getApplication(), LoginActivity.class));
         }
     }
 
 
-
-    public static void log_say(String tag,String content){
-        if (BaseApplication.DEBUG){
-            Log.i(tag,content);
+    public static void log_say(String tag, String content) {
+        if (BaseApplication.DEBUG) {
+            Log.i(tag, content);
         }
     }
 }

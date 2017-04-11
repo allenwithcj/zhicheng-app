@@ -34,7 +34,7 @@ public class ScrollTest extends View {
     public boolean onTouchEvent(MotionEvent event) {
         int x = (int) event.getX();
         int y = (int) event.getY();
-        switch (event.getAction()){
+        switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 lastX = x;
                 lastY = y;
@@ -42,7 +42,7 @@ public class ScrollTest extends View {
             case MotionEvent.ACTION_MOVE:
                 offsetX = x - lastX;
                 offsetY = y - lastY;
-                layout(getLeft()+offsetX,getTop()+offsetY,getRight()+offsetX,getBottom()+offsetY);
+                layout(getLeft() + offsetX, getTop() + offsetY, getRight() + offsetX, getBottom() + offsetY);
 //                offsetLeftAndRight(offsetX);
 //                offsetTopAndBottom(offsetY);
                 break;

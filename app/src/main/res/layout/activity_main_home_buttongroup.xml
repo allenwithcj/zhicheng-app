@@ -3,30 +3,19 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:layout_marginBottom="@dimen/activity_vertical_margin">
+    android:layout_marginTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_marginBottom="20dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/cardview_light_background">
 
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/noFinish"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:padding="8dp"
-                android:drawablePadding="10dp"
-                android:drawableTop="@mipmap/ic_nofinish"
-                android:text="@string/NoFinish" />
 
             <TextView
                 android:id="@+id/fabNotice_nofinish"
@@ -41,21 +30,24 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:textSize="@dimen/badge_text_size"
-                android:visibility="gone"/>
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/noFinish"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="8dp"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/home_menu_tobedone"
+                android:text="@string/NoFinish" />
         </FrameLayout>
+
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
-        <TextView
-            android:id="@+id/Finished"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="8dp"
-            android:drawablePadding="10dp"
-            android:drawableTop="@mipmap/ic_finished"
-            android:text="@string/Finished" />
+
             <TextView
                 android:id="@+id/fabNotice_finished"
                 android:layout_width="wrap_content"
@@ -70,7 +62,18 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:textSize="@dimen/badge_text_size" />
+
+            <TextView
+                android:id="@+id/Finished"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="8dp"
+                android:drawablePadding="10dp"
+                android:drawableTop="@drawable/home_menu_hasbenndone"
+                android:text="@string/Finished" />
         </FrameLayout>
+
         <TextView
             android:id="@+id/FenLei"
             android:layout_width="0dp"
@@ -79,8 +82,18 @@
             android:gravity="center"
             android:padding="8dp"
             android:drawablePadding="10dp"
-            android:drawableTop="@mipmap/ic_fenlei"
+            android:drawableTop="@drawable/home_menu_eventquery"
             android:text="@string/FenLei" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:background="@color/cardview_light_background">
 
         <TextView
             android:id="@+id/GridDataBase"
@@ -90,43 +103,9 @@
             android:gravity="center"
             android:padding="8dp"
             android:drawablePadding="10dp"
-            android:drawableTop="@mipmap/ic_grid"
+            android:drawableTop="@drawable/home_menu_datagrid"
             android:text="@string/GridDataBase" />
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="1">
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-        <TextView
-            android:id="@+id/work"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="8dp"
-            android:drawablePadding="10dp"
-            android:drawableTop="@mipmap/ic_work"
-            android:text="@string/work" />
-            <TextView
-                android:id="@+id/fabNotice_work"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
-                android:layout_marginRight="@dimen/textView_padding"
-                android:minWidth="19dp"
-                android:maxHeight="19dp"
-                android:padding="2dp"
-                android:visibility="gone"
-                android:background="@drawable/i_show_deal"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:textSize="@dimen/badge_text_size" />
-        </FrameLayout>
 
         <TextView
             android:id="@+id/Experiment"
@@ -136,36 +115,9 @@
             android:layout_weight="1"
             android:padding="8dp"
             android:drawablePadding="10dp"
-            android:drawableTop="@mipmap/ic_experiment"
+            android:drawableTop="@drawable/home_menu_exchangeofexperienc"
             android:text="@string/Experiment" />
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-        <TextView
-            android:id="@+id/CallTheCoun"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:padding="8dp"
-            android:drawablePadding="10dp"
-            android:drawableTop="@mipmap/ic_callthecon"
-            android:text="@string/CallTheCoun" />
-            <TextView
-                android:id="@+id/fabNotice_notice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top|end"
-                android:layout_marginRight="@dimen/textView_padding"
-                android:minWidth="19dp"
-                android:maxHeight="19dp"
-                android:padding="2dp"
-                android:background="@drawable/i_show_deal"
-                android:textColor="@color/white"
-                android:gravity="center"
-                android:visibility="gone"
-                android:textSize="@dimen/badge_text_size" />
-        </FrameLayout>
+
 
         <TextView
             android:id="@+id/workNote"
@@ -175,7 +127,7 @@
             android:layout_weight="1"
             android:padding="8dp"
             android:drawablePadding="10dp"
-            android:drawableTop="@mipmap/ic_worknote"
+            android:drawableTop="@drawable/home_menu_worklog"
             android:text="@string/workNote" />
     </LinearLayout>
 </LinearLayout>

@@ -28,7 +28,8 @@ allprojects {
             url 'https://oss.sonatype.org/content/repositories/snapshots/'
         }
         maven {
-            url "https://raw.githubusercontent.com/Pgyer/mvn_repo_pgyer/master" }
+            url "https://raw.githubusercontent.com/Pgyer/mvn_repo_pgyer/master"
+        }
     }
 }
 

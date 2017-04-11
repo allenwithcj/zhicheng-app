@@ -15,7 +15,7 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by hp on 2017/3/2.
  */
 
-public class OfficialBaseGridUpdatePresenterImpl implements OfficialBaseGridUpdatePresenter,ApiCompleteListener {
+public class OfficialBaseGridUpdatePresenterImpl implements OfficialBaseGridUpdatePresenter, ApiCompleteListener {
     private OfficialBaseGridUpdateView mOfficialBaseGridUpdateView;
     private OfficialBaseGridUpdateModel mOfficialBaseGridUpdateModel;
 
@@ -26,15 +26,15 @@ public class OfficialBaseGridUpdatePresenterImpl implements OfficialBaseGridUpda
 
     @Override
     public void updateDate(String rBody) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())){
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialBaseGridUpdateView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
-        mOfficialBaseGridUpdateModel.updateDate(rBody,this);
+        mOfficialBaseGridUpdateModel.updateDate(rBody, this);
     }
 
     @Override
     public void onComplected(Object result) {
-        if(result instanceof CommonResponse){
+        if (result instanceof CommonResponse) {
             mOfficialBaseGridUpdateView.updateDateResponse(result);
         }
 
@@ -42,7 +42,7 @@ public class OfficialBaseGridUpdatePresenterImpl implements OfficialBaseGridUpda
 
     @Override
     public void onFailed(BaseResponse msg) {
-        if (msg == null){
+        if (msg == null) {
             return;
         }
         mOfficialBaseGridUpdateView.showMessage(msg.getMsg());

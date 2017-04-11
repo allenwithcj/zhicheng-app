@@ -22,12 +22,12 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by hp on 2017/3/2.
  */
 
-public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
+public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
     private OfficialBaseGridDetailResponse mData;
-    private String ZZ_RESIDENCE,GRIDNAME;
-    private String RENTNAME,REMARK2,RENTPHONE;
-    private String CARD_NUM,NAME,RELATION,HUZU,GENDER,MARITAL_STATUS,POLITICAL_STATUS,EDUCATION,
-            HOBBY,REMARK1,DOMICILE,OUTADDRESS,PHONE,WORK,SORT;
+    private String ZZ_RESIDENCE, GRIDNAME;
+    private String RENTNAME, REMARK2, RENTPHONE;
+    private String CARD_NUM, NAME, RELATION, HUZU, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
+            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT;
     private OfficialBaseGridUpdatePresenter mOfficialBaseGridUpdatePresenter;
     private ItemViewHolder holder;
     private String[] mList;
@@ -37,7 +37,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
         this.mOfficialBaseGridUpdatePresenter = mOfficialBaseGridUpdatePresenter;
     }
 
-    public void setData(OfficialBaseGridDetailResponse mData){
+    public void setData(OfficialBaseGridDetailResponse mData) {
         this.mData = mData;
         this.notifyDataSetChanged();
     }
@@ -54,8 +54,8 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         this.holder = (ItemViewHolder) holder;
-        if(mData != null){
-            if(holder instanceof ItemViewHolder){
+        if (mData != null) {
+            if (holder instanceof ItemViewHolder) {
                 ((ItemViewHolder) holder).grid_base_add_residence.setText(mData.getIq().getQuery().getPreMsg().getZZ_RESIDENCE());
                 ((ItemViewHolder) holder).grid_base_add_grid_no.setText(mData.getIq().getQuery().getPreMsg().getGRIDNAME());
                 ((ItemViewHolder) holder).grid_base_add_lessor.setText(mData.getIq().getQuery().getPreMsg().getRENTNAME());
@@ -81,36 +81,36 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
     }
 
     private String getSexString(String gender) {
-        if(gender != null){
-            if(gender.equals("0")){
+        if (gender != null) {
+            if (gender.equals("0")) {
                 return "男";
-            }else {
+            } else {
                 return "女";
             }
-        }else{
+        } else {
             return null;
         }
     }
 
     private String getMarriedString(String marital_status) {
-        if(marital_status != null){
-            if(marital_status.equals("0")){
+        if (marital_status != null) {
+            if (marital_status.equals("0")) {
                 return "未婚";
-            }else if(marital_status.equals("1")){
+            } else if (marital_status.equals("1")) {
                 return "已婚";
-            }else if(marital_status.equals("2")){
+            } else if (marital_status.equals("2")) {
                 return "离婚";
-            }else {
+            } else {
                 return "丧偶";
             }
-        }else{
+        } else {
             return null;
         }
     }
 
     @Override
     public int getItemCount() {
-        return  1;
+        return 1;
     }
 
     public void update(String id, AlertDialog dialog) {
@@ -221,7 +221,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
             grid_base_add_workspace = (EditText) itemView.findViewById(R.id.grid_base_add_workspace);
             grid_base_add_hobby = (EditText) itemView.findViewById(R.id.grid_base_add_hobby);
             grid_base_add_remark = (EditText) itemView.findViewById(R.id.grid_base_add_remark);
-            grid_base_add_outaddress = (EditText)itemView.findViewById(R.id.grid_base_add_outaddress);
+            grid_base_add_outaddress = (EditText) itemView.findViewById(R.id.grid_base_add_outaddress);
             grid_base_add_rkfl = (TextView) itemView.findViewById(R.id.input_rkfl);
 
             grid_base_add_sex.setOnClickListener(view -> {
@@ -265,7 +265,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
 
     private void myIntent(String[] mList, String type) {
         Intent intent = new Intent(UIUtils.getContext(), BaseGridAddSelectType.class);
-        intent.putExtra("mList",mList);
+        intent.putExtra("mList", mList);
         intent.putExtra("type", type);
         UIUtils.startActivity(intent);
     }
@@ -273,7 +273,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
     private String sexCode(String str) {
         if (str.equals("男")) {
             return "0";
-        } else if(str.equals("女")){
+        } else if (str.equals("女")) {
             return "1";
         }
         return null;
@@ -286,7 +286,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter{
             return "1";
         } else if (str.equals("离婚")) {
             return "2";
-        } else if(str.equals("丧偶")){
+        } else if (str.equals("丧偶")) {
             return "3";
         }
         return null;

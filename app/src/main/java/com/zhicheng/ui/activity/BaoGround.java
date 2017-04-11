@@ -19,7 +19,7 @@ public class BaoGround extends BaseActivity {
         setContentView(R.layout.activity_home_baoground);
         FragmentManager mFragmentManage = getSupportFragmentManager();
         FragmentTransaction ft = mFragmentManage.beginTransaction();
-        WebViewFragment mWebViewFragment = WebViewFragment.newInstance("http://10.0.2.2/helloworld/index.html","index");
+        WebViewFragment mWebViewFragment = WebViewFragment.newInstance("http://10.0.2.2/helloworld/index.html", "index");
         mWebViewFragment.isShowClose();
         ft.add(R.id.webView_content, mWebViewFragment);
         ft.commit();

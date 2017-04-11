@@ -16,28 +16,28 @@ import java.util.List;
  * Created by Donson on 2017/2/14.
  */
 
-public class ChoosePhotoAdapter extends RecyclerView.Adapter{
+public class ChoosePhotoAdapter extends RecyclerView.Adapter {
 
     private List<String> imagePath;
 
-    public ChoosePhotoAdapter(){
+    public ChoosePhotoAdapter() {
         imagePath = new ArrayList<String>();
     }
 
-    public void addData(List<String> imgs){
+    public void addData(List<String> imgs) {
         this.imagePath = imgs;
         this.notifyDataSetChanged();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view, parent, false);
         return new ChoosePhotoViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ChoosePhotoViewHolder){
+        if (holder instanceof ChoosePhotoViewHolder) {
             Glide.with(holder.itemView.getContext())
                     .load("file://" + imagePath.get(position))
                     .into(((ChoosePhotoViewHolder) holder).mImg);
