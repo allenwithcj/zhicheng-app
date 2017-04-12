@@ -34,5 +34,9 @@ public interface WorkNodeService {
     @POST("/servlet/mobileServlet")
     Observable<Response<CommonResponse>> deleteWorkNode(@Field("json") String rBody);
 
+    @FormUrlEncoded
+    @POST("/servlet/mobileServlet")
+    Observable<Response<CommonResponse>> invalidWorkNode(@Field("json") String rBody);
+
 }
 

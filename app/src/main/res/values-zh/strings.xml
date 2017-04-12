@@ -91,6 +91,20 @@
     <string name="find_new_version">发现新版本,是否进行下载更新?</string>
     <string name="download">下载</string>
     <string name="update_cancel">取消</string>
+    <string name="nofinish_deal">处理</string>
+    <string name="nofinish_apply">申请</string>
+    <string name="more">更多>></string>
+    <string name="homepage">首页</string>
+    <string name="map">地图</string>
+    <string name="baoliao">爆料</string>
+    <string name="news">消息</string>
+    <string name="mine">我的</string>
+    <string name="grid">所属网格</string>
+    <string name="setting">设置</string>
+    <string name="exit">退出登录</string>
+    <string name="exit_content">是否退出重新登录？</string>
+    <string name="action_invalid">作废</string>
+    <string name="dynamic_detail">工作动态详情</string>
 
 
     <string-array name="detail">

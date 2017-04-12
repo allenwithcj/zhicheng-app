@@ -10,6 +10,7 @@ import com.zhicheng.api.model.impl.OfficialBaseGridModelImpl;
 import com.zhicheng.api.presenter.OfficialBaseGridPresenter;
 import com.zhicheng.api.view.OfficialBaseGridView;
 import com.zhicheng.bean.http.BaseResponse;
+import com.zhicheng.bean.http.CaseGridResponse;
 import com.zhicheng.bean.http.OfficialBaseGridResponse;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.utils.common.NetworkUtils;
@@ -32,7 +33,7 @@ public class OfficialBaseGridPresenterImpl implements OfficialBaseGridPresenter,
 
     @Override
     public void onComplected(Object result) {
-        if (result instanceof OfficialBaseGridResponse) {
+        if (result instanceof CaseGridResponse) {
             mOfficialBaseGridView.refreshData(result);
         }
         mOfficialBaseGridView.hideProgress();
@@ -48,32 +49,15 @@ public class OfficialBaseGridPresenterImpl implements OfficialBaseGridPresenter,
     }
 
     @Override
-    public void loadOfficialBaseGrid(String street, String communicate, String grid) {
+    public void loadOfficialBaseGridNames(String json) {
         if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialBaseGridView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
             mOfficialBaseGridView.hideProgress();
         }
         mOfficialBaseGridView.showProgress();
-        mOfficialBaseGridModel.loadOfficial(street, communicate, grid, this);
+        mOfficialBaseGridModel.loadOfficialGridNames(json, this);
     }
 
-    public void loadOfficialBaseGrid(String street, String communicate) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
-            mOfficialBaseGridView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
-            mOfficialBaseGridView.hideProgress();
-        }
-        mOfficialBaseGridView.showProgress();
-        mOfficialBaseGridModel.loadOfficial(street, communicate, this);
-    }
-
-    public void loadOfficialBaseGrid(String street) {
-        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
-            mOfficialBaseGridView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
-            mOfficialBaseGridView.hideProgress();
-        }
-        mOfficialBaseGridView.showProgress();
-        mOfficialBaseGridModel.loadOfficial(street, this);
-    }
 
     @Override
     public void cancelLoading() {

@@ -267,6 +267,38 @@ public class WorkNodeModelImpl implements WorkNodeModel {
                 });
     }
 
+    @Override
+    public void invalidWorkNodes(String s, ApiCompleteListener listener) {
+        WorkNodeService mWorkNodeService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, WorkNodeService.class);
+        mWorkNodeService.invalidWorkNode(s)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<CommonResponse>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException) {
+                            listener.onFailed(null);
+                            return;
+                        }
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
+                    }
+
+                    @Override
+                    public void onNext(Response<CommonResponse> commonResponseResponse) {
+                        if (commonResponseResponse.isSuccessful()) {
+                            listener.onComplected(commonResponseResponse.body());
+                        } else {
+                            listener.onFailed(new BaseResponse(commonResponseResponse.code(), commonResponseResponse.message()));
+                        }
+                    }
+                });
+    }
+
 
     @Override
     public void cancelLoading() {

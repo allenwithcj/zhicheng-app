@@ -40,7 +40,9 @@ public class CaseQueryRequest {
             private String manageStatus;
             private String caseTime;
             private String caseName;
+            private String eventType;
             private int pageNum;
+
 
             public String getManageStatus() {
                 return manageStatus;
@@ -64,6 +66,14 @@ public class CaseQueryRequest {
 
             public void setPageNum(int pageNum) {
                 this.pageNum = pageNum;
+            }
+
+            public String getEventType() {
+                return eventType;
+            }
+
+            public void setEventType(String eventType) {
+                this.eventType = eventType;
             }
 
             public String getCaseName() {

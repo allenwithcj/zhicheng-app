@@ -11,78 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="170dp" />
 
-    <LinearLayout
-        android:id="@+id/type_layout"
-        android:layout_below="@+id/bg_layout"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/patrol_heading"
-            android:gravity="center"
-            android:drawablePadding="5dp"
-            android:text="类型" />
-
-        <RadioGroup
-            android:id="@+id/rg_type_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/allThings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/radiobutton_background"
-                android:button="@null"
-                android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="@string/allThings"
-                android:checked="true"
-                android:textColor="@color/radiobutton_textcolor" />
-
-            <RadioButton
-                android:id="@+id/NoFinish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/radiobutton_background"
-                android:button="@null"
-                android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="@string/NoFinish"
-                android:textColor="@color/radiobutton_textcolor" />
-
-            <RadioButton
-                android:id="@+id/Finished"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/radiobutton_background"
-                android:button="@null"
-                android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp"
-                android:text="@string/Finished"
-                android:textColor="@color/radiobutton_textcolor" />
-        </RadioGroup>
-    </LinearLayout>
-
     <View
         android:id="@+id/line1"
         android:layout_below="@+id/type_layout"
@@ -91,7 +19,7 @@
         android:background="@color/gray_text" />
 
     <LinearLayout
-        android:id="@+id/sender_layout"
+        android:id="@+id/eventType_layout"
         android:layout_below="@+id/line1"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -106,61 +34,21 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:drawablePadding="5dp"
-            android:text="送办人" />
+            android:text="事项分类" />
 
-        <EditText
-            android:id="@+id/sender"
+        <TextView
+            android:id="@+id/eventtype"
             android:layout_width="0dp"
-            android:layout_weight="3.5"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:padding="@dimen/textView_padding"
             android:layout_margin="@dimen/photo_margin"
             android:layout_gravity="center"
             android:textSize="@dimen/content_size"
             android:textStyle="normal"
-            android:hint="请输入姓名"
+            android:hint="请选择事项分类"
             android:background="@null"
             android:textColor="@color/black" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/line2"
-        android:layout_below="@+id/sender_layout"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/gray_text" />
-    <LinearLayout
-        android:id="@+id/date_layout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/line2"
-        android:layout_alignParentStart="true">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:drawableLeft="@drawable/patrol_heading"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:drawablePadding="5dp"
-            android:text="时间"/>
-
-        <TextView
-            android:id="@+id/Date"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/textView_padding"
-            android:layout_margin="@dimen/photo_margin"
-            android:layout_gravity="center"
-            android:textSize="@dimen/content_size"
-            android:textStyle="normal"
-            android:hint="请选择时间"
-            android:textColor="@color/black" />
-
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -169,12 +57,21 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/patrol_next_arrow" />
     </LinearLayout>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_below="@+id/eventType_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray_text" />
+
     <View
         android:id="@+id/line3"
         android:layout_below="@+id/date_layout"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_text" />
+
     <LinearLayout
         android:id="@+id/grid_layout"
         android:orientation="horizontal"
@@ -192,12 +89,13 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:drawablePadding="5dp"
-            android:text="@string/grid"/>
+            android:text="@string/grid"
+            android:id="@+id/textView6" />
 
         <TextView
             android:id="@+id/grid_name"
             android:layout_width="0dp"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:padding="@dimen/textView_padding"
             android:layout_margin="@dimen/photo_margin"
@@ -224,11 +122,125 @@
 
 
     <LinearLayout
+        android:id="@+id/type_layout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bg_layout"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/patrol_heading"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:text="办理状态" />
+
+        <RadioGroup
+            android:id="@+id/rg_type_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/handing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/radiobutton_background"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="在办"
+                android:textColor="@color/radiobutton_textcolor" />
+
+            <RadioButton
+                android:id="@+id/Finished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/radiobutton_background"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="办结"
+                android:textColor="@color/radiobutton_textcolor" />
+
+            <RadioButton
+                android:id="@+id/suspend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/radiobutton_background"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="挂起"
+                android:textColor="@color/radiobutton_textcolor" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/date_layout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line2"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:drawableLeft="@drawable/patrol_heading"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawablePadding="5dp"
+            android:text="上报时间"/>
+
+        <TextView
+            android:id="@+id/Date"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/textView_padding"
+            android:layout_margin="@dimen/photo_margin"
+            android:layout_gravity="center"
+            android:textSize="@dimen/content_size"
+            android:textStyle="normal"
+            android:hint="请选择时间"
+            android:textColor="@color/black" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/patrol_next_arrow" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/btn_cancel"

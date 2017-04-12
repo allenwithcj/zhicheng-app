@@ -46,7 +46,9 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
             if (intent.getAction().equals("com.grid.type")) {
                 String value = intent.getStringExtra("value");
                 String type = intent.getStringExtra("type");
-                if (type.equals(Constant.TYPE_SEX)) {
+                if (type.equals(Constant.TYPE_RELATION)) {
+                    holder.grid_base_add_relation.setText(value);
+                }else if (type.equals(Constant.TYPE_SEX)) {
                     holder.grid_base_add_sex.setText(value);
                 } else if (type.equals(Constant.TYPE_POLICATIAL)) {
                     holder.grid_base_add_policatial.setText(value);
@@ -56,8 +58,10 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
                     holder.grid_base_add_married.setText(value);
                 } else if (type.equals(Constant.TYPE_CLASSIFICATION)) {
                     holder.grid_base_add_rkfl.setText(value);
-                } else if (type.equals(Constant.TYPE_REMARK)) {
-                    holder.grid_base_add_lessor_remark.setText(value);
+                } else if (type.equals(Constant.TYPE_REMARK1)) {
+                    holder.grid_base_add_remark1.setText(value);
+                }else if (type.equals(Constant.TYPE_REMARK2)) {
+                    holder.grid_base_add_lessor_remark2.setText(value);
                 }
             }
         }

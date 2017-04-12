@@ -104,6 +104,14 @@ public class OfficialPresenterImpl implements OfficialPresenter, ApiCompleteList
     }
 
     @Override
+    public void loadDynamicDetail(String js) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
+            mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
+        }
+        mOfficialModelImpl.loadDynamicDetail(js, this);
+    }
+
+    @Override
     public void onComplected(Object result) {
         if (result instanceof OfficialResponse) {
             if (start == 1) {

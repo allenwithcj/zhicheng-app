@@ -103,6 +103,9 @@ public class OfficialBaseGridDetailResponse {
                 private String RENTPHONE;
                 private String HUZU;
                 private String SORT;
+                private String BADDRESS;
+                private String BLONGITUDE;
+                private String BLATITUDE;
 
                 public String getID() {
                     return ID;
@@ -271,6 +274,30 @@ public class OfficialBaseGridDetailResponse {
 
                 public void setSORT(String SORT) {
                     this.SORT = SORT;
+                }
+
+                public String getBADDRESS() {
+                    return BADDRESS;
+                }
+
+                public void setBADDRESS(String BADDRESS) {
+                    this.BADDRESS = BADDRESS;
+                }
+
+                public String getBLONGITUDE() {
+                    return BLONGITUDE;
+                }
+
+                public void setBLONGITUDE(String BLONGITUDE) {
+                    this.BLONGITUDE = BLONGITUDE;
+                }
+
+                public String getBLATITUDE() {
+                    return BLATITUDE;
+                }
+
+                public void setBLATITUDE(String BLATITUDE) {
+                    this.BLATITUDE = BLATITUDE;
                 }
             }
         }

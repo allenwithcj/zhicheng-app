@@ -23,6 +23,7 @@ import com.zhicheng.api.presenter.impl.WorkNodePresenterImpl;
 import com.zhicheng.api.view.WorkNodeView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.PersonalLogMaResponse;
+import com.zhicheng.bean.json.PersonalDynamicRequest;
 import com.zhicheng.bean.json.PersonalLogMaRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.common.URL;
@@ -143,6 +144,8 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         if (mData.getLocalConfig() != null) {
             if (mData.getLocalConfig().getUserName().equals(sender)) {
                 return R.menu.official_grid_operate;
+            }else if(mData.getLocalConfig().getUserPost().equals("镇街受理员")){
+                return R.menu.official_grid_invalid;
             }
         }
         return super.getMenuID();
@@ -150,6 +153,7 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //删除
         if (item.getItemId() == R.id.action_operate) {
             if (b) {
                 item.setTitle("修改");
@@ -160,6 +164,23 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
                 btn_layout.setVisibility(View.VISIBLE);
                 b = true;
             }
+            //作废
+        }else if(item.getItemId() == R.id.action_invalid){
+            dialog = new AlertDialog.Builder(this, R.style.dialog)
+                    .setView(R.layout.z_loading_view)
+                    .setCancelable(false)
+                    .create();
+            dialog.show();
+            PersonalDynamicRequest mPersonalDynamicRequest = new PersonalDynamicRequest();
+            PersonalDynamicRequest.IqBean iqb = new PersonalDynamicRequest.IqBean();
+            PersonalDynamicRequest.IqBean.QueryBean qb = new PersonalDynamicRequest.IqBean.QueryBean();
+            iqb.setNamespace("PersonalLogMaRequest");
+            qb.setType("6");
+            qb.setId(Uid);
+            iqb.setQuery(qb);
+            mPersonalDynamicRequest.setIq(iqb);
+            Gson gson = new Gson();
+            mWorkNodePresenterImpl.invalidWorkNodes(gson.toJson(mPersonalDynamicRequest));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -188,12 +209,16 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
                     showMessage("修改成功");
                 } else if (Constant.LOG_OPERATE_TYPE.equals("delete")) {
                     showMessage("删除成功");
+                }else{
+                    showMessage("作废成功");
                 }
                 finish();
             } else {
                 if (Constant.LOG_OPERATE_TYPE.equals("update")) {
                     showMessage("修改失败");
                 } else if (Constant.LOG_OPERATE_TYPE.equals("delete")) {
+                    showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
+                }else{
                     showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
                 }
             }

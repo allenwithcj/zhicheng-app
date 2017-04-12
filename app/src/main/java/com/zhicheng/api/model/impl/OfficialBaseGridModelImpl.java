@@ -6,6 +6,7 @@ import com.zhicheng.api.common.ServiceFactory;
 import com.zhicheng.api.common.service.OfficialBaseGridService;
 import com.zhicheng.api.model.OfficialBaseGridModel;
 import com.zhicheng.bean.http.BaseResponse;
+import com.zhicheng.bean.http.CaseGridResponse;
 import com.zhicheng.bean.http.OfficialBaseGridResponse;
 import com.zhicheng.common.URL;
 
@@ -22,13 +23,14 @@ import rx.schedulers.Schedulers;
 
 public class OfficialBaseGridModelImpl implements OfficialBaseGridModel {
 
+
     @Override
-    public void loadOfficial(String street, String communicate, String grid, ApiCompleteListener listener) {
+    public void loadOfficialGridNames(String s, ApiCompleteListener listener) {
         OfficialBaseGridService mOfficialBaseGridService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialBaseGridService.class);
-        mOfficialBaseGridService.getOfficialCommonData(street, communicate, grid)
+        mOfficialBaseGridService.loadGridNames(s)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<OfficialBaseGridResponse>>() {
+                .subscribe(new Subscriber<Response<CaseGridResponse>>() {
                     @Override
                     public void onCompleted() {
 
@@ -45,24 +47,14 @@ public class OfficialBaseGridModelImpl implements OfficialBaseGridModel {
                     }
 
                     @Override
-                    public void onNext(Response<OfficialBaseGridResponse> officialBaseGridResponseResponse) {
-                        if (officialBaseGridResponseResponse.isSuccessful()) {
-                            listener.onComplected(officialBaseGridResponseResponse.body());
+                    public void onNext(Response<CaseGridResponse> mCaseGridResponseResponse) {
+                        if (mCaseGridResponseResponse.isSuccessful()) {
+                            listener.onComplected(mCaseGridResponseResponse.body());
                         } else {
-                            listener.onFailed(new BaseResponse(officialBaseGridResponseResponse.code(), officialBaseGridResponseResponse.message()));
+                            listener.onFailed(new BaseResponse(mCaseGridResponseResponse.code(), mCaseGridResponseResponse.message()));
                         }
                     }
                 });
-    }
-
-    @Override
-    public void loadOfficial(String street, String communicate, ApiCompleteListener listener) {
-        this.loadOfficial(street, communicate, "0", listener);
-    }
-
-    @Override
-    public void loadOfficial(String street, ApiCompleteListener listener) {
-        this.loadOfficial(street, "0", "0", listener);
     }
 
     @Override

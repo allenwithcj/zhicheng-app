@@ -27,4 +27,8 @@ public interface OfficialPresenter {
 
     //查询通知公告详情
     void queryMewsDetail(String js);
+
+    //查看工作动态详情
+    void loadDynamicDetail(String js);
+
 }

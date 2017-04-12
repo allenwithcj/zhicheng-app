@@ -17,5 +17,7 @@ public interface WorkNodeModel {
 
     void deleteWorkNodes(String s, ApiCompleteListener listener);
 
+    void invalidWorkNodes(String s, ApiCompleteListener listener);
+
     void cancelLoading();
 }

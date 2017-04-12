@@ -48,6 +48,8 @@ public class PersonalDynamicRequest {
             private String attguid;
             private String location;
             private int page;
+            private int row;
+            private String ID;
 
             public String getType() {
                 return type;
@@ -95,6 +97,22 @@ public class PersonalDynamicRequest {
 
             public void setPage(int page) {
                 this.page = page;
+            }
+
+            public int getRow() {
+                return row;
+            }
+
+            public void setRow(int row) {
+                this.row = row;
+            }
+
+            public String getID() {
+                return ID;
+            }
+
+            public void setID(String ID) {
+                this.ID = ID;
             }
         }
     }

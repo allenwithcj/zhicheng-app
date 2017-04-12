@@ -1,53 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="relation">
+        <item>本人</item>
+        <item>父</item>
+        <item>母</item>
+        <item>夫</item>
+        <item>妻</item>
+        <item>子</item>
+        <item>女</item>
+        <item>兄</item>
+        <item>弟</item>
+        <item>姐</item>
+        <item>妹</item>
+        <item>孙子</item>
+        <item>孙女</item>
+        <item>儿媳</item>
+        <item>女婿</item>
+        <item>祖父</item>
+        <item>祖母</item>
+        <item>外祖父</item>
+        <item>外祖母</item>
+        <item>外孙子</item>
+        <item>外孙女</item>
+        <item>旁系亲属</item>
+        <item>其他亲属</item>
+        <item>承租</item>
+    </string-array>
+
     <string-array name="sex">
         <item>男</item>
         <item>女</item>
     </string-array>
 
     <string-array name="political_status">
-        <item>群众</item>
-        <item>团员</item>
         <item>党员</item>
+        <item>团员</item>
+        <item>群众</item>
     </string-array>
 
     <string-array name="degree_of_educatio">
-        <item>小学</item>
         <item>初中</item>
         <item>高中</item>
         <item>中专</item>
         <item>大专</item>
         <item>本科</item>
-        <item>研究生</item>
-        <item>其他</item>
+        <item>硕士</item>
+        <item>博士</item>
+        <item>小学毕业（肄业）</item>
     </string-array>
 
     <string-array name="married">
-        <item>未婚</item>
         <item>已婚</item>
+        <item>未婚</item>
         <item>离婚</item>
         <item>丧偶</item>
     </string-array>
 
-    <string-array name="classification">
+    <string-array name="remark1">
+        <item>低保户</item>
+        <item>五保户</item>
+        <item>60~90岁老人</item>
+        <item>残疾人</item>
+        <item>90岁以上老人</item>
+        <item>空巢老人</item>
+        <item>计生优抚对象</item>
+        <item>计生奖抚对象</item>
+        <item>计生特抚对象</item>
+        <item>无</item>
+    </string-array>
+
+    <string-array name="remark2">
+        <item>刑满释放</item>
+        <item>社区矫正</item>
+        <item>社区戒毒康复</item>
+        <item>肇事精神病</item>
+        <item>重点上访人员</item>
+        <item>重点青少年</item>
+        <item>无</item>
+    </string-array>
+
+    <string-array name="sort">
         <item>常住人口</item>
         <item>县类流动人口</item>
         <item>县外流入人口</item>
-    </string-array>
-
-    <string-array name="remark">
-        <item>低保户</item>
-        <item>奖抚</item>
-        <item>特抚</item>
         <item>其他</item>
-        <item>吸毒</item>
-        <item>社区矫正</item>
-        <item>残疾</item>
-        <item>肇事精神患者</item>
-        <item>是否退伍军</item>
-        <item>90岁以上老人</item>
-        <item>空巢老人</item>
-        <item>优抚对象</item>
     </string-array>
 
     <string-array name="grid_add">
@@ -59,7 +95,7 @@
         <item>姓名:</item>
         <item>与户主关系:</item>
         <item>性别:</item>
-        <item>身份证号:</item>
+        <item>公民身份证号码:</item>
         <item>政治面貌:</item>
         <item>文化程度:</item>
         <item>婚否:</item>

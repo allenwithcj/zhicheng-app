@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.zhicheng.R;
 import com.zhicheng.ui.activity.ContactActivity;
 import com.zhicheng.ui.activity.OfficialSended;
+import com.zhicheng.ui.activity.SettingActivity;
 import com.zhicheng.utils.common.UIUtils;
 
 /**
@@ -91,6 +92,10 @@ public class InfoAdapter extends RecyclerView.Adapter {
             if(position == 5){
                 ((InfoLastViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.set));
                 ((InfoLastViewHolder) holder).mTextViewLast.setText("设置");
+                ((InfoLastViewHolder) holder).mTextViewLast.setOnClickListener(view -> {
+                    Intent intent = new Intent(holder.itemView.getContext(), SettingActivity.class);
+                    UIUtils.startActivity(intent);
+                });
             }
         }
     }

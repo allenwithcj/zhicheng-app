@@ -212,7 +212,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     finish();
                 }
             }).setNegativeButton("取消", null).show();
-            ;
         } else {
             mLocation_title.setText(getResources().getString(R.string.grid_location_open));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(

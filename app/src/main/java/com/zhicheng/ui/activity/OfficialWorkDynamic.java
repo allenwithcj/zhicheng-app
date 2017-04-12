@@ -259,6 +259,7 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView, S
         iqb.setNamespace("PersonalDynamicRequest");
         qb.setType(type);
         qb.setPage(page);
+        qb.setRow(10);
         iqb.setQuery(qb);
         mPersonalDynamicRequest.setIq(iqb);
         Gson gson = new Gson();

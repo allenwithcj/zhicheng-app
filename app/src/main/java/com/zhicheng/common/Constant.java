@@ -15,12 +15,14 @@ public class Constant {
     public static final int MAIN_INEED_MODE = 2;
     public static final int MAIN_INFO_MODE = 3;
 
+    public static final String TYPE_RELATION = "relation";
     public static final String TYPE_SEX = "sex";
     public static final String TYPE_POLICATIAL = "policatial";
     public static final String TYPE_DEGREE = "degree";
     public static final String TYPE_MARRIED = "married";
     public static final String TYPE_CLASSIFICATION = "classification";
-    public static final String TYPE_REMARK = "remark";
+    public static final String TYPE_REMARK1 = "remark1";
+    public static final String TYPE_REMARK2 = "remark2";
 
     public static String LOG_OPERATE_TYPE = "";
 

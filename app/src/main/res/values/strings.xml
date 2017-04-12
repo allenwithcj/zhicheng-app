@@ -99,7 +99,12 @@
     <string name="baoliao">爆料</string>
     <string name="news">消息</string>
     <string name="mine">我的</string>
-    <string name="grid">网格</string>
+    <string name="grid">所属网格</string>
+    <string name="setting">设置</string>
+    <string name="exit">退出登录</string>
+    <string name="exit_content">是否退出重新登录？</string>
+    <string name="action_invalid">作废</string>
+    <string name="dynamic_detail">工作动态详情</string>
 
 
     <string-array name="detail">

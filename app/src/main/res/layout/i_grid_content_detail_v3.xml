@@ -52,7 +52,7 @@
                 android:text="@string/grid_base_add_lessor_remark" />
 
             <TextView
-                android:id="@+id/grid_base_add_lessor_remark"
+                android:id="@+id/grid_base_add_lessor_remark2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="5"

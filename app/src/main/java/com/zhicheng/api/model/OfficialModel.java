@@ -29,4 +29,7 @@ public interface OfficialModel {
 
     //查询通知公告详情
     void queryNewsDetail(String j, ApiCompleteListener listener);
+
+    //查询工作动态详情
+    void loadDynamicDetail(String j, ApiCompleteListener listener);
 }

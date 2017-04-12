@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,11 +27,13 @@ import com.zhicheng.bean.json.OfficialRequest;
 import com.zhicheng.bean.json.PersonalDynamicRequest;
 import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.CallTheCounActivity;
+import com.zhicheng.ui.activity.CallTheCounDetailActivity;
 import com.zhicheng.ui.activity.ExperienceActivity;
 import com.zhicheng.ui.activity.Official;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
 import com.zhicheng.ui.activity.OfficialSendDetails;
 import com.zhicheng.ui.activity.OfficialWorkDynamic;
+import com.zhicheng.ui.activity.OfficialWorkDynamicDetail;
 import com.zhicheng.ui.activity.SearchViewActivity;
 import com.zhicheng.ui.activity.WorkNoteActivity;
 import com.zhicheng.ui.activity.officialFinished;
@@ -149,6 +153,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
                 iqb.setNamespace("PersonalDynamicRequest");
                 qb.setType("2");
                 qb.setPage(1);
+                qb.setRow(3);
                 iqb.setQuery(qb);
                 mPersonalDynamicRequest.setIq(iqb);
                 Gson gson = new Gson();
@@ -335,7 +340,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
     }
 
     //通知公告
-    private class MyNoticeAdapter extends RecyclerView.Adapter {
+    private class MyNoticeAdapter extends RecyclerView.Adapter<MyNoticeAdapter.NoticeItemViewHolder> {
         private List<List<NoticeResponse.IqBean.QueryBean.TableBean.TableRowsBean>> data;
         public void setDataList(NoticeResponse.IqBean.QueryBean.TableBean table) {
             this.data = table.getTableRows();
@@ -343,17 +348,22 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyNoticeAdapter.NoticeItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_official_notice_item,parent,false);
             return new NoticeItemViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(holder instanceof NoticeItemViewHolder){
+        public void onBindViewHolder(MyNoticeAdapter.NoticeItemViewHolder holder, int position) {
+            if(data != null){
                 if(data.size() != 0){
-                    ((NoticeItemViewHolder) holder).notice_title.setText(data.get(position).get(4).getValue());
-                    ((NoticeItemViewHolder) holder).notice_time.setText(data.get(position).get(6).getValue());
+                    holder.notice_title.setText(data.get(position).get(4).getValue());
+                    holder.notice_time.setText(data.get(position).get(6).getValue());
+                    holder.notice_layout.setOnClickListener(view -> {
+                        Intent intent = new Intent(holder.itemView.getContext(), CallTheCounDetailActivity.class);
+                        intent.putExtra("id", data.get(position).get(0).getValue());
+                        UIUtils.startActivity(intent);
+                    });
                 }
             }
 
@@ -363,7 +373,11 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
         public int getItemCount() {
             if(data != null){
                 if(data.size() != 0) {
-                    return 5;
+                    if(data.size() >5){
+                        return 5;
+                    }else{
+                        return  data.size();
+                    }
                 }
             }
             return 0;
@@ -374,25 +388,26 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
             return 1;
         }
 
+        class NoticeItemViewHolder extends RecyclerView.ViewHolder{
+            private RelativeLayout notice_layout;
+            private TextView notice_title;
+            private TextView notice_time;
 
+            public NoticeItemViewHolder(View itemView) {
+                super(itemView);
+                notice_layout = (RelativeLayout) itemView.findViewById(R.id.notice_layout);
+                notice_title = (TextView) itemView.findViewById(R.id.notice_title);
+                notice_time = (TextView) itemView.findViewById(R.id.notice_time);
 
-    }
-
-    class NoticeItemViewHolder extends RecyclerView.ViewHolder{
-        private TextView notice_title;
-        private TextView notice_time;
-
-        public NoticeItemViewHolder(View itemView) {
-            super(itemView);
-
-            notice_title = (TextView) itemView.findViewById(R.id.notice_title);
-            notice_time = (TextView) itemView.findViewById(R.id.notice_time);
-
+            }
         }
+
     }
+
+
 
     //工作动态
-    private class MyWorkAdapter extends RecyclerView.Adapter{
+    private class MyWorkAdapter extends RecyclerView.Adapter<MyWorkAdapter.WorkItemViewHolder>{
         private List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogs;
 
         public void setDateList(List<OfficialWorkDynamicList.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogs) {
@@ -402,56 +417,73 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
 
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyWorkAdapter.WorkItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_official_dynamic_item,parent,false);
-            return new NoticeItemViewHolder(view);
+            return new WorkItemViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            if(holder instanceof WorkItemViewHolder){
+        public void onBindViewHolder(MyWorkAdapter.WorkItemViewHolder holder, int position) {
+            if(prelogs != null){
                 if(prelogs.size() != 0){
-                    Glide.with(holder.itemView.getContext())
-                            .load(URL.HOST_URL_SERVER_ZHICHENG + prelogs.get(0).getIMG())
-                            .placeholder(R.drawable.glide_loading)
-                            .error(R.drawable.glide_failed)
-                            .thumbnail((float) 0.4)
-                            .into(((WorkItemViewHolder) holder).work_image);
-                    ((WorkItemViewHolder) holder).work_content.setText(prelogs.get(position).getCOUNT());
-                    ((WorkItemViewHolder) holder).work_address.setText(prelogs.get(position).getLOCATION());
-                    ((WorkItemViewHolder) holder).work_time.setText(prelogs.get(position).getDATETIME());
-
+                    if(prelogs.get(position).getIMG().size() != 0){
+                        Glide.with(holder.itemView.getContext())
+                                .load(URL.HOST_URL_SERVER_ZHICHENG + prelogs.get(position).getIMG().get(0).getHref())
+                                .placeholder(R.drawable.glide_loading)
+                                .error(R.drawable.glide_failed)
+                                .thumbnail((float) 0.4)
+                                .into(holder.work_image);
+                    }
+                    holder.work_content.setText(prelogs.get(position).getCOUNT());
+                    holder.work_address.setText(prelogs.get(position).getLOCATION());
+                    String mTime = prelogs.get(position).getDATETIME();
+                    if(mTime.length() != 0){
+                        holder.work_time.setText(mTime.substring(0,mTime.length()-2));
+                    }
+                    //查看工作动态详情
+                    holder.work_layout.setOnClickListener(view -> {
+                        Intent intent = new Intent(holder.itemView.getContext(), OfficialWorkDynamicDetail.class);
+                        intent.putExtra("id",prelogs.get(position).getID());
+                        UIUtils.startActivity(intent);
+                    });
                 }
-
             }
+
         }
 
         @Override
         public int getItemCount() {
             if(prelogs != null){
-                if(prelogs.size() != 0){
-                    return 3;
+                    return prelogs.size();
                 }
-            }
             return 0;
         }
 
-
-    }
-
-    class WorkItemViewHolder extends RecyclerView.ViewHolder{
-        private ImageView work_image;
-        private TextView work_content;
-        private TextView work_address;
-        private TextView work_time;
-
-        public WorkItemViewHolder(View itemView) {
-            super(itemView);
-            work_image = (ImageView) itemView.findViewById(R.id.work_image);
-            work_content = (TextView) itemView.findViewById(R.id.work_content);
-            work_address = (TextView) itemView.findViewById(R.id.work_address);
-            work_time = (TextView) itemView.findViewById(R.id.work_time);
-
+        @Override
+        public int getItemViewType(int position) {
+            return 1;
         }
+
+        class WorkItemViewHolder extends RecyclerView.ViewHolder{
+            private LinearLayout work_layout;
+            private ImageView work_image;
+            private TextView work_content;
+            private TextView work_address;
+            private TextView work_time;
+
+            public WorkItemViewHolder(View itemView) {
+                super(itemView);
+                work_layout = (LinearLayout) itemView.findViewById(R.id.work_layout);
+                work_image = (ImageView) itemView.findViewById(R.id.work_image);
+                work_content = (TextView) itemView.findViewById(R.id.work_content);
+                work_address = (TextView) itemView.findViewById(R.id.work_address);
+                work_time = (TextView) itemView.findViewById(R.id.work_time);
+
+            }
+        }
+
+
     }
+
+
 }

@@ -17,5 +17,7 @@ public interface WorkNodePresenter {
 
     void deleteWorkNodes(String s);
 
+    void invalidWorkNodes(String s);
+
     void cancelLoading();
 }

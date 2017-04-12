@@ -1,9 +1,13 @@
 package com.zhicheng.api.common.service;
 
+import com.zhicheng.bean.http.CaseGridResponse;
 import com.zhicheng.bean.http.OfficialBaseGridResponse;
 
 import retrofit2.Response;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -12,6 +16,8 @@ import rx.Observable;
  */
 
 public interface OfficialBaseGridService {
-    @GET("api.php")
-    Observable<Response<OfficialBaseGridResponse>> getOfficialCommonData(@Query("street") String street, @Query("communicate") String communicate, @Query("grid") String grid);
+    @FormUrlEncoded
+    @POST("/servlet/mobileServlet")
+    Observable<Response<CaseGridResponse>> loadGridNames(@Field("json") String rBody);
+
 }

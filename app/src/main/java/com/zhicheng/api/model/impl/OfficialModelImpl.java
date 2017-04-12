@@ -474,6 +474,42 @@ public class OfficialModelImpl implements OfficialModel {
                 });
     }
 
+    @Override
+    public void loadDynamicDetail(String j, ApiCompleteListener listener) {
+        if (mOfficialService == null) {
+            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
+        }
+        mOfficialService.loadDynamicDetail(j)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<OfficialWorkDynamicList>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException) {
+                            listener.onFailed(null);
+                            return;
+                        }
+                        BaseApplication.checkLogin();
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
+
+                    }
+
+                    @Override
+                    public void onNext(Response<OfficialWorkDynamicList> mOfficialWorkDynamicListResponse) {
+                        if (mOfficialWorkDynamicListResponse.isSuccessful()) {
+                            listener.onComplected(mOfficialWorkDynamicListResponse.body());
+                        } else {
+                            listener.onFailed(new BaseResponse(mOfficialWorkDynamicListResponse.code(), mOfficialWorkDynamicListResponse.message()));
+                        }
+                    }
+                });
+    }
+
     public void formExportRequest(int requestType, String type, ApiCompleteListener listener) {
         MainService mMainService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, MainService.class);
         FormExportRequest feq = new FormExportRequest();

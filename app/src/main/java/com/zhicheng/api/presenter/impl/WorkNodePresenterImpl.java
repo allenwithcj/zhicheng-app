@@ -63,6 +63,14 @@ public class WorkNodePresenterImpl implements WorkNodePresenter, ApiCompleteList
     }
 
     @Override
+    public void invalidWorkNodes(String s) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
+            mWorkNodeView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
+        }
+        mWorkNodeModelImpl.invalidWorkNodes(s, this);
+    }
+
+    @Override
     public void cancelLoading() {
 
     }

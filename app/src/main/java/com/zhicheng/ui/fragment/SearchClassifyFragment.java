@@ -1,6 +1,9 @@
 package com.zhicheng.ui.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
@@ -35,9 +38,11 @@ import com.zhicheng.holder.itemsprovider.Line;
 import com.zhicheng.ui.activity.GridNameActivity;
 import com.zhicheng.ui.activity.OfficialFinishDetail;
 import com.zhicheng.ui.activity.OfficialNoFinishDetails;
+import com.zhicheng.ui.activity.SearchViewActivity;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -59,15 +64,27 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     private LinearLayoutManager mLinearLayoutManager;
     private int start;
     private RadioGroup rg_type_group;
-    private RadioButton allThings, NoFinish, Finished;
+    private RadioButton handing,Finished,suspend;
     private Button btn_cancel, btn_confirm;
-    private LinearLayout date_layout,grid_layout;
-    private TextView date_txt,grid_name;
-    private EditText sender;
+    private LinearLayout date_layout,grid_layout,eventType_layout;
+    private TextView eventtype,date_txt,grid_name;
     private String mCaseTime = "";
     private String mManageState = "";
-    private String mCaseName = "";
+    private String mGridName = "";
+    private String mEventType = "";
 
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals("com.grid.gridNo")) {
+                String value = intent.getStringExtra("value");
+                 grid_name.setText(value);
+            }else if(intent.getAction().equals("com.search.classify.bao")){
+                ArrayList<String> mNode = intent.getStringArrayListExtra("node");
+                mEventType = mNode.get(3);
+            }
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,6 +112,8 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
     @Override
     protected void initEvents() {
+        IntentFilter mFilter = new IntentFilter("com.grid.gridNo");
+        getActivity().registerReceiver(receiver, mFilter);
         mDrawerLayout = (DrawerLayout) mRootView.findViewById(R.id.drawer_layout);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
         mainContent = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
@@ -108,23 +127,27 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         mSwipeRefreshLayout.setOnRefreshListener(this);
         //侧滑栏内容RecyclerView
         rg_type_group = (RadioGroup) mRootView.findViewById(R.id.rg_type_group);
-        allThings = (RadioButton) mRootView.findViewById(R.id.allThings);
-        NoFinish = (RadioButton) mRootView.findViewById(R.id.NoFinish);
+        handing = (RadioButton) mRootView.findViewById(R.id.handing);
         Finished = (RadioButton) mRootView.findViewById(R.id.Finished);
+        suspend = (RadioButton) mRootView.findViewById(R.id.suspend);
 
         btn_cancel = (Button) mRootView.findViewById(R.id.btn_cancel);
         btn_confirm = (Button) mRootView.findViewById(R.id.btn_confirm);
+
         date_layout = (LinearLayout) mRootView.findViewById(R.id.date_layout);
         grid_layout = (LinearLayout) mRootView.findViewById(R.id.grid_layout);
+        eventType_layout  = (LinearLayout) mRootView.findViewById(R.id.eventType_layout);
+
         date_txt = (TextView) mRootView.findViewById(R.id.Date);
         grid_name = (TextView)mRootView.findViewById(R.id.grid_name);
-        sender = (EditText) mRootView.findViewById(R.id.sender);
+        eventtype = (TextView) mRootView.findViewById(R.id.eventtype);
 
 
         btn_cancel.setOnClickListener(this);
         btn_confirm.setOnClickListener(this);
         date_layout.setOnClickListener(this);
         grid_layout.setOnClickListener(this);
+        eventType_layout.setOnClickListener(this);
         rg_type_group.setOnCheckedChangeListener(this);
 
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, null, R.string.open, R.string.close) {
@@ -211,12 +234,12 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
     private void refresh() {
         start = 1;
-        String entity = createObj(start, mCaseTime, mManageState, mCaseName);
+        String entity = createObj(start, mCaseTime, mManageState, mGridName,mEventType);
         mCaseQueryPresenterImpl.caseQuery(entity, start);
         start++;
     }
 
-    private String createObj(int page, String caseTime, String manageSate, String mCaseName) {
+    private String createObj(int page, String caseTime, String manageSate, String mGridName,String mEventType) {
         CaseQueryRequest caseQueryRequest = new CaseQueryRequest();
         CaseQueryRequest.IqBean iq = new CaseQueryRequest.IqBean();
         CaseQueryRequest.IqBean.QueryBean qb = new CaseQueryRequest.IqBean.QueryBean();
@@ -224,7 +247,8 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         qb.setCaseTime(caseTime);
         qb.setManageStatus(manageSate);
         qb.setPageNum(page);
-        qb.setCaseName(mCaseName);
+        qb.setEventType(mEventType);
+        qb.setCaseName(mGridName);
         iq.setQuery(qb);
         caseQueryRequest.setIq(iq);
         Gson gson = new Gson();
@@ -233,12 +257,12 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        if (i == allThings.getId()) {
-            mManageState = "";
-        } else if (i == Finished.getId()) {
+        if (i == handing.getId()) {
             mManageState = "1";
-        } else if (i == NoFinish.getId()) {
-            mManageState = "0";
+        } else if (i == Finished.getId()) {
+            mManageState = "2";
+        } else if (i == suspend.getId()) {
+            mManageState = "3";
         }
 
     }
@@ -249,15 +273,20 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             case R.id.btn_cancel:
                 mCaseTime = "";
                 mManageState = "";
-                mCaseName = "";
+                mGridName = "";
+                mEventType = "";
                 date_txt.setText("");
-                sender.setText("");
-                allThings.setChecked(true);
+                eventtype.setText("");
+                grid_name.setText("");
+                handing.setChecked(false);
+                Finished.setChecked(false);
+                suspend.setChecked(false);
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 refresh();
                 break;
             case R.id.btn_confirm:
-                mCaseName = sender.getText().toString();
+                mGridName = grid_name.getText().toString();
+                mEventType = eventtype.getText().toString();
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 refresh();
                 break;
@@ -275,8 +304,16 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
                 pvTime.show();
                 break;
+
             case R.id.grid_layout:
-                Intent intent = new Intent(getActivity(), GridNameActivity.class);
+                Intent mIntent = new Intent(getActivity(), GridNameActivity.class);
+                UIUtils.startActivity(mIntent);
+                break;
+
+            case R.id.eventType_layout:
+                Intent intent = new Intent(UIUtils.getContext(), SearchViewActivity.class);
+                intent.putExtra("fragment", "Search");
+                intent.putExtra("isClassify", "true");
                 UIUtils.startActivity(intent);
                 break;
         }
@@ -381,7 +418,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         }
 
         private void onLoadMore() {
-            String entity = createObj(start, mCaseTime, mManageState, mCaseName);
+            String entity = createObj(start, mCaseTime, mManageState,mGridName,mEventType);
             mCaseQueryPresenterImpl.caseQuery(entity, start);
             start++;
         }
@@ -392,5 +429,11 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
             lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
     }
 }

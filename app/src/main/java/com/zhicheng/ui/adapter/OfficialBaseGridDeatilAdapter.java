@@ -16,6 +16,7 @@ import com.zhicheng.bean.http.OfficialBaseGridDetailResponse;
 import com.zhicheng.bean.json.SubmitOrdinaryFormRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.activity.BaseGridAddSelectType;
+import com.zhicheng.utils.CodeUtils;
 import com.zhicheng.utils.common.UIUtils;
 
 /**
@@ -58,53 +59,27 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
             if (holder instanceof ItemViewHolder) {
                 ((ItemViewHolder) holder).grid_base_add_residence.setText(mData.getIq().getQuery().getPreMsg().getZZ_RESIDENCE());
                 ((ItemViewHolder) holder).grid_base_add_grid_no.setText(mData.getIq().getQuery().getPreMsg().getGRIDNAME());
+
                 ((ItemViewHolder) holder).grid_base_add_lessor.setText(mData.getIq().getQuery().getPreMsg().getRENTNAME());
-                ((ItemViewHolder) holder).grid_base_add_lessor_remark.setText(mData.getIq().getQuery().getPreMsg().getREMARK2());
+                ((ItemViewHolder) holder).grid_base_add_lessor_remark2.setText(CodeUtils.getRemark2String(mData.getIq().getQuery().getPreMsg().getREMARK2()));
                 ((ItemViewHolder) holder).grid_base_add_lessor_telephone.setText(mData.getIq().getQuery().getPreMsg().getRENTPHONE());
+
                 ((ItemViewHolder) holder).grid_base_add_name.setText(mData.getIq().getQuery().getPreMsg().getNAME());
-                ((ItemViewHolder) holder).grid_base_add_relation.setText(mData.getIq().getQuery().getPreMsg().getRENTPHONE());
+                ((ItemViewHolder) holder).grid_base_add_relation.setText(mData.getIq().getQuery().getPreMsg().getRELATION());
                 ((ItemViewHolder) holder).grid_base_huzu_name.setText(mData.getIq().getQuery().getPreMsg().getHUZU());
-                ((ItemViewHolder) holder).grid_base_add_sex.setText(getSexString(mData.getIq().getQuery().getPreMsg().getGENDER()));
+                ((ItemViewHolder) holder).grid_base_add_sex.setText(CodeUtils.getSexString(mData.getIq().getQuery().getPreMsg().getGENDER()));
                 ((ItemViewHolder) holder).grid_base_add_cardid.setText(mData.getIq().getQuery().getPreMsg().getCARD_NUM());
                 ((ItemViewHolder) holder).grid_base_add_policatial.setText(mData.getIq().getQuery().getPreMsg().getPOLITICAL_STATUS());
-                ((ItemViewHolder) holder).grid_base_add_degree.setText(mData.getIq().getQuery().getPreMsg().getEDUCATION());
-                ((ItemViewHolder) holder).grid_base_add_married.setText(getMarriedString(mData.getIq().getQuery().getPreMsg().getMARITAL_STATUS()));
+                ((ItemViewHolder) holder).grid_base_add_degree.setText(CodeUtils.getDegreeString(mData.getIq().getQuery().getPreMsg().getEDUCATION()));
+                ((ItemViewHolder) holder).grid_base_add_married.setText(CodeUtils.getMarriedString(mData.getIq().getQuery().getPreMsg().getMARITAL_STATUS()));
                 ((ItemViewHolder) holder).grid_base_add_brithplace.setText(mData.getIq().getQuery().getPreMsg().getDOMICILE());
                 ((ItemViewHolder) holder).grid_base_add_telephone.setText(mData.getIq().getQuery().getPreMsg().getPHONE());
                 ((ItemViewHolder) holder).grid_base_add_workspace.setText(mData.getIq().getQuery().getPreMsg().getWORK());
                 ((ItemViewHolder) holder).grid_base_add_hobby.setText(mData.getIq().getQuery().getPreMsg().getHOBBY());
-                ((ItemViewHolder) holder).grid_base_add_remark.setText(mData.getIq().getQuery().getPreMsg().getREMARK1());
+                ((ItemViewHolder) holder).grid_base_add_remark1.setText(CodeUtils.getRemark1String(mData.getIq().getQuery().getPreMsg().getREMARK1()));
                 ((ItemViewHolder) holder).grid_base_add_outaddress.setText(mData.getIq().getQuery().getPreMsg().getOUTADDRESS());
-                ((ItemViewHolder) holder).grid_base_add_rkfl.setText(mData.getIq().getQuery().getPreMsg().getSORT());
+                ((ItemViewHolder) holder).grid_base_add_rkfl.setText(CodeUtils.getSortString(mData.getIq().getQuery().getPreMsg().getSORT()));
             }
-        }
-    }
-
-    private String getSexString(String gender) {
-        if (gender != null) {
-            if (gender.equals("0")) {
-                return "男";
-            } else {
-                return "女";
-            }
-        } else {
-            return null;
-        }
-    }
-
-    private String getMarriedString(String marital_status) {
-        if (marital_status != null) {
-            if (marital_status.equals("0")) {
-                return "未婚";
-            } else if (marital_status.equals("1")) {
-                return "已婚";
-            } else if (marital_status.equals("2")) {
-                return "离婚";
-            } else {
-                return "丧偶";
-            }
-        } else {
-            return null;
         }
     }
 
@@ -119,22 +94,22 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
 
         NAME = holder.grid_base_add_name.getText().toString();
         RELATION = holder.grid_base_add_relation.getText().toString();
-        GENDER = sexCode(holder.grid_base_add_sex.getText().toString());
+        GENDER = CodeUtils.sexCode(holder.grid_base_add_sex.getText().toString());
         HUZU = holder.grid_base_huzu_name.getText().toString();
         CARD_NUM = holder.grid_base_add_cardid.getText().toString();
         POLITICAL_STATUS = holder.grid_base_add_policatial.getText().toString();
-        EDUCATION = holder.grid_base_add_degree.getText().toString();
-        MARITAL_STATUS = marriedCode(holder.grid_base_add_married.getText().toString());
+        EDUCATION = CodeUtils.degreeCode(holder.grid_base_add_degree.getText().toString());
+        MARITAL_STATUS = CodeUtils.marriedCode(holder.grid_base_add_married.getText().toString());
         DOMICILE = holder.grid_base_add_brithplace.getText().toString();
         PHONE = holder.grid_base_add_telephone.getText().toString();
         WORK = holder.grid_base_add_workspace.getText().toString();
         HOBBY = holder.grid_base_add_hobby.getText().toString();
-        REMARK1 = holder.grid_base_add_remark.getText().toString();
+        REMARK1 = CodeUtils.remark1Code(holder.grid_base_add_remark1.getText().toString());
         OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
-        SORT = holder.grid_base_add_rkfl.getText().toString();
+        SORT = CodeUtils.sortCode(holder.grid_base_add_rkfl.getText().toString());
 
         RENTNAME = holder.grid_base_add_lessor.getText().toString();
-        REMARK2 = holder.grid_base_add_lessor_remark.getText().toString();
+        REMARK2 = CodeUtils.remark2Code(holder.grid_base_add_lessor_remark2.getText().toString());
         RENTPHONE = holder.grid_base_add_lessor_telephone.getText().toString();
 
         SubmitOrdinaryFormRequest mSf = new SubmitOrdinaryFormRequest();
@@ -164,6 +139,10 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         mFormobj.setHOBBY(HOBBY);
         mFormobj.setREMARK1(REMARK1);
         mFormobj.setOUTADDRESS(OUTADDRESS);
+        mFormobj.setSORT(SORT);
+        mFormobj.setBADDRESS("武汉市");
+        mFormobj.setBLONGITUDE("3333333");
+        mFormobj.setBLATITUDE("44444444");
 
         irIqQB.setFormobj(mFormobj);
         lrIq.setNamespace("PersonMsgMaRequest");
@@ -180,11 +159,11 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         public TextView grid_base_add_grid_no;
 
         public EditText grid_base_add_lessor;
-        public TextView grid_base_add_lessor_remark;
+        public TextView grid_base_add_lessor_remark2;
         public EditText grid_base_add_lessor_telephone;
 
         public EditText grid_base_add_name;
-        public EditText grid_base_add_relation;
+        public TextView grid_base_add_relation;
         private EditText grid_base_huzu_name;
         public TextView grid_base_add_sex;
         public EditText grid_base_add_cardid;
@@ -195,21 +174,21 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         public EditText grid_base_add_telephone;
         public EditText grid_base_add_workspace;
         public EditText grid_base_add_hobby;
-        public EditText grid_base_add_remark;
+        public TextView grid_base_add_remark1;
         public EditText grid_base_add_outaddress;
         public TextView grid_base_add_rkfl;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             grid_base_add_lessor = (EditText) itemView.findViewById(R.id.grid_base_add_lessor);
-            grid_base_add_lessor_remark = (TextView) itemView.findViewById(R.id.grid_base_add_lessor_remark);
+            grid_base_add_lessor_remark2 = (TextView) itemView.findViewById(R.id.grid_base_add_lessor_remark2);
             grid_base_add_lessor_telephone = (EditText) itemView.findViewById(R.id.grid_base_add_lessor_telephone);
 
             grid_base_add_residence = (EditText) itemView.findViewById(R.id.grid_base_add_residence);
             grid_base_add_grid_no = (TextView) itemView.findViewById(R.id.grid_base_add_grid_no);
 
             grid_base_add_name = (EditText) itemView.findViewById(R.id.grid_base_add_name);
-            grid_base_add_relation = (EditText) itemView.findViewById(R.id.grid_base_add_relation);
+            grid_base_add_relation = (TextView) itemView.findViewById(R.id.input_relation);
             grid_base_huzu_name = (EditText) itemView.findViewById(R.id.grid_base_huzu_name);
             grid_base_add_sex = (TextView) itemView.findViewById(R.id.input_sex);
             grid_base_add_cardid = (EditText) itemView.findViewById(R.id.grid_base_add_cardid);
@@ -220,9 +199,15 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
             grid_base_add_telephone = (EditText) itemView.findViewById(R.id.grid_base_add_telephone);
             grid_base_add_workspace = (EditText) itemView.findViewById(R.id.grid_base_add_workspace);
             grid_base_add_hobby = (EditText) itemView.findViewById(R.id.grid_base_add_hobby);
-            grid_base_add_remark = (EditText) itemView.findViewById(R.id.grid_base_add_remark);
+            grid_base_add_remark1 = (TextView) itemView.findViewById(R.id.grid_base_add_remark1);
             grid_base_add_outaddress = (EditText) itemView.findViewById(R.id.grid_base_add_outaddress);
             grid_base_add_rkfl = (TextView) itemView.findViewById(R.id.input_rkfl);
+
+            grid_base_add_relation.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.relation);
+                type = Constant.TYPE_RELATION;
+                myIntent(mList, type);
+            });
 
             grid_base_add_sex.setOnClickListener(view -> {
                 mList = UIUtils.getContext().getResources().getStringArray(R.array.sex);
@@ -249,14 +234,20 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
             });
 
             grid_base_add_rkfl.setOnClickListener(view -> {
-                mList = UIUtils.getContext().getResources().getStringArray(R.array.classification);
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.sort);
                 type = Constant.TYPE_CLASSIFICATION;
                 myIntent(mList, type);
             });
 
-            grid_base_add_lessor_remark.setOnClickListener(view -> {
-                mList = UIUtils.getContext().getResources().getStringArray(R.array.remark);
-                type = Constant.TYPE_REMARK;
+            grid_base_add_remark1.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.remark1);
+                type = Constant.TYPE_REMARK1;
+                myIntent(mList, type);
+            });
+
+            grid_base_add_lessor_remark2.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.remark2);
+                type = Constant.TYPE_REMARK2;
                 myIntent(mList, type);
             });
 
@@ -268,28 +259,6 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         intent.putExtra("mList", mList);
         intent.putExtra("type", type);
         UIUtils.startActivity(intent);
-    }
-
-    private String sexCode(String str) {
-        if (str.equals("男")) {
-            return "0";
-        } else if (str.equals("女")) {
-            return "1";
-        }
-        return null;
-    }
-
-    private String marriedCode(String str) {
-        if (str.equals("未婚")) {
-            return "0";
-        } else if (str.equals("已婚")) {
-            return "1";
-        } else if (str.equals("离婚")) {
-            return "2";
-        } else if (str.equals("丧偶")) {
-            return "3";
-        }
-        return null;
     }
 
 }

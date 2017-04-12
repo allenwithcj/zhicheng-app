@@ -157,9 +157,9 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
     }
 
+
     @Override
     protected void initData() {
-        onLoadWorkNodes();
         mInput.setImeOptions(EditorInfo.IME_ACTION_SEND);
         mInput.setImeActionLabel("发送", EditorInfo.IME_ACTION_SEND);
         mInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -201,6 +201,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     @Override
     protected void onResume() {
         super.onResume();
+        onLoadWorkNodes();
     }
 
     public void showProgress() {
@@ -229,7 +230,8 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 
     @Override
     protected int getMenuID() {
-        return R.menu.menu_worknode_search;
+        //return R.menu.menu_worknode_search;
+        return super.getMenuID();
     }
 
     @Override

@@ -12,7 +12,7 @@
         <item name="actionOverflowMenuStyle">@style/OverflowMenu</item>
 
         <!--TextColor-->
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
     </style>
 
     <style name="OverflowMenu" parent="Widget.AppCompat.PopupMenu.Overflow">
