@@ -112,8 +112,10 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
     @Override
     protected void initEvents() {
-        IntentFilter mFilter = new IntentFilter("com.grid.gridNo");
-        getActivity().registerReceiver(receiver, mFilter);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.search.classify.bao");
+        intentFilter.addAction("com.grid.gridNo");
+        getActivity().registerReceiver(receiver, intentFilter);
         mDrawerLayout = (DrawerLayout) mRootView.findViewById(R.id.drawer_layout);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
         mainContent = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
