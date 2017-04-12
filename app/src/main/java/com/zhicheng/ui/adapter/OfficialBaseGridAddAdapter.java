@@ -128,9 +128,9 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             mFormobj.setREMARK1(REMARK1);
             mFormobj.setOUTADDRESS(OUTADDRESS);
             mFormobj.setSORT(SORT);
-            mFormobj.setBADDRESS("湖北武汉洪山区");
-            mFormobj.setBLONGITUDE("2222");
-            mFormobj.setBLATITUDE("1111");
+            mFormobj.setBADDRESS(Constant.ADDRESS);
+            mFormobj.setBLONGITUDE(Constant.LONGITUDE);
+            mFormobj.setBLATITUDE(Constant.LATITUDE);
 
             irIqQB.setFormobj(mFormobj);
             lrIq.setNamespace("PersonMsgMaRequest");

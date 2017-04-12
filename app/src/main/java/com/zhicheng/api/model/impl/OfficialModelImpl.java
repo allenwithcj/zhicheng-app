@@ -18,6 +18,7 @@ import com.zhicheng.bean.http.NoticeResponse;
 import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.http.OfficialWorkDynamicList;
+import com.zhicheng.bean.http.PersonalDynamicResponse;
 import com.zhicheng.bean.json.FormExportRequest;
 import com.zhicheng.bean.json.FormNodeRequest;
 import com.zhicheng.bean.json.FormSendDoRequest;
@@ -482,7 +483,7 @@ public class OfficialModelImpl implements OfficialModel {
         mOfficialService.loadDynamicDetail(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<OfficialWorkDynamicList>>() {
+                .subscribe(new Subscriber<Response<PersonalDynamicResponse>>() {
                     @Override
                     public void onCompleted() {
 
@@ -500,11 +501,11 @@ public class OfficialModelImpl implements OfficialModel {
                     }
 
                     @Override
-                    public void onNext(Response<OfficialWorkDynamicList> mOfficialWorkDynamicListResponse) {
-                        if (mOfficialWorkDynamicListResponse.isSuccessful()) {
-                            listener.onComplected(mOfficialWorkDynamicListResponse.body());
+                    public void onNext(Response<PersonalDynamicResponse> mPersonalDynamicResponse) {
+                        if (mPersonalDynamicResponse.isSuccessful()) {
+                            listener.onComplected(mPersonalDynamicResponse.body());
                         } else {
-                            listener.onFailed(new BaseResponse(mOfficialWorkDynamicListResponse.code(), mOfficialWorkDynamicListResponse.message()));
+                            listener.onFailed(new BaseResponse(mPersonalDynamicResponse.code(), mPersonalDynamicResponse.message()));
                         }
                     }
                 });

@@ -159,7 +159,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                 inflater.inflate(R.menu.official_grid, menu);
                 item = menu.findItem(R.id.action_location);
                 if (mLocationClient.isStarted()) {
-                    icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
+                    icon = getResources().getDrawable(R.drawable.ic_location_on_white_24dp);
                 } else {
                     icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
                 }
@@ -195,7 +195,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         if (mLocationClient.isStarted()) {
             mLocation_title.setText(getResources().getString(R.string.grid_location_close));
             mLocation_title.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                    null, null, getResources().getDrawable(R.drawable.ic_location_on_red_24dp), null);
+                    null, null, getResources().getDrawable(R.drawable.ic_location_on_white_24dp), null);
             mLocation_message.setText(getResources().getString(R.string.grid_location_close_message));
             builder.setPositiveButton("关闭上传", new DialogInterface.OnClickListener() {
                 @Override
@@ -221,7 +221,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     mLocationClient.start();
-                    icon = getResources().getDrawable(R.drawable.ic_location_on_red_24dp);
+                    icon = getResources().getDrawable(R.drawable.ic_location_on_white_24dp);
                     item.setIcon(icon);
                     mArm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                             SystemClock.elapsedRealtime(), Constant.LOCATION_UP_TIME, mPendingIntent);
@@ -356,6 +356,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         public void onReceiveLocation(BDLocation bdLocation) {
             Constant.LATITUDE = String.valueOf(bdLocation.getLatitude());
             Constant.LONGITUDE = String.valueOf(bdLocation.getLongitude());
+            Constant.ADDRESS = bdLocation.getAddrStr();
         }
     }
 

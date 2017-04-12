@@ -16,6 +16,7 @@ import com.zhicheng.bean.http.OfficialBaseGridDetailResponse;
 import com.zhicheng.bean.json.SubmitOrdinaryFormRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.activity.BaseGridAddSelectType;
+import com.zhicheng.ui.activity.BaseGridAddSelectTypeMultipleChoice;
 import com.zhicheng.utils.CodeUtils;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -140,9 +141,9 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         mFormobj.setREMARK1(REMARK1);
         mFormobj.setOUTADDRESS(OUTADDRESS);
         mFormobj.setSORT(SORT);
-        mFormobj.setBADDRESS("武汉市");
-        mFormobj.setBLONGITUDE("3333333");
-        mFormobj.setBLATITUDE("44444444");
+        mFormobj.setBADDRESS(Constant.ADDRESS);
+        mFormobj.setBLONGITUDE(Constant.LONGITUDE);
+        mFormobj.setBLATITUDE(Constant.LATITUDE);
 
         irIqQB.setFormobj(mFormobj);
         lrIq.setNamespace("PersonMsgMaRequest");
@@ -242,13 +243,13 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
             grid_base_add_remark1.setOnClickListener(view -> {
                 mList = UIUtils.getContext().getResources().getStringArray(R.array.remark1);
                 type = Constant.TYPE_REMARK1;
-                myIntent(mList, type);
+                myMultipleIntent(mList, type);
             });
 
             grid_base_add_lessor_remark2.setOnClickListener(view -> {
                 mList = UIUtils.getContext().getResources().getStringArray(R.array.remark2);
                 type = Constant.TYPE_REMARK2;
-                myIntent(mList, type);
+                myMultipleIntent(mList, type);
             });
 
         }
@@ -260,5 +261,13 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         intent.putExtra("type", type);
         UIUtils.startActivity(intent);
     }
+
+    private void myMultipleIntent(String[] mList, String type) {
+        Intent intent = new Intent(UIUtils.getContext(), BaseGridAddSelectTypeMultipleChoice.class);
+        intent.putExtra("mList", mList);
+        intent.putExtra("type", type);
+        UIUtils.startActivity(intent);
+    }
+
 
 }

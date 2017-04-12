@@ -66,7 +66,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     private RadioGroup rg_type_group;
     private RadioButton handing,Finished,suspend;
     private Button btn_cancel, btn_confirm;
-    private LinearLayout date_layout,grid_layout,eventType_layout;
+    private LinearLayout date_layout,grid_layout,enventtype_layout;
     private TextView eventtype,date_txt,grid_name;
     private String mCaseTime = "";
     private String mManageState = "";
@@ -136,7 +136,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
         date_layout = (LinearLayout) mRootView.findViewById(R.id.date_layout);
         grid_layout = (LinearLayout) mRootView.findViewById(R.id.grid_layout);
-        eventType_layout  = (LinearLayout) mRootView.findViewById(R.id.eventType_layout);
+        enventtype_layout  = (LinearLayout) mRootView.findViewById(R.id.enventtype_layout);
 
         date_txt = (TextView) mRootView.findViewById(R.id.Date);
         grid_name = (TextView)mRootView.findViewById(R.id.grid_name);
@@ -147,7 +147,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         btn_confirm.setOnClickListener(this);
         date_layout.setOnClickListener(this);
         grid_layout.setOnClickListener(this);
-        eventType_layout.setOnClickListener(this);
+        enventtype_layout.setOnClickListener(this);
         rg_type_group.setOnCheckedChangeListener(this);
 
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, null, R.string.open, R.string.close) {
@@ -310,8 +310,8 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 UIUtils.startActivity(mIntent);
                 break;
 
-            case R.id.eventType_layout:
-                Intent intent = new Intent(UIUtils.getContext(), SearchViewActivity.class);
+            case R.id.enventtype_layout:
+                Intent intent = new Intent(getActivity(), SearchViewActivity.class);
                 intent.putExtra("fragment", "Search");
                 intent.putExtra("isClassify", "true");
                 UIUtils.startActivity(intent);

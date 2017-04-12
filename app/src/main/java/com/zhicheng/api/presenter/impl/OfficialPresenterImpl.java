@@ -14,6 +14,8 @@ import com.zhicheng.bean.http.OfficialDealResponse;
 import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.http.OfficialWorkDynamicList;
+import com.zhicheng.bean.http.PersonalDynamicResponse;
+import com.zhicheng.bean.json.PersonalDynamicRequest;
 import com.zhicheng.utils.common.NetworkUtils;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -107,7 +109,9 @@ public class OfficialPresenterImpl implements OfficialPresenter, ApiCompleteList
     public void loadDynamicDetail(String js) {
         if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
+            mOfficialView.hideProgress();
         }
+        mOfficialView.showProgress();
         mOfficialModelImpl.loadDynamicDetail(js, this);
     }
 
@@ -126,6 +130,9 @@ public class OfficialPresenterImpl implements OfficialPresenter, ApiCompleteList
             } else {
                 mOfficialView.addData(result);
             }
+        }
+        if(result instanceof PersonalDynamicResponse){
+            mOfficialView.refreshData(result);
         }
         if (result instanceof OfficialDetailResponse) {
             mOfficialView.refreshData(result);

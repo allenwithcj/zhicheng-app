@@ -7,6 +7,7 @@ import com.zhicheng.bean.http.OfficialDealResponse;
 import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.http.OfficialWorkDynamicList;
+import com.zhicheng.bean.http.PersonalDynamicResponse;
 import com.zhicheng.bean.json.PersonalDynamicRequest;
 
 import okhttp3.MultipartBody;
@@ -75,6 +76,6 @@ public interface OfficialService {
     //工作动态详情
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")
-    Observable<Response<OfficialWorkDynamicList>> loadDynamicDetail(@Field("json") String rBody);
+    Observable<Response<PersonalDynamicResponse>> loadDynamicDetail(@Field("json") String rBody);
 
 }
