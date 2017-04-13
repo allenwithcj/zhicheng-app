@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.library.LoopContentPager;
 import com.library.LoopViewPager;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
@@ -28,10 +26,8 @@ import com.zhicheng.bean.json.PersonalDynamicRequest;
 import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.CallTheCounActivity;
 import com.zhicheng.ui.activity.CallTheCounDetailActivity;
-import com.zhicheng.ui.activity.ExperienceActivity;
 import com.zhicheng.ui.activity.Official;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
-import com.zhicheng.ui.activity.OfficialSendDetails;
 import com.zhicheng.ui.activity.OfficialWorkDynamic;
 import com.zhicheng.ui.activity.OfficialWorkDynamicDetail;
 import com.zhicheng.ui.activity.SearchViewActivity;
@@ -39,10 +35,7 @@ import com.zhicheng.ui.activity.WorkNoteActivity;
 import com.zhicheng.ui.activity.officialFinished;
 import com.zhicheng.utils.common.UIUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -289,8 +282,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
                     UIUtils.startActivity(mIntent);
                     break;
                 case R.id.Experiment:
-                    ExperienceActivity.actionStart
-                            (URL.HOST_URL_SERVER_ZHICHENG + "/mdp/html/BLOG/listUI.html");
+
                     break;
                 case R.id.workNote:
                     UIUtils.startActivity(new Intent(UIUtils.getContext(), WorkNoteActivity.class));

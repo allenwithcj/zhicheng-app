@@ -213,10 +213,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
-            android:name=".ui.activity.ExperienceActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
-        <activity
             android:name=".ui.activity.GridNameActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
