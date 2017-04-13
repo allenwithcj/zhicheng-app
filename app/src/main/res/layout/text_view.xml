@@ -7,4 +7,4 @@
     android:padding="@dimen/textView_padding"
     android:textColor="@color/navigationColor"
     android:gravity="center"
-    android:id="@+id/text_view"></TextView>
+    android:id="@+id/text_view"/>

@@ -80,7 +80,7 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
             ((OfficialDynamicHolder) holder).content.setText(mOfficialDynamicDetail.get(position).getCOUNT());
             ((OfficialDynamicHolder) holder).location.setText(mOfficialDynamicDetail.get(position).getLOCATION());
             String sendTime = mOfficialDynamicDetail.get(position).getDATETIME();
-            if (!TextUtils.isEmpty(sendTime)) {
+            if (sendTime.length() != 0 && sendTime.length() >2) {
                 ((OfficialDynamicHolder) holder).time.setText(sendTime.substring(0, sendTime.length() - 2));
             }
             ((OfficialDynamicHolder) holder).more.setOnClickListener(new View.OnClickListener() {

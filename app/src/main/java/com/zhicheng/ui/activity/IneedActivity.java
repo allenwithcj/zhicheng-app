@@ -205,7 +205,9 @@ public class IneedActivity extends BaseActivity implements UpThingsView {
                                 method.invoke(iqbQB, "智慧雉城App");
                             } else if (method.getName().endsWith("ZC07")) {
                                 method.invoke(iqbQB, config.getUserId());
-                            } else if (method.getName().endsWith("ZC17")) {
+                            }  else if (method.getName().endsWith("ZC12")) {
+                                method.invoke(iqbQB, config.getUserName());
+                            }  else if (method.getName().endsWith("ZC17")) {
                                 method.invoke(iqbQB, mNode.get(1));
                             } else if (method.getName().endsWith("ZC19")) {
                                 method.invoke(iqbQB, mNode.get(2));

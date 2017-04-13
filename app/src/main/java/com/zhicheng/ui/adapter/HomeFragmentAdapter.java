@@ -428,7 +428,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
                                 .into(holder.work_image);
                     }else{
                         Glide.with(holder.itemView.getContext())
-                                .load("file://" + prelogs.get(position))
+                                .load(R.drawable.glide_failed)
                                 .into((holder).work_image);
                     }
                     holder.work_content.setText(prelogs.get(position).getCOUNT());
