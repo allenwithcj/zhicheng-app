@@ -186,7 +186,6 @@ public class BaseApplication extends Application {
                                 if (loginResponseResponse.body() != null) {
                                     LoginResponse lr = loginResponseResponse.body();
                                     BaseApplication.log_say(TAG, lr.getIq().getQuery().getErrorMessage());
-//                                  Toast.makeText(getApplication(),"欢迎回来",Toast.LENGTH_SHORT).show();
                                 }
                             } else {
                                 Toast.makeText(getApplication(), loginResponseResponse.message(), Toast.LENGTH_SHORT).show();
