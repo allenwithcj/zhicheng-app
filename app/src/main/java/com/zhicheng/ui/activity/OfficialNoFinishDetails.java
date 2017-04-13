@@ -206,9 +206,6 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.action_deal){
-//
-//        }
         return super.onOptionsItemSelected(item);
     }
 

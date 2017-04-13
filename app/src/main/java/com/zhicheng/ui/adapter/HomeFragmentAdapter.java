@@ -28,6 +28,7 @@ import com.zhicheng.ui.activity.CallTheCounActivity;
 import com.zhicheng.ui.activity.CallTheCounDetailActivity;
 import com.zhicheng.ui.activity.Official;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
+import com.zhicheng.ui.activity.OfficialNoFinishDetails;
 import com.zhicheng.ui.activity.OfficialWorkDynamic;
 import com.zhicheng.ui.activity.OfficialWorkDynamicDetail;
 import com.zhicheng.ui.activity.SearchViewActivity;
@@ -425,11 +426,15 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(holder.work_image);
+                    }else{
+                        Glide.with(holder.itemView.getContext())
+                                .load("file://" + prelogs.get(position))
+                                .into((holder).work_image);
                     }
                     holder.work_content.setText(prelogs.get(position).getCOUNT());
                     holder.work_address.setText(prelogs.get(position).getLOCATION());
                     String mTime = prelogs.get(position).getDATETIME();
-                    if(mTime.length() != 0){
+                    if(mTime.length() != 0 && mTime.length() >2){
                         holder.work_time.setText(mTime.substring(0,mTime.length()-2));
                     }
                     //查看工作动态详情

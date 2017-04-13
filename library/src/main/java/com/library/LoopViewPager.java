@@ -99,7 +99,7 @@ public class LoopViewPager extends FrameLayout {
         for (int i = 0; i < DataNum; i++) {
             View view = new ImageView(getContext());
             FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-            params.setMargins(6, 0, 6, 6);
+            params.setMargins(6, 6, 6, 6);
             view.setBackgroundDrawable(getResources().getDrawable(R.drawable.viewpager_dots_normal));
             data.add(view);
             mLinearLayout.addView(view, params);
@@ -109,9 +109,6 @@ public class LoopViewPager extends FrameLayout {
     //设置图片数据
     public void setImages(List<View> images) {
         int[] imgs = {
-//                R.drawable.banner_defult,
-//                R.drawable.banner2,
-//                R.drawable.banner3
                 R.drawable.banner_1,
                 R.drawable.banner_2,
                 R.drawable.banner_3
