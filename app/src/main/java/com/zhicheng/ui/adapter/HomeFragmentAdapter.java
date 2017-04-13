@@ -26,6 +26,7 @@ import com.zhicheng.bean.json.PersonalDynamicRequest;
 import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.CallTheCounActivity;
 import com.zhicheng.ui.activity.CallTheCounDetailActivity;
+import com.zhicheng.ui.activity.ExperienceExchangeActivity;
 import com.zhicheng.ui.activity.Official;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
 import com.zhicheng.ui.activity.OfficialNoFinishDetails;
@@ -283,7 +284,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
                     UIUtils.startActivity(mIntent);
                     break;
                 case R.id.Experiment:
-
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(),ExperienceExchangeActivity.class));
                     break;
                 case R.id.workNote:
                     UIUtils.startActivity(new Intent(UIUtils.getContext(), WorkNoteActivity.class));

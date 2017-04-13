@@ -124,8 +124,11 @@
     <string name="dynamic_detail">工作动态详情</string>
     <string name="action_choice">选择</string>
 
-    <string name="exp_content">经验交流描述：</string>
-    <string name="exp_hint_content">请输入经验交流描述</string>
+    <string name="exp_title">标题:</string>
+    <string name="exp_hint_title">请输入标题</string>
+    <string name="exp_sender">发布人:</string>
+    <string name="exp_dept">所在部门:</string>
+    <string name="exp_hint_content">请输入内容</string>
 
     <string-array name="detail">
         <item>编号:</item>
