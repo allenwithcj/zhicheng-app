@@ -82,6 +82,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             }else if(intent.getAction().equals("com.search.classify.bao")){
                 ArrayList<String> mNode = intent.getStringArrayListExtra("node");
                 mEventType = mNode.get(3);
+                eventtype.setText(mEventType);
             }
         }
     };
@@ -273,19 +274,18 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_cancel:
-                mCaseTime = "";
+                rg_type_group.clearCheck();
                 mManageState = "";
+                mCaseTime = "";
                 mGridName = "";
                 mEventType = "";
                 date_txt.setText("");
                 eventtype.setText("");
                 grid_name.setText("");
-                handing.setChecked(false);
-                Finished.setChecked(false);
-                suspend.setChecked(false);
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 refresh();
                 break;
+
             case R.id.btn_confirm:
                 mGridName = grid_name.getText().toString();
                 mEventType = eventtype.getText().toString();
@@ -345,39 +345,16 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 }
                 ((SearchClassifyViewHolder) holder).caseAddress.setText(tag[2] + caseList.get(position).getCaseaddress());
                 ((SearchClassifyViewHolder) holder).case_layout.setOnClickListener(view -> {
-                    if (mManageState.equals("")) {
-                        if (caseList.get(position).getCasetype().equals("1")) {
-                            Intent intent = new Intent(UIUtils.getContext(), OfficialFinishDetail.class);
-                            intent.putExtra("detailId", caseList.get(position).getId());
-                            UIUtils.startActivity(intent);
-                        } else if (caseList.get(position).getCasetype().equals("0")) {
-                            Intent intent = new Intent(UIUtils.getContext(), OfficialNoFinishDetails.class);
-                            intent.putExtra("detailId", caseList.get(position).getId());
-                            intent.putExtra("type", "nofinish_query");
-                            UIUtils.startActivity(intent);
-                        }
-
-                    } else if (mManageState.equals("1")) {
-                        Intent intent = new Intent(UIUtils.getContext(), OfficialFinishDetail.class);
-                        intent.putExtra("detailId", caseList.get(position).getId());
-                        UIUtils.startActivity(intent);
-
-                    } else if (mManageState.equals("0")) {
-                        Intent intent = new Intent(UIUtils.getContext(), OfficialNoFinishDetails.class);
-                        intent.putExtra("detailId", caseList.get(position).getId());
-                        intent.putExtra("type", "nofinish_query");
-                        UIUtils.startActivity(intent);
-                    }
+                    Intent intent = new Intent(UIUtils.getContext(), OfficialFinishDetail.class);
+                    intent.putExtra("detailId", caseList.get(position).getId());
+                    UIUtils.startActivity(intent);
                 });
             }
         }
 
         @Override
         public int getItemCount() {
-            if (caseList != null) {
-                return caseList.size();
-            }
-            return 0;
+            return caseList == null ? 0 : caseList.size();
         }
 
         public void addAllDate(List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> caselistcon) {

@@ -65,7 +65,7 @@
     <string name="grid_base_add_relation">与户主关系:</string>
     <string name="grid_base_huzu_name">户主姓名:</string>
     <string name="grid_base_add_sex">性别:</string>
-    <string name="grid_base_add_cardid">身份证号:</string>
+    <string name="grid_base_add_cardid">公民身份号码:</string>
     <string name="grid_base_add_policatial">政治面貌:</string>
     <string name="grid_base_add_degree">文化程度:</string>
     <string name="grid_base_add_married">婚否:</string>
