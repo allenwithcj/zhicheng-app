@@ -39,7 +39,7 @@ public class ContactModelImpl implements ContactModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
+//                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 

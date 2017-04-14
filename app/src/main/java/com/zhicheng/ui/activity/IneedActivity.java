@@ -229,7 +229,6 @@ public class IneedActivity extends BaseActivity implements UpThingsView {
                                 method.invoke(iqbQB, mNode.get(7));
                             } else if (method.getName().endsWith("No")) {
                                 //事件上报  201702141342340
-                                //经验交流 201704101440000
                                 method.invoke(iqbQB, "201702141342340");
                             } else if (method.getName().endsWith("key")) {
                                 method.invoke(iqbQB, String.valueOf(System.currentTimeMillis()));
@@ -293,7 +292,7 @@ public class IneedActivity extends BaseActivity implements UpThingsView {
                     Toast.makeText(this, "请先定位地址", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                BaseApplication.checkLogin();
+//                BaseApplication.checkLogin();
                 Snackbar.make(mToolbar, "重连成功，请重新上报", Snackbar.LENGTH_SHORT).show();
             }
         }

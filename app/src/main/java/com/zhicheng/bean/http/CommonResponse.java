@@ -58,6 +58,7 @@ public class CommonResponse {
             private DataBean data;
             private String errorMessage;
             private int errorCode;
+            private List<AttaItemsBean> attaItems;
 
             public DataBean getData() {
                 return data;
@@ -81,6 +82,50 @@ public class CommonResponse {
 
             public void setErrorCode(int errorCode) {
                 this.errorCode = errorCode;
+            }
+
+            public List<AttaItemsBean> getAttaItems() {
+                return attaItems;
+            }
+
+            public void setAttaItems(List<AttaItemsBean> attaItems) {
+                this.attaItems = attaItems;
+            }
+
+            public static class AttaItemsBean {
+                /**
+                 * guid : AF4D7BA1-82D4-80AF-F52B-AAE2332E2541
+                 * time :
+                 * master_key : MzAzMDk=
+                 */
+
+                private String guid;
+                private String time;
+                private String master_key;
+
+                public String getGuid() {
+                    return guid;
+                }
+
+                public void setGuid(String guid) {
+                    this.guid = guid;
+                }
+
+                public String getTime() {
+                    return time;
+                }
+
+                public void setTime(String time) {
+                    this.time = time;
+                }
+
+                public String getMaster_key() {
+                    return master_key;
+                }
+
+                public void setMaster_key(String master_key) {
+                    this.master_key = master_key;
+                }
             }
 
             public static class DataBean {

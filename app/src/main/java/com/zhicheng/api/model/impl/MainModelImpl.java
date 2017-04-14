@@ -275,7 +275,6 @@ public class MainModelImpl implements MainModel {
                     @Override
                     public void onNext(Response<CommonResponse> commonResponseResponse) {
                         if (commonResponseResponse.isSuccessful()) {
-//                            listener.onComplected(commonResponseResponse.body());
                             if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0) {
                                 formExportRequest(requestType, listener);
                                 BaseApplication.log_say("MainModelImpl", "FormExportRequest");

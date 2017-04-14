@@ -278,7 +278,7 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (firstClickBack != 0 && System.currentTimeMillis() - firstClickBack < 1500) {
-                BaseApplication.quiteApplication();
+                BaseApplication.clearAllActivity();
                 return true;
             } else {
                 Toast.makeText(this, "再点一次退出本应用", Toast.LENGTH_SHORT).show();

@@ -40,7 +40,7 @@ public class OfficialWorkModelImpl implements OfficialWorkModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
+//                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
@@ -73,7 +73,7 @@ public class OfficialWorkModelImpl implements OfficialWorkModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
+//                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 

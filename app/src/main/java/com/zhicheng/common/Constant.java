@@ -23,6 +23,7 @@ public class Constant {
     public static final String TYPE_CLASSIFICATION = "classification";
     public static final String TYPE_REMARK1 = "remark1";
     public static final String TYPE_REMARK2 = "remark2";
+    public static final String TYPE_HOBBY = "hobby";
 
     public static String LOG_OPERATE_TYPE = "";
 

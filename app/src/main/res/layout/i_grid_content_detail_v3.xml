@@ -171,17 +171,19 @@
                 android:gravity="right"
                 android:text="@string/grid_base_add_hobby"
                 android:padding="@dimen/textView_padding" />
-
-            <EditText
+            <TextView
                 android:id="@+id/grid_base_add_hobby"
                 android:layout_width="0dp"
-                android:textColor="@color/black"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="5"
+                android:textColor="@color/black"
+                android:maxLines="1"
                 android:textSize="@dimen/content_size"
-                android:background="@null"
-                android:hint="@string/hint_grid_hobby"
-                android:padding="@dimen/textView_padding" />
+                android:gravity="center|left"
+                android:paddingLeft="10dp"
+                android:hint="@string/hint_grid_choice"
+                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp" />
+
         </LinearLayout>
 
         <include layout="@layout/z_line" />

@@ -71,8 +71,6 @@ public class ServiceFactory {
         int maxStale = DEFAULT_MAX_STALE_ONLINE;
         //向服务期请求数据缓存1个小时
         CacheControl tempCacheControl = new CacheControl.Builder()
-//                .onlyIfCached()
-//                .maxStale(5, TimeUnit.SECONDS)
                 .noCache()
                 .build();
         request.cacheControl(tempCacheControl);

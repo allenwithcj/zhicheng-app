@@ -2,6 +2,7 @@ package com.zhicheng.api.common.service;
 
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.CommonResponse;
+import com.zhicheng.bean.http.ExperienceCommonResponse;
 import com.zhicheng.bean.http.IneedResponse;
 
 import okhttp3.MultipartBody;
@@ -61,4 +62,9 @@ public interface MainService {
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")
     Observable<Response<CommonResponse>> FormSendDoRequest(@Field("json") String rBody);
+
+    //表单处理请求
+    @FormUrlEncoded
+    @POST("/servlet/mobileServlet")
+    Observable<Response<ExperienceCommonResponse>> sFormSendDoRequest(@Field("json") String rBody);
 }

@@ -77,7 +77,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         GRIDNAME = holder.grid_base_add_grid_no.getText().toString();
 
         NAME = holder.grid_base_add_name.getText().toString();
-        RELATION = holder.grid_base_add_relation.getText().toString();
+        RELATION = CodeUtils.relationCode(holder.grid_base_add_relation.getText().toString());
         HUZUNAME = holder.grid_base_huzu_name.getText().toString();
         GENDER = CodeUtils.sexCode(holder.grid_base_add_sex.getText().toString());
         CARD_NUM = holder.grid_base_add_cardid.getText().toString();
@@ -88,12 +88,12 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         PHONE = holder.grid_base_add_telephone.getText().toString();
         WORK = holder.grid_base_add_workspace.getText().toString();
         HOBBY = holder.grid_base_add_hobby.getText().toString();
-        REMARK1 = CodeUtils.remark1Code(holder.grid_base_add_remark1.getText().toString());
+        REMARK1 = holder.grid_base_add_remark1.getText().toString();
         OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
-        SORT = CodeUtils.sortCode(holder.grid_base_add_rkfl.getText().toString());
+        SORT = holder.grid_base_add_rkfl.getText().toString();
 
         RENTNAME = holder.grid_base_add_lessor.getText().toString();
-        REMARK2 = CodeUtils.remark2Code(holder.grid_base_add_lessor_remark2.getText().toString());
+        REMARK2 = holder.grid_base_add_lessor_remark2.getText().toString();
         RENTPHONE = holder.grid_base_add_lessor_telephone.getText().toString();
 
         if (GENDER.equals("") || MARITAL_STATUS.equals("")) {
@@ -162,7 +162,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         public EditText grid_base_add_brithplace;
         public EditText grid_base_add_telephone;
         public EditText grid_base_add_workspace;
-        public EditText grid_base_add_hobby;
+        public TextView grid_base_add_hobby;
         public TextView grid_base_add_remark1;
         public EditText grid_base_add_outaddress;
         public TextView grid_base_add_rkfl;
@@ -187,7 +187,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             grid_base_add_brithplace = (EditText) itemView.findViewById(R.id.grid_base_add_brithplace);
             grid_base_add_telephone = (EditText) itemView.findViewById(R.id.grid_base_add_telephone);
             grid_base_add_workspace = (EditText) itemView.findViewById(R.id.grid_base_add_workspace);
-            grid_base_add_hobby = (EditText) itemView.findViewById(R.id.grid_base_add_hobby);
+            grid_base_add_hobby = (TextView) itemView.findViewById(R.id.grid_base_add_hobby);
             grid_base_add_remark1 = (TextView) itemView.findViewById(R.id.grid_base_add_remark1);
             grid_base_add_outaddress = (EditText) itemView.findViewById(R.id.grid_base_add_outaddress);
             grid_base_add_rkfl = (TextView) itemView.findViewById(R.id.input_rkfl);
@@ -238,6 +238,12 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             grid_base_add_lessor_remark2.setOnClickListener(view -> {
                 mList = UIUtils.getContext().getResources().getStringArray(R.array.remark2);
                 type = Constant.TYPE_REMARK2;
+                myMultipleIntent(mList, type);
+            });
+
+            grid_base_add_hobby.setOnClickListener(view -> {
+                mList = UIUtils.getContext().getResources().getStringArray(R.array.grid_hobby);
+                type = Constant.TYPE_HOBBY;
                 myMultipleIntent(mList, type);
             });
         }

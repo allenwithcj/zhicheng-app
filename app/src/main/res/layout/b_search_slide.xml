@@ -226,7 +226,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/type_layout"
+        android:layout_below="@+id/line1"
         android:layout_alignParentStart="true">
 
         <TextView
@@ -238,7 +238,7 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:drawablePadding="5dp"
-            android:text="事项分类" />
+            android:text="事件分类" />
 
         <TextView
             android:id="@+id/eventtype"
@@ -250,7 +250,7 @@
             android:layout_gravity="center"
             android:textSize="@dimen/content_size"
             android:textStyle="normal"
-            android:hint="请选择事项分类"
+            android:hint="请选择事件分类"
             android:background="@null"
             android:textColor="@color/black" />
         <ImageView

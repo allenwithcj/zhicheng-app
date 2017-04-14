@@ -2,81 +2,120 @@
 <resources>
     <string-array name="relation">
         <item>本人</item>
-        <item>父</item>
-        <item>母</item>
-        <item>夫</item>
-        <item>妻</item>
+        <item>配偶</item>
+        <item>父母</item>
         <item>子</item>
         <item>女</item>
-        <item>兄</item>
-        <item>弟</item>
-        <item>姐</item>
-        <item>妹</item>
-        <item>孙子</item>
-        <item>孙女</item>
-        <item>儿媳</item>
-        <item>女婿</item>
-        <item>祖父</item>
-        <item>祖母</item>
-        <item>外祖父</item>
-        <item>外祖母</item>
-        <item>外孙子</item>
-        <item>外孙女</item>
-        <item>旁系亲属</item>
-        <item>其他亲属</item>
-        <item>承租</item>
+        <item>孙子、孙女、或外孙子、外孙女</item>
+        <item>祖父母或外祖父母</item>
+        <item>兄、弟、姐、妹</item>
+        <item>其他</item>
+        <item>承租人</item>
     </string-array>
 
     <string-array name="sex">
         <item>男</item>
         <item>女</item>
+        <item>未知</item>
+        <item>未说明</item>
     </string-array>
 
     <string-array name="political_status">
-        <item>党员</item>
-        <item>团员</item>
+        <item>中国共产党党员</item>
+        <item>中国共产党预备党员</item>
+        <item>中国共产主义青年团团员</item>
+        <item>中国国民党革命委员会会员</item>
+        <item>中国民主同盟盟员</item>
+        <item>中国民主建国会会员</item>
+        <item>中国民主促进会会员</item>
+        <item>中国农工民主党党员</item>
+        <item>中国致公党党员</item>
+        <item>九三学社社员</item>
+        <item>台湾民主自治同盟盟员</item>
+        <item>无党派民主人士</item>
         <item>群众</item>
     </string-array>
 
     <string-array name="degree_of_educatio">
-        <item>初中</item>
-        <item>高中</item>
-        <item>中专</item>
-        <item>大专</item>
-        <item>本科</item>
-        <item>硕士</item>
-        <item>博士</item>
-        <item>小学毕业（肄业）</item>
+        <item>初中毕业</item>
+        <item>初中肄业</item>
+        <item>普通髙中毕业</item>
+        <item>普通高中结业</item>
+        <item>普通髙中肄业</item>
+        <item>大学专科毕业</item>
+        <item>大学本科肄业</item>
+        <item>大学本科结业</item>
+        <item>大学普通班毕业</item>
+        <item>大学本科毕业</item>
+        <item>大学专科结业</item>
+        <item>大学专科肄业</item>
+        <item>博士研究生毕业</item>
+        <item>博士研究生结业</item>
+        <item>博士研究生肄业</item>
+        <item>硕士研究生毕业</item>
+        <item>硕士研究生结业</item>
+        <item>硕士研究生肄业</item>
+        <item>研究生班毕业</item>
+        <item>研究生班结业</item>
+        <item>研究生班肄业</item>
+        <item>小学毕业</item>
+        <item>小学肄业</item>
+        <item>中等专科毕业</item>
+        <item>中等专科结业</item>
+        <item>中等专科肄业</item>
+        <item>职业高中毕业</item>
+        <item>职业髙中结业</item>
+        <item>职业髙中肄业</item>
+        <item>技工学校毕业</item>
+        <item>技工学校结业</item>
+        <item>技工学校肄业</item>
+        <item>其他</item>
+
     </string-array>
 
     <string-array name="married">
-        <item>已婚</item>
         <item>未婚</item>
+        <item>已婚</item>
         <item>离婚</item>
         <item>丧偶</item>
+        <item>初婚</item>
+        <item>再婚</item>
+        <item>复婚</item>
+        <item>未说明</item>
     </string-array>
 
     <string-array name="remark1">
+        <item>无</item>
         <item>低保户</item>
         <item>五保户</item>
         <item>60~90岁老人</item>
         <item>残疾人</item>
         <item>90岁以上老人</item>
-        <item>空巢老人</item>
+        <item>孤寡老人</item>
         <item>计生优抚对象</item>
         <item>计生奖抚对象</item>
         <item>计生特抚对象</item>
-        <item>无</item>
+        <item>孤儿</item>
+        <item>居家养老</item>
+        <item>留守人员</item>
+        <item>需求救助</item>
+        <item>贫困人员</item>
+        <item>流浪乞讨人员</item>
+
+
     </string-array>
 
     <string-array name="remark2">
-        <item>刑满释放</item>
+        <item>无</item>
+        <item>刑满释放人员</item>
         <item>社区矫正</item>
+        <item>吸毒人员</item>
         <item>社区戒毒康复</item>
-        <item>肇事精神病</item>
+        <item>精神病障碍患者</item>
         <item>重点上访人员</item>
         <item>重点青少年</item>
-        <item>无</item>
+        <item>艾滋病危险人员</item>
+        <item>邪教人员</item>
     </string-array>
 
     <string-array name="sort">
@@ -106,5 +145,25 @@
         <item>备注:</item>
         <item>流出地:</item>
     </string-array>
+
+    <string-array name="grid_hobby">
+        <item>摄影</item>
+        <item>垂钓</item>
+        <item>歌舞</item>
+        <item>书画</item>
+        <item>表演</item>
+        <item>动漫</item>
+        <item>小说</item>
+        <item>影视剧</item>
+        <item>足球</item>
+        <item>篮球</item>
+        <item>羽毛球</item>
+        <item>乒乓球</item>
+        <item>游泳</item>
+        <item>自行车</item>
+        <item>其他</item>
+    </string-array>
+
+
 
 </resources>

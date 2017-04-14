@@ -107,7 +107,6 @@ public class MainFragment extends BaseFragment implements CheckVerisonView {
         } else {
             mName.setText("未登录");
             mOccupation.setText("无权限");
-            userpost.setText("无权限");
         }
     }
 

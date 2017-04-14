@@ -54,6 +54,8 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                     holder.grid_base_add_remark1.setText(value);
                 } else if (type.equals(Constant.TYPE_REMARK2)) {
                     holder.grid_base_add_lessor_remark2.setText(value);
+                } else if (type.equals(Constant.TYPE_HOBBY)) {
+                    holder.grid_base_add_hobby.setText(value);
                 }
             }
         }
