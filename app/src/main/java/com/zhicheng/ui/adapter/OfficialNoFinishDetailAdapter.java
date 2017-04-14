@@ -79,12 +79,14 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
         }
     }
 
+
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (mData != null) {
             if (holder instanceof HeaderViewHolder) {
-                ((HeaderViewHolder) holder).NumberId.setText(mData.getIq().getQuery().getFormData().getFormData().getZC01().getViewValue());
-                if (mData.getIq().getQuery().getReplies() != null) {
+                ((HeaderViewHolder) holder).NumberId.setText(mData.getIq().getQuery().getTitle());
+                if (mData.getIq().getQuery().getReplies() != null
+                        && mData.getIq().getQuery().getReplies().size() != 0) {
                     ((HeaderViewHolder) holder).replies.setVisibility(View.VISIBLE);
                     ((HeaderViewHolder) holder).replies.setText(mData.getIq().getQuery().getReplies().size() + "条回复");
                     ((HeaderViewHolder) holder).replies.setOnClickListener(view -> {
@@ -98,8 +100,9 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                 switch (position) {
                     case 1:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position - 1]);
-                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getFormData().getFormData().getZC08().getViewValue());
+                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getMap().getReportChannel());
                         break;
+
                     case 2:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position - 1]);
                         if (mData.getIq().getQuery().getMap().getType() == 1) {
@@ -137,7 +140,7 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                 }
             } else if (holder instanceof ShowContentViewHolder) {
                 ((ShowContentViewHolder) holder).tagContentName.setText(tags[5]);
-                ((ShowContentViewHolder) holder).tagBaoContent.setText(mData.getIq().getQuery().getFormData().getFormData().getZC04().getViewValue());
+                ((ShowContentViewHolder) holder).tagBaoContent.setText(mData.getIq().getQuery().getMap().getEventDescription());
             } else if (holder instanceof ShowImageViewHolder) {
                 ((ShowImageViewHolder) holder).tagImage.setText(tags[6]);
                 int images = mData.getIq().getQuery().getAttachments().size();
@@ -214,14 +217,14 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                 }
             } else if (holder instanceof ShowDealViewHolder) {
                 String mFlowStatus = mData.getIq().getQuery().getMap().getFlowStatus();
-                if (mFlowStatus.equals("1")) {
+                if (mFlowStatus != null && mFlowStatus.equals("1")) {
                     ((ShowDealViewHolder) holder).Bao.setText(null);
                     ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     ((ShowDealViewHolder) holder).Accept.setText(null);
                     ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     ((ShowDealViewHolder) holder).Deal.setText("办理中...");
                     ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                } else if (mFlowStatus.equals("2")) {
+                } else if (mFlowStatus != null && mFlowStatus.equals("2")) {
                     String mStartTime = mData.getIq().getQuery().getMap().getFlowStartTime();
                     if (!mStartTime.equals("")) {
                         ((ShowDealViewHolder) holder).Bao.setText(mStartTime.substring(0, mStartTime.length() - 2));
@@ -235,14 +238,13 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
                     ((ShowDealViewHolder) holder).Deal.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.red));
                     ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     String mEndTime = mData.getIq().getQuery().getMap().getFlowEndTime();
-                    if (!mEndTime.equals("")) {
+                    if (mEndTime != null && mEndTime.length() > 2) {
                         ((ShowDealViewHolder) holder).Complete.setText(mEndTime.substring(0, mEndTime.length() - 2));
                     } else {
                         ((ShowDealViewHolder) holder).Complete.setText("");
                     }
                     ((ShowDealViewHolder) holder).CompleteImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                 }
-
             }
         }
     }

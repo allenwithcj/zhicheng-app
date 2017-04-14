@@ -549,18 +549,27 @@ public class OfficialModelImpl implements OfficialModel {
                                 query.setRequestType("0");
                                 query.setId(OfficialDeatail.getIq().getQuery().getId());
                                 List<IneedResponse.IqBean.QueryBean.ItemsBean> itemsBeens = ineedResponseResponse.body().getIq().getQuery().getItems();
+
+
                                 if (itemsBeens != null) {
-                                    for (IneedResponse.IqBean.QueryBean.ItemsBean itemsBean : itemsBeens) {
-                                        if (type.equals("0")) {
-                                            if (itemsBean.getValue().equals("提交处置结果")) {
-                                                query.setChukouID(itemsBean.getKey());
-                                            }
-                                        } else if (type.equals("4")) {
-                                            if (itemsBean.getValue().equals("申请重新分配")) {
-                                                query.setChukouID(itemsBean.getKey());
+                                    if(itemsBeens.size() == 1){
+                                        query.setChukouID(itemsBeens.get(0).getKey());
+                                    }else{
+                                        for (IneedResponse.IqBean.QueryBean.ItemsBean itemsBean : itemsBeens) {
+                                            if (type.equals("0")) {
+                                                if (itemsBean.getValue().equals("提交处置结果")) {
+                                                    query.setChukouID(itemsBean.getKey());
+                                                }else if(itemsBean.getValue().equals("事件办结")){
+                                                    query.setChukouID(itemsBean.getKey());
+                                                }
+                                            } else if (type.equals("4")) {
+                                                if (itemsBean.getValue().equals("申请重新分配")) {
+                                                    query.setChukouID(itemsBean.getKey());
+                                                }
                                             }
                                         }
                                     }
+
                                 }
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);

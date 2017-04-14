@@ -107,12 +107,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     }
 
     @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        mToolbar.setTitle("");
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         onRefresh();
@@ -160,6 +154,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        mToolbar.setTitle("");
         if (mData.getLocalConfig() != null) {
             if (mData.getLocalConfig().getUserPost().equals("网格长")
                     || mData.getLocalConfig().getUserPost().equals("网格员")) {

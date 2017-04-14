@@ -6,8 +6,9 @@ package com.zhicheng.bean.http;
 
 public class LoginResponse {
 
+
     /**
-     * iq : {"namespace":"LoginResponse","query":{"userID":"7494","userName":"叶思阳","department":"雉城指挥中心","userPost":"镇街受理员","headUrl":"/UserUploadFile/photo/photo.png&isMobile=true","logoUrl":"","feVersion":"65","errorCode":"0","errorMessage":"登陆成功","accessToken":"5b7610a6e5475410f76ca3d6fa6181f2","imid":"","imtoken":""}}
+     * iq : {"namespace":"LoginResponse","query":{"userID":"7541","userName":"宋莹","department":"大西门社区第五网格","userPost":"网格员","departmentID":"2547","headUrl":"/UserUploadFile/photo/photo.png","logoUrl":"/login/applyTheme/images/portal/login/20170227174325.png","feVersion":"65","errorCode":"0","errorMessage":"登陆成功","accessToken":"3488a41fe076abfb1ff4d71e9a7d6148","imid":"","imtoken":""}}
      */
 
     private IqBean iq;
@@ -23,7 +24,7 @@ public class LoginResponse {
     public static class IqBean {
         /**
          * namespace : LoginResponse
-         * query : {"userID":"7494","userName":"叶思阳","department":"雉城指挥中心","userPost":"镇街受理员","headUrl":"/UserUploadFile/photo/photo.png&isMobile=true","logoUrl":"","feVersion":"65","errorCode":"0","errorMessage":"登陆成功","accessToken":"5b7610a6e5475410f76ca3d6fa6181f2","imid":"","imtoken":""}
+         * query : {"userID":"7541","userName":"宋莹","department":"大西门社区第五网格","userPost":"网格员","departmentID":"2547","headUrl":"/UserUploadFile/photo/photo.png","logoUrl":"/login/applyTheme/images/portal/login/20170227174325.png","feVersion":"65","errorCode":"0","errorMessage":"登陆成功","accessToken":"3488a41fe076abfb1ff4d71e9a7d6148","imid":"","imtoken":""}
          */
 
         private String namespace;
@@ -47,16 +48,17 @@ public class LoginResponse {
 
         public static class QueryBean {
             /**
-             * userID : 7494
-             * userName : 叶思阳
-             * department : 雉城指挥中心
-             * userPost : 镇街受理员
-             * headUrl : /UserUploadFile/photo/photo.png&isMobile=true
-             * logoUrl :
+             * userID : 7541
+             * userName : 宋莹
+             * department : 大西门社区第五网格
+             * userPost : 网格员
+             * departmentID : 2547
+             * headUrl : /UserUploadFile/photo/photo.png
+             * logoUrl : /login/applyTheme/images/portal/login/20170227174325.png
              * feVersion : 65
              * errorCode : 0
              * errorMessage : 登陆成功
-             * accessToken : 5b7610a6e5475410f76ca3d6fa6181f2
+             * accessToken : 3488a41fe076abfb1ff4d71e9a7d6148
              * imid :
              * imtoken :
              */
@@ -65,6 +67,7 @@ public class LoginResponse {
             private String userName;
             private String department;
             private String userPost;
+            private String departmentID;
             private String headUrl;
             private String logoUrl;
             private String feVersion;
@@ -104,6 +107,14 @@ public class LoginResponse {
 
             public void setUserPost(String userPost) {
                 this.userPost = userPost;
+            }
+
+            public String getDepartmentID() {
+                return departmentID;
+            }
+
+            public void setDepartmentID(String departmentID) {
+                this.departmentID = departmentID;
             }
 
             public String getHeadUrl() {

@@ -29,6 +29,7 @@ public class LocalConfig extends RealmObject {
     private String headUrl;
     private String logoUrl;
     private String accessToken;
+    private String departmentID;
 
     public long getId() {
         return id;
@@ -156,5 +157,13 @@ public class LocalConfig extends RealmObject {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public String getDepartmentID() {
+        return departmentID;
+    }
+
+    public void setDepartmentID(String departmentID) {
+        this.departmentID = departmentID;
     }
 }

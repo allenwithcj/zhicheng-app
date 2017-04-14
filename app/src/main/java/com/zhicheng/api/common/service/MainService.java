@@ -3,6 +3,8 @@ package com.zhicheng.api.common.service;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.ExperienceCommonResponse;
+import com.zhicheng.bean.http.ExperienceDetailResponse;
+import com.zhicheng.bean.http.ExperienceResponse;
 import com.zhicheng.bean.http.IneedResponse;
 
 import okhttp3.MultipartBody;
@@ -67,4 +69,14 @@ public interface MainService {
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")
     Observable<Response<ExperienceCommonResponse>> expFormSendDoRequest(@Field("json") String rBody);
+
+    //经验交流
+    @FormUrlEncoded
+    @POST("/servlet/mobileServlet")
+    Observable<Response<ExperienceResponse>> queyExp(@Field("json") String rBody);
+
+    //经验交流详情
+    @FormUrlEncoded
+    @POST("/servlet/mobileServlet")
+    Observable<Response<ExperienceDetailResponse>> queyExpDetail(@Field("json") String rBody);
 }

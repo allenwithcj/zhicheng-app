@@ -17,9 +17,11 @@ import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.presenter.impl.ExperiencePresenterImpl;
+import com.zhicheng.api.view.ExperienceView;
 import com.zhicheng.api.view.UpThingsView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.ExperienceCommonResponse;
+import com.zhicheng.bean.json.ExperienceRequest;
 import com.zhicheng.bean.json.UpFileRequest;
 import com.zhicheng.bean.json.UpThingsRequest;
 import com.zhicheng.module.imageloader.GlideImageLoader;
@@ -35,7 +37,7 @@ import java.util.UUID;
 import cc.dagger.photopicker.PhotoPicker;
 import cc.dagger.photopicker.picker.PhotoFilter;
 
-public class ExperienceExchangeAddActivity extends BaseActivity implements UpThingsView {
+public class ExperienceExchangeAddActivity extends BaseActivity implements ExperienceView {
     private RecyclerView mRecyclerView;
     private MyExpAdapter mAdapter;
     private ChoosePhotoAdapter mChoosePhotoAdapter;
@@ -103,6 +105,16 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements UpThi
     }
 
     @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
     public void showMessage(String msg) {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
@@ -111,7 +123,17 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements UpThi
     }
 
     @Override
-    public void UpThings(Object result) {
+    public void queryExpResponse(Object result) {
+
+    }
+
+    @Override
+    public void loadExpResponse(Object result) {
+
+    }
+
+    @Override
+    public void upExpResponse(Object result) {
         if(result instanceof CommonResponse){
             if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
                 //上传经验交流
@@ -127,7 +149,6 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements UpThi
                 showMessage(((ExperienceCommonResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
-
     }
 
     class MyExpAdapter extends RecyclerView.Adapter{
@@ -273,14 +294,14 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements UpThi
     private void upExperience(String attrGuID){
         MyInputViewHolder inputHolder = (MyInputViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
         MyContentViewHolder contentHolder = (MyContentViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(1));
-        UpThingsRequest utp = new UpThingsRequest();
-        UpThingsRequest.IqBean iqb = new UpThingsRequest.IqBean();
-        UpThingsRequest.IqBean.QueryBean iqbQB = new UpThingsRequest.IqBean.QueryBean();
+        ExperienceRequest mExperienceRequest = new ExperienceRequest();
+        ExperienceRequest.IqBean iqb = new ExperienceRequest.IqBean();
+        ExperienceRequest.IqBean.QueryBean iqbQB = new ExperienceRequest.IqBean.QueryBean();
         iqb.setNamespace("SubmitFormRequest");
         iqbQB.setTITLE_NAME(inputHolder.exp_title.getText().toString());
         iqbQB.setPOSTED_PERSON(inputHolder.exp_sender.getText().toString());
         iqbQB.setPOSTED_BY(mData.getLocalConfig().getUserId());
-        iqbQB.setDEPARTMENT(inputHolder.exp_dept.getText().toString());
+        iqbQB.setDEPARTMENT(mData.getLocalConfig().getDepartmentID());
         iqbQB.setCONTENT(contentHolder.i_exp_content.getText().toString());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         iqbQB.setPOSTED_TIME(sdf.format(new Date()));
@@ -289,10 +310,10 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements UpThi
         iqbQB.setTaskTitle("经验交流");
         iqbQB.setANNEX(attrGuID);
         iqb.setQuery(iqbQB);
-        utp.setIq(iqb);
+        mExperienceRequest.setIq(iqb);
 
         Gson gson = new Gson();
-        String strEntity = gson.toJson(utp);
+        String strEntity = gson.toJson(mExperienceRequest);
         mExperiencePresenterImpl.UpExperience(5,strEntity);
     }
 

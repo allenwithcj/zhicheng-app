@@ -20,6 +20,7 @@ import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.http.OfficialWorkDynamicList;
+import com.zhicheng.bean.json.NewsCaseTotalRequest;
 import com.zhicheng.bean.json.OfficialRequest;
 import com.zhicheng.ui.adapter.HomeFragmentAdapter;
 
@@ -122,13 +123,14 @@ public class HomeFragment extends BaseFragment implements MainView, OfficialView
 
     @Override
     public void onRefresh() {
+        NewsCaseTotalRequest  mNewsCaseTotalRequest = new NewsCaseTotalRequest();
+        NewsCaseTotalRequest.IqBean iqb = new NewsCaseTotalRequest.IqBean();
+        NewsCaseTotalRequest.IqBean.QueryBean qb = new NewsCaseTotalRequest.IqBean.QueryBean();
+        iqb.setNamespace("NewsCaseTotalRequest");
+        iqb.setQuery(qb);
+        mNewsCaseTotalRequest.setIq(iqb);
         Gson gson = new Gson();
-        Map<String, Object> map = new HashMap<>();
-        Map<String, Object> map1 = new HashMap<>();
-        map1.put("namespace", "NewsCaseTotalRequest");
-        map1.put("query", new HashMap<>());
-        map.put("iq", map1);
-        String json = gson.toJson(map);
+        String json = gson.toJson(mNewsCaseTotalRequest);
         BaseApplication.log_say(TAG, json);
         mMainPresenterImpl.loadMain(json);
     }

@@ -1,5 +1,6 @@
 package com.zhicheng.ui.adapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,11 @@ import com.bumptech.glide.Glide;
 import com.zhicheng.R;
 import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.common.URL;
+import com.zhicheng.ui.activity.ReplyActivity;
 import com.zhicheng.utils.common.UIUtils;
+
+import java.io.Serializable;
+import java.util.List;
 
 import me.codeboy.android.aligntextview.CBAlignTextView;
 
@@ -28,6 +33,19 @@ public class OfficialSendedDetailAdapter extends RecyclerView.Adapter {
     private OfficialDetailResponse mData;
     private String[] tags = UIUtils.getContext().getResources().getStringArray(R.array.NoFinishDetail);
     private String[] tag_last = UIUtils.getContext().getResources().getStringArray(R.array.detail_last);
+
+    //接口
+    private ShowPhoto mShowPhoto;
+
+    public interface ShowPhoto {
+        void onShowPhoto(int position);
+    }
+
+    public void setShowPhoto(ShowPhoto mShowPhoto) {
+        if (this.mShowPhoto == null) {
+            this.mShowPhoto = mShowPhoto;
+        }
+    }
 
     public OfficialSendedDetailAdapter() {
         this.mData = null;
@@ -65,6 +83,17 @@ public class OfficialSendedDetailAdapter extends RecyclerView.Adapter {
         if (mData != null) {
             if (holder instanceof HeaderViewHolder) {
                 ((HeaderViewHolder) holder).NumberId.setText(mData.getIq().getQuery().getTitle());
+                if (mData.getIq().getQuery().getReplies() != null
+                        && mData.getIq().getQuery().getReplies().size() != 0) {
+                    ((HeaderViewHolder) holder).replies.setVisibility(View.VISIBLE);
+                    ((HeaderViewHolder) holder).replies.setText(mData.getIq().getQuery().getReplies().size() + "条回复");
+                    ((HeaderViewHolder) holder).replies.setOnClickListener(view -> {
+                        List<OfficialDetailResponse.IqBean.QueryBean.RepliesBean> mRepliesBeanList = mData.getIq().getQuery().getReplies();
+                        Intent intent = new Intent(holder.itemView.getContext(), ReplyActivity.class);
+                        intent.putExtra("replies", (Serializable) mRepliesBeanList);
+                        UIUtils.startActivity(intent);
+                    });
+                }
             } else if (holder instanceof ShowBoxViewHolder) {
                 switch (position) {
                     case 1:
@@ -121,6 +150,7 @@ public class OfficialSendedDetailAdapter extends RecyclerView.Adapter {
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img1);
+                        ((ShowImageViewHolder) holder).img1.setOnClickListener(v -> mShowPhoto.onShowPhoto(0));
                     } else if (images == 2) {
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(0).getHref())
@@ -134,6 +164,8 @@ public class OfficialSendedDetailAdapter extends RecyclerView.Adapter {
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img2);
+                        ((ShowImageViewHolder) holder).img1.setOnClickListener(v -> mShowPhoto.onShowPhoto(0));
+                        ((ShowImageViewHolder) holder).img2.setOnClickListener(v -> mShowPhoto.onShowPhoto(1));
                     } else if (images == 3) {
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(0).getHref())
@@ -153,6 +185,9 @@ public class OfficialSendedDetailAdapter extends RecyclerView.Adapter {
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img3);
+                        ((ShowImageViewHolder) holder).img1.setOnClickListener(v -> mShowPhoto.onShowPhoto(0));
+                        ((ShowImageViewHolder) holder).img2.setOnClickListener(v -> mShowPhoto.onShowPhoto(1));
+                        ((ShowImageViewHolder) holder).img3.setOnClickListener(v -> mShowPhoto.onShowPhoto(2));
                     } else {
                         Glide.with(holder.itemView.getContext())
                                 .load(URL.HOST_URL_SERVER_ZHICHENG + mData.getIq().getQuery().getAttachments().get(0).getHref())
@@ -172,19 +207,22 @@ public class OfficialSendedDetailAdapter extends RecyclerView.Adapter {
                                 .error(R.drawable.glide_failed)
                                 .thumbnail((float) 0.4)
                                 .into(((ShowImageViewHolder) holder).img3);
+                        ((ShowImageViewHolder) holder).img1.setOnClickListener(v -> mShowPhoto.onShowPhoto(0));
+                        ((ShowImageViewHolder) holder).img2.setOnClickListener(v -> mShowPhoto.onShowPhoto(1));
+                        ((ShowImageViewHolder) holder).img3.setOnClickListener(v -> mShowPhoto.onShowPhoto(2));
                     }
 
                 }
             } else if (holder instanceof ShowDealViewHolder) {
                 String mFlowStatus = mData.getIq().getQuery().getMap().getFlowStatus();
-                if (mFlowStatus.equals("1")) {
+                if (mFlowStatus != null && mFlowStatus.equals("1")) {
                     ((ShowDealViewHolder) holder).Bao.setText(null);
                     ((ShowDealViewHolder) holder).BaoImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     ((ShowDealViewHolder) holder).Accept.setText(null);
                     ((ShowDealViewHolder) holder).AcceptImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     ((ShowDealViewHolder) holder).Deal.setText("办理中...");
                     ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
-                } else if (mFlowStatus.equals("2")) {
+                } else if (mFlowStatus != null && mFlowStatus.equals("2")) {
                     String mStartTime = mData.getIq().getQuery().getMap().getFlowStartTime();
                     if (!mStartTime.equals("")) {
                         ((ShowDealViewHolder) holder).Bao.setText(mStartTime.substring(0, mStartTime.length() - 2));
@@ -198,7 +236,7 @@ public class OfficialSendedDetailAdapter extends RecyclerView.Adapter {
                     ((ShowDealViewHolder) holder).Deal.setTextColor(holder.itemView.getContext().getResources().getColor(R.color.red));
                     ((ShowDealViewHolder) holder).DealImage.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.i_show_deal));
                     String mEndTime = mData.getIq().getQuery().getMap().getFlowEndTime();
-                    if (!mEndTime.equals("")) {
+                    if (mEndTime != null && mEndTime.length() > 2) {
                         ((ShowDealViewHolder) holder).Complete.setText(mEndTime.substring(0, mEndTime.length() - 2));
                     } else {
                         ((ShowDealViewHolder) holder).Complete.setText("");
@@ -233,11 +271,14 @@ public class OfficialSendedDetailAdapter extends RecyclerView.Adapter {
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
-        private TextView NumberId;
 
-        public HeaderViewHolder(View view) {
-            super(view);
-            NumberId = (TextView) view.findViewById(R.id.NumberId);
+        private TextView NumberId;
+        private TextView replies;
+
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+            NumberId = (TextView) itemView.findViewById(R.id.NumberId);
+            replies = (TextView) itemView.findViewById(R.id.replies);
         }
     }
 

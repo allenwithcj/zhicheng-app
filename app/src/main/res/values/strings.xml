@@ -131,6 +131,7 @@
     <string name="exp_hint_content">请输入内容</string>
     <string name="baoliao_title">我的爆料</string>
     <string name="grid_base_title">网格基础数据</string>
+    <string name="grid_base_detail_title">网格基础数据详情</string>
 
     <string-array name="detail">
         <item>编号:</item>

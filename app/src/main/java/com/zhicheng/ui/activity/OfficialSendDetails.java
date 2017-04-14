@@ -13,17 +13,24 @@ import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.bean.json.OfficialDetailRequest;
+import com.zhicheng.common.URL;
 import com.zhicheng.ui.adapter.OfficialSendedDetailAdapter;
+
+import java.util.ArrayList;
+
+import cc.dagger.photopicker.PhotoPicker;
 
 public class OfficialSendDetails extends BaseActivity implements OfficialView {
     private RecyclerView mRecyclerView;
     private OfficialSendedDetailAdapter mAdapter;
     private OfficialPresenterImpl mOfficialDetail;
     private ViewGroup parentView;
+    private ArrayList<String> mShowPhoto;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_official_send_details);
+        mShowPhoto = new ArrayList<>();
         parentView = (ViewGroup) findViewById(android.R.id.content).getRootView();
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -47,6 +54,12 @@ public class OfficialSendDetails extends BaseActivity implements OfficialView {
         Gson gson = new Gson();
         String strEntity = gson.toJson(odr);
         mOfficialDetail.loadDetail(strEntity);
+        mAdapter.setShowPhoto(position -> {
+            PhotoPicker.preview()
+                    .paths(mShowPhoto)
+                    .currentItem(position)
+                    .start(OfficialSendDetails.this);
+        });
     }
 
     @Override
@@ -73,8 +86,15 @@ public class OfficialSendDetails extends BaseActivity implements OfficialView {
     @Override
     public void refreshData(Object result) {
         if (result instanceof OfficialDetailResponse) {
-            BaseApplication.log_say(TAG, ((OfficialDetailResponse) result).getIq().getQuery().getContent());
-            mAdapter.setData((OfficialDetailResponse) result);
+            if (((OfficialDetailResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
+                BaseApplication.log_say(TAG, ((OfficialDetailResponse) result).getIq().getQuery().getContent());
+                for (int i = 0; i < ((OfficialDetailResponse) result).getIq().getQuery().getAttachments().size(); i++) {
+                    mShowPhoto.add(URL.HOST_URL_SERVER_ZHICHENG + ((OfficialDetailResponse) result).getIq().getQuery().getAttachments().get(i).getHref());
+                }
+                mAdapter.setData((OfficialDetailResponse) result);
+            } else {
+                showMessage(((OfficialDetailResponse) result).getIq().getQuery().getErrorMessage());
+            }
         }
     }
 

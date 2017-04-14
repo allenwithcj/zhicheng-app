@@ -12,21 +12,21 @@ public class NewsDetailsRequest {
 
     private IqBean iq;
 
-    public IqBean getIq() {
-        return iq;
-    }
+        public IqBean getIq() {
+            return iq;
+        }
 
-    public void setIq(IqBean iq) {
-        this.iq = iq;
-    }
+        public void setIq(IqBean iq) {
+            this.iq = iq;
+        }
 
-    public static class IqBean {
-        /**
-         * namespace : AddressBookRequest
-         * query : {"page":"1","perPageNums":"10","orderBy":"","orderType":"","searchKey":"","parentItemType":0,"dataSourceType":1,"filterType":0,"parentItemID":"","isCurrentDept":"0","isRequestAllData":"1"}
-         */
+        public static class IqBean {
+            /**
+             * namespace : AddressBookRequest
+             * query : {"page":"1","perPageNums":"10","orderBy":"","orderType":"","searchKey":"","parentItemType":0,"dataSourceType":1,"filterType":0,"parentItemID":"","isCurrentDept":"0","isRequestAllData":"1"}
+             */
 
-        private String namespace;
+            private String namespace;
         private QueryBean query;
 
         public String getNamespace() {

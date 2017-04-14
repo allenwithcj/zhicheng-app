@@ -98,16 +98,7 @@ public class UpThingsRequest {
             private String yjlistbysgt;
             private String sbbmlistbysgt;
 
-            private String TITLE_NAME;//  标题
-            private String POSTED_BY; //发布人ID
-            private String DEPARTMENT;//  发布人部门
-            private String POSTED_TIME;
-            private String STATUS;
-            private String UNITCODE;
-            private String POSTED_PERSON;
-            private String  CONTENT;//主题内容
-            private String  ANNEX;//   附件
-            private String taskTitle;
+
 
 
             public String getZC01() {
@@ -508,86 +499,6 @@ public class UpThingsRequest {
 
             public void setSbbmlistbysgt(String sbbmlistbysgt) {
                 this.sbbmlistbysgt = sbbmlistbysgt;
-            }
-
-            public String getTITLE_NAME() {
-                return TITLE_NAME;
-            }
-
-            public void setTITLE_NAME(String TITLE_NAME) {
-                this.TITLE_NAME = TITLE_NAME;
-            }
-
-            public String getPOSTED_BY() {
-                return POSTED_BY;
-            }
-
-            public void setPOSTED_BY(String POSTED_BY) {
-                this.POSTED_BY = POSTED_BY;
-            }
-
-            public String getDEPARTMENT() {
-                return DEPARTMENT;
-            }
-
-            public void setDEPARTMENT(String DEPARTMENT) {
-                this.DEPARTMENT = DEPARTMENT;
-            }
-
-            public String getPOSTED_TIME() {
-                return POSTED_TIME;
-            }
-
-            public void setPOSTED_TIME(String POSTED_TIME) {
-                this.POSTED_TIME = POSTED_TIME;
-            }
-
-            public String getSTATUS() {
-                return STATUS;
-            }
-
-            public void setSTATUS(String STATUS) {
-                this.STATUS = STATUS;
-            }
-
-            public String getUNITCODE() {
-                return UNITCODE;
-            }
-
-            public void setUNITCODE(String UNITCODE) {
-                this.UNITCODE = UNITCODE;
-            }
-
-            public String getPOSTED_PERSON() {
-                return POSTED_PERSON;
-            }
-
-            public void setPOSTED_PERSON(String POSTED_PERSON) {
-                this.POSTED_PERSON = POSTED_PERSON;
-            }
-
-            public String getCONTENT() {
-                return CONTENT;
-            }
-
-            public void setCONTENT(String CONTENT) {
-                this.CONTENT = CONTENT;
-            }
-
-            public String getANNEX() {
-                return ANNEX;
-            }
-
-            public void setANNEX(String ANNEX) {
-                this.ANNEX = ANNEX;
-            }
-
-            public String getTaskTitle() {
-                return taskTitle;
-            }
-
-            public void setTaskTitle(String taskTitle) {
-                this.taskTitle = taskTitle;
             }
         }
     }
