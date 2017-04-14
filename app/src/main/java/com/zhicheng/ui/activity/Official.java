@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -35,10 +36,12 @@ public class Official extends BaseActivity implements OfficialView, SwipeRefresh
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private NoFinishAdapter mNoFinishAdapter;
+    private TextView title_name;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_official);
+        title_name = (TextView) findViewById(R.id.title_name);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         mOfficialPresenterImpl = new OfficialPresenterImpl(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
@@ -63,6 +66,12 @@ public class Official extends BaseActivity implements OfficialView, SwipeRefresh
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        mToolbar.setTitle("");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public void showMessage(String msg) {
         Toast.makeText(UIUtils.getContext(), msg, Toast.LENGTH_SHORT).show();
     }
@@ -84,9 +93,9 @@ public class Official extends BaseActivity implements OfficialView, SwipeRefresh
                 mNoFinishAdapter.setDataList(((OfficialResponse) result).getIq().getQuery().getTable());
                 int num = ((OfficialResponse) result).getIq().getQuery().getTotalNums();
                 if (num != 0) {
-                    mToolbar.setTitle("待办事项(" + num + ")");
+                    title_name.setText(getResources().getString(R.string.NoFinish)+"(" + num + ")");
                 } else {
-                    mToolbar.setTitle("待办事项(0)");
+                    title_name.setText(getResources().getString(R.string.NoFinish)+"(0)");
                 }
             } else {
                 showMessage(((OfficialResponse) result).getIq().getQuery().getErrorMessage());

@@ -286,6 +286,7 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements UpThi
         iqbQB.setPOSTED_TIME(sdf.format(new Date()));
         //经验交流 201704101440000
         iqbQB.setFormNo("201704101440000");
+        iqbQB.setTaskTitle("经验交流");
         iqbQB.setANNEX(attrGuID);
         iqb.setQuery(iqbQB);
         utp.setIq(iqb);

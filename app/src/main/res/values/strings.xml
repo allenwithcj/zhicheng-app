@@ -129,6 +129,8 @@
     <string name="exp_sender">发布人:</string>
     <string name="exp_dept">所在部门:</string>
     <string name="exp_hint_content">请输入内容</string>
+    <string name="baoliao_title">我的爆料</string>
+    <string name="grid_base_title">网格基础数据</string>
 
     <string-array name="detail">
         <item>编号:</item>

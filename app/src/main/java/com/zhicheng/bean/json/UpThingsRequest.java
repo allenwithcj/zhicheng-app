@@ -97,6 +97,7 @@ public class UpThingsRequest {
             private String sbldlistbysgt;
             private String yjlistbysgt;
             private String sbbmlistbysgt;
+
             private String TITLE_NAME;//  标题
             private String POSTED_BY; //发布人ID
             private String DEPARTMENT;//  发布人部门
@@ -106,6 +107,7 @@ public class UpThingsRequest {
             private String POSTED_PERSON;
             private String  CONTENT;//主题内容
             private String  ANNEX;//   附件
+            private String taskTitle;
 
 
             public String getZC01() {
@@ -578,6 +580,14 @@ public class UpThingsRequest {
 
             public void setANNEX(String ANNEX) {
                 this.ANNEX = ANNEX;
+            }
+
+            public String getTaskTitle() {
+                return taskTitle;
+            }
+
+            public void setTaskTitle(String taskTitle) {
+                this.taskTitle = taskTitle;
             }
         }
     }

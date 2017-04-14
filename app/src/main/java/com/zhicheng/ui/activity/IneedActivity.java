@@ -230,7 +230,9 @@ public class IneedActivity extends BaseActivity implements UpThingsView {
                             } else if (method.getName().endsWith("No")) {
                                 //事件上报  201702141342340
                                 method.invoke(iqbQB, "201702141342340");
-                            } else if (method.getName().endsWith("key")) {
+                            }else if (method.getName().endsWith("taskTitle")) {
+                                method.invoke(iqbQB, "案件办理-[ZC01]");
+                            }  else if (method.getName().endsWith("key")) {
                                 method.invoke(iqbQB, String.valueOf(System.currentTimeMillis()));
                             } else if (method.getName().endsWith("ZC11")) {//是否普通上报
                                 if (isCommon) {

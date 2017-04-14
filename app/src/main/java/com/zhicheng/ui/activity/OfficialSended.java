@@ -32,10 +32,12 @@ public class OfficialSended extends BaseActivity implements OfficialView,
     private LinearLayoutManager mLinearLayoutManager;
     private RecyclerView mRecyclerView;
     private SendedAdapter mSendedAdapter;
+    private TextView title_name;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_official_sended);
+        title_name = (TextView) findViewById(R.id.title_name);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         mOfficialPresenterImpl = new OfficialPresenterImpl(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
@@ -46,6 +48,7 @@ public class OfficialSended extends BaseActivity implements OfficialView,
         mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+        title_name.setText(getResources().getString(R.string.baoliao_title));
     }
 
     @Override
@@ -55,7 +58,7 @@ public class OfficialSended extends BaseActivity implements OfficialView,
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mToolbar.setTitle("我的爆料");
+        mToolbar.setTitle("");
         return super.onCreateOptionsMenu(menu);
     }
 

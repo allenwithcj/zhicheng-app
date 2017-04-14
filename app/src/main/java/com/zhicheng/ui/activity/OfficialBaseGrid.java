@@ -11,6 +11,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -59,11 +60,13 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private LocationClient mLocationClient;
     private MyLocationListener myLocationListener;
     private DatabaseHelper mData;
+    private TextView title_name;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid);
         mData = new DatabaseHelper();
+        title_name = (TextView) findViewById(R.id.title_name);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         mLocationClient = new LocationClient(this);
         BDLocationInit.getInstance().initLocation(mLocationClient);
@@ -78,6 +81,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+        title_name.setText(getResources().getString(R.string.grid_base_title));
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +106,11 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        mToolbar.setTitle("");
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
 
     @Override
     protected void onResume() {
@@ -130,7 +139,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             if (((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 mAdapter.setDataList(((OfficialQueyResponse) result).getIq().getQuery()
                         .getPreMsgcon().getPreMsgs());
-                mToolbar.setTitle("网格基础数据");
             } else {
                 showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
             }
