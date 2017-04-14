@@ -8,6 +8,7 @@ public class Constant {
     public static final String THEME_MODEL = "theme_mode1";
 
     public static final String SID = "36C9CF7D-390C-9F4F-BCA3-21F3EE377566";
+    public static final String EXPSID = "06D9F6F6-D623-9A44-BBD5-41B5E725EFD0";
 
 
     //IneedActivity

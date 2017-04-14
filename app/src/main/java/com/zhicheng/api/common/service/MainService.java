@@ -66,5 +66,5 @@ public interface MainService {
     //表单处理请求
     @FormUrlEncoded
     @POST("/servlet/mobileServlet")
-    Observable<Response<ExperienceCommonResponse>> sFormSendDoRequest(@Field("json") String rBody);
+    Observable<Response<ExperienceCommonResponse>> expFormSendDoRequest(@Field("json") String rBody);
 }

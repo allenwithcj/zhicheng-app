@@ -21,6 +21,7 @@ public class URL {
 //    public static final String HOST_URL_SERVER_ZHICHENG = "http://219.131.197.178:9909";
 
     //feiqi  192.168.191.1:8080   21.33.198.138:8089  http://zhangxin.vicp.io:28373   http://5311095c.ngrok.io
+    // http://219.131.197.178:9909
     public static final String HOST_URL_SERVER_ZHICHENG = "http://bee7f075.ngrok.io";
 
 }
