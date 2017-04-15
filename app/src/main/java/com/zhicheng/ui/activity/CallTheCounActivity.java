@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhicheng.R;
@@ -60,7 +61,7 @@ public class CallTheCounActivity extends BaseActivity implements OfficialView
 
     @Override
     public void showMessage(String msg) {
-        Snackbar.make(mToolbar, msg, Snackbar.LENGTH_SHORT).show();
+        Toast.makeText(CallTheCounActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
