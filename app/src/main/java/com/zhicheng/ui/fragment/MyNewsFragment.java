@@ -211,7 +211,6 @@ public class MyNewsFragment extends BaseFragment implements OfficialView, SwipeR
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            Toast.makeText(getActivity(),lastVisibleItem+"",Toast.LENGTH_SHORT).show();
             if (newState == RecyclerView.SCROLL_STATE_IDLE &&
                     lastVisibleItem + 1 == mNoFinishAdapter.getItemCount()) {
                 onLoadMore();

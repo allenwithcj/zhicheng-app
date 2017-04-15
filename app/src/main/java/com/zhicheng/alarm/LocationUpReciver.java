@@ -7,6 +7,7 @@ import android.text.Html;
 
 import com.zhicheng.R;
 import com.zhicheng.common.Constant;
+import com.zhicheng.ui.activity.OfficialBaseGrid;
 import com.zhicheng.utils.common.NotificationUtils;
 
 /**
@@ -17,6 +18,7 @@ public class LocationUpReciver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction().equals(Constant.ALARM_ACTION)) {
+            OfficialBaseGrid.getInstance().openGps();
             if (!Constant.LATITUDE.equals("") && !Constant.LONGITUDE.equals("")) {
                 StringBuffer sb = new StringBuffer();
                 sb.append("经纬度定时上传中,不使用时记得关闭定位上传功能! ").append("\n");

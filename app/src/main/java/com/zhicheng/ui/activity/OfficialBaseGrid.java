@@ -51,7 +51,6 @@ import java.util.Map;
 
 public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQueryView, SwipeRefreshLayout.OnRefreshListener {
     private int start;
-    private static OfficialBaseGrid instance;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private OfficialBaseGridQueryPresenterImpl mOfficialBaseGridQueryPresenterImpl;
     private RecyclerView mRecyclerView;
@@ -63,10 +62,19 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private MyLocationListener myLocationListener;
     private DatabaseHelper mData;
     private TextView title_name;
+    public static OfficialBaseGrid instance;
+
+    public static OfficialBaseGrid getInstance(){
+        if(instance == null){
+            instance = new OfficialBaseGrid();
+        }
+        return instance;
+    }
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid);
+        instance = this;
         mData = new DatabaseHelper();
         title_name = (TextView) findViewById(R.id.title_name);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
@@ -385,10 +393,8 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     }
 
     public void openGps(){
-        if (!mLocationClient.isStarted()) {
-            mLocationClient.start();
-            mLocationClient.requestLocation();
-        }
+        mLocationClient.start();
+        mLocationClient.requestLocation();
     }
 
 }
