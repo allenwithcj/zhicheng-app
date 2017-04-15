@@ -676,8 +676,10 @@ public class OfficialModelImpl implements OfficialModel {
                             node.setGUID(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getGUID());
                             node.setId(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getId());
                             node.setType(Integer.parseInt(mIneedResponse.body().getIq().getQuery().getNodes().get(0).getType()));
-                            node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
-                            node.setValue("Y" + ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
+                            if(ineedResponseResponse.body().getIq().getQuery().getItems() != null &&ineedResponseResponse.body().getIq().getQuery().getItems().size() != 0){
+                                node.setName(ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getValue());
+                                node.setValue("Y" + ineedResponseResponse.body().getIq().getQuery().getItems().get(0).getKey());
+                            }
                             node.setFigureID("");
                             node.setFigureName("");
                             node.setFigureType("");
