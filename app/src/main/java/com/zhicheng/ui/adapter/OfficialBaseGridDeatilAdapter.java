@@ -27,7 +27,7 @@ import com.zhicheng.utils.common.UIUtils;
 public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
     private OfficialBaseGridDetailResponse mData;
     private String ZZ_RESIDENCE, GRIDNAME;
-    private String RENTNAME, REMARK2, RENTPHONE;
+    private String REMARK2;
     private String CARD_NUM, NAME, RELATION, HUZU, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
             HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT;
     private OfficialBaseGridUpdatePresenter mOfficialBaseGridUpdatePresenter;
@@ -61,9 +61,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
                 ((ItemViewHolder) holder).grid_base_add_residence.setText(mData.getIq().getQuery().getPreMsg().getZZ_RESIDENCE());
                 ((ItemViewHolder) holder).grid_base_add_grid_no.setText(mData.getIq().getQuery().getPreMsg().getGRIDNAME());
 
-                ((ItemViewHolder) holder).grid_base_add_lessor.setText(mData.getIq().getQuery().getPreMsg().getRENTNAME());
                 ((ItemViewHolder) holder).grid_base_add_lessor_remark2.setText(mData.getIq().getQuery().getPreMsg().getREMARK2());
-                ((ItemViewHolder) holder).grid_base_add_lessor_telephone.setText(mData.getIq().getQuery().getPreMsg().getRENTPHONE());
 
                 ((ItemViewHolder) holder).grid_base_add_name.setText(mData.getIq().getQuery().getPreMsg().getNAME());
                 ((ItemViewHolder) holder).grid_base_add_relation.setText(CodeUtils.getRelationString(mData.getIq().getQuery().getPreMsg().getRELATION()));
@@ -109,9 +107,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
         SORT = holder.grid_base_add_rkfl.getText().toString();
 
-        RENTNAME = holder.grid_base_add_lessor.getText().toString();
         REMARK2 = holder.grid_base_add_lessor_remark2.getText().toString();
-        RENTPHONE = holder.grid_base_add_lessor_telephone.getText().toString();
 
         SubmitOrdinaryFormRequest mSf = new SubmitOrdinaryFormRequest();
         SubmitOrdinaryFormRequest.IqBean lrIq = new SubmitOrdinaryFormRequest.IqBean();
@@ -121,9 +117,9 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         mFormobj.setZZ_RESIDENCE(ZZ_RESIDENCE);
         mFormobj.setGRIDNAME(GRIDNAME);
 
-        mFormobj.setRENTNAME(RENTNAME);
+        mFormobj.setRENTNAME("");
         mFormobj.setREMARK2(REMARK2);
-        mFormobj.setRENTPHONE(RENTPHONE);
+        mFormobj.setRENTPHONE("");
 
         mFormobj.setID(id);
         mFormobj.setNAME(NAME);
@@ -159,9 +155,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         public EditText grid_base_add_residence;
         public TextView grid_base_add_grid_no;
 
-        public EditText grid_base_add_lessor;
         public TextView grid_base_add_lessor_remark2;
-        public EditText grid_base_add_lessor_telephone;
 
         public EditText grid_base_add_name;
         public TextView grid_base_add_relation;
@@ -181,9 +175,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            grid_base_add_lessor = (EditText) itemView.findViewById(R.id.grid_base_add_lessor);
             grid_base_add_lessor_remark2 = (TextView) itemView.findViewById(R.id.grid_base_add_lessor_remark2);
-            grid_base_add_lessor_telephone = (EditText) itemView.findViewById(R.id.grid_base_add_lessor_telephone);
 
             grid_base_add_residence = (EditText) itemView.findViewById(R.id.grid_base_add_residence);
             grid_base_add_grid_no = (TextView) itemView.findViewById(R.id.grid_base_add_grid_no);

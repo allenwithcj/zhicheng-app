@@ -30,7 +30,7 @@ import java.util.UUID;
 public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
     private DatabaseHelper mDataBase;
     private String ZZ_RESIDENCE, GRIDNAME;
-    private String RENTNAME, REMARK2, RENTPHONE;
+    private String REMARK2;
     private String CARD_NUM, NAME, RELATION, HUZUNAME, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
             HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT;
 
@@ -92,9 +92,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
         SORT = holder.grid_base_add_rkfl.getText().toString();
 
-        RENTNAME = holder.grid_base_add_lessor.getText().toString();
         REMARK2 = holder.grid_base_add_lessor_remark2.getText().toString();
-        RENTPHONE = holder.grid_base_add_lessor_telephone.getText().toString();
 
         if (GENDER.equals("") || MARITAL_STATUS.equals("")) {
             dialog.dismiss();
@@ -108,9 +106,9 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             mFormobj.setZZ_RESIDENCE(ZZ_RESIDENCE);
             mFormobj.setGRIDNAME(GRIDNAME);
 
-            mFormobj.setRENTNAME(RENTNAME);
+            mFormobj.setRENTNAME("");
             mFormobj.setREMARK2(REMARK2);
-            mFormobj.setRENTPHONE(RENTPHONE);
+            mFormobj.setRENTPHONE("");
 
             mFormobj.setID(UUID.randomUUID().toString());
             mFormobj.setNAME(NAME);
@@ -147,9 +145,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         public EditText grid_base_add_residence;
         public TextView grid_base_add_grid_no;
 
-        public EditText grid_base_add_lessor;
         public TextView grid_base_add_lessor_remark2;
-        public EditText grid_base_add_lessor_telephone;
 
         public EditText grid_base_add_name;
         public TextView grid_base_add_relation;
@@ -169,9 +165,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            grid_base_add_lessor = (EditText) itemView.findViewById(R.id.grid_base_add_lessor);
             grid_base_add_lessor_remark2 = (TextView) itemView.findViewById(R.id.grid_base_add_lessor_remark2);
-            grid_base_add_lessor_telephone = (EditText) itemView.findViewById(R.id.grid_base_add_lessor_telephone);
 
             grid_base_add_residence = (EditText) itemView.findViewById(R.id.grid_base_add_residence);
             grid_base_add_grid_no = (TextView) itemView.findViewById(R.id.grid_base_add_grid_no);
