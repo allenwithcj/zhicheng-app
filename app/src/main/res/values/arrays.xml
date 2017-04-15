@@ -9,7 +9,7 @@
         <item>孙子、孙女、或外孙子、外孙女</item>
         <item>祖父母或外祖父母</item>
         <item>兄、弟、姐、妹</item>
-        <item>其他</item>
+        <item>其它</item>
         <item>承租人</item>
     </string-array>
 
@@ -69,7 +69,7 @@
         <item>技工学校毕业</item>
         <item>技工学校结业</item>
         <item>技工学校肄业</item>
-        <item>其他</item>
+        <item>其它</item>
 
     </string-array>
 
@@ -120,9 +120,9 @@
 
     <string-array name="sort">
         <item>常住人口</item>
-        <item>县类流动人口</item>
+        <item>县内流动人口</item>
         <item>县外流入人口</item>
-        <item>其他</item>
+        <item>其它</item>
     </string-array>
 
     <string-array name="grid_add">
@@ -161,7 +161,7 @@
         <item>乒乓球</item>
         <item>游泳</item>
         <item>自行车</item>
-        <item>其他</item>
+        <item>其它</item>
     </string-array>
 
 

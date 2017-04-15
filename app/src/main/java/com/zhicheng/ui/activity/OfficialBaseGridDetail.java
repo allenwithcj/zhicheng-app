@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
 import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.api.common.database.DatabaseHelper;
@@ -24,6 +27,10 @@ import com.zhicheng.bean.http.OfficialBaseGridDetailResponse;
 import com.zhicheng.bean.json.OfficialQueryDetailRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.OfficialBaseGridDeatilAdapter;
+import com.zhicheng.utils.BDLocationInit;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Donson on 2017/1/14.
@@ -39,6 +46,21 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     private AlertDialog dialog;
     private DatabaseHelper mData;
     private TextView title_name;
+    private LocationClient mLocationClient;
+    private MyLocationListener myLocationListener;
+    private String latitude,longitude,address;
+
+    public interface sendLocation {
+        void onSendLocation(Map<String, String> maps);
+    }
+
+    private sendLocation mSendLocation;
+
+    public void setSendLocation(sendLocation s) {
+        if (this.mSendLocation == null) {
+            this.mSendLocation = s;
+        }
+    }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -75,6 +97,12 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid_add_detail);
         mData = new DatabaseHelper();
+        mLocationClient = new LocationClient(this);
+        BDLocationInit.getInstance().initLocation(mLocationClient);
+        myLocationListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(myLocationListener);
+        //开启定位
+        openGps();
         title_name = (TextView) findViewById(R.id.title_name);
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -87,6 +115,20 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
         registerReceiver(receiver, mFilter);
         title_name.setText(getResources().getString(R.string.grid_base_detail_title));
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+
+        setSendLocation(maps -> {
+            latitude = maps.get("latitude");
+            longitude = maps.get("longitude");
+            address = maps.get("address");
+
+        });
+    }
+
+    private void openGps() {
+        if (!mLocationClient.isStarted()) {
+            mLocationClient.start();
+            mLocationClient.requestLocation();
+        }
     }
 
     @Override
@@ -141,7 +183,7 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
                     .setCancelable(false)
                     .create();
             dialog.show();
-            mAdapter.update(ID, dialog);
+            mAdapter.update(ID, dialog,latitude,longitude,address);
 
         }
         return super.onOptionsItemSelected(item);
@@ -189,5 +231,20 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+    }
+
+    class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            Map<String, String> map = new HashMap<>();
+            map.put("latitude", String.valueOf(bdLocation.getLatitude()));
+            map.put("longitude", String.valueOf(bdLocation.getLongitude()));
+            map.put("address", bdLocation.getAddrStr());
+            map.put("desc", bdLocation.getLocationDescribe());
+
+            mSendLocation.onSendLocation(map);
+            mLocationClient.stop();
+        }
     }
 }

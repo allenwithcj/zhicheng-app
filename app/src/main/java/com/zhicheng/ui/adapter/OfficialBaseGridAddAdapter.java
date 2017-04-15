@@ -18,6 +18,7 @@ import com.zhicheng.bean.json.SubmitOrdinaryFormRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.activity.BaseGridAddSelectType;
 import com.zhicheng.ui.activity.BaseGridAddSelectTypeMultipleChoice;
+import com.zhicheng.ui.activity.OfficialBaseGrid;
 import com.zhicheng.utils.CodeUtils;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -72,7 +73,8 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         return 1;
     }
 
-    public void submit(AlertDialog dialog) {
+    public void submit(AlertDialog dialog, String latitude, String longitude, String address) {
+
         ZZ_RESIDENCE = holder.grid_base_add_residence.getText().toString();
         GRIDNAME = holder.grid_base_add_grid_no.getText().toString();
 
@@ -126,9 +128,9 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             mFormobj.setREMARK1(REMARK1);
             mFormobj.setOUTADDRESS(OUTADDRESS);
             mFormobj.setSORT(SORT);
-            mFormobj.setBADDRESS(Constant.ADDRESS);
-            mFormobj.setBLONGITUDE(Constant.LONGITUDE);
-            mFormobj.setBLATITUDE(Constant.LATITUDE);
+            mFormobj.setBADDRESS(address);
+            mFormobj.setBLONGITUDE(longitude);
+            mFormobj.setBLATITUDE(latitude);
 
             irIqQB.setFormobj(mFormobj);
             lrIq.setNamespace("PersonMsgMaRequest");

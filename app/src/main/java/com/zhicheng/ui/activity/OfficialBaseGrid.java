@@ -40,7 +40,9 @@ import com.zhicheng.utils.common.NotificationUtils;
 import com.zhicheng.utils.common.PermissionUtils;
 import com.zhicheng.utils.common.UIUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -49,7 +51,7 @@ import java.util.List;
 
 public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQueryView, SwipeRefreshLayout.OnRefreshListener {
     private int start;
-
+    private static OfficialBaseGrid instance;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private OfficialBaseGridQueryPresenterImpl mOfficialBaseGridQueryPresenterImpl;
     private RecyclerView mRecyclerView;
@@ -175,9 +177,13 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add) {
-            Intent intent = new Intent();
-            intent.setClass(this, OfficialBaseGridAdd.class);
-            startActivity(intent);
+            if(mLocationClient.isStarted()){
+                Intent intent = new Intent();
+                intent.setClass(this, OfficialBaseGridAdd.class);
+                startActivity(intent);
+            }else{
+                Toast.makeText(OfficialBaseGrid.this,getResources().getString(R.string.grid_base_location_alert),Toast.LENGTH_SHORT).show();
+            }
         } else if (item.getItemId() == R.id.action_location) {
             mLocationDialog();
         }
@@ -204,7 +210,9 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     dialogInterface.dismiss();
-                    mLocationClient.stop();
+                    if (mLocationClient.isStarted()) {
+                        mLocationClient.stop();
+                    }
                     icon = getResources().getDrawable(R.drawable.ic_location_on_white_24dp);
                     item.setIcon(icon);
                     if (mArm != null) {
@@ -223,7 +231,8 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             builder.setPositiveButton("开启上传", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    mLocationClient.start();
+                    //开启定位
+                    openGps();
                     icon = getResources().getDrawable(R.drawable.ic_location_on_black_24dp);
                     item.setIcon(icon);
                     mArm.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -374,4 +383,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    public void openGps(){
+        if (!mLocationClient.isStarted()) {
+            mLocationClient.start();
+            mLocationClient.requestLocation();
+        }
+    }
+
 }

@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.OfficialBaseGridAddPresenter;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridAddPresenterImpl;
@@ -18,6 +21,10 @@ import com.zhicheng.api.view.OfficialBaseGridAddView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.OfficialBaseGridAddAdapter;
+import com.zhicheng.utils.BDLocationInit;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by hp on 2017/3/1.
@@ -29,6 +36,21 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     private OfficialBaseGridAddAdapter mAdapter;
     private OfficialBaseGridAddPresenter mOfficialBaseGridAddPresenter;
     private AlertDialog dialog;
+    private LocationClient mLocationClient;
+    private MyLocationListener myLocationListener;
+    private String latitude,longitude,address;
+
+    public interface sendLocation {
+        void onSendLocation(Map<String, String> maps);
+    }
+
+    private sendLocation mSendLocation;
+
+    public void setSendLocation(sendLocation s) {
+        if (this.mSendLocation == null) {
+            this.mSendLocation = s;
+        }
+    }
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -64,6 +86,12 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid_add);
+        mLocationClient = new LocationClient(this);
+        BDLocationInit.getInstance().initLocation(mLocationClient);
+        myLocationListener = new MyLocationListener();
+        mLocationClient.registerLocationListener(myLocationListener);
+        //开启定位
+        openGps();
         mOfficialBaseGridAddPresenter = new OfficialBaseGridAddPresenterImpl(this);
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
         mAdapter = new OfficialBaseGridAddAdapter(mOfficialBaseGridAddPresenter);
@@ -72,6 +100,13 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
         IntentFilter mFilter = new IntentFilter("com.grid.type");
         registerReceiver(receiver, mFilter);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+
+        setSendLocation(maps -> {
+            latitude = maps.get("latitude");
+            longitude = maps.get("longitude");
+            address = maps.get("address");
+
+        });
     }
 
 
@@ -100,10 +135,17 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                         .setCancelable(false)
                         .create();
                 dialog.show();
-                mAdapter.submit(dialog);
+                mAdapter.submit(dialog,latitude,longitude,address);
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void openGps() {
+        if (!mLocationClient.isStarted()) {
+            mLocationClient.start();
+            mLocationClient.requestLocation();
+        }
     }
 
     @Override
@@ -130,5 +172,20 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(receiver);
+    }
+
+    class MyLocationListener implements BDLocationListener {
+
+        @Override
+        public void onReceiveLocation(BDLocation bdLocation) {
+            Map<String, String> map = new HashMap<>();
+            map.put("latitude", String.valueOf(bdLocation.getLatitude()));
+            map.put("longitude", String.valueOf(bdLocation.getLongitude()));
+            map.put("address", bdLocation.getAddrStr());
+            map.put("desc", bdLocation.getLocationDescribe());
+
+            mSendLocation.onSendLocation(map);
+            mLocationClient.stop();
+        }
     }
 }
