@@ -52,11 +52,12 @@ public class HomeFragment extends BaseFragment implements MainView, OfficialView
     @Override
     public void onResume() {
         onRefresh();
+        getNofinshCount();
         super.onResume();
     }
 
     //查询待办事项个数
-    private void fresh() {
+    private void getNofinshCount() {
         start = 1;
         String strEntity = createObj(start);
         mOfficialPresenterImpl.loadNoFinish(strEntity, start);
@@ -114,7 +115,7 @@ public class HomeFragment extends BaseFragment implements MainView, OfficialView
 
     @Override
     protected void initData(boolean isSavedNull) {
-        fresh();
+
     }
 
 
@@ -137,7 +138,7 @@ public class HomeFragment extends BaseFragment implements MainView, OfficialView
 
     @Override
     public void showMessage(String msg) {
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), msg+"", Toast.LENGTH_SHORT).show();
     }
 
     @Override
