@@ -37,7 +37,6 @@ public class MyNewsFragment extends BaseFragment implements OfficialView, SwipeR
     private TextView title_name;
 
     public static MyNewsFragment newInstance() {
-        Bundle args = new Bundle();
         MyNewsFragment fragment = new MyNewsFragment();
         return fragment;
     }

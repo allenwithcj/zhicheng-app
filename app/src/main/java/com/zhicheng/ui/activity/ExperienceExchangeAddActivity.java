@@ -47,6 +47,7 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements Exper
     private PhotoFilter filter;
     private AlertDialog dialog;
     private ExperiencePresenterImpl mExperiencePresenterImpl;
+    private String guid;
 
     @Override
     protected void initEvents() {
@@ -137,7 +138,7 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements Exper
         if(result instanceof CommonResponse){
             if(((CommonResponse) result).getIq().getQuery().getErrorCode() == 0){
                 //上传经验交流
-                upExperience(((CommonResponse) result).getIq().getQuery().getAttaItems().get(0).getGuid());
+                upExperience(guid);
             }else{
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }
@@ -206,7 +207,7 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements Exper
                     if (null != mImagePath) {
                         if (mImagePath.size() != 0) {
                             //上传附件
-                            String guid = UUID.randomUUID().toString();
+                            guid = UUID.randomUUID().toString();
                             UpFileRequest uf = new UpFileRequest();
                             UpFileRequest.IqBean ufIB = new UpFileRequest.IqBean();
                             UpFileRequest.IqBean.QueryBean ufIBQB = new UpFileRequest.IqBean.QueryBean();
@@ -291,7 +292,7 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements Exper
     }
 
 
-    private void upExperience(String attrGuID){
+    private void upExperience(String guid){
         MyInputViewHolder inputHolder = (MyInputViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(0));
         MyContentViewHolder contentHolder = (MyContentViewHolder) mRecyclerView.getChildViewHolder(mRecyclerView.getChildAt(1));
         ExperienceRequest mExperienceRequest = new ExperienceRequest();
@@ -308,7 +309,7 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements Exper
         //经验交流 201704101440000
         iqbQB.setFormNo("201704101440000");
         iqbQB.setTaskTitle("经验交流");
-        iqbQB.setANNEX(attrGuID);
+        iqbQB.setANNEX(guid);
         iqb.setQuery(iqbQB);
         mExperienceRequest.setIq(iqb);
 

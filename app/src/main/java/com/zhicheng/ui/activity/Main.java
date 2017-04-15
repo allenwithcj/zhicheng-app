@@ -259,7 +259,7 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
 
     @Override
     protected void onResume() {
-        fresh();
+        //fresh();
         super.onResume();
         firstClickBack = 0;
     }

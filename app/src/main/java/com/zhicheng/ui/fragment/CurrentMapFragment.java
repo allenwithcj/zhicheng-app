@@ -197,6 +197,7 @@ public class CurrentMapFragment extends BaseFragment {
                 }
                 Button button = new Button(getActivity());
                 button.setBackgroundResource(R.drawable.location_tips);
+                button.setTextColor(getResources().getColor(R.color.white));
                 button.setText(addr[0]);
                 InfoWindow infoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), latLng, -47, new InfoWindow.OnInfoWindowClickListener() {
                     @Override

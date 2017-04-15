@@ -51,7 +51,7 @@ public class HomeFragment extends BaseFragment implements MainView, OfficialView
 
     @Override
     public void onResume() {
-        fresh();
+        onRefresh();
         super.onResume();
     }
 
@@ -114,7 +114,7 @@ public class HomeFragment extends BaseFragment implements MainView, OfficialView
 
     @Override
     protected void initData(boolean isSavedNull) {
-
+        fresh();
     }
 
 

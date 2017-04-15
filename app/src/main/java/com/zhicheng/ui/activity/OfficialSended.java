@@ -135,7 +135,7 @@ public class OfficialSended extends BaseActivity implements OfficialView,
 
         private List<List<OfficialResponse.IqBean.QueryBean.TableBean.TableRowsBean>> data;
 
-        private String[] tag = {"编号:", "描述:", "发送时间:"};
+        private String[] tag = {"编号:", "发送时间:"};
 
         public SendedAdapter() {
 
@@ -154,7 +154,7 @@ public class OfficialSended extends BaseActivity implements OfficialView,
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(OfficialSended.this).inflate(R.layout.activity_home_finish, parent, false);
+            View view = LayoutInflater.from(OfficialSended.this).inflate(R.layout.activity_baoliao_item, parent, false);
             return new FinishViewHolder(view);
         }
 
@@ -162,8 +162,7 @@ public class OfficialSended extends BaseActivity implements OfficialView,
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             if (holder instanceof FinishViewHolder) {
                 ((FinishViewHolder) holder).NumberId.setText(tag[0] + data.get(position).get(1).getValue());
-                ((FinishViewHolder) holder).desc.setText(tag[1] + data.get(position).get(4).getValue());
-                ((FinishViewHolder) holder).deal.setText(tag[2] + data.get(position).get(3).getValue());
+                ((FinishViewHolder) holder).deal.setText(tag[1] + data.get(position).get(3).getValue());
                 ((FinishViewHolder) holder).Suc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
