@@ -167,6 +167,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+
             grid_base_add_lessor_remark2 = (TextView) itemView.findViewById(R.id.grid_base_add_lessor_remark2);
 
             grid_base_add_residence = (EditText) itemView.findViewById(R.id.grid_base_add_residence);
@@ -187,6 +188,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             grid_base_add_remark1 = (TextView) itemView.findViewById(R.id.grid_base_add_remark1);
             grid_base_add_outaddress = (EditText) itemView.findViewById(R.id.grid_base_add_outaddress);
             grid_base_add_rkfl = (TextView) itemView.findViewById(R.id.input_rkfl);
+            grid_base_huzu_name.setVisibility(View.VISIBLE);
 
 
             grid_base_add_relation.setOnClickListener(view -> {
