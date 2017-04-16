@@ -70,7 +70,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
 
                 ((ItemViewHolder) holder).grid_base_add_residence.setText(mData.getIq().getQuery().getPreMsg().getZZ_RESIDENCE());
                 ((ItemViewHolder) holder).grid_base_add_grid_no.setText(mData.getIq().getQuery().getPreMsg().getGRIDNAME());
-
+                ((ItemViewHolder) holder).grid_base_huzu_name.setText(mData.getIq().getQuery().getPreMsg().getHUZU());
                 ((ItemViewHolder) holder).grid_base_add_lessor_remark2.setText(mData.getIq().getQuery().getPreMsg().getREMARK2());
 
                 ((ItemViewHolder) holder).grid_base_add_name.setText(mData.getIq().getQuery().getPreMsg().getNAME());
@@ -184,9 +184,10 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
     public void refreshHuZuResponse(Object result) {
         if(result instanceof PersonMsgResponse){
             if(((PersonMsgResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+                holder.grid_base_huzu_name.setVisibility(View.VISIBLE);
                 holder.grid_base_huzu_name.setText(((PersonMsgResponse) result).getIq().getQuery().getPreMsg().getNAME());
             }else{
-                showMessage(((PersonMsgResponse) result).getIq().getQuery().getErrorMessage());
+                holder.grid_base_huzu_name.setVisibility(View.VISIBLE);
             }
         }
     }
