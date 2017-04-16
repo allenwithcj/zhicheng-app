@@ -12,7 +12,12 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.OfficialBaseGridUpdatePresenter;
+import com.zhicheng.api.presenter.impl.HuZuPresenterImpl;
+import com.zhicheng.api.view.HuZuView;
 import com.zhicheng.bean.http.OfficialBaseGridDetailResponse;
+import com.zhicheng.bean.http.PersonMsgMaResponse;
+import com.zhicheng.bean.http.PersonMsgResponse;
+import com.zhicheng.bean.json.PersonMsgMaRequest;
 import com.zhicheng.bean.json.SubmitOrdinaryFormRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.activity.BaseGridAddSelectType;
@@ -26,7 +31,7 @@ import com.zhicheng.utils.common.UIUtils;
  * Created by hp on 2017/3/2.
  */
 
-public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
+public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implements HuZuView {
     private OfficialBaseGridDetailResponse mData;
     private String ZZ_RESIDENCE, GRIDNAME;
     private String REMARK2;
@@ -36,9 +41,11 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
     private ItemViewHolder holder;
     private String[] mList;
     private String type;
+    private HuZuPresenterImpl mHuZuPresenterImpl;
 
     public OfficialBaseGridDeatilAdapter(OfficialBaseGridUpdatePresenter mOfficialBaseGridUpdatePresenter) {
         this.mOfficialBaseGridUpdatePresenter = mOfficialBaseGridUpdatePresenter;
+        mHuZuPresenterImpl = new HuZuPresenterImpl(this);
     }
 
     public void setData(OfficialBaseGridDetailResponse mData) {
@@ -60,7 +67,6 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         this.holder = (ItemViewHolder) holder;
         if (mData != null) {
             if (holder instanceof ItemViewHolder) {
-                HUZU = mData.getIq().getQuery().getPreMsg().getHUZU();
 
                 ((ItemViewHolder) holder).grid_base_add_residence.setText(mData.getIq().getQuery().getPreMsg().getZZ_RESIDENCE());
                 ((ItemViewHolder) holder).grid_base_add_grid_no.setText(mData.getIq().getQuery().getPreMsg().getGRIDNAME());
@@ -69,7 +75,6 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
 
                 ((ItemViewHolder) holder).grid_base_add_name.setText(mData.getIq().getQuery().getPreMsg().getNAME());
                 ((ItemViewHolder) holder).grid_base_add_relation.setText(CodeUtils.getRelationString(mData.getIq().getQuery().getPreMsg().getRELATION()));
-                ((ItemViewHolder) holder).grid_base_huzu_name.setText(mData.getIq().getQuery().getPreMsg().getHUZU());
                 ((ItemViewHolder) holder).grid_base_add_sex.setText(CodeUtils.getSexString(mData.getIq().getQuery().getPreMsg().getGENDER()));
                 ((ItemViewHolder) holder).grid_base_add_cardid.setText(mData.getIq().getQuery().getPreMsg().getCARD_NUM());
                 ((ItemViewHolder) holder).grid_base_add_policatial.setText(mData.getIq().getQuery().getPreMsg().getPOLITICAL_STATUS());
@@ -82,6 +87,10 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
                 ((ItemViewHolder) holder).grid_base_add_remark1.setText(mData.getIq().getQuery().getPreMsg().getREMARK1());
                 ((ItemViewHolder) holder).grid_base_add_outaddress.setText(mData.getIq().getQuery().getPreMsg().getOUTADDRESS());
                 ((ItemViewHolder) holder).grid_base_add_rkfl.setText(mData.getIq().getQuery().getPreMsg().getSORT());
+
+                HUZU = mData.getIq().getQuery().getPreMsg().getHUZU();
+                getHuzuNAme(HUZU);
+
             }
         }
     }
@@ -154,6 +163,37 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         Gson gson = new Gson();
         String json = gson.toJson(mSf);
         mOfficialBaseGridUpdatePresenter.updateDate(json);
+    }
+
+    @Override
+    public void showMessage(String msg) {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void refreshHuZuResponse(Object result) {
+        if(result instanceof PersonMsgResponse){
+            if(((PersonMsgResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+                holder.grid_base_huzu_name.setText(((PersonMsgResponse) result).getIq().getQuery().getPreMsg().getNAME());
+            }else{
+                showMessage(((PersonMsgResponse) result).getIq().getQuery().getErrorMessage());
+            }
+        }
+    }
+
+    @Override
+    public void loadHuZuResponse(Object result) {
+
     }
 
 
@@ -275,6 +315,24 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         intent.putExtra("mList", mList);
         intent.putExtra("type", type);
         UIUtils.startActivity(intent);
+    }
+
+    public void getHuzuNAme(String hzId){
+        String strEntity = createObj(hzId);
+        mHuZuPresenterImpl.queryHuZuName(strEntity);
+    }
+
+    private String createObj(String hzId) {
+        Gson gson = new Gson();
+        PersonMsgMaRequest mPersonMsgMaRequest = new PersonMsgMaRequest();
+        PersonMsgMaRequest.IqBean iqb = new PersonMsgMaRequest.IqBean();
+        iqb.setNamespace("PersonMsgMaRequest");
+        PersonMsgMaRequest.IqBean.QueryBean qyb = new PersonMsgMaRequest.IqBean.QueryBean();
+        qyb.setType("5");
+        qyb.setID(hzId);
+        iqb.setQuery(qyb);
+        mPersonMsgMaRequest.setIq(iqb);
+        return gson.toJson(mPersonMsgMaRequest);
     }
 
 

@@ -6,4 +6,6 @@ package com.zhicheng.api.presenter;
 
 public interface HuZuPresenter {
     void queryHuZu(String s, int start);
+
+    void queryHuZuName(String s);
 }
