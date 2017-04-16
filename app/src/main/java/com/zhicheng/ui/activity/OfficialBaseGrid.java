@@ -30,10 +30,14 @@ import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.alarm.LocationUpReciver;
 import com.zhicheng.api.common.database.DatabaseHelper;
+import com.zhicheng.api.presenter.impl.HuZuPresenterImpl;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridQueryPresenterImpl;
+import com.zhicheng.api.view.HuZuView;
 import com.zhicheng.api.view.OfficialBaseGridQueryView;
 import com.zhicheng.bean.http.OfficialQueyResponse;
+import com.zhicheng.bean.http.PersonMsgResponse;
 import com.zhicheng.bean.json.OfficialQueryRequest;
+import com.zhicheng.bean.json.PersonMsgMaRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.utils.BDLocationInit;
 import com.zhicheng.utils.common.NotificationUtils;
@@ -283,12 +287,14 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         return gson.toJson(ofq);
     }
 
-    class OfficialBaseGridAdapter extends RecyclerView.Adapter {
+    class OfficialBaseGridAdapter extends RecyclerView.Adapter implements HuZuView {
+        private HuZuPresenterImpl mHuZuPresenterImpl;
         private List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data;
         private String[] tag = {"姓名:", "户主:", "户籍地址:"};
+        private ItemViewHolder itemHolder;
 
         public OfficialBaseGridAdapter() {
-
+            mHuZuPresenterImpl = new HuZuPresenterImpl(this);
         }
 
         public void addDataList(List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
@@ -310,10 +316,15 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            this.itemHolder = (ItemViewHolder) holder;
             if (holder instanceof ItemViewHolder) {
+                ((ItemViewHolder) holder).grid_base_add_huzu.setTag(position);
                 ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0] + data.get(position).getNAME());
                 ((ItemViewHolder) holder).grid_base_add_huzu.setText(tag[1] + data.get(position).getHUZU());
                 ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[2] + data.get(position).getDOMICILE());
+                //获取户主名称
+                getHuzuNAme(data.get(position).getHUZU());
+
                 ((ItemViewHolder) holder).Suc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -333,6 +344,55 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                 return data.size();
             }
             return 0;
+        }
+
+        @Override
+        public void showMessage(String msg) {
+
+        }
+
+        @Override
+        public void showProgress() {
+
+        }
+
+        @Override
+        public void hideProgress() {
+
+        }
+
+        @Override
+        public void refreshHuZuResponse(Object result) {
+            if(result instanceof PersonMsgResponse){
+                if(((PersonMsgResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+                    if(itemHolder.grid_base_add_huzu.getTag().equals(itemHolder.getPosition())){
+                        itemHolder.grid_base_add_huzu.setText(((PersonMsgResponse) result).getIq().getQuery().getPreMsg().getNAME());
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void loadHuZuResponse(Object result) {
+
+        }
+
+        public void getHuzuNAme(String hzId){
+            String strEntity = createObj(hzId);
+            mHuZuPresenterImpl.queryHuZuName(strEntity);
+        }
+
+        private String createObj(String hzId) {
+            Gson gson = new Gson();
+            PersonMsgMaRequest mPersonMsgMaRequest = new PersonMsgMaRequest();
+            PersonMsgMaRequest.IqBean iqb = new PersonMsgMaRequest.IqBean();
+            iqb.setNamespace("PersonMsgMaRequest");
+            PersonMsgMaRequest.IqBean.QueryBean qyb = new PersonMsgMaRequest.IqBean.QueryBean();
+            qyb.setType("5");
+            qyb.setID(hzId);
+            iqb.setQuery(qyb);
+            mPersonMsgMaRequest.setIq(iqb);
+            return gson.toJson(mPersonMsgMaRequest);
         }
 
         private class ItemViewHolder extends RecyclerView.ViewHolder {
