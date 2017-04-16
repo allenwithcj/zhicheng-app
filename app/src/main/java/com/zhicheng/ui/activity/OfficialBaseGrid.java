@@ -27,26 +27,41 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.google.gson.Gson;
+import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.alarm.LocationUpReciver;
+import com.zhicheng.api.common.ServiceFactory;
 import com.zhicheng.api.common.database.DatabaseHelper;
+import com.zhicheng.api.common.service.HuZuService;
 import com.zhicheng.api.presenter.impl.HuZuPresenterImpl;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridQueryPresenterImpl;
 import com.zhicheng.api.view.HuZuView;
 import com.zhicheng.api.view.OfficialBaseGridQueryView;
+import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.OfficialQueyResponse;
+import com.zhicheng.bean.http.PersonMsgMaResponse;
 import com.zhicheng.bean.http.PersonMsgResponse;
 import com.zhicheng.bean.json.OfficialQueryRequest;
 import com.zhicheng.bean.json.PersonMsgMaRequest;
 import com.zhicheng.common.Constant;
+import com.zhicheng.common.URL;
 import com.zhicheng.utils.BDLocationInit;
 import com.zhicheng.utils.common.NotificationUtils;
 import com.zhicheng.utils.common.PermissionUtils;
 import com.zhicheng.utils.common.UIUtils;
 
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import retrofit2.Response;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -67,6 +82,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private DatabaseHelper mData;
     private TextView title_name;
     public static OfficialBaseGrid instance;
+
 
     public static OfficialBaseGrid getInstance(){
         if(instance == null){
@@ -145,7 +161,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     public void refreshData(Object result) {
         if (result instanceof OfficialQueyResponse) {
             if (((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
-                mAdapter.setDataList(((OfficialQueyResponse) result).getIq().getQuery()
+                getHuzus("1",((OfficialQueyResponse) result).getIq().getQuery()
                         .getPreMsgcon().getPreMsgs());
             } else {
                 showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
@@ -153,11 +169,80 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
     }
 
+    private void getHuzus(String s, List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> preMsgs) {
+        Gson gson = new Gson();
+        PersonMsgMaRequest mPersonMsgMaRequest = new PersonMsgMaRequest();
+        PersonMsgMaRequest.IqBean iqb = new PersonMsgMaRequest.IqBean();
+        iqb.setNamespace("PersonMsgMaRequest");
+        PersonMsgMaRequest.IqBean.QueryBean qyb = new PersonMsgMaRequest.IqBean.QueryBean();
+        qyb.setType("6");
+        qyb.setRow("1000");
+        qyb.setPage("1");
+        iqb.setQuery(qyb);
+        mPersonMsgMaRequest.setIq(iqb);
+        Observable.just(gson.toJson(mPersonMsgMaRequest))
+                .flatMap(new Func1<String, Observable<Response<PersonMsgMaResponse>>>() {
+                    @Override
+                    public Observable<Response<PersonMsgMaResponse>> call(String s) {
+                        HuZuService mHuZuService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, HuZuService.class);
+
+                        return mHuZuService.queryHuzu(s);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<PersonMsgMaResponse>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException) {
+                            Toast.makeText(getApplication(), "", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Response<PersonMsgMaResponse> mPersonMsgMaResponse) {
+                        if (mPersonMsgMaResponse.isSuccessful()) {
+                            if (mPersonMsgMaResponse.body() != null) {
+                                List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> ps = new ArrayList<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean>();
+                                for (OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean mp:preMsgs){
+                                    OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean mPreMsgsBean = new OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean();
+                                    mPreMsgsBean.setNAME(mp.getNAME());
+                                    mPreMsgsBean.setID(mp.getID());
+                                    mPreMsgsBean.setDOMICILE(mp.getDOMICILE());
+                                    mPreMsgsBean.setREPORTUSER(mp.getREPORTUSER());
+                                    mPreMsgsBean.setHUZU(mp.getHUZU());
+                                    for(PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean plg : mPersonMsgMaResponse.body().getIq().getQuery().getPrelogcon().getPrelogs()){
+                                        if(plg.getID().equals(mp.getHUZU())){
+                                            mPreMsgsBean.setHUZU(plg.getNAME());
+                                        }
+                                    }
+                                    ps.add(mPreMsgsBean);
+                                }
+                                if(s.equals("1")){
+                                    mAdapter.setDataList(ps);
+                                }else{
+                                    mAdapter.addDataList(ps);
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getApplication(), mPersonMsgMaResponse.message(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
     @Override
     public void addData(Object result) {
         if (result instanceof OfficialQueyResponse) {
             if (((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
-                mAdapter.addDataList(((OfficialQueyResponse) result).getIq().getQuery()
+                getHuzus("2",((OfficialQueyResponse) result).getIq().getQuery()
                         .getPreMsgcon().getPreMsgs());
             } else {
                 showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
@@ -287,14 +372,14 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         return gson.toJson(ofq);
     }
 
-    class OfficialBaseGridAdapter extends RecyclerView.Adapter implements HuZuView {
-        private HuZuPresenterImpl mHuZuPresenterImpl;
+    class OfficialBaseGridAdapter extends RecyclerView.Adapter {
+
         private List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data;
         private String[] tag = {"姓名:", "户主:", "户籍地址:"};
         private ItemViewHolder itemHolder;
 
         public OfficialBaseGridAdapter() {
-            mHuZuPresenterImpl = new HuZuPresenterImpl(this);
+
         }
 
         public void addDataList(List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
@@ -318,12 +403,9 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             this.itemHolder = (ItemViewHolder) holder;
             if (holder instanceof ItemViewHolder) {
-                ((ItemViewHolder) holder).grid_base_add_huzu.setTag(position);
                 ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0] + data.get(position).getNAME());
                 ((ItemViewHolder) holder).grid_base_add_huzu.setText(tag[1] + data.get(position).getHUZU());
                 ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[2] + data.get(position).getDOMICILE());
-                //获取户主名称
-                getHuzuNAme(data.get(position).getHUZU());
 
                 ((ItemViewHolder) holder).Suc.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -340,59 +422,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
         @Override
         public int getItemCount() {
-            if (data != null) {
-                return data.size();
-            }
-            return 0;
-        }
-
-        @Override
-        public void showMessage(String msg) {
-
-        }
-
-        @Override
-        public void showProgress() {
-
-        }
-
-        @Override
-        public void hideProgress() {
-
-        }
-
-        @Override
-        public void refreshHuZuResponse(Object result) {
-            if(result instanceof PersonMsgResponse){
-                if(((PersonMsgResponse) result).getIq().getQuery().getErrorCode().equals("0")){
-                    if(itemHolder.grid_base_add_huzu.getTag().equals(itemHolder.getPosition())){
-                        itemHolder.grid_base_add_huzu.setText(((PersonMsgResponse) result).getIq().getQuery().getPreMsg().getNAME());
-                    }
-                }
-            }
-        }
-
-        @Override
-        public void loadHuZuResponse(Object result) {
-
-        }
-
-        public void getHuzuNAme(String hzId){
-            String strEntity = createObj(hzId);
-            mHuZuPresenterImpl.queryHuZuName(strEntity);
-        }
-
-        private String createObj(String hzId) {
-            Gson gson = new Gson();
-            PersonMsgMaRequest mPersonMsgMaRequest = new PersonMsgMaRequest();
-            PersonMsgMaRequest.IqBean iqb = new PersonMsgMaRequest.IqBean();
-            iqb.setNamespace("PersonMsgMaRequest");
-            PersonMsgMaRequest.IqBean.QueryBean qyb = new PersonMsgMaRequest.IqBean.QueryBean();
-            qyb.setType("5");
-            qyb.setID(hzId);
-            iqb.setQuery(qyb);
-            mPersonMsgMaRequest.setIq(iqb);
-            return gson.toJson(mPersonMsgMaRequest);
+            return data == null ? 0:data.size();
         }
 
         private class ItemViewHolder extends RecyclerView.ViewHolder {
