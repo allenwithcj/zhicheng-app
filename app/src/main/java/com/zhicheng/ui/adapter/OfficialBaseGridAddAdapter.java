@@ -18,6 +18,7 @@ import com.zhicheng.bean.json.SubmitOrdinaryFormRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.activity.BaseGridAddSelectType;
 import com.zhicheng.ui.activity.BaseGridAddSelectTypeMultipleChoice;
+import com.zhicheng.ui.activity.HuzuActivity;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
 import com.zhicheng.utils.CodeUtils;
 import com.zhicheng.utils.common.UIUtils;
@@ -32,7 +33,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
     private DatabaseHelper mDataBase;
     private String ZZ_RESIDENCE, GRIDNAME;
     private String REMARK2;
-    private String CARD_NUM, NAME, RELATION, HUZUNAME, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
+    private String CARD_NUM, NAME, RELATION, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
             HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT;
 
     private OfficialBaseGridAddPresenter mOfficialBaseGridAddPresenter;
@@ -73,14 +74,13 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         return 1;
     }
 
-    public void submit(AlertDialog dialog, String latitude, String longitude, String address) {
+    public void submit(AlertDialog dialog, String hzId, String latitude, String longitude, String address) {
 
         ZZ_RESIDENCE = holder.grid_base_add_residence.getText().toString();
         GRIDNAME = holder.grid_base_add_grid_no.getText().toString();
 
         NAME = holder.grid_base_add_name.getText().toString();
         RELATION = CodeUtils.relationCode(holder.grid_base_add_relation.getText().toString());
-        HUZUNAME = holder.grid_base_huzu_name.getText().toString();
         GENDER = CodeUtils.sexCode(holder.grid_base_add_sex.getText().toString());
         CARD_NUM = holder.grid_base_add_cardid.getText().toString();
         POLITICAL_STATUS = holder.grid_base_add_policatial.getText().toString();
@@ -115,7 +115,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             mFormobj.setID(UUID.randomUUID().toString());
             mFormobj.setNAME(NAME);
             mFormobj.setRELATION(RELATION);
-            mFormobj.setHUZU(HUZUNAME);
+            mFormobj.setHUZU(hzId);
             mFormobj.setGENDER(GENDER);
             mFormobj.setCARD_NUM(CARD_NUM);
             mFormobj.setPOLITICAL_STATUS(POLITICAL_STATUS);
@@ -151,7 +151,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
 
         public EditText grid_base_add_name;
         public TextView grid_base_add_relation;
-        public EditText grid_base_huzu_name;
+        public TextView grid_base_huzu_name;
         public TextView grid_base_add_sex;
         public EditText grid_base_add_cardid;
         public TextView grid_base_add_policatial;
@@ -174,7 +174,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
 
             grid_base_add_name = (EditText) itemView.findViewById(R.id.grid_base_add_name);
             grid_base_add_relation = (TextView) itemView.findViewById(R.id.input_relation);
-            grid_base_huzu_name = (EditText) itemView.findViewById(R.id.grid_base_huzu_name);
+            grid_base_huzu_name = (TextView) itemView.findViewById(R.id.grid_base_huzu_name);
             grid_base_add_sex = (TextView) itemView.findViewById(R.id.input_sex);
             grid_base_add_cardid = (EditText) itemView.findViewById(R.id.grid_base_add_cardid);
             grid_base_add_policatial = (TextView) itemView.findViewById(R.id.input_political);
@@ -241,6 +241,10 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
                 mList = UIUtils.getContext().getResources().getStringArray(R.array.grid_hobby);
                 type = Constant.TYPE_HOBBY;
                 myMultipleIntent(mList, type);
+            });
+
+            grid_base_huzu_name.setOnClickListener(view -> {
+                UIUtils.startActivity(new Intent(UIUtils.getContext(), HuzuActivity.class));
             });
         }
     }

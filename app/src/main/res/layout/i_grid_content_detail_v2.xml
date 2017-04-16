@@ -207,17 +207,18 @@
                 android:padding="@dimen/textView_padding"
                 android:text="@string/grid_base_huzu_name"
                 android:id="@+id/textView8" />
-
-            <EditText
+            <TextView
                 android:id="@+id/grid_base_huzu_name"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:textColor="@color/black"
-                android:background="@null"
+                android:maxLines="1"
                 android:textSize="@dimen/content_size"
-                android:hint="@string/hint_grid_owner_name"
-                android:padding="@dimen/textView_padding" />
+                android:gravity="center|left"
+                android:hint="@string/hint_grid_choice"
+                android:paddingLeft="10dp"
+                android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp" />
         </LinearLayout>
 
         <include layout="@layout/z_line" />

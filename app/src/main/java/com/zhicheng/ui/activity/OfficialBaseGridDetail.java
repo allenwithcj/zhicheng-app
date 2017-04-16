@@ -24,6 +24,7 @@ import com.zhicheng.api.view.OfficialBaseGridDetailView;
 import com.zhicheng.api.view.OfficialBaseGridUpdateView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.OfficialBaseGridDetailResponse;
+import com.zhicheng.bean.http.PersonMsgMaResponse;
 import com.zhicheng.bean.json.OfficialQueryDetailRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.OfficialBaseGridDeatilAdapter;
@@ -49,6 +50,8 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     private LocationClient mLocationClient;
     private MyLocationListener myLocationListener;
     private String latitude,longitude,address;
+    private PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean mPrelogsBean;
+    private String HUZU_ID;
 
     public interface sendLocation {
         void onSendLocation(Map<String, String> maps);
@@ -89,6 +92,10 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
                 } else if (type.equals(Constant.TYPE_HOBBY)) {
                     holder.grid_base_add_hobby.setText(value);
                 }
+            }else if(intent.getAction().equals("com.grid.huzu")){
+                mPrelogsBean = intent.getParcelableExtra("value");
+                HUZU_ID = mPrelogsBean.getID();
+                holder.grid_base_huzu_name.setText(mPrelogsBean.getNAME());
             }
         }
     };
@@ -111,7 +118,9 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
         ID = getIntent().getStringExtra("ID");
         mRecyclerView.setAdapter(mAdapter);
         mOfficialBaseGridDetailPresenterImpl = new OfficialBaseGridDetailPresenterImpl(this);
-        IntentFilter mFilter = new IntentFilter("com.grid.type");
+        IntentFilter mFilter = new IntentFilter();
+        mFilter.addAction("com.grid.type");
+        mFilter.addAction("com.grid.huzu");
         registerReceiver(receiver, mFilter);
         title_name.setText(getResources().getString(R.string.grid_base_detail_title));
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
@@ -183,7 +192,7 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
                     .setCancelable(false)
                     .create();
             dialog.show();
-            mAdapter.update(ID, dialog,latitude,longitude,address);
+            mAdapter.update(ID,dialog,HUZU_ID,latitude,longitude,address);
 
         }
         return super.onOptionsItemSelected(item);

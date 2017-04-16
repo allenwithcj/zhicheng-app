@@ -19,6 +19,7 @@ import com.zhicheng.api.presenter.OfficialBaseGridAddPresenter;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridAddPresenterImpl;
 import com.zhicheng.api.view.OfficialBaseGridAddView;
 import com.zhicheng.bean.http.CommonResponse;
+import com.zhicheng.bean.http.PersonMsgMaResponse;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.OfficialBaseGridAddAdapter;
 import com.zhicheng.utils.BDLocationInit;
@@ -39,6 +40,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     private LocationClient mLocationClient;
     private MyLocationListener myLocationListener;
     private String latitude,longitude,address;
+    private PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean mPrelogsBean;
 
     public interface sendLocation {
         void onSendLocation(Map<String, String> maps);
@@ -58,8 +60,8 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
             OfficialBaseGridAddAdapter.ItemViewHolder holder = (OfficialBaseGridAddAdapter.ItemViewHolder) mRecyclerView
                     .getChildViewHolder(mRecyclerView.getChildAt(0));
             if (intent.getAction().equals("com.grid.type")) {
-                String value = intent.getStringExtra("value");
                 String type = intent.getStringExtra("type");
+                String value = intent.getStringExtra("value");
                 if (type.equals(Constant.TYPE_RELATION)) {
                     holder.grid_base_add_relation.setText(value);
                 }else if (type.equals(Constant.TYPE_SEX)) {
@@ -79,6 +81,9 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                 } else if (type.equals(Constant.TYPE_HOBBY)) {
                     holder.grid_base_add_hobby.setText(value);
                 }
+            }else if(intent.getAction().equals("com.grid.huzu")){
+                mPrelogsBean = intent.getParcelableExtra("value");
+                holder.grid_base_huzu_name.setText(mPrelogsBean.getNAME());
             }
         }
     };
@@ -97,7 +102,9 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
         mAdapter = new OfficialBaseGridAddAdapter(mOfficialBaseGridAddPresenter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
-        IntentFilter mFilter = new IntentFilter("com.grid.type");
+        IntentFilter mFilter = new IntentFilter();
+        mFilter.addAction("com.grid.type");
+        mFilter.addAction("com.grid.huzu");
         registerReceiver(receiver, mFilter);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
 
@@ -135,7 +142,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                         .setCancelable(false)
                         .create();
                 dialog.show();
-                mAdapter.submit(dialog,latitude,longitude,address);
+                mAdapter.submit(dialog,mPrelogsBean.getID(),latitude,longitude,address);
                 break;
         }
         return super.onOptionsItemSelected(item);

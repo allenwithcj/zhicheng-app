@@ -17,6 +17,7 @@ import com.zhicheng.bean.json.SubmitOrdinaryFormRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.activity.BaseGridAddSelectType;
 import com.zhicheng.ui.activity.BaseGridAddSelectTypeMultipleChoice;
+import com.zhicheng.ui.activity.HuzuActivity;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
 import com.zhicheng.utils.CodeUtils;
 import com.zhicheng.utils.common.UIUtils;
@@ -29,8 +30,8 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
     private OfficialBaseGridDetailResponse mData;
     private String ZZ_RESIDENCE, GRIDNAME;
     private String REMARK2;
-    private String CARD_NUM, NAME, RELATION, HUZU, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
-            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT;
+    private String CARD_NUM, NAME, RELATION, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
+            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT,HUZU;
     private OfficialBaseGridUpdatePresenter mOfficialBaseGridUpdatePresenter;
     private ItemViewHolder holder;
     private String[] mList;
@@ -59,6 +60,8 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         this.holder = (ItemViewHolder) holder;
         if (mData != null) {
             if (holder instanceof ItemViewHolder) {
+                HUZU = mData.getIq().getQuery().getPreMsg().getHUZU();
+
                 ((ItemViewHolder) holder).grid_base_add_residence.setText(mData.getIq().getQuery().getPreMsg().getZZ_RESIDENCE());
                 ((ItemViewHolder) holder).grid_base_add_grid_no.setText(mData.getIq().getQuery().getPreMsg().getGRIDNAME());
 
@@ -88,14 +91,13 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         return 1;
     }
 
-    public void update(String id, AlertDialog dialog, String latitude, String longitude, String address) {
+    public void update(String id, AlertDialog dialog, String hzID, String latitude, String longitude, String address) {
         ZZ_RESIDENCE = holder.grid_base_add_residence.getText().toString();
         GRIDNAME = holder.grid_base_add_grid_no.getText().toString();
 
         NAME = holder.grid_base_add_name.getText().toString();
         RELATION = CodeUtils.relationCode(holder.grid_base_add_relation.getText().toString());
         GENDER = CodeUtils.sexCode(holder.grid_base_add_sex.getText().toString());
-        HUZU = holder.grid_base_huzu_name.getText().toString();
         CARD_NUM = holder.grid_base_add_cardid.getText().toString();
         POLITICAL_STATUS = holder.grid_base_add_policatial.getText().toString();
         EDUCATION = CodeUtils.degreeCode(holder.grid_base_add_degree.getText().toString());
@@ -121,11 +123,14 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
         mFormobj.setRENTNAME("");
         mFormobj.setREMARK2(REMARK2);
         mFormobj.setRENTPHONE("");
-
         mFormobj.setID(id);
         mFormobj.setNAME(NAME);
         mFormobj.setRELATION(RELATION);
-        mFormobj.setHUZU(HUZU);
+        if(hzID == null){
+            mFormobj.setHUZU(HUZU);
+        }else{
+            mFormobj.setHUZU(hzID);
+        }
         mFormobj.setGENDER(GENDER);
         mFormobj.setCARD_NUM(CARD_NUM);
         mFormobj.setPOLITICAL_STATUS(POLITICAL_STATUS);
@@ -160,7 +165,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
 
         public EditText grid_base_add_name;
         public TextView grid_base_add_relation;
-        private EditText grid_base_huzu_name;
+        public TextView grid_base_huzu_name;
         public TextView grid_base_add_sex;
         public EditText grid_base_add_cardid;
         public TextView grid_base_add_policatial;
@@ -183,7 +188,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
 
             grid_base_add_name = (EditText) itemView.findViewById(R.id.grid_base_add_name);
             grid_base_add_relation = (TextView) itemView.findViewById(R.id.input_relation);
-            grid_base_huzu_name = (EditText) itemView.findViewById(R.id.grid_base_huzu_name);
+            grid_base_huzu_name = (TextView) itemView.findViewById(R.id.grid_base_huzu_name);
             grid_base_add_sex = (TextView) itemView.findViewById(R.id.input_sex);
             grid_base_add_cardid = (EditText) itemView.findViewById(R.id.grid_base_add_cardid);
             grid_base_add_policatial = (TextView) itemView.findViewById(R.id.input_political);
@@ -249,6 +254,10 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter {
                 mList = UIUtils.getContext().getResources().getStringArray(R.array.grid_hobby);
                 type = Constant.TYPE_HOBBY;
                 myMultipleIntent(mList, type);
+            });
+
+            grid_base_huzu_name.setOnClickListener(view -> {
+                UIUtils.startActivity(new Intent(UIUtils.getContext(), HuzuActivity.class));
             });
 
         }

@@ -133,6 +133,7 @@
     <string name="grid_base_title">网格基础数据</string>
     <string name="grid_base_detail_title">网格基础数据详情</string>
     <string name="grid_base_location_alert">请先开启定位后再录入网格数据</string>
+    <string name="huzu_choice">请选择户主</string>
 
     <string-array name="detail">
         <item>编号:</item>

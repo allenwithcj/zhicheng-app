@@ -393,8 +393,14 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     }
 
     public void openGps(){
-        mLocationClient.start();
-        mLocationClient.requestLocation();
+        if(mLocationClient.isStarted()){
+            mLocationClient.stop();
+            mLocationClient.start();
+            mLocationClient.requestLocation();
+        }else{
+            mLocationClient.start();
+            mLocationClient.requestLocation();
+        }
     }
 
 }
