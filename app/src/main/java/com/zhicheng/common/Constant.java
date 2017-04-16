@@ -6,9 +6,11 @@ package com.zhicheng.common;
 
 public class Constant {
     public static final String THEME_MODEL = "theme_mode1";
-
+    //事件上报 36C9CF7D-390C-9F4F-BCA3-21F3EE377566
     public static final String SID = "36C9CF7D-390C-9F4F-BCA3-21F3EE377566";
-    public static final String EXPSID = "06D9F6F6-D623-9A44-BBD5-41B5E725EFD0";
+    //经验交流 测试环境：06D9F6F6-D623-9A44-BBD5-41B5E725EFD0
+     //         正式环境：05D02FE3-3BE8-1641-9234-A1716D4BF32B
+    public static final String EXPSID = "05D02FE3-3BE8-1641-9234-A1716D4BF32B";
 
 
     //IneedActivity
