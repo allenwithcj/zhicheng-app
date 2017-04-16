@@ -30,15 +30,10 @@ import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.alarm.LocationUpReciver;
 import com.zhicheng.api.common.database.DatabaseHelper;
-import com.zhicheng.api.presenter.impl.HuZuPresenterImpl;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridQueryPresenterImpl;
-import com.zhicheng.api.view.HuZuView;
 import com.zhicheng.api.view.OfficialBaseGridQueryView;
 import com.zhicheng.bean.http.OfficialQueyResponse;
-import com.zhicheng.bean.http.PersonMsgMaResponse;
-import com.zhicheng.bean.http.PersonMsgResponse;
 import com.zhicheng.bean.json.OfficialQueryRequest;
-import com.zhicheng.bean.json.PersonMsgMaRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.utils.BDLocationInit;
 import com.zhicheng.utils.common.NotificationUtils;
@@ -54,7 +49,7 @@ import java.util.Map;
  * Created by Donson on 2017/1/5.
  */
 
-public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQueryView,SwipeRefreshLayout.OnRefreshListener {
+public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQueryView, SwipeRefreshLayout.OnRefreshListener {
     private int start;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private OfficialBaseGridQueryPresenterImpl mOfficialBaseGridQueryPresenterImpl;
@@ -68,8 +63,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private DatabaseHelper mData;
     private TextView title_name;
     public static OfficialBaseGrid instance;
-    private HuZuPresenterImpl mHuZuPresenterImpl;
-
 
     public static OfficialBaseGrid getInstance(){
         if(instance == null){
@@ -110,7 +103,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                 }
             }
         });
-
     }
 
     @Override
@@ -144,8 +136,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     public void hideProgress() {
         mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
     }
-
-
 
     @Override
     public void refreshData(Object result) {
@@ -293,14 +283,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         return gson.toJson(ofq);
     }
 
-    class OfficialBaseGridAdapter extends RecyclerView.Adapter implements HuZuView{
+    class OfficialBaseGridAdapter extends RecyclerView.Adapter {
         private List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data;
         private String[] tag = {"姓名:", "户主:", "户籍地址:"};
-        private ItemViewHolder holder;
-        private HuZuPresenterImpl mHuZuPresenterImpl;
 
         public OfficialBaseGridAdapter() {
-            mHuZuPresenterImpl = new HuZuPresenterImpl(this);
+
         }
 
         public void addDataList(List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
@@ -322,7 +310,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            this.holder = (ItemViewHolder) holder;
             if (holder instanceof ItemViewHolder) {
                 ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0] + data.get(position).getNAME());
                 ((ItemViewHolder) holder).grid_base_add_huzu.setText(tag[1] + data.get(position).getHUZU());
@@ -336,66 +323,19 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                         UIUtils.startActivity(intent);
                     }
                 });
-                //根据户主id查询户主名称
-                String HUZU = data.get(position).getHUZU();
-                getHuzuNAme(HUZU);
 
             }
-        }
-
-        public void getHuzuNAme(String hzId){
-            String strEntity = createObj(hzId);
-            mHuZuPresenterImpl.queryHuZuName(strEntity);
-        }
-
-        private String createObj(String hzId) {
-            Gson gson = new Gson();
-            PersonMsgMaRequest mPersonMsgMaRequest = new PersonMsgMaRequest();
-            PersonMsgMaRequest.IqBean iqb = new PersonMsgMaRequest.IqBean();
-            iqb.setNamespace("PersonMsgMaRequest");
-            PersonMsgMaRequest.IqBean.QueryBean qyb = new PersonMsgMaRequest.IqBean.QueryBean();
-            qyb.setType("5");
-            qyb.setID(hzId);
-            iqb.setQuery(qyb);
-            mPersonMsgMaRequest.setIq(iqb);
-            return gson.toJson(mPersonMsgMaRequest);
         }
 
         @Override
         public int getItemCount() {
-            return data == null ? 0:data.size();
-        }
-
-        @Override
-        public void showMessage(String msg) {
-
-        }
-
-        @Override
-        public void showProgress() {
-
-        }
-
-        @Override
-        public void hideProgress() {
-
-        }
-
-        @Override
-        public void refreshHuZuResponse(Object result) {
-            if(result instanceof PersonMsgResponse){
-                if(((PersonMsgResponse) result).getIq().getQuery().getErrorCode().equals("0")){
-                    holder.grid_base_add_huzu.setText(tag[1] +((PersonMsgResponse) result).getIq().getQuery().getPreMsg().getNAME());
-                }
+            if (data != null) {
+                return data.size();
             }
+            return 0;
         }
 
-        @Override
-        public void loadHuZuResponse(Object result) {
-
-        }
-
-        public class ItemViewHolder extends RecyclerView.ViewHolder {
+        private class ItemViewHolder extends RecyclerView.ViewHolder {
             private TextView grid_base_add_name;
             private TextView grid_base_add_huzu;
             private TextView grid_base_add_brithplace;
@@ -453,14 +393,8 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     }
 
     public void openGps(){
-        if(mLocationClient.isStarted()){
-            mLocationClient.stop();
-            mLocationClient.start();
-            mLocationClient.requestLocation();
-        }else{
-            mLocationClient.start();
-            mLocationClient.requestLocation();
-        }
+        mLocationClient.start();
+        mLocationClient.requestLocation();
     }
 
 }

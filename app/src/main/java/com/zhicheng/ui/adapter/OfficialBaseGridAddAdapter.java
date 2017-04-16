@@ -115,7 +115,11 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             mFormobj.setID(UUID.randomUUID().toString());
             mFormobj.setNAME(NAME);
             mFormobj.setRELATION(RELATION);
-            mFormobj.setHUZU(hzId);
+            if(RELATION.equals("0")){
+                mFormobj.setHUZU(NAME);
+            }else {
+                mFormobj.setHUZU(hzId);
+            }
             mFormobj.setGENDER(GENDER);
             mFormobj.setCARD_NUM(CARD_NUM);
             mFormobj.setPOLITICAL_STATUS(POLITICAL_STATUS);

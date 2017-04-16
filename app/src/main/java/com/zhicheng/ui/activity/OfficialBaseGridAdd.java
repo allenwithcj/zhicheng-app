@@ -41,6 +41,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     private MyLocationListener myLocationListener;
     private String latitude,longitude,address;
     private PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean mPrelogsBean;
+    private String hzId;
 
     public interface sendLocation {
         void onSendLocation(Map<String, String> maps);
@@ -83,6 +84,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                 }
             }else if(intent.getAction().equals("com.grid.huzu")){
                 mPrelogsBean = intent.getParcelableExtra("value");
+                hzId = mPrelogsBean.getID();
                 holder.grid_base_huzu_name.setText(mPrelogsBean.getNAME());
             }
         }
@@ -142,7 +144,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                         .setCancelable(false)
                         .create();
                 dialog.show();
-                mAdapter.submit(dialog,mPrelogsBean.getID(),latitude,longitude,address);
+                mAdapter.submit(dialog,hzId,latitude,longitude,address);
                 break;
         }
         return super.onOptionsItemSelected(item);

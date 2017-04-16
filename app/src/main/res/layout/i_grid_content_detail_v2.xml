@@ -217,7 +217,6 @@
                 android:textSize="@dimen/content_size"
                 android:gravity="center|left"
                 android:hint="@string/hint_grid_choice"
-                android:visibility="invisible"
                 android:paddingLeft="10dp"
                 android:drawableRight="@drawable/ic_arrow_drop_down_black_24dp" />
         </LinearLayout>

@@ -184,10 +184,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
     public void refreshHuZuResponse(Object result) {
         if(result instanceof PersonMsgResponse){
             if(((PersonMsgResponse) result).getIq().getQuery().getErrorCode().equals("0")){
-                holder.grid_base_huzu_name.setVisibility(View.VISIBLE);
                 holder.grid_base_huzu_name.setText(((PersonMsgResponse) result).getIq().getQuery().getPreMsg().getNAME());
-            }else{
-                holder.grid_base_huzu_name.setVisibility(View.VISIBLE);
             }
         }
     }
