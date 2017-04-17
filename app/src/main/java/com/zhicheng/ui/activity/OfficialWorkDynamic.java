@@ -76,7 +76,7 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView, S
 
     @Override
     protected void initEvents() {
-        setContentView(R.layout.activity_main_official_basegrid);
+        setContentView(R.layout.activity_work_dynamic);
         parentView = (ViewGroup) findViewById(android.R.id.content).getRootView();
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);

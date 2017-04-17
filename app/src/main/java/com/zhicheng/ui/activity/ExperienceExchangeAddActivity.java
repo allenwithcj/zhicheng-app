@@ -218,7 +218,6 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements Exper
                             Gson gson = new Gson();
                             String jFile = gson.toJson(uf);
                             mExperiencePresenterImpl.UpThings(guid, jFile, mImagePath);
-
                         } else {
                             upExperience("");
                         }

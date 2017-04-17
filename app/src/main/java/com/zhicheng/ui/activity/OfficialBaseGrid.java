@@ -170,6 +170,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             if (((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 getHuzus("1",((OfficialQueyResponse) result).getIq().getQuery()
                         .getPreMsgcon().getPreMsgs());
+                int num = ((OfficialQueyResponse) result).getIq().getQuery().getPreMsgcon().getAllnum();
+                if(num != 0){
+                    title_name.setText(getResources().getString(R.string.grid_base_title)+"(" + num + ")");
+                }else{
+                    title_name.setText(getResources().getString(R.string.grid_base_title)+"(0)");
+                }
             } else {
                 showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
             }

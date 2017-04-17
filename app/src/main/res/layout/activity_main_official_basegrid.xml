@@ -11,51 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical">
 
         <include layout="@layout/activity_home_toolbar" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:padding="@dimen/activity_half_margin"
-                android:orientation="horizontal">
-
-                <com.zhicheng.utils.ClearEditText
-                    android:id="@+id/mClearEditText"
-                    android:layout_width="0dp"
-                    android:layout_weight="4"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:background="@drawable/search_bar_edit_selector"
-                    android:drawableLeft="@drawable/search_bar_icon_normal_"
-                    android:drawableStart="@drawable/search_bar_icon_normal_"
-                    android:hint="@string/hint_search"
-                    android:singleLine="true"
-                    android:layout_margin="@dimen/activity_small_margin"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/contact_edit_font_size" />
-
-                <Button
-                    android:id="@+id/ad_search"
-                    android:text="@string/ad_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/gray_text"/>
-            </LinearLayout>
-            <TextView
-                android:id="@+id/search_count"
-                android:visibility="gone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+        <include layout="@layout/activity_searchview" />
         <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

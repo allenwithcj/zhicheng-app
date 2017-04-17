@@ -52,6 +52,7 @@ public class Official extends BaseActivity implements OfficialView, SwipeRefresh
         mRecyclerView.setAdapter(mNoFinishAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+        title_name.setText(getResources().getString(R.string.NoFinish));
     }
 
     @Override
