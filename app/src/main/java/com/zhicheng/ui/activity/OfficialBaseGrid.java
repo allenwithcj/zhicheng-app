@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -82,6 +83,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private DatabaseHelper mData;
     private TextView title_name;
     public static OfficialBaseGrid instance;
+    private Button ad_search;
 
 
     public static OfficialBaseGrid getInstance(){
@@ -98,6 +100,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         mData = new DatabaseHelper();
         title_name = (TextView) findViewById(R.id.title_name);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        ad_search = (Button)findViewById(R.id.ad_search);
         mLocationClient = new LocationClient(this);
         BDLocationInit.getInstance().initLocation(mLocationClient);
         myLocationListener = new MyLocationListener();
@@ -122,6 +125,10 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     finish();
                 }
             }
+        });
+
+        ad_search.setOnClickListener(view -> {
+            UIUtils.startActivity(new Intent(this,BaseGridSearchActivity.class));
         });
     }
 

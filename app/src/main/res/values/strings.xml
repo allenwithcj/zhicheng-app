@@ -135,6 +135,14 @@
     <string name="grid_base_location_alert">请先开启定位后再录入网格数据</string>
     <string name="huzu_choice">请选择户主</string>
 
+    <string name="ad_search">高级搜索</string>
+    <string name="hint_search">请输入姓名、户籍地址或居住地址进行搜索</string>
+    <string name="grid_sender">采集人:</string>
+    <string name="hint_grid_sender">请输入采集人</string>
+    <string name="grid_time">采集时间:</string>
+    <string name="hint_grid_time">请选择采集时间</string>
+    <string name="grid_base_more_search">网格基础数据高级搜索</string>
+
     <string-array name="detail">
         <item>编号:</item>
         <item>来源:</item>
