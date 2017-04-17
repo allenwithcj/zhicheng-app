@@ -1,5 +1,6 @@
 package com.zhicheng.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import com.baidu.location.LocationClient;
 import com.zhicheng.R;
 import com.zhicheng.ui.activity.SearchViewActivity;
 import com.zhicheng.utils.BDLocationInit;
+import com.zhicheng.utils.common.PermissionUtils;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.util.HashMap;
@@ -93,10 +95,6 @@ public class IneedAdapter extends RecyclerView.Adapter {
         BDLocationInit.getInstance().initLocation(mLocationClient);
         mLocation = new mLocationListener();
         mLocationClient.registerLocationListener(mLocation);
-        //if (!mLocationClient.isStarted()){
-        //   mLocationClient.start();
-        //   mLocationClient.requestLocation();
-        //}
     }
 
     public void addPhoto(List<String> photo) {

@@ -8,4 +8,6 @@ public interface OfficialBaseGridAddPresenter {
 
     void addDate(String rBody);
 
+    void judgmentLocation(String x,String y);
+
 }

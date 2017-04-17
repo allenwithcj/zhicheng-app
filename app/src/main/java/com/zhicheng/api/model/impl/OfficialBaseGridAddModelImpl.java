@@ -6,6 +6,7 @@ import com.zhicheng.api.common.service.OfficialbaseGridAddService;
 import com.zhicheng.api.model.OfficialBaseGridAddModel;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.CommonResponse;
+import com.zhicheng.bean.http.JudgementLocationResponse;
 import com.zhicheng.common.URL;
 
 import java.net.UnknownHostException;
@@ -51,5 +52,38 @@ public class OfficialBaseGridAddModelImpl implements OfficialBaseGridAddModel {
                     }
                 });
     }
+
+    @Override
+    public void judgmentLocation(String x, String y, ApiCompleteListener listener) {
+        OfficialbaseGridAddService mOfficialBaseGridAddService = ServiceFactory.createService(URL.HOST_URL_SERVER_LOCATION, OfficialbaseGridAddService.class);
+        mOfficialBaseGridAddService.judgmentLocation(x,y)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<JudgementLocationResponse>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException) {
+                            listener.onFailed(null);
+                            return;
+                        }
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
+                    }
+
+                    @Override
+                    public void onNext(Response<JudgementLocationResponse> mJudgementLocationResponse) {
+                        if (mJudgementLocationResponse.isSuccessful()) {
+                            listener.onComplected(mJudgementLocationResponse.body());
+                        } else {
+                            listener.onFailed(new BaseResponse(mJudgementLocationResponse.code(), mJudgementLocationResponse.message()));
+                        }
+                    }
+                });
+        }
+
 
 }

@@ -14,12 +14,16 @@ import android.widget.Toast;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
+import com.baidu.platform.comapi.map.J;
+import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.OfficialBaseGridAddPresenter;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridAddPresenterImpl;
 import com.zhicheng.api.view.OfficialBaseGridAddView;
 import com.zhicheng.bean.http.CommonResponse;
+import com.zhicheng.bean.http.JudgementLocationResponse;
 import com.zhicheng.bean.http.PersonMsgMaResponse;
+import com.zhicheng.bean.json.JudgementLocationRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.OfficialBaseGridAddAdapter;
 import com.zhicheng.utils.BDLocationInit;
@@ -152,7 +156,9 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                         .setCancelable(false)
                         .create();
                 dialog.show();
+                //先判断是否处于所属网格
                 mAdapter.submit(dialog,hzId,latitude,longitude,address);
+                //mOfficialBaseGridAddPresenter.judgmentLocation(latitude,longitude);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -181,6 +187,13 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                 this.finish();
             } else {
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
+            }
+        }else if(result instanceof JudgementLocationResponse){
+            if (((JudgementLocationResponse) result).isSuccess()) {
+                //  mAdapter.submit(dialog,hzId,latitude,longitude,address);
+
+            } else {
+
             }
         }
     }

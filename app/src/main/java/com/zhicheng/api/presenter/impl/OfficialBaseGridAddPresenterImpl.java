@@ -8,6 +8,7 @@ import com.zhicheng.api.presenter.OfficialBaseGridAddPresenter;
 import com.zhicheng.api.view.OfficialBaseGridAddView;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.CommonResponse;
+import com.zhicheng.bean.http.JudgementLocationResponse;
 import com.zhicheng.utils.common.NetworkUtils;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -30,6 +31,9 @@ public class OfficialBaseGridAddPresenterImpl implements OfficialBaseGridAddPres
         if (result instanceof CommonResponse) {
             mOfficialBaseGridAddView.addDateResponse(result);
         }
+        if (result instanceof JudgementLocationResponse) {
+            mOfficialBaseGridAddView.addDateResponse(result);
+        }
     }
 
     @Override
@@ -48,4 +52,13 @@ public class OfficialBaseGridAddPresenterImpl implements OfficialBaseGridAddPres
         }
         mOfficialBaseGridAddModel.addDate(rBody, this);
     }
+
+    @Override
+    public void judgmentLocation(String x, String y) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
+            mOfficialBaseGridAddView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
+        }
+        mOfficialBaseGridAddModel.judgmentLocation(x, y, this);
+    }
+
 }

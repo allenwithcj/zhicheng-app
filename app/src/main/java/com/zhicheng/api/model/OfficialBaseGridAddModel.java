@@ -10,4 +10,5 @@ public interface OfficialBaseGridAddModel {
 
     void addDate(String json, ApiCompleteListener listener);
 
+    void judgmentLocation(String x,String y, ApiCompleteListener listener);
 }

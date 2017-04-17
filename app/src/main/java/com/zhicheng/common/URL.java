@@ -16,6 +16,8 @@ public class URL {
 
 //    public static final String HOST_URL_SERVER_ZHICHENG = "http://222.46.11.107:8082";
 
+    public static final String HOST_URL_SERVER_LOCATION = "http://cxcig.ddns.net:10000";
+
     public static final String PGYURL = "http://www.pgyer.com";
 
 //    public static final String HOST_URL_SERVER_ZHICHENG = "http://219.131.197.178:9909";
