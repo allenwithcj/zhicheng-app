@@ -1,5 +1,6 @@
 package com.zhicheng.ui.adapter;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhicheng.R;
@@ -101,68 +103,109 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
     }
 
     public void update(String id, AlertDialog dialog, String hzID, String latitude, String longitude, String address) {
-        ZZ_RESIDENCE = holder.grid_base_add_residence.getText().toString();
-        GRIDNAME = holder.grid_base_add_grid_no.getText().toString();
+        if(NAME.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_name),dialog);
+        }else if(ZZ_RESIDENCE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(GENDER.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(MARITAL_STATUS.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(EDUCATION.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(POLITICAL_STATUS.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(SORT.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(HUZU.equals("")){
+            if(!RELATION.equals("0")){
+                showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+            }
+        }else if(RELATION.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(REMARK1.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(REMARK2.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(PHONE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(DOMICILE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(HOBBY.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else {
+            ZZ_RESIDENCE = holder.grid_base_add_residence.getText().toString();
+            GRIDNAME = holder.grid_base_add_grid_no.getText().toString();
 
-        NAME = holder.grid_base_add_name.getText().toString();
-        RELATION = CodeUtils.relationCode(holder.grid_base_add_relation.getText().toString());
-        GENDER = CodeUtils.sexCode(holder.grid_base_add_sex.getText().toString());
-        CARD_NUM = holder.grid_base_add_cardid.getText().toString();
-        POLITICAL_STATUS = holder.grid_base_add_policatial.getText().toString();
-        EDUCATION = CodeUtils.degreeCode(holder.grid_base_add_degree.getText().toString());
-        MARITAL_STATUS = CodeUtils.marriedCode(holder.grid_base_add_married.getText().toString());
-        DOMICILE = holder.grid_base_add_brithplace.getText().toString();
-        PHONE = holder.grid_base_add_telephone.getText().toString();
-        WORK = holder.grid_base_add_workspace.getText().toString();
-        HOBBY = holder.grid_base_add_hobby.getText().toString();
-        REMARK1 = holder.grid_base_add_remark1.getText().toString();
-        OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
-        SORT = holder.grid_base_add_rkfl.getText().toString();
+            NAME = holder.grid_base_add_name.getText().toString();
+            RELATION = CodeUtils.relationCode(holder.grid_base_add_relation.getText().toString());
+            GENDER = CodeUtils.sexCode(holder.grid_base_add_sex.getText().toString());
+            CARD_NUM = holder.grid_base_add_cardid.getText().toString();
+            POLITICAL_STATUS = holder.grid_base_add_policatial.getText().toString();
+            EDUCATION = CodeUtils.degreeCode(holder.grid_base_add_degree.getText().toString());
+            MARITAL_STATUS = CodeUtils.marriedCode(holder.grid_base_add_married.getText().toString());
+            DOMICILE = holder.grid_base_add_brithplace.getText().toString();
+            PHONE = holder.grid_base_add_telephone.getText().toString();
+            WORK = holder.grid_base_add_workspace.getText().toString();
+            HOBBY = holder.grid_base_add_hobby.getText().toString();
+            REMARK1 = holder.grid_base_add_remark1.getText().toString();
+            OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
+            SORT = holder.grid_base_add_rkfl.getText().toString();
 
-        REMARK2 = holder.grid_base_add_lessor_remark2.getText().toString();
+            REMARK2 = holder.grid_base_add_lessor_remark2.getText().toString();
 
-        SubmitOrdinaryFormRequest mSf = new SubmitOrdinaryFormRequest();
-        SubmitOrdinaryFormRequest.IqBean lrIq = new SubmitOrdinaryFormRequest.IqBean();
-        SubmitOrdinaryFormRequest.IqBean.QueryBean irIqQB = new SubmitOrdinaryFormRequest.IqBean.QueryBean();
-        irIqQB.setType("1");
-        SubmitOrdinaryFormRequest.IqBean.QueryBean.Formobj mFormobj = new SubmitOrdinaryFormRequest.IqBean.QueryBean.Formobj();
-        mFormobj.setZZ_RESIDENCE(ZZ_RESIDENCE);
-        mFormobj.setGRIDNAME(GRIDNAME);
+            SubmitOrdinaryFormRequest mSf = new SubmitOrdinaryFormRequest();
+            SubmitOrdinaryFormRequest.IqBean lrIq = new SubmitOrdinaryFormRequest.IqBean();
+            SubmitOrdinaryFormRequest.IqBean.QueryBean irIqQB = new SubmitOrdinaryFormRequest.IqBean.QueryBean();
+            irIqQB.setType("1");
+            SubmitOrdinaryFormRequest.IqBean.QueryBean.Formobj mFormobj = new SubmitOrdinaryFormRequest.IqBean.QueryBean.Formobj();
+            mFormobj.setZZ_RESIDENCE(ZZ_RESIDENCE);
+            mFormobj.setGRIDNAME(GRIDNAME);
 
-        mFormobj.setRENTNAME("");
-        mFormobj.setREMARK2(REMARK2);
-        mFormobj.setRENTPHONE("");
-        mFormobj.setID(id);
-        mFormobj.setNAME(NAME);
-        mFormobj.setRELATION(RELATION);
-        if(hzID == null){
-            mFormobj.setHUZU(HUZU);
-        }else{
-            mFormobj.setHUZU(hzID);
+            mFormobj.setRENTNAME("");
+            mFormobj.setREMARK2(REMARK2);
+            mFormobj.setRENTPHONE("");
+            mFormobj.setID(id);
+            mFormobj.setNAME(NAME);
+            mFormobj.setRELATION(RELATION);
+            if (hzID == null) {
+                if (RELATION.equals("0")) {
+                    mFormobj.setHUZU("");
+                } else {
+                    mFormobj.setHUZU(HUZU);
+                }
+            } else {
+                mFormobj.setHUZU(hzID);
+            }
+            mFormobj.setGENDER(GENDER);
+            mFormobj.setCARD_NUM(CARD_NUM);
+            mFormobj.setPOLITICAL_STATUS(POLITICAL_STATUS);
+            mFormobj.setEDUCATION(EDUCATION);
+            mFormobj.setMARITAL_STATUS(MARITAL_STATUS);
+            mFormobj.setDOMICILE(DOMICILE);
+            mFormobj.setPHONE(PHONE);
+            mFormobj.setWORK(WORK);
+            mFormobj.setHOBBY(HOBBY);
+            mFormobj.setREMARK1(REMARK1);
+            mFormobj.setOUTADDRESS(OUTADDRESS);
+            mFormobj.setSORT(SORT);
+            mFormobj.setBADDRESS(address);
+            mFormobj.setBLONGITUDE(longitude);
+            mFormobj.setBLATITUDE(latitude);
+
+            irIqQB.setFormobj(mFormobj);
+            lrIq.setNamespace("PersonMsgMaRequest");
+            lrIq.setQuery(irIqQB);
+            mSf.setIq(lrIq);
+            Gson gson = new Gson();
+            String json = gson.toJson(mSf);
+            mOfficialBaseGridUpdatePresenter.updateDate(json);
         }
-        mFormobj.setGENDER(GENDER);
-        mFormobj.setCARD_NUM(CARD_NUM);
-        mFormobj.setPOLITICAL_STATUS(POLITICAL_STATUS);
-        mFormobj.setEDUCATION(EDUCATION);
-        mFormobj.setMARITAL_STATUS(MARITAL_STATUS);
-        mFormobj.setDOMICILE(DOMICILE);
-        mFormobj.setPHONE(PHONE);
-        mFormobj.setWORK(WORK);
-        mFormobj.setHOBBY(HOBBY);
-        mFormobj.setREMARK1(REMARK1);
-        mFormobj.setOUTADDRESS(OUTADDRESS);
-        mFormobj.setSORT(SORT);
-        mFormobj.setBADDRESS(address);
-        mFormobj.setBLONGITUDE(longitude);
-        mFormobj.setBLATITUDE(latitude);
+    }
 
-        irIqQB.setFormobj(mFormobj);
-        lrIq.setNamespace("PersonMsgMaRequest");
-        lrIq.setQuery(irIqQB);
-        mSf.setIq(lrIq);
-        Gson gson = new Gson();
-        String json = gson.toJson(mSf);
-        mOfficialBaseGridUpdatePresenter.updateDate(json);
+    private void showMessage(String msg, Dialog dialog) {
+        dialog.dismiss();
+        Toast.makeText(UIUtils.getContext(), msg+"不能为空", Toast.LENGTH_SHORT).show();
     }
 
     @Override

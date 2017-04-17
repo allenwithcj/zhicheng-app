@@ -74,6 +74,14 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
                 String value = intent.getStringExtra("value");
                 String type = intent.getStringExtra("type");
                 if (type.equals(Constant.TYPE_RELATION)) {
+                    if(value.equals("本人")){
+                        holder.grid_base_huzu_name.setText("");
+                        holder.grid_base_huzu_name.setBackgroundColor(getResources().getColor(R.color.gray_text));
+                        holder.grid_base_huzu_name.setClickable(false);
+                    }else{
+                        holder.grid_base_huzu_name.setBackgroundColor(getResources().getColor(R.color.white));
+                        holder.grid_base_huzu_name.setClickable(true);
+                    }
                     holder.grid_base_add_relation.setText(value);
                 }else if (type.equals(Constant.TYPE_SEX)) {
                     holder.grid_base_add_sex.setText(value);

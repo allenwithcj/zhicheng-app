@@ -1,5 +1,6 @@
 package com.zhicheng.ui.adapter;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +35,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
     private String ZZ_RESIDENCE, GRIDNAME;
     private String REMARK2;
     private String CARD_NUM, NAME, RELATION, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
-            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT;
+            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT,HUZU;
 
     private OfficialBaseGridAddPresenter mOfficialBaseGridAddPresenter;
     private ItemViewHolder holder;
@@ -93,13 +94,40 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         REMARK1 = holder.grid_base_add_remark1.getText().toString();
         OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
         SORT = holder.grid_base_add_rkfl.getText().toString();
+        HUZU = holder.grid_base_huzu_name.getText().toString();
 
         REMARK2 = holder.grid_base_add_lessor_remark2.getText().toString();
-
-        if (GENDER.equals("") || MARITAL_STATUS.equals("")) {
-            dialog.dismiss();
-            Toast.makeText(UIUtils.getContext(), "性别和婚姻选项不能为空", Toast.LENGTH_SHORT).show();
-        } else {
+        if(NAME.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_name),dialog);
+        }else if(ZZ_RESIDENCE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(GENDER.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(MARITAL_STATUS.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(EDUCATION.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(POLITICAL_STATUS.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(SORT.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(HUZU.equals("")){
+            if(!RELATION.equals("0")){
+                showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+            }
+        }else if(RELATION.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(REMARK1.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(REMARK2.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(PHONE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(DOMICILE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(HOBBY.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else {
             SubmitOrdinaryFormRequest mSf = new SubmitOrdinaryFormRequest();
             SubmitOrdinaryFormRequest.IqBean lrIq = new SubmitOrdinaryFormRequest.IqBean();
             SubmitOrdinaryFormRequest.IqBean.QueryBean irIqQB = new SubmitOrdinaryFormRequest.IqBean.QueryBean();
@@ -116,7 +144,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             mFormobj.setNAME(NAME);
             mFormobj.setRELATION(RELATION);
             if(RELATION.equals("0")){
-                mFormobj.setHUZU(NAME);
+                mFormobj.setHUZU("");
             }else {
                 mFormobj.setHUZU(hzId);
             }
@@ -144,6 +172,11 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             String json = gson.toJson(mSf);
             mOfficialBaseGridAddPresenter.addDate(json);
         }
+    }
+
+    private void showMessage(String msg, Dialog dialog) {
+        dialog.dismiss();
+        Toast.makeText(UIUtils.getContext(), msg+"不能为空", Toast.LENGTH_SHORT).show();
     }
 
 
