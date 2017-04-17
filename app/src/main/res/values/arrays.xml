@@ -11,6 +11,8 @@
         <item>兄、弟、姐、妹</item>
         <item>其他</item>
         <item>承租人</item>
+        <item>媳</item>
+        <item>婿</item>
     </string-array>
 
     <string-array name="sex">
@@ -92,7 +94,6 @@
         <item>残疾人</item>
         <item>90岁以上老人</item>
         <item>孤寡老人</item>
-        <item>计生优抚对象</item>
         <item>计生奖抚对象</item>
         <item>计生特抚对象</item>
         <item>孤儿</item>
