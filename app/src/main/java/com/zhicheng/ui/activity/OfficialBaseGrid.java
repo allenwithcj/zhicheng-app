@@ -90,6 +90,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private PersonQueryRequest.IqBean.QueryBean mQb;
     private TextView search_count;
     private int page;
+    private boolean isSearch = false;
 
 
     public static OfficialBaseGrid getInstance(){
@@ -169,6 +170,9 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     || actionId == EditorInfo.IME_ACTION_DONE
                     || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
                     && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                isSearch = true;
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mClearEditText.getWindowToken(), 0);
                 dialog = new AlertDialog.Builder(this, R.style.dialog)
                         .setView(R.layout.z_loading_view)
                         .setCancelable(false)
@@ -214,6 +218,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             @Override
             public void afterTextChanged(Editable editable) {
                 if(editable.toString().isEmpty()){
+                    isSearch = false;
                     onRefresh();
                 }
             }
@@ -614,11 +619,5 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         mLocationClient.requestLocation();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mClearEditText.getWindowToken(), 0);
-    }
 
 }
