@@ -135,7 +135,6 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
         mFilter.addAction("com.grid.huzu");
         registerReceiver(receiver, mFilter);
         title_name.setText(getResources().getString(R.string.grid_base_detail_title));
-        mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
 
         setSendLocation(maps -> {
             latitude = maps.get("latitude");

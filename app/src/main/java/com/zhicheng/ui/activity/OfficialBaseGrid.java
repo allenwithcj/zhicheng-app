@@ -139,7 +139,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
         title_name.setText(getResources().getString(R.string.grid_base_title));
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

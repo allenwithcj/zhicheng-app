@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -43,6 +44,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     private String latitude,longitude,address;
     private PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean mPrelogsBean;
     private String hzId;
+    private TextView title_name;
 
     public interface sendLocation {
         void onSendLocation(Map<String, String> maps);
@@ -111,6 +113,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
         BDLocationInit.getInstance().initLocation(mLocationClient);
         myLocationListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myLocationListener);
+        title_name = (TextView)findViewById(R.id.title_name);
         //开启定位
         openGps();
         mOfficialBaseGridAddPresenter = new OfficialBaseGridAddPresenterImpl(this);
@@ -122,7 +125,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
         mFilter.addAction("com.grid.type");
         mFilter.addAction("com.grid.huzu");
         registerReceiver(receiver, mFilter);
-        mToolbar.setNavigationIcon(R.drawable.ic_action_clear);
+        title_name.setText(getResources().getString(R.string.grid_base_add_title));
 
         setSendLocation(maps -> {
             latitude = maps.get("latitude");
