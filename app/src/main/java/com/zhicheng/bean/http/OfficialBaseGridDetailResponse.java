@@ -106,6 +106,10 @@ public class OfficialBaseGridDetailResponse {
                 private String BADDRESS;
                 private String BLONGITUDE;
                 private String BLATITUDE;
+                private String FLAG;//是否有效
+                private String HZNAME;//户主姓名
+                private String USERNAME;//采集人姓名
+                private String PERSONAGE;//年龄
 
                 public String getID() {
                     return ID;
@@ -298,6 +302,38 @@ public class OfficialBaseGridDetailResponse {
 
                 public void setBLATITUDE(String BLATITUDE) {
                     this.BLATITUDE = BLATITUDE;
+                }
+
+                public String getFLAG() {
+                    return FLAG;
+                }
+
+                public void setFLAG(String FLAG) {
+                    this.FLAG = FLAG;
+                }
+
+                public String getHZNAME() {
+                    return HZNAME;
+                }
+
+                public void setHZNAME(String HZNAME) {
+                    this.HZNAME = HZNAME;
+                }
+
+                public String getUSERNAME() {
+                    return USERNAME;
+                }
+
+                public void setUSERNAME(String USERNAME) {
+                    this.USERNAME = USERNAME;
+                }
+
+                public String getPERSONAGE() {
+                    return PERSONAGE;
+                }
+
+                public void setPERSONAGE(String PERSONAGE) {
+                    this.PERSONAGE = PERSONAGE;
                 }
             }
         }

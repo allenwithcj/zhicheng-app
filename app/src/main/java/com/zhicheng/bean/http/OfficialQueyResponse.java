@@ -119,6 +119,7 @@ public class OfficialQueyResponse {
                     private String NAME;
                     private String HUZU;
                     private String REPORTUSER;
+                    private String ZZ_RESIDENCE;
 
                     public String getDOMICILE() {
                         return DOMICILE;
@@ -158,6 +159,14 @@ public class OfficialQueyResponse {
 
                     public void setREPORTUSER(String REPORTUSER) {
                         this.REPORTUSER = REPORTUSER;
+                    }
+
+                    public String getZZ_RESIDENCE() {
+                        return ZZ_RESIDENCE;
+                    }
+
+                    public void setZZ_RESIDENCE(String ZZ_RESIDENCE) {
+                        this.ZZ_RESIDENCE = ZZ_RESIDENCE;
                     }
                 }
             }

@@ -8,4 +8,7 @@ public interface OfficialBaseGridQueryPresenter {
     void query(String rBody, int start);
 
     void loadDetail(String js);
+
+    //模糊查询和高级搜索
+    void queryByCondition(String js);
 }

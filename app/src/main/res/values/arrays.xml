@@ -76,14 +76,10 @@
     </string-array>
 
     <string-array name="married">
-        <item>未婚</item>
-        <item>已婚</item>
         <item>离婚</item>
         <item>丧偶</item>
-        <item>初婚</item>
-        <item>再婚</item>
-        <item>复婚</item>
-        <item>未说明</item>
+        <item>未婚</item>
+        <item>已婚</item>
     </string-array>
 
     <string-array name="remark1">

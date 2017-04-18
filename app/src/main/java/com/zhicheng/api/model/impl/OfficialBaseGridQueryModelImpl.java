@@ -8,6 +8,7 @@ import com.zhicheng.api.model.OfficialBaseGridQueryModel;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.OfficialBaseGridDetailResponse;
 import com.zhicheng.bean.http.OfficialQueyResponse;
+import com.zhicheng.bean.http.PersonQueryResponse;
 import com.zhicheng.common.URL;
 
 import java.net.UnknownHostException;
@@ -84,6 +85,39 @@ public class OfficialBaseGridQueryModelImpl implements OfficialBaseGridQueryMode
                             listener.onComplected(officialBaseGridDetailResponseResponse.body());
                         } else {
                             listener.onFailed(new BaseResponse(officialBaseGridDetailResponseResponse.code(), officialBaseGridDetailResponseResponse.message()));
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void queryByCondition(String js, ApiCompleteListener listener) {
+        OfficialBaseGridQueryService mOfficialBaseGridQueryService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialBaseGridQueryService.class);
+        mOfficialBaseGridQueryService.queryByCondition(js)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<PersonQueryResponse>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException) {
+                            listener.onFailed(null);
+                            return;
+                        }
+                        BaseApplication.checkLogin();
+                        listener.onFailed(new BaseResponse(404, e.getMessage()));
+                    }
+
+                    @Override
+                    public void onNext(Response<PersonQueryResponse> mOfficialQueyResponse) {
+                        if (mOfficialQueyResponse.isSuccessful()) {
+                            listener.onComplected(mOfficialQueyResponse.body());
+                        } else {
+                            listener.onFailed(new BaseResponse(mOfficialQueyResponse.code(), mOfficialQueyResponse.message()));
                         }
                     }
                 });

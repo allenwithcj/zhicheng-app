@@ -35,7 +35,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
     private String ZZ_RESIDENCE, GRIDNAME;
     private String REMARK2;
     private String CARD_NUM, NAME, RELATION, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
-            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT,HUZU;
+            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT,HUZU,AGE;
 
     private OfficialBaseGridAddPresenter mOfficialBaseGridAddPresenter;
     private ItemViewHolder holder;
@@ -96,11 +96,18 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         SORT = holder.grid_base_add_rkfl.getText().toString();
         HUZU = holder.grid_base_huzu_name.getText().toString();
         REMARK2 = holder.grid_base_add_remark1.getText().toString();
+        AGE = holder.grid_base_add_age.getText().toString();
 
         if(NAME.equals("")){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_name),dialog);
         }else if(ZZ_RESIDENCE.equals("")){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(DOMICILE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_brithplace),dialog);
+        }else if(PHONE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_telephone),dialog);
+        }else if(AGE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_age),dialog);
         }else if(GENDER.equals("")|| GENDER == null){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_sex),dialog);
         }else if(MARITAL_STATUS.equals("") || MARITAL_STATUS == null){
@@ -117,12 +124,6 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_lessor_remark),dialog);
         }else if(REMARK2.equals("")){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_remark),dialog);
-        }else if(PHONE.equals("")){
-            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_telephone),dialog);
-        }else if(DOMICILE.equals("")){
-            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_brithplace),dialog);
-        }else if(HOBBY.equals("")){
-            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_hobby),dialog);
         }else if(HUZU.equals("")){
             if(!RELATION.equals("0")){
                 showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_huzu_name),dialog);
@@ -142,6 +143,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         SubmitOrdinaryFormRequest.IqBean.QueryBean.Formobj mFormobj = new SubmitOrdinaryFormRequest.IqBean.QueryBean.Formobj();
         mFormobj.setZZ_RESIDENCE(ZZ_RESIDENCE);
         mFormobj.setGRIDNAME(GRIDNAME);
+        mFormobj.setPERSONAGE(AGE);
 
         mFormobj.setRENTNAME("");
         mFormobj.setREMARK2(REMARK2);
@@ -170,6 +172,9 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         mFormobj.setBADDRESS(address);
         mFormobj.setBLONGITUDE(longitude);
         mFormobj.setBLATITUDE(latitude);
+        mFormobj.setFLAG("1");
+        mFormobj.setHZNAME(HUZU);
+        mFormobj.setUSERNAME(mDataBase.getLocalConfig().getUserName());
 
         irIqQB.setFormobj(mFormobj);
         lrIq.setNamespace("PersonMsgMaRequest");
@@ -207,6 +212,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         public TextView grid_base_add_remark1;
         public EditText grid_base_add_outaddress;
         public TextView grid_base_add_rkfl;
+        private EditText grid_base_add_age;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -231,6 +237,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             grid_base_add_remark1 = (TextView) itemView.findViewById(R.id.grid_base_add_remark1);
             grid_base_add_outaddress = (EditText) itemView.findViewById(R.id.grid_base_add_outaddress);
             grid_base_add_rkfl = (TextView) itemView.findViewById(R.id.input_rkfl);
+            grid_base_add_age = (EditText)itemView.findViewById(R.id.grid_base_add_age);
             grid_base_huzu_name.setVisibility(View.VISIBLE);
 
 

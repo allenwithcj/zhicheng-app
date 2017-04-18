@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -34,10 +33,8 @@ import com.zhicheng.api.presenter.impl.CaseQueryPresenterImpl;
 import com.zhicheng.api.view.CaseQueryView;
 import com.zhicheng.bean.http.CaseQueryResponse;
 import com.zhicheng.bean.json.CaseQueryRequest;
-import com.zhicheng.holder.itemsprovider.Line;
 import com.zhicheng.ui.activity.GridNameActivity;
 import com.zhicheng.ui.activity.OfficialFinishDetail;
-import com.zhicheng.ui.activity.OfficialNoFinishDetails;
 import com.zhicheng.ui.activity.SearchViewActivity;
 import com.zhicheng.utils.common.UIUtils;
 

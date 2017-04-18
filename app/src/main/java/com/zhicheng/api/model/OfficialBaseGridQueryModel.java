@@ -12,5 +12,7 @@ public interface OfficialBaseGridQueryModel {
 
     void loadDetail(String j, ApiCompleteListener listener);
 
+    void queryByCondition(String js, ApiCompleteListener listener);
+
     void cancelLoading();
 }

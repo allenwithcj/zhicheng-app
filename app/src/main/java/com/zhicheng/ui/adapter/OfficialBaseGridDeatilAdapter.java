@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhicheng.R;
+import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.presenter.OfficialBaseGridUpdatePresenter;
 import com.zhicheng.api.presenter.impl.HuZuPresenterImpl;
 import com.zhicheng.api.view.HuZuView;
@@ -40,16 +41,19 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
     private String ZZ_RESIDENCE, GRIDNAME;
     private String REMARK2;
     private String CARD_NUM, NAME, RELATION, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
-            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT,HUZU;
+            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT,HUZU,AGE;
+    private String HUZUID;
     private OfficialBaseGridUpdatePresenter mOfficialBaseGridUpdatePresenter;
     private ItemViewHolder holder;
     private String[] mList;
     private String type;
     private HuZuPresenterImpl mHuZuPresenterImpl;
+    private DatabaseHelper mDatabaseHelper;
 
     public OfficialBaseGridDeatilAdapter(OfficialBaseGridUpdatePresenter mOfficialBaseGridUpdatePresenter) {
         this.mOfficialBaseGridUpdatePresenter = mOfficialBaseGridUpdatePresenter;
         mHuZuPresenterImpl = new HuZuPresenterImpl(this);
+        mDatabaseHelper = new DatabaseHelper();
     }
 
     public void setData(OfficialBaseGridDetailResponse mData) {
@@ -91,9 +95,10 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
                 ((ItemViewHolder) holder).grid_base_add_remark1.setText(mData.getIq().getQuery().getPreMsg().getREMARK1());
                 ((ItemViewHolder) holder).grid_base_add_outaddress.setText(mData.getIq().getQuery().getPreMsg().getOUTADDRESS());
                 ((ItemViewHolder) holder).grid_base_add_rkfl.setText(mData.getIq().getQuery().getPreMsg().getSORT());
+                ((ItemViewHolder) holder).grid_base_add_age.setText(mData.getIq().getQuery().getPreMsg().getPERSONAGE());
 
-                HUZU = mData.getIq().getQuery().getPreMsg().getHUZU();
-                getHuzuNAme(HUZU);
+                HUZUID = mData.getIq().getQuery().getPreMsg().getHUZU();
+                getHuzuNAme(HUZUID);
 
             }
         }
@@ -122,6 +127,8 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
         REMARK1 = holder.grid_base_add_lessor_remark2.getText().toString();
         OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
         SORT = holder.grid_base_add_rkfl.getText().toString();
+        AGE = holder.grid_base_add_age.getText().toString();
+        HUZU = holder.grid_base_huzu_name.getText().toString();
 
         REMARK2 = holder.grid_base_add_remark1.getText().toString();
 
@@ -129,6 +136,12 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_name),dialog);
         }else if(ZZ_RESIDENCE.equals("")){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_residence),dialog);
+        }else if(DOMICILE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_brithplace),dialog);
+        }else if(PHONE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_telephone),dialog);
+        }else if(AGE.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_age),dialog);
         }else if(GENDER.equals("")|| GENDER == null){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_sex),dialog);
         }else if(MARITAL_STATUS.equals("") || MARITAL_STATUS == null){
@@ -145,13 +158,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_lessor_remark),dialog);
         }else if(REMARK2.equals("")){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_remark),dialog);
-        }else if(PHONE.equals("")){
-            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_telephone),dialog);
-        }else if(DOMICILE.equals("")){
-            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_brithplace),dialog);
-        }else if(HOBBY.equals("")){
-            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_hobby),dialog);
-        }else if(HUZU.equals("")){
+        }else if(HUZUID.equals("")){
             if(!RELATION.equals("0")){
                 showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_huzu_name),dialog);
             }else{
@@ -181,7 +188,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
             if (RELATION.equals("0")) {
                 mFormobj.setHUZU("");
             } else {
-                mFormobj.setHUZU(HUZU);
+                mFormobj.setHUZU(HUZUID);
             }
         } else {
             mFormobj.setHUZU(hzID);
@@ -201,6 +208,9 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
         mFormobj.setBADDRESS(address);
         mFormobj.setBLONGITUDE(longitude);
         mFormobj.setBLATITUDE(latitude);
+        mFormobj.setFLAG("1");
+        mFormobj.setHZNAME(HUZU);
+        mFormobj.setUSERNAME(mDatabaseHelper.getLocalConfig().getUserName());
 
         irIqQB.setFormobj(mFormobj);
         lrIq.setNamespace("PersonMsgMaRequest");
@@ -268,6 +278,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
         public TextView grid_base_add_remark1;
         public EditText grid_base_add_outaddress;
         public TextView grid_base_add_rkfl;
+        private EditText grid_base_add_age;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -291,6 +302,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
             grid_base_add_remark1 = (TextView) itemView.findViewById(R.id.grid_base_add_remark1);
             grid_base_add_outaddress = (EditText) itemView.findViewById(R.id.grid_base_add_outaddress);
             grid_base_add_rkfl = (TextView) itemView.findViewById(R.id.input_rkfl);
+            grid_base_add_age = (EditText)itemView.findViewById(R.id.grid_base_add_age);
 
             grid_base_add_relation.setOnClickListener(view -> {
                 mList = UIUtils.getContext().getResources().getStringArray(R.array.relation);

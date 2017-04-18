@@ -8,6 +8,7 @@ import com.zhicheng.api.presenter.OfficialBaseGridQueryPresenter;
 import com.zhicheng.api.view.OfficialBaseGridQueryView;
 import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.http.OfficialQueyResponse;
+import com.zhicheng.bean.http.PersonQueryResponse;
 import com.zhicheng.utils.common.NetworkUtils;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -45,6 +46,14 @@ public class OfficialBaseGridQueryPresenterImpl implements OfficialBaseGridQuery
     }
 
     @Override
+    public void queryByCondition(String js) {
+        if (!NetworkUtils.isConnected(UIUtils.getContext())) {
+            mOfficialBaseGridQueryView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
+        }
+        mOfficialBaseGridQueryModel.queryByCondition(js, this);
+    }
+
+    @Override
     public void onComplected(Object result) {
         if (result instanceof OfficialQueyResponse) {
             if (start == 1) {
@@ -52,6 +61,9 @@ public class OfficialBaseGridQueryPresenterImpl implements OfficialBaseGridQuery
             } else {
                 mOfficialBaseGridQueryView.addData(result);
             }
+        }
+        if(result instanceof PersonQueryResponse){
+            mOfficialBaseGridQueryView.refreshData(result);
         }
         mOfficialBaseGridQueryView.hideProgress();
     }
