@@ -25,6 +25,8 @@ import com.zhicheng.api.view.OfficialBaseGridUpdateView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.OfficialBaseGridDetailResponse;
 import com.zhicheng.bean.http.PersonMsgMaResponse;
+import com.zhicheng.bean.http.PersonQueryFuzzyResponse;
+import com.zhicheng.bean.http.PersonQueryResponse;
 import com.zhicheng.bean.json.OfficialQueryDetailRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.OfficialBaseGridDeatilAdapter;
@@ -51,6 +53,7 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     private MyLocationListener myLocationListener;
     private String latitude,longitude,address;
     private PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean mPrelogsBean;
+    private PersonQueryFuzzyResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean fuzzyPrelogsBean;
     private String HUZU_ID;
 
     public interface sendLocation {
@@ -101,9 +104,16 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
                     holder.grid_base_add_hobby.setText(value);
                 }
             }else if(intent.getAction().equals("com.grid.huzu")){
-                mPrelogsBean = intent.getParcelableExtra("value");
-                HUZU_ID = mPrelogsBean.getID();
-                holder.grid_base_huzu_name.setText(mPrelogsBean.getNAME());
+                if(intent.getStringExtra("type").equals("fuzzy")){
+                    fuzzyPrelogsBean = (PersonQueryFuzzyResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean) intent.getSerializableExtra("value");
+                    HUZU_ID = fuzzyPrelogsBean.getID();
+                    holder.grid_base_huzu_name.setText(fuzzyPrelogsBean.getHZNAME());
+                }else{
+                    mPrelogsBean = intent.getParcelableExtra("value");
+                    HUZU_ID = mPrelogsBean.getID();
+                    holder.grid_base_huzu_name.setText(mPrelogsBean.getNAME());
+
+                }
             }
         }
     };

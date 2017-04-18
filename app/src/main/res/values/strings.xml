@@ -145,6 +145,9 @@
     <string name="hint_grid_time">请选择采集时间</string>
     <string name="grid_base_more_search">网格基础数据高级搜索</string>
     <string name="to">至</string>
+    <string name="hint_hz_search">请输入房主/户主姓名进行搜索</string>
+    <string name="hz_search">房主/户主姓名搜索</string>
+    <string name="no_data">未查询到数据</string>
 
     <string-array name="detail">
         <item>编号:</item>

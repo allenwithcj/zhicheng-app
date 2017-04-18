@@ -114,12 +114,12 @@ public class OfficialQueyResponse {
                      * Name : bcnc
                      */
 
-                    private String DOMICILE;
                     private String ID;
                     private String NAME;
-                    private String HUZU;
                     private String REPORTUSER;
                     private String ZZ_RESIDENCE;
+                    private String HUZU;
+                    private String DOMICILE;
 
                     public String getDOMICILE() {
                         return DOMICILE;
@@ -168,6 +168,7 @@ public class OfficialQueyResponse {
                     public void setZZ_RESIDENCE(String ZZ_RESIDENCE) {
                         this.ZZ_RESIDENCE = ZZ_RESIDENCE;
                     }
+
                 }
             }
         }

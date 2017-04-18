@@ -23,6 +23,8 @@ import com.zhicheng.api.view.OfficialBaseGridAddView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.JudgementLocationResponse;
 import com.zhicheng.bean.http.PersonMsgMaResponse;
+import com.zhicheng.bean.http.PersonQueryFuzzyResponse;
+import com.zhicheng.bean.http.PersonQueryResponse;
 import com.zhicheng.bean.json.JudgementLocationRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.OfficialBaseGridAddAdapter;
@@ -45,6 +47,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     private MyLocationListener myLocationListener;
     private String latitude,longitude,address;
     private PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean mPrelogsBean;
+    private PersonQueryFuzzyResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean fuzzyPrelogsBean;
     private String hzId;
 
     public interface sendLocation {
@@ -95,9 +98,15 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                     holder.grid_base_add_hobby.setText(value);
                 }
             }else if(intent.getAction().equals("com.grid.huzu")){
-                mPrelogsBean = intent.getParcelableExtra("value");
-                hzId = mPrelogsBean.getID();
-                holder.grid_base_huzu_name.setText(mPrelogsBean.getNAME());
+                if(intent.getStringExtra("type").equals("fuzzy")){
+                    fuzzyPrelogsBean = (PersonQueryFuzzyResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean) intent.getSerializableExtra("value");
+                    hzId = fuzzyPrelogsBean.getID();
+                    holder.grid_base_huzu_name.setText(fuzzyPrelogsBean.getHZNAME());
+                }else{
+                    mPrelogsBean = intent.getParcelableExtra("value");
+                    hzId = mPrelogsBean.getID();
+                    holder.grid_base_huzu_name.setText(mPrelogsBean.getNAME());
+                }
             }
         }
     };

@@ -25,6 +25,7 @@ import com.zhicheng.bean.json.SubmitOrdinaryFormRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.activity.BaseGridAddSelectType;
 import com.zhicheng.ui.activity.BaseGridAddSelectTypeMultipleChoice;
+import com.zhicheng.ui.activity.HuZuSearchActivity;
 import com.zhicheng.ui.activity.HuzuActivity;
 import com.zhicheng.ui.activity.OfficialBaseGrid;
 import com.zhicheng.utils.CodeUtils;
@@ -359,7 +360,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
             });
 
             grid_base_huzu_name.setOnClickListener(view -> {
-                UIUtils.startActivity(new Intent(UIUtils.getContext(), HuzuActivity.class));
+                UIUtils.startActivity(new Intent(UIUtils.getContext(), HuZuSearchActivity.class));
             });
 
         }
