@@ -9,5 +9,5 @@ public interface HuZuPresenter {
 
     void queryHuZuName(String s);
 
-    void fuzzySearchHuzu(String s, int start);
+    void fuzzyQueryHuZuName(String s, int start);
 }

@@ -23,6 +23,6 @@ public class URL {
 //    public static final String HOST_URL_SERVER_ZHICHENG = "http://219.131.197.178:9909";
 
     //feiqi  http://zhangxin.vicp.io:28373   http://feljj520.oicp.io/
-    public static final String HOST_URL_SERVER_ZHICHENG = "http://zhangxin.vicp.io:28373";
+    public static final String HOST_URL_SERVER_ZHICHENG = "http://feljj520.oicp.io/";
 
 }

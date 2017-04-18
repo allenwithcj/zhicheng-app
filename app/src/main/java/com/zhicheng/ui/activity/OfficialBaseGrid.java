@@ -86,7 +86,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private Button ad_search;
     private ClearEditText mClearEditText;
     private AlertDialog dialog;
-    private PersonQueryRequest mPersonQueryRequest;
+    private PersonQueryRequest.IqBean.QueryBean mQb;
     private TextView search_count;
     private int page;
 
@@ -102,7 +102,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.grid.search")) {
-                mPersonQueryRequest = (PersonQueryRequest) intent.getSerializableExtra("value");
+                PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
+                PersonQueryRequest.IqBean iq = new PersonQueryRequest.IqBean();
+                iq.setNamespace("PersonQueryRequest");
+                mQb = (PersonQueryRequest.IqBean.QueryBean) intent.getSerializableExtra("value");
+                iq.setQuery(mQb);
+                mPersonQueryRequest.setIq(iq);
                 Gson gson = new Gson();
                 mOfficialBaseGridQueryPresenterImpl.queryByCondition(gson.toJson(mPersonQueryRequest));
             }

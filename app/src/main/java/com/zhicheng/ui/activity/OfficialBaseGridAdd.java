@@ -14,8 +14,6 @@ import android.widget.Toast;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
-import com.baidu.platform.comapi.map.J;
-import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.OfficialBaseGridAddPresenter;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridAddPresenterImpl;
@@ -23,9 +21,6 @@ import com.zhicheng.api.view.OfficialBaseGridAddView;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.JudgementLocationResponse;
 import com.zhicheng.bean.http.PersonMsgMaResponse;
-import com.zhicheng.bean.http.PersonQueryFuzzyResponse;
-import com.zhicheng.bean.http.PersonQueryResponse;
-import com.zhicheng.bean.json.JudgementLocationRequest;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.OfficialBaseGridAddAdapter;
 import com.zhicheng.utils.BDLocationInit;
@@ -47,7 +42,6 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     private MyLocationListener myLocationListener;
     private String latitude,longitude,address;
     private PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean mPrelogsBean;
-    private PersonQueryFuzzyResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean fuzzyPrelogsBean;
     private String hzId;
 
     public interface sendLocation {
@@ -98,15 +92,14 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                     holder.grid_base_add_hobby.setText(value);
                 }
             }else if(intent.getAction().equals("com.grid.huzu")){
-                if(intent.getStringExtra("type").equals("fuzzy")){
-                    fuzzyPrelogsBean = (PersonQueryFuzzyResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean) intent.getSerializableExtra("value");
-                    hzId = fuzzyPrelogsBean.getID();
-                    holder.grid_base_huzu_name.setText(fuzzyPrelogsBean.getHZNAME());
+                mPrelogsBean = intent.getParcelableExtra("value");
+                hzId = mPrelogsBean.getID();
+                if(intent.getBooleanExtra("type",true)){
+                    holder.grid_base_huzu_name.setText(mPrelogsBean.getHZNAME());
                 }else{
-                    mPrelogsBean = intent.getParcelableExtra("value");
-                    hzId = mPrelogsBean.getID();
                     holder.grid_base_huzu_name.setText(mPrelogsBean.getNAME());
                 }
+
             }
         }
     };
