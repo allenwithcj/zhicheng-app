@@ -18,7 +18,6 @@ import com.zhicheng.api.presenter.OfficialBaseGridUpdatePresenter;
 import com.zhicheng.api.presenter.impl.HuZuPresenterImpl;
 import com.zhicheng.api.view.HuZuView;
 import com.zhicheng.bean.http.OfficialBaseGridDetailResponse;
-import com.zhicheng.bean.http.PersonMsgMaResponse;
 import com.zhicheng.bean.http.PersonMsgResponse;
 import com.zhicheng.bean.json.PersonMsgMaRequest;
 import com.zhicheng.bean.json.SubmitOrdinaryFormRequest;
@@ -26,12 +25,8 @@ import com.zhicheng.common.Constant;
 import com.zhicheng.ui.activity.BaseGridAddSelectType;
 import com.zhicheng.ui.activity.BaseGridAddSelectTypeMultipleChoice;
 import com.zhicheng.ui.activity.HuZuSearchActivity;
-import com.zhicheng.ui.activity.HuzuActivity;
-import com.zhicheng.ui.activity.OfficialBaseGrid;
 import com.zhicheng.utils.CodeUtils;
 import com.zhicheng.utils.common.UIUtils;
-
-import java.util.UUID;
 
 /**
  * Created by hp on 2017/3/2.

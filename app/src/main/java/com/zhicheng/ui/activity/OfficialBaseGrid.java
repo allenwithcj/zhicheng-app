@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -611,6 +612,13 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     public void openGps(){
         mLocationClient.start();
         mLocationClient.requestLocation();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mClearEditText.getWindowToken(), 0);
     }
 
 }
