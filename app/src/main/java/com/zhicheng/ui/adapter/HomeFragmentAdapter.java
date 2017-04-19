@@ -342,13 +342,13 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
         }
 
         @Override
-        public MyNoticeAdapter.NoticeItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public NoticeItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_official_notice_item,parent,false);
             return new NoticeItemViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(MyNoticeAdapter.NoticeItemViewHolder holder, int position) {
+        public void onBindViewHolder(NoticeItemViewHolder holder, int position) {
             if(data != null){
                 if(data.size() != 0){
                     holder.notice_title.setText(data.get(position).get(4).getValue());
@@ -411,13 +411,13 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
 
 
         @Override
-        public MyWorkAdapter.WorkItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public WorkItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_official_dynamic_item,parent,false);
             return new WorkItemViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(MyWorkAdapter.WorkItemViewHolder holder, int position) {
+        public void onBindViewHolder(WorkItemViewHolder holder, int position) {
             if(prelogs != null){
                 if(prelogs.size() != 0){
                     if(prelogs.get(position).getIMG().size() != 0){
@@ -434,6 +434,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
                     }
                     holder.work_content.setText(prelogs.get(position).getCOUNT());
                     holder.work_address.setText(prelogs.get(position).getLOCATION());
+                    holder.work_department.setText(prelogs.get(position).getDEPT());//---------->新增
                     String mTime = prelogs.get(position).getDATETIME();
                     if(mTime.length() != 0 && mTime.length() >2){
                         holder.work_time.setText(mTime.substring(0,mTime.length()-2));
@@ -468,6 +469,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
             private TextView work_content;
             private TextView work_address;
             private TextView work_time;
+            private TextView work_department;//---------->新增
 
             public WorkItemViewHolder(View itemView) {
                 super(itemView);
@@ -476,6 +478,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter implements Officia
                 work_content = (TextView) itemView.findViewById(R.id.work_content);
                 work_address = (TextView) itemView.findViewById(R.id.work_address);
                 work_time = (TextView) itemView.findViewById(R.id.work_time);
+                work_department= (TextView) itemView.findViewById(R.id.work_department);//---------->新增
 
             }
         }

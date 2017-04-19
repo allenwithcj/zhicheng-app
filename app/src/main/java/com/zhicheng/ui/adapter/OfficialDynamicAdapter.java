@@ -78,6 +78,7 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
             }
             ((OfficialDynamicHolder) holder).name.setText(mOfficialDynamicDetail.get(position).getUSERID());
             ((OfficialDynamicHolder) holder).content.setText(mOfficialDynamicDetail.get(position).getCOUNT());
+            ((OfficialDynamicHolder) holder).department.setText(mOfficialDynamicDetail.get(position).getDEPT());//------------------------------->新增
             ((OfficialDynamicHolder) holder).location.setText(mOfficialDynamicDetail.get(position).getLOCATION());
             String sendTime = mOfficialDynamicDetail.get(position).getDATETIME();
             if (sendTime.length() != 0 && sendTime.length() >2) {
@@ -139,6 +140,7 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
         private RecyclerView mImageRecycler;
         private TextView location;
         private TextView time;
+        private TextView department;//--------------------->新增
         private ImageButton more;
 
         OfficialDynamicHolder(View itemView) {
@@ -146,6 +148,7 @@ public class OfficialDynamicAdapter extends RecyclerView.Adapter {
             img = (ImageView) itemView.findViewById(R.id.img);
             name = (TextView) itemView.findViewById(R.id.name);
             content = (AlignTextView) itemView.findViewById(R.id.content);
+            department= (TextView) itemView.findViewById(R.id.department);
             mImageRecycler = (RecyclerView) itemView.findViewById(R.id.image_content);
             location = (TextView) itemView.findViewById(R.id.location);
             time = (TextView) itemView.findViewById(R.id.time);

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.zhicheng.R;
 import com.zhicheng.ui.activity.ContactActivity;
+import com.zhicheng.ui.activity.MyjobActivity;
 import com.zhicheng.ui.activity.OfficialSended;
 import com.zhicheng.ui.activity.SettingActivity;
 import com.zhicheng.utils.common.UIUtils;
@@ -62,21 +63,40 @@ public class InfoAdapter extends RecyclerView.Adapter {
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("通讯录");
                 ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(view -> {
                     UIUtils.startActivity(new Intent(UIUtils.getContext(), ContactActivity.class));
+                    ((InfoHeadViewHolder) holder).mVersion_notice.setText("");
                 });
             }else if(position == 1){
                 ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.baoliao));
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("我的爆料");
                 ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(view -> {
                     UIUtils.startActivity(new Intent(UIUtils.getContext(), OfficialSended.class));
+                    ((InfoHeadViewHolder) holder).mVersion_notice.setText("");
                 });
-            }else if(position == 2){
+            }else if (position==2){
+                ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.job));
+                ((InfoHeadViewHolder) holder).mTextViewHead.setText("我的工作动态");
+                ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(view ->{
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(), MyjobActivity.class));
+                    ((InfoHeadViewHolder) holder).mVersion_notice.setText("");
+                });
+            }else if (position==3){
+                ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.experience));
+                ((InfoHeadViewHolder) holder).mTextViewHead.setText("我的经验交流");
+                ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(view->{
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(),MyjobActivity.class));
+                    ((InfoHeadViewHolder) holder).mVersion_notice.setText("");
+                });
+            }
+            else if(position == 4){
                 ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.news));
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("通知推送");
-            }else if(position == 3){
+                ((InfoHeadViewHolder) holder).mVersion_notice.setText("");
+            }else if(position == 5){
                 ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.night));
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("夜间模式");
+                ((InfoHeadViewHolder) holder).mVersion_notice.setText("");
 
-            }else if(position == 4){
+            }else if(position == 6){
                 ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.refresh));
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("在线更新");
                 if (b) {
@@ -89,7 +109,7 @@ public class InfoAdapter extends RecyclerView.Adapter {
                 });
             }
         } else if (holder instanceof InfoLastViewHolder) {
-            if(position == 5){
+            if(position == 7){
                 ((InfoLastViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.set));
                 ((InfoLastViewHolder) holder).mTextViewLast.setText("设置");
                 ((InfoLastViewHolder) holder).mTextViewLast.setOnClickListener(view -> {
@@ -102,12 +122,12 @@ public class InfoAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return 6;
+        return 8;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 5) {
+        if (position == 7) {
             return TYPE_LAST;
         } else {
             return TYPE_HEAD;

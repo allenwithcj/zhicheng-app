@@ -110,11 +110,14 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     private String str2 = "";
     private String str3 = "";
     private int Type = 0;
+    private Context mContext = null;
     private Button row_button,village_button,net_button;
     private PopupWindow popupWindow;
     private ListView grid_listView;
     private TextView notice_tv;
     private ArrayAdapter<String> arrayAdapter;
+    private int Sin=1;
+    private int Sin2=1;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -129,16 +132,29 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 //                secondClass.setText(mEventType);
             }else if (intent.getAction().equals("com.searchNewFragment.item.result")){
                 parentPoint = intent.getStringExtra("parentPoint");
-                if (!firstClass.getText().equals("第一类")){
+//                if (!firstClass.getText().equals("第一类")){
+//                    String item=intent.getStringExtra("item");
+//                    secondClass.setText(item);
+//                    mEventType=item;
+//                }else{
+//                    String item=intent.getStringExtra("item");
+//                    firstClass.setText(item);
+//                    secondClass.setText("第二类");
+//                    mEventType=item;
+//                }
+                if (Sin==3){
                     String item=intent.getStringExtra("item");
                     secondClass.setText(item);
                     mEventType=item;
-                }else{
+                }else {
                     String item=intent.getStringExtra("item");
                     firstClass.setText(item);
+                    secondClass.setText("第二类");
                     mEventType=item;
+                    Sin=2;
                 }
             }
+
         }
     };
 
@@ -383,6 +399,8 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 showPopupWindow(view);
                 break;
             case R.id.firstClass:
+                Sin=2;
+                parentPoint="";
                 Intent intent =new Intent(getActivity(),SearchViewActivity.class);
                 intent.putExtra("fragment","Search");
                 intent.putExtra("isClassify","false");
@@ -394,6 +412,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                     secondClass.setEnabled(false);
                     Toast.makeText(getContext(),"请选择第一类",Toast.LENGTH_SHORT).show();
                 }else {
+                    Sin=3;
                     Intent sIntent =new Intent(getActivity(),SearchViewActivity.class);
                     sIntent.putExtra("fragment","Search");
                     sIntent.putExtra("isClassify","false");
@@ -411,7 +430,9 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             popupWindow=null;
         }else {
             View contentView=LayoutInflater.from(getContext()).inflate(R.layout.b_search_grid_select,null);
-            popupWindow = new PopupWindow(contentView,500,600);
+            int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+            int height = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+            popupWindow = new PopupWindow(contentView,width,height/2);
             AnimationUtils.darkBackgroundColor(getActivity().getWindow(),0.5f);
             row_button= (Button) contentView.findViewById(R.id.row_button);
             net_button= (Button) contentView.findViewById(R.id.net_button);

@@ -31,18 +31,27 @@
         android:orientation="vertical">
         <TextView
             android:id="@+id/work_content"
-            android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/content_size"
-            android:maxLines="2"/>
+            android:maxLines="2"
+            android:layout_alignParentTop="true"/>
+        <TextView
+            android:id="@+id/work_department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/work_address"
+            android:textSize="@dimen/content_size"
+            android:maxLines="2"
+            android:layout_marginTop="10dp"/>
+
         <TextView
             android:id="@+id/work_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/work_content"
             android:layout_above="@+id/work_time"
             android:textSize="@dimen/small_text_size"/>
+
         <TextView
             android:id="@+id/work_time"
             android:layout_width="wrap_content"
