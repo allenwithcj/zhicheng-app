@@ -63,7 +63,6 @@ public class MainModelImpl implements MainModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
@@ -279,7 +278,7 @@ public class MainModelImpl implements MainModel {
                                 formExportRequest(requestType, listener);
                                 BaseApplication.log_say("MainModelImpl", "FormExportRequest");
                             } else if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == -1) {
-                                BaseApplication.checkLogin();
+
                             } else {
                                 listener.onComplected(commonResponseResponse.body());
                                 Toast.makeText(UIUtils.getContext(), commonResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();

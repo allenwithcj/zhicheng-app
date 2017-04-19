@@ -64,13 +64,11 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
 
     private TextView mBtn;
     private OfficialDetailResponse OfficialDetail;
-    private String type;
     private AlertDialog dialog;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_selectimg);
-        type = getIntent().getStringExtra("type");
         parentView = (ViewGroup) findViewById(android.R.id.content).getRootView();
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -188,12 +186,7 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
 
     @Override
     protected int getMenuID() {
-        if (type.equals("nofinish")) {
-            //return R.menu.official_detail;
-            return R.menu.nofinish_action;
-        } else {
-            return super.getMenuID();
-        }
+        return R.menu.nofinish_action;
     }
 
 

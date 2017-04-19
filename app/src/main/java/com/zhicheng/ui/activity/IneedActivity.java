@@ -293,9 +293,6 @@ public class IneedActivity extends BaseActivity implements UpThingsView {
                 } else {
                     Toast.makeText(this, "请先定位地址", Toast.LENGTH_SHORT).show();
                 }
-            } else {
-//                BaseApplication.checkLogin();
-                Snackbar.make(mToolbar, "重连成功，请重新上报", Snackbar.LENGTH_SHORT).show();
             }
         }
         return super.onOptionsItemSelected(item);

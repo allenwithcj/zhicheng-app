@@ -29,6 +29,8 @@ import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -50,6 +52,10 @@ public class BaseApplication extends Application {
     public final static boolean DEBUG = true;
     private static BaseApplication mBaseApplication;
     private static int mainTid;
+
+    //唯一登录Service
+    public static LoginService mLoginService;
+
     //activity集合 管理所有Activity
     private static List<BaseActivity> mActivities;
 
@@ -57,6 +63,15 @@ public class BaseApplication extends Application {
         RoboGuice.setUseAnnotationDatabases(false);
     }
 
+    //登录计时器
+    private Timer timer = new Timer(true);
+    private TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run() {
+            checkLogin();
+            log_say("登录Timer------------>","保持登陆");
+        }
+    };
 
     @Override
     public void onCreate() {
@@ -77,6 +92,9 @@ public class BaseApplication extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
             builder.detectFileUriExposure();
         }
+        mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,LoginService.class);
+        allLogin();
+        timer.schedule(timerTask,25*60);
     }
 
     /**
@@ -95,6 +113,10 @@ public class BaseApplication extends Application {
      */
     public static int getMainTid() {
         return mainTid;
+    }
+
+    public static LoginService getLoginService(){
+        return mLoginService;
     }
 
     /**
@@ -134,7 +156,15 @@ public class BaseApplication extends Application {
         System.exit(0);
     }
 
-    public static void checkLogin() {
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        if (timer != null){
+            timer.cancel();
+        }
+    }
+
+    public static void allLogin() {
         DatabaseHelper mDataBase = new DatabaseHelper();
         LocalConfig config = mDataBase.getLocalConfig();
         if (config != null && config.getUserName() != null && config.getPwd() != null) {
@@ -158,8 +188,7 @@ public class BaseApplication extends Application {
                     .flatMap(new Func1<String, Observable<Response<LoginResponse>>>() {
                         @Override
                         public Observable<Response<LoginResponse>> call(String s) {
-                            LoginService mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, LoginService.class);
-
+//                            LoginService mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, LoginService.class);
                             return mLoginService.loginRequest(s);
                         }
                     })
@@ -185,7 +214,6 @@ public class BaseApplication extends Application {
                             if (loginResponseResponse.isSuccessful()) {
                                 if (loginResponseResponse.body() != null) {
                                     LoginResponse lr = loginResponseResponse.body();
-                                    BaseApplication.log_say(TAG, lr.getIq().getQuery().getErrorMessage());
                                 }
                             } else {
                                 Toast.makeText(getApplication(), loginResponseResponse.message(), Toast.LENGTH_SHORT).show();
@@ -197,10 +225,67 @@ public class BaseApplication extends Application {
         }
     }
 
+    public static void checkLogin(){
+        LoginRequest.IqBean.QueryBean irIqQB = new LoginRequest.IqBean.QueryBean();
+        LoginRequest.IqBean lrIq = new LoginRequest.IqBean();
+        LoginRequest lr = new LoginRequest();
+        lrIq.setNamespace("LoginRequest");
+        lrIq.setMobileVersion("");
+        lrIq.setVersion("");
+        lrIq.setResolution("");
+        irIqQB.setName("");
+        irIqQB.setPassword("");
+        irIqQB.setDeviceId("");
+        irIqQB.setLanguageType("");
+        irIqQB.setToken("");
+        lrIq.setQuery(irIqQB);
+        lr.setIq(lrIq);
+        Gson gson = new Gson();
+        String strEntity = gson.toJson(lr);
+        Observable.just(strEntity)
+                .flatMap(new Func1<String, Observable<Response<LoginResponse>>>() {
+                    @Override
+                    public Observable<Response<LoginResponse>> call(String s) {
+//                            LoginService mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, LoginService.class);
+                        return mLoginService.loginRequest(s);
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<LoginResponse>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException) {
+                            Toast.makeText(getApplication(), "", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Response<LoginResponse> loginResponseResponse) {
+                        if (loginResponseResponse.isSuccessful()) {
+                            if (loginResponseResponse.body() != null) {
+                                LoginResponse lr = loginResponseResponse.body();
+                            }
+                        } else {
+                            Toast.makeText(getApplication(), loginResponseResponse.message(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
 
     public static void log_say(String tag, String content) {
         if (BaseApplication.DEBUG) {
             Log.i(tag, content);
         }
     }
+
+
 }

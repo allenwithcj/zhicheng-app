@@ -76,7 +76,6 @@ public class OfficialModelImpl implements OfficialModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
@@ -111,7 +110,6 @@ public class OfficialModelImpl implements OfficialModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
@@ -147,7 +145,6 @@ public class OfficialModelImpl implements OfficialModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
@@ -283,7 +280,6 @@ public class OfficialModelImpl implements OfficialModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
                     }
 
@@ -423,7 +419,6 @@ public class OfficialModelImpl implements OfficialModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
 
                     }
@@ -459,7 +454,6 @@ public class OfficialModelImpl implements OfficialModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
 
                     }
@@ -495,7 +489,6 @@ public class OfficialModelImpl implements OfficialModel {
                             listener.onFailed(null);
                             return;
                         }
-                        BaseApplication.checkLogin();
                         listener.onFailed(new BaseResponse(404, e.getMessage()));
 
                     }
@@ -574,7 +567,7 @@ public class OfficialModelImpl implements OfficialModel {
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);
                                 formNode.setIq(iq);
-                                formNodeRequest(mMainService, gson.toJson(formNode), ineedResponseResponse, requestType, listener);
+                                formNodeRequest(mMainService, gson.toJson(formNode), requestType, listener);
                                 BaseApplication.log_say("MainModelImpl", "FormNodeRequest");
                             } else {
                                 listener.onComplected(ineedResponseResponse.body());
@@ -587,7 +580,7 @@ public class OfficialModelImpl implements OfficialModel {
                 });
     }
 
-    public void formNodeRequest(MainService s, String j, Response<IneedResponse> ineedResponseResponse, int requestType, ApiCompleteListener listener) {
+    public void formNodeRequest(MainService s, String j, int requestType, ApiCompleteListener listener) {
         s.FormNodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

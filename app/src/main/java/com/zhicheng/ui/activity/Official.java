@@ -184,7 +184,6 @@ public class Official extends BaseActivity implements OfficialView, SwipeRefresh
                     ((noFinishViewHolder) holder).noSuc.setOnClickListener(v -> {
                         Intent intent = new Intent(UIUtils.getContext(), OfficialNoFinishDetails.class);
                         intent.putExtra("detailId", data.get(position).get(0).getValue());
-                        intent.putExtra("type", "nofinish");
                         UIUtils.startActivity(intent);
                     });
                 }

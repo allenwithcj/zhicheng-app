@@ -18,6 +18,7 @@ import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.OfficialView;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.json.OfficialRequest;
+import com.zhicheng.ui.activity.MyNewsDetails;
 import com.zhicheng.ui.activity.OfficialNoFinishDetails;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -170,9 +171,8 @@ public class MyNewsFragment extends BaseFragment implements OfficialView, SwipeR
                     ((noFinishViewHolder) holder).desc.setText(tag[1] + data.get(position).get(4).getValue());
                     ((noFinishViewHolder) holder).deal.setText(tag[2] + data.get(position).get(3).getValue());
                     ((noFinishViewHolder) holder).noSuc.setOnClickListener(v -> {
-                        Intent intent = new Intent(UIUtils.getContext(), OfficialNoFinishDetails.class);
+                        Intent intent = new Intent(UIUtils.getContext(), MyNewsDetails.class);
                         intent.putExtra("detailId", data.get(position).get(0).getValue());
-                        intent.putExtra("type", "news");
                         UIUtils.startActivity(intent);
                     });
                 }
