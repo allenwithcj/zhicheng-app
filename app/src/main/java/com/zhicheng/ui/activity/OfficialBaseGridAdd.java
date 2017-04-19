@@ -148,7 +148,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mToolbar.setTitle("新增网格基础数据");
+        mToolbar.setTitle("");
         return super.onCreateOptionsMenu(menu);
     }
 

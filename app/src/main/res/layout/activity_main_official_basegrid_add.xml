@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:clipToPadding="false">
 
-    <include layout="@layout/activity_toolbar" />
+    <include layout="@layout/activity_home_toolbar" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/mRecycleView"

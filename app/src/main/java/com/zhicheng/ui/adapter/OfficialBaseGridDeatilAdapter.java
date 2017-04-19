@@ -198,6 +198,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
         mFormobj.setPHONE(PHONE);
         mFormobj.setWORK(WORK);
         mFormobj.setHOBBY(HOBBY);
+        mFormobj.setPERSONAGE(AGE);
         mFormobj.setREMARK1(REMARK1);
         mFormobj.setOUTADDRESS(OUTADDRESS);
         mFormobj.setSORT(SORT);

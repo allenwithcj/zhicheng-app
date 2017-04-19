@@ -90,7 +90,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     private PersonQueryRequest.IqBean.QueryBean mQb;
     private TextView search_count;
     private int page;
-    private boolean isSearch = false;
 
 
     public static OfficialBaseGrid getInstance(){
@@ -104,17 +103,23 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.grid.search")) {
-                PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
-                PersonQueryRequest.IqBean iq = new PersonQueryRequest.IqBean();
-                iq.setNamespace("PersonQueryRequest");
                 mQb = (PersonQueryRequest.IqBean.QueryBean) intent.getSerializableExtra("value");
-                iq.setQuery(mQb);
-                mPersonQueryRequest.setIq(iq);
-                Gson gson = new Gson();
-                mOfficialBaseGridQueryPresenterImpl.queryByCondition(gson.toJson(mPersonQueryRequest));
+                superiorSearch();
             }
         }
+
+
     };
+
+    private void superiorSearch() {
+        PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
+        PersonQueryRequest.IqBean iq = new PersonQueryRequest.IqBean();
+        iq.setNamespace("PersonQueryRequest");
+        iq.setQuery(mQb);
+        mPersonQueryRequest.setIq(iq);
+        Gson gson = new Gson();
+        mOfficialBaseGridQueryPresenterImpl.queryByCondition(gson.toJson(mPersonQueryRequest));
+    }
 
     @Override
     protected void initEvents() {
@@ -170,7 +175,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     || actionId == EditorInfo.IME_ACTION_DONE
                     || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
                     && event.getAction() == KeyEvent.ACTION_DOWN)) {
-                isSearch = true;
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mClearEditText.getWindowToken(), 0);
                 dialog = new AlertDialog.Builder(this, R.style.dialog)
@@ -182,21 +186,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                 if (mClearEditText.getText().toString().isEmpty()) {
                     showMessage(getResources().getString(R.string.hint_search));
                 } else {
-                    page = 1;
-                    PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
-                    PersonQueryRequest.IqBean iqb = new PersonQueryRequest.IqBean();
-                    PersonQueryRequest.IqBean.QueryBean qb = new PersonQueryRequest.IqBean.QueryBean();
-                    iqb.setNamespace("PersonQueryRequest");
-                    qb.setPkey(mClearEditText.getText().toString());
-                    qb.setBegintime("");
-                    qb.setEndtime("");
-                    qb.setUserid("");
-                    qb.setGrid("");
-                    qb.setPagenum(page);
-                    iqb.setQuery(qb);
-                    mPersonQueryRequest.setIq(iqb);
-                    Gson gson = new Gson();
-                    mOfficialBaseGridQueryPresenterImpl.queryByCondition(gson.toJson(mPersonQueryRequest));
+                    fuzzySearch();
 
                 }
                 return true;
@@ -218,11 +208,29 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             @Override
             public void afterTextChanged(Editable editable) {
                 if(editable.toString().isEmpty()){
-                    isSearch = false;
                     onRefresh();
                 }
             }
         });
+    }
+
+    private void fuzzySearch() {
+        page = 1;
+        PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
+        PersonQueryRequest.IqBean iqb = new PersonQueryRequest.IqBean();
+        PersonQueryRequest.IqBean.QueryBean qb = new PersonQueryRequest.IqBean.QueryBean();
+        iqb.setNamespace("PersonQueryRequest");
+        qb.setPkey(mClearEditText.getText().toString());
+        qb.setBegintime("");
+        qb.setEndtime("");
+        qb.setUserid("");
+        qb.setGrid("");
+        qb.setPagenum(page);
+        iqb.setQuery(qb);
+        mPersonQueryRequest.setIq(iqb);
+        Gson gson = new Gson();
+        mOfficialBaseGridQueryPresenterImpl.queryByCondition(gson.toJson(mPersonQueryRequest));
+        page ++;
     }
 
     @Override
@@ -484,6 +492,11 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     public void onRefresh() {
+        normalSearch();
+
+    }
+
+    private void normalSearch() {
         search_count.setVisibility(View.GONE);
         start = 1;
         String strEntity = createObj(start);
