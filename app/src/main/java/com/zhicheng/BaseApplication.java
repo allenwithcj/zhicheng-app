@@ -64,8 +64,8 @@ public class BaseApplication extends Application {
     }
 
     //登录计时器
-    private Timer timer = new Timer(true);
-    private TimerTask timerTask = new TimerTask() {
+    private static Timer timer = new Timer(true);
+    private static TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
             checkLogin();
@@ -93,7 +93,7 @@ public class BaseApplication extends Application {
             builder.detectFileUriExposure();
         }
         mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,LoginService.class);
-        allLogin();
+//        allLogin();
         timer.schedule(timerTask,25*60);
     }
 
@@ -153,6 +153,10 @@ public class BaseApplication extends Application {
 
     public static void quiteApplication() {
         clearAllActivity();
+        if (timer != null){
+            timerTask.cancel();
+            timer.cancel();
+        }
         System.exit(0);
     }
 
@@ -160,6 +164,7 @@ public class BaseApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
         if (timer != null){
+            timerTask.cancel();
             timer.cancel();
         }
     }
@@ -167,7 +172,9 @@ public class BaseApplication extends Application {
     public static void allLogin() {
         DatabaseHelper mDataBase = new DatabaseHelper();
         LocalConfig config = mDataBase.getLocalConfig();
+//        BaseApplication.log_say("------------>",config.getUserName());
         if (config != null && config.getUserName() != null && config.getPwd() != null) {
+            BaseApplication.log_say("------------>",config.getUserName());
             LoginRequest.IqBean.QueryBean irIqQB = new LoginRequest.IqBean.QueryBean();
             LoginRequest.IqBean lrIq = new LoginRequest.IqBean();
             LoginRequest lr = new LoginRequest();
@@ -226,58 +233,65 @@ public class BaseApplication extends Application {
     }
 
     public static void checkLogin(){
-        LoginRequest.IqBean.QueryBean irIqQB = new LoginRequest.IqBean.QueryBean();
-        LoginRequest.IqBean lrIq = new LoginRequest.IqBean();
-        LoginRequest lr = new LoginRequest();
-        lrIq.setNamespace("LoginRequest");
-        lrIq.setMobileVersion("");
-        lrIq.setVersion("");
-        lrIq.setResolution("");
-        irIqQB.setName("");
-        irIqQB.setPassword("");
-        irIqQB.setDeviceId("");
-        irIqQB.setLanguageType("");
-        irIqQB.setToken("");
-        lrIq.setQuery(irIqQB);
-        lr.setIq(lrIq);
-        Gson gson = new Gson();
-        String strEntity = gson.toJson(lr);
-        Observable.just(strEntity)
-                .flatMap(new Func1<String, Observable<Response<LoginResponse>>>() {
-                    @Override
-                    public Observable<Response<LoginResponse>> call(String s) {
+        DatabaseHelper mDataBase = new DatabaseHelper();
+        LocalConfig config = mDataBase.getLocalConfig();
+        if (config != null && config.getUserName() != null && config.getPwd() != null) {
+            BaseApplication.log_say("------------>",config.getUserName());
+            LoginRequest.IqBean.QueryBean irIqQB = new LoginRequest.IqBean.QueryBean();
+            LoginRequest.IqBean lrIq = new LoginRequest.IqBean();
+            LoginRequest lr = new LoginRequest();
+            lrIq.setNamespace("LoginRequest");
+            lrIq.setMobileVersion(config.getMobileVersion());
+            lrIq.setVersion(config.getVersion());
+            lrIq.setResolution(config.getResolution());
+            irIqQB.setName(config.getName());
+            irIqQB.setPassword(FileUtils.getBase64Pwd(config.getPwd()));
+            irIqQB.setDeviceId(config.getDeviceId());
+            irIqQB.setLanguageType(config.getLanguageType());
+            irIqQB.setToken(config.getToken());
+            lrIq.setQuery(irIqQB);
+            lr.setIq(lrIq);
+            Gson gson = new Gson();
+            String strEntity = gson.toJson(lr);
+            Observable.just(strEntity)
+                    .flatMap(new Func1<String, Observable<Response<LoginResponse>>>() {
+                        @Override
+                        public Observable<Response<LoginResponse>> call(String s) {
 //                            LoginService mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, LoginService.class);
-                        return mLoginService.loginRequest(s);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<LoginResponse>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException) {
-                            Toast.makeText(getApplication(), "", Toast.LENGTH_SHORT).show();
-                            return;
+                            return mLoginService.loginRequest(s);
                         }
-                        Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+                    })
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Response<LoginResponse>>() {
+                        @Override
+                        public void onCompleted() {
 
-                    @Override
-                    public void onNext(Response<LoginResponse> loginResponseResponse) {
-                        if (loginResponseResponse.isSuccessful()) {
-                            if (loginResponseResponse.body() != null) {
-                                LoginResponse lr = loginResponseResponse.body();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            if (e instanceof UnknownHostException) {
+                                Toast.makeText(getApplication(), "", Toast.LENGTH_SHORT).show();
+                                return;
                             }
-                        } else {
-                            Toast.makeText(getApplication(), loginResponseResponse.message(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-                    }
-                });
+
+                        @Override
+                        public void onNext(Response<LoginResponse> loginResponseResponse) {
+                            if (loginResponseResponse.isSuccessful()) {
+                                if (loginResponseResponse.body() != null) {
+                                    LoginResponse lr = loginResponseResponse.body();
+                                }
+                            } else {
+                                Toast.makeText(getApplication(), loginResponseResponse.message(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        } else {
+            UIUtils.startActivity(new Intent(getApplication(), LoginActivity.class));
+        }
     }
 
 

@@ -76,7 +76,6 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
             mFragmentManager = getSupportFragmentManager();
         }
         PermissionUtils.requestStoragePermission(this);
-        BaseApplication.checkLogin();
     }
 
 
@@ -259,7 +258,7 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
 
     @Override
     protected void onResume() {
-        //fresh();
+        fresh();
         super.onResume();
         firstClickBack = 0;
     }
@@ -278,7 +277,7 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (firstClickBack != 0 && System.currentTimeMillis() - firstClickBack < 1500) {
-                BaseApplication.clearAllActivity();
+                BaseApplication.quiteApplication();
                 return true;
             } else {
                 Toast.makeText(this, "再点一次退出本应用", Toast.LENGTH_SHORT).show();

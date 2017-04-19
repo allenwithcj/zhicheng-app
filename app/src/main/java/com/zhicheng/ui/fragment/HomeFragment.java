@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
+import com.zhicheng.api.common.database.DatabaseHelper;
+import com.zhicheng.api.common.database.LocalConfig;
 import com.zhicheng.api.presenter.impl.MainPresenterImpl;
 import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.MainView;
@@ -60,7 +62,11 @@ public class HomeFragment extends BaseFragment implements MainView, OfficialView
     private void getNofinshCount() {
         start = 1;
         String strEntity = createObj(start);
-        mOfficialPresenterImpl.loadNoFinish(strEntity, start);
+        DatabaseHelper mDataBase = new DatabaseHelper();
+        LocalConfig config = mDataBase.getLocalConfig();
+        if (config != null && config.getUserName() != null && config.getPwd() != null) {
+            mOfficialPresenterImpl.loadNoFinish(strEntity, start);
+        }
         start++;
     }
 
@@ -133,7 +139,11 @@ public class HomeFragment extends BaseFragment implements MainView, OfficialView
         Gson gson = new Gson();
         String json = gson.toJson(mNewsCaseTotalRequest);
         BaseApplication.log_say(TAG, json);
-        mMainPresenterImpl.loadMain(json);
+        DatabaseHelper mDataBase = new DatabaseHelper();
+        LocalConfig config = mDataBase.getLocalConfig();
+        if (config != null && config.getUserName() != null && config.getPwd() != null) {
+            mMainPresenterImpl.loadMain(json);
+        }
     }
 
     @Override

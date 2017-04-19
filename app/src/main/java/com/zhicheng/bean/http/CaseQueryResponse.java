@@ -90,6 +90,9 @@ public class CaseQueryResponse {
 
                 private int allcasenum;
                 private List<CasesBean> cases;
+                private int ztal;
+                private int btal;
+                private int gtal;
 
                 public int getAllcasenum() {
                     return allcasenum;
@@ -97,6 +100,30 @@ public class CaseQueryResponse {
 
                 public void setAllcasenum(int allcasenum) {
                     this.allcasenum = allcasenum;
+                }
+
+                public int getZtal() {
+                    return ztal;
+                }
+
+                public void setZtal(int ztal) {
+                    this.ztal = ztal;
+                }
+
+                public int getBtal() {
+                    return btal;
+                }
+
+                public void setBtal(int btal) {
+                    this.btal = btal;
+                }
+
+                public int getGtal() {
+                    return gtal;
+                }
+
+                public void setGtal(int gtal) {
+                    this.gtal = gtal;
                 }
 
                 public List<CasesBean> getCases() {

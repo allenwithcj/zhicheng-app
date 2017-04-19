@@ -194,7 +194,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            BaseApplication.clearAllActivity();
+            BaseApplication.quiteApplication();
         }
         return super.onKeyDown(keyCode, event);
     }

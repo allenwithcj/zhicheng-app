@@ -35,6 +35,7 @@ import com.zhicheng.common.URL;
 import com.zhicheng.ui.activity.LoginActivity;
 import com.zhicheng.ui.adapter.InfoAdapter;
 import com.zhicheng.utils.CircleImageView;
+import com.zhicheng.utils.common.PermissionUtils;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.util.HashMap;

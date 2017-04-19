@@ -110,14 +110,13 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     private String str2 = "";
     private String str3 = "";
     private int Type = 0;
-    private Context mContext = null;
-    private Button row_button,village_button,net_button;
+    private RadioGroup grid_group;
+    private RadioButton row_button,village_button,grid_button;
     private PopupWindow popupWindow;
     private ListView grid_listView;
     private TextView notice_tv;
     private ArrayAdapter<String> arrayAdapter;
     private int Sin=1;
-    private int Sin2=1;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -131,7 +130,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 //                mEventType = mNode.get(8);
 //                secondClass.setText(mEventType);
             }else if (intent.getAction().equals("com.searchNewFragment.item.result")){
-                parentPoint = intent.getStringExtra("parentPoint");
+
 //                if (!firstClass.getText().equals("第一类")){
 //                    String item=intent.getStringExtra("item");
 //                    secondClass.setText(item);
@@ -147,6 +146,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                     secondClass.setText(item);
                     mEventType=item;
                 }else {
+                    parentPoint = intent.getStringExtra("parentPoint");
                     String item=intent.getStringExtra("item");
                     firstClass.setText(item);
                     secondClass.setText("第二类");
@@ -276,9 +276,11 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     public void refreshData(Object result) {
         if (result instanceof CaseQueryResponse) {
             if (((CaseQueryResponse) result).getIq().getQuery().getErrorCode() == 0) {
-
                 mSearchClassifyAdapter.addAllDate(((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getCases());
-
+                String str="<font color='gray_text'>共</font><font color='red'>"+((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getAllcasenum()+"</font><font color='gray_text'>宗事件，其中在办事件：</font><font color='red'>"
+                        +((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getZtal()+"</font><font color='gray_text'>宗，办结事件：</font><font color='red'>"+((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getBtal()
+                        +"</font><font color='gray_text'>宗，挂起事件</font><font color='red'>"+((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getGtal()+"</font><font color='gray_text'>宗</font>";
+                notice_tv.setText(Html.fromHtml(str));
             } else {
                 showMessage(((CaseQueryResponse) result).getIq().getQuery().getErrorMessage());
             }
@@ -431,12 +433,13 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         }else {
             View contentView=LayoutInflater.from(getContext()).inflate(R.layout.b_search_grid_select,null);
             int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
-            int height = getActivity().getWindowManager().getDefaultDisplay().getHeight();
-            popupWindow = new PopupWindow(contentView,width,height/2);
+            int height  = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+            popupWindow = new PopupWindow(contentView,width -width/4,width);
             AnimationUtils.darkBackgroundColor(getActivity().getWindow(),0.5f);
-            row_button= (Button) contentView.findViewById(R.id.row_button);
-            net_button= (Button) contentView.findViewById(R.id.net_button);
-            village_button= (Button) contentView.findViewById(R.id.village_button);
+            grid_group = (RadioGroup)contentView.findViewById(R.id.grid_group);
+            row_button= (RadioButton) contentView.findViewById(R.id.row_button);
+            grid_button= (RadioButton) contentView.findViewById(R.id.grid_button);
+            village_button= (RadioButton) contentView.findViewById(R.id.village_button);
             grid_listView = (ListView) contentView.findViewById(R.id.grid_listView);
             arrayAdapter = new ArrayAdapter<String>(getContext(),R.layout.text_view);
             grid_listView.setAdapter(arrayAdapter);
@@ -446,13 +449,24 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     if (Type == 0){
                         str1 = parent.getItemAtPosition(position).toString();
+                        grid_name.setText(str1);
                         Type=3;
+                        if (popupWindow != null && popupWindow.isShowing()){
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                        }
                     }else if (Type==1){
                         str2=parent.getItemAtPosition(position).toString();
+                        grid_name.setText(str2);
                         Type=3;
+                        if (popupWindow != null && popupWindow.isShowing()){
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                        }
                     }else if (Type==2){
+
                         str3=parent.getItemAtPosition(position).toString();
-                        grid_name.setText(str1+"/"+str2+"/"+str3);
+                        grid_name.setText(str3);
                         if (popupWindow != null && popupWindow.isShowing()){
                             popupWindow.dismiss();
                             popupWindow = null;
@@ -463,26 +477,19 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 }
             });
 
-            row_button.setOnClickListener(new View.OnClickListener() {
+            grid_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View v) {
-                    getGridData(0);
-                    Type = 0;
-                }
-            });
-            village_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    getGridData(1);
-                    Type = 1;
-                }
-            });
-            net_button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getGridData(2);
-                    Type = 2;
+                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                    if (i == row_button.getId()) {
+                        getGridData(0);
+                        Type = 0;
+                    } else if (i == village_button.getId()) {
+                        getGridData(1);
+                        Type = 1;
+                    } else if (i == grid_button.getId()) {
+                        getGridData(2);
+                        Type = 2;
+                    }
                 }
             });
 
@@ -541,8 +548,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         public void addAllDate(List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> caselistcon) {
             this.caseList = caselistcon;
             notifyDataSetChanged();
-            String str="<font color='gray_text'>共</font><font color='red'>"+getItemCount()+"</font><font color='gray_text'>宗事件，其中在办事件：</font><font color='red'>0</font><font color='gray_text'>宗，办结事件：</font><font color='red'>0</font><font color='gray_text'>宗，挂起事件</font><font color='red'>0</font><font color='gray_text'>宗</font>";
-            notice_tv.setText(Html.fromHtml(str));
+
         }
 
         public void addDataList(List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> cases) {

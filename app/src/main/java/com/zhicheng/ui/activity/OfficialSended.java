@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.OfficialView;
@@ -97,7 +98,9 @@ public class OfficialSended extends BaseActivity implements OfficialView,
             if (((OfficialResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
                 mSendedAdapter.setDataList(((OfficialResponse) result).getIq().getQuery().getTable());
             } else {
-                showMessage(((OfficialResponse) result).getIq().getQuery().getErrorMessage());
+//                showMessage(((OfficialResponse) result).getIq().getQuery().getErrorMessage());
+                BaseApplication.checkLogin();
+                onRefresh();
             }
         }
     }
