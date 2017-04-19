@@ -76,6 +76,7 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
             mFragmentManager = getSupportFragmentManager();
         }
         PermissionUtils.requestStoragePermission(this);
+        BaseApplication.checkLogin();
     }
 
 
