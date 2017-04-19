@@ -4,22 +4,36 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
+import android.transition.Slide;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -28,22 +42,43 @@ import android.widget.Toast;
 
 import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.Gson;
+import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
+import com.zhicheng.api.common.ServiceFactory;
+import com.zhicheng.api.common.service.OfficialBaseGridService;
+import com.zhicheng.api.common.service.SearchService;
 import com.zhicheng.api.presenter.impl.CaseQueryPresenterImpl;
 import com.zhicheng.api.view.CaseQueryView;
+import com.zhicheng.bean.http.BaseResponse;
+import com.zhicheng.bean.http.CaseGridResponse;
 import com.zhicheng.bean.http.CaseQueryResponse;
+import com.zhicheng.bean.http.SearchBaoClassifyResponse;
+import com.zhicheng.bean.json.CaseGridRequest;
+import com.zhicheng.bean.json.CaseItemRequest;
 import com.zhicheng.bean.json.CaseQueryRequest;
+import com.zhicheng.common.URL;
+import com.zhicheng.holder.itemsprovider.Line;
 import com.zhicheng.ui.activity.GridNameActivity;
 import com.zhicheng.ui.activity.OfficialFinishDetail;
+import com.zhicheng.ui.activity.OfficialNoFinishDetails;
 import com.zhicheng.ui.activity.SearchViewActivity;
+import com.zhicheng.utils.common.AnimationUtils;
 import com.zhicheng.utils.common.UIUtils;
 
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Donson on 2017/1/17.
@@ -63,23 +98,46 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     private RadioGroup rg_type_group;
     private RadioButton handing,Finished,suspend;
     private Button btn_cancel, btn_confirm;
-    private LinearLayout date_layout,grid_layout,enventtype_layout;
-    private TextView eventtype,date_txt,grid_name;
+    private TextView firstClass,secondClass;
+    private LinearLayout date_layout,grid_layout,event_layout;
+    private TextView date_txt,grid_name;
     private String mCaseTime = "";
     private String mManageState = "";
     private String mGridName = "";
     private String mEventType = "";
+    private String parentPoint = "";
+    private String str1 = "";
+    private String str2 = "";
+    private String str3 = "";
+    private int Type = 0;
+    private Button row_button,village_button,net_button;
+    private PopupWindow popupWindow;
+    private ListView grid_listView;
+    private TextView notice_tv;
+    private ArrayAdapter<String> arrayAdapter;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+
             if (intent.getAction().equals("com.grid.gridNo")) {
                 String value = intent.getStringExtra("value");
-                 grid_name.setText(value);
-            }else if(intent.getAction().equals("com.search.classify.bao")){
-                ArrayList<String> mNode = intent.getStringArrayListExtra("node");
-                mEventType = mNode.get(3);
-                eventtype.setText(mEventType);
+                grid_name.setText(value);
+//            }else if(intent.getAction().equals("com.search.classify.bao")){
+//                ArrayList<String> mNode = intent.getStringArrayListExtra("node");
+//                mEventType = mNode.get(8);
+//                secondClass.setText(mEventType);
+            }else if (intent.getAction().equals("com.searchNewFragment.item.result")){
+                parentPoint = intent.getStringExtra("parentPoint");
+                if (!firstClass.getText().equals("第一类")){
+                    String item=intent.getStringExtra("item");
+                    secondClass.setText(item);
+                    mEventType=item;
+                }else{
+                    String item=intent.getStringExtra("item");
+                    firstClass.setText(item);
+                    mEventType=item;
+                }
             }
         }
     };
@@ -112,11 +170,13 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     protected void initEvents() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.search.classify.bao");
+        intentFilter.addAction("com.searchNewFragment.item.result");
         intentFilter.addAction("com.grid.gridNo");
         getActivity().registerReceiver(receiver, intentFilter);
         mDrawerLayout = (DrawerLayout) mRootView.findViewById(R.id.drawer_layout);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipeRefresh);
         mainContent = (RecyclerView) mRootView.findViewById(R.id.mRecycleView);
+        notice_tv= (TextView) mRootView.findViewById(R.id.notice_tv);
         mCaseQueryPresenterImpl = new CaseQueryPresenterImpl(this);
         //主内容RecyclerView
         mSearchClassifyAdapter = new SearchClassifyAdapter();
@@ -125,6 +185,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         mainContent.setAdapter(mSearchClassifyAdapter);
         mainContent.addOnScrollListener(new RecyclerViewScrollDetector());
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
         //侧滑栏内容RecyclerView
         rg_type_group = (RadioGroup) mRootView.findViewById(R.id.rg_type_group);
         handing = (RadioButton) mRootView.findViewById(R.id.handing);
@@ -136,19 +197,29 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
         date_layout = (LinearLayout) mRootView.findViewById(R.id.date_layout);
         grid_layout = (LinearLayout) mRootView.findViewById(R.id.grid_layout);
-        enventtype_layout  = (LinearLayout) mRootView.findViewById(R.id.enventtype_layout);
+
+        event_layout= (LinearLayout) mRootView.findViewById(R.id.event_layout);
 
         date_txt = (TextView) mRootView.findViewById(R.id.Date);
         grid_name = (TextView)mRootView.findViewById(R.id.grid_name);
-        eventtype = (TextView) mRootView.findViewById(R.id.eventtype);
+
+
+
+
+        firstClass= (TextView) mRootView.findViewById(R.id.firstClass);
+        secondClass= (TextView) mRootView.findViewById(R.id.secondClass);
 
 
         btn_cancel.setOnClickListener(this);
         btn_confirm.setOnClickListener(this);
         date_layout.setOnClickListener(this);
         grid_layout.setOnClickListener(this);
-        enventtype_layout.setOnClickListener(this);
+
         rg_type_group.setOnCheckedChangeListener(this);
+
+        firstClass.setOnClickListener(this);
+        secondClass.setOnClickListener(this);
+
 
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawerLayout, null, R.string.open, R.string.close) {
             @Override
@@ -189,7 +260,9 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     public void refreshData(Object result) {
         if (result instanceof CaseQueryResponse) {
             if (((CaseQueryResponse) result).getIq().getQuery().getErrorCode() == 0) {
+
                 mSearchClassifyAdapter.addAllDate(((CaseQueryResponse) result).getIq().getQuery().getCaselistcon().getCases());
+
             } else {
                 showMessage(((CaseQueryResponse) result).getIq().getQuery().getErrorMessage());
             }
@@ -276,8 +349,9 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 mCaseTime = "";
                 mGridName = "";
                 mEventType = "";
+                firstClass.setText("第一类");
+                secondClass.setText("第二类");
                 date_txt.setText("");
-                eventtype.setText("");
                 grid_name.setText("");
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 refresh();
@@ -285,7 +359,6 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
             case R.id.btn_confirm:
                 mGridName = grid_name.getText().toString();
-                mEventType = eventtype.getText().toString();
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 refresh();
                 break;
@@ -305,18 +378,108 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 break;
 
             case R.id.grid_layout:
-                Intent mIntent = new Intent(getActivity(), GridNameActivity.class);
-                UIUtils.startActivity(mIntent);
+//                Intent mIntent = new Intent(getActivity(), GridNameActivity.class);
+//                UIUtils.startActivity(mIntent);
+                showPopupWindow(view);
                 break;
-
-            case R.id.enventtype_layout:
-                Intent intent = new Intent(getActivity(), SearchViewActivity.class);
-                intent.putExtra("fragment", "Search");
-                intent.putExtra("isClassify", "true");
+            case R.id.firstClass:
+                Intent intent =new Intent(getActivity(),SearchViewActivity.class);
+                intent.putExtra("fragment","Search");
+                intent.putExtra("isClassify","false");
+                intent.putExtra("parentPoint",parentPoint);
                 UIUtils.startActivity(intent);
                 break;
+            case R.id.secondClass:
+                if (firstClass.getText().equals("第一类")){
+                    secondClass.setEnabled(false);
+                    Toast.makeText(getContext(),"请选择第一类",Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent sIntent =new Intent(getActivity(),SearchViewActivity.class);
+                    sIntent.putExtra("fragment","Search");
+                    sIntent.putExtra("isClassify","false");
+                    sIntent.putExtra("parentPoint",parentPoint);
+                    UIUtils.startActivity(sIntent);
+                }
+                break;
+
+
         }
     }
+    private void showPopupWindow(View view){
+        if (popupWindow!=null && popupWindow.isShowing()){
+            popupWindow.dismiss();
+            popupWindow=null;
+        }else {
+            View contentView=LayoutInflater.from(getContext()).inflate(R.layout.b_search_grid_select,null);
+            popupWindow = new PopupWindow(contentView,500,600);
+            AnimationUtils.darkBackgroundColor(getActivity().getWindow(),0.5f);
+            row_button= (Button) contentView.findViewById(R.id.row_button);
+            net_button= (Button) contentView.findViewById(R.id.net_button);
+            village_button= (Button) contentView.findViewById(R.id.village_button);
+            grid_listView = (ListView) contentView.findViewById(R.id.grid_listView);
+            arrayAdapter = new ArrayAdapter<String>(getContext(),R.layout.text_view);
+            grid_listView.setAdapter(arrayAdapter);
+            getGridData(0);
+            grid_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (Type == 0){
+                        str1 = parent.getItemAtPosition(position).toString();
+                        Type=3;
+                    }else if (Type==1){
+                        str2=parent.getItemAtPosition(position).toString();
+                        Type=3;
+                    }else if (Type==2){
+                        str3=parent.getItemAtPosition(position).toString();
+                        grid_name.setText(str1+"/"+str2+"/"+str3);
+                        if (popupWindow != null && popupWindow.isShowing()){
+                            popupWindow.dismiss();
+                            popupWindow = null;
+                            Type=3;
+                        }
+                    }
+
+                }
+            });
+
+            row_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getGridData(0);
+                    Type = 0;
+                }
+            });
+            village_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    getGridData(1);
+                    Type = 1;
+                }
+            });
+            net_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getGridData(2);
+                    Type = 2;
+                }
+            });
+
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow.setAnimationStyle(R.style.popwin_anim_style);
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    AnimationUtils.darkBackgroundColor(getActivity().getWindow(),1.0f);
+                }
+            });
+            popupWindow.showAtLocation(mRootView, Gravity.CENTER,0,0);
+        }
+
+    }
+
+
 
     private class SearchClassifyAdapter extends RecyclerView.Adapter {
         private List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> caseList;
@@ -357,12 +520,15 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         public void addAllDate(List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> caselistcon) {
             this.caseList = caselistcon;
             notifyDataSetChanged();
+            String str="<font color='gray_text'>共</font><font color='red'>"+getItemCount()+"</font><font color='gray_text'>宗事件，其中在办事件：</font><font color='red'>0</font><font color='gray_text'>宗，办结事件：</font><font color='red'>0</font><font color='gray_text'>宗，挂起事件</font><font color='red'>0</font><font color='gray_text'>宗</font>";
+            notice_tv.setText(Html.fromHtml(str));
         }
 
         public void addDataList(List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> cases) {
             int page = this.caseList.size();
             this.caseList.addAll(cases);
             this.notifyItemRangeInserted(page, cases.size());
+
         }
 
         private class SearchClassifyViewHolder extends RecyclerView.ViewHolder {
@@ -402,14 +568,85 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-
             lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
         }
+    }
+
+    private void getGridData(int type){
+
+        CaseGridRequest mCaseGridRequest = new CaseGridRequest();
+        CaseGridRequest.IqBean iqb = new CaseGridRequest.IqBean();
+        CaseGridRequest.IqBean.QueryBean qb = new CaseGridRequest.IqBean.QueryBean();
+        iqb.setNamespace("CaseGridRequest");
+        qb.setFlag("2");
+        iqb.setQuery(qb);
+        mCaseGridRequest.setIq(iqb);
+        Gson gson = new Gson();
+
+        OfficialBaseGridService mOfficialBaseGridService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialBaseGridService.class);
+        mOfficialBaseGridService.loadGridNames(gson.toJson(mCaseGridRequest))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<CaseGridResponse>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException) {
+                            showMessage(null);
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onNext(Response<CaseGridResponse> mCaseGridResponseResponse) {
+
+                        if (mCaseGridResponseResponse.isSuccessful()) {
+                            arrayAdapter.clear();
+                            if (type == 0){
+                                BaseApplication.log_say("------------>","sdfs");
+                                List<CaseGridResponse.IqBean.QueryBean.ItemsBean> items = (List<CaseGridResponse.IqBean.QueryBean.ItemsBean>) mCaseGridResponseResponse.body().getIq().getQuery().getItems();
+                                BaseApplication.log_say("-------------->",items.get(1).getFirstname()+" "+items.size());
+                                for (int i=0;i<items.size();i++){
+                                    BaseApplication.log_say("------------>","sdfdgfhgfs");
+                                    arrayAdapter.add(items.get(i).getFirstname());
+                                }
+                                arrayAdapter.notifyDataSetChanged();
+                            }else if (type==1){
+                                List<CaseGridResponse.IqBean.QueryBean.ItemsBean> items=mCaseGridResponseResponse.body().getIq().getQuery().getItems();
+                                for (int i=0;i<items.size();i++){
+                                    arrayAdapter.add(items.get(i).getSecondname());
+                                    BaseApplication.log_say("------------>",items.get(i).getSecondname());
+                                }
+                                arrayAdapter.notifyDataSetChanged();
+                            }else  if (type==2){
+                                List<CaseGridResponse.IqBean.QueryBean.ItemsBean> items=mCaseGridResponseResponse.body().getIq().getQuery().getItems();
+                                for (int i=0;i<items.size();i++){
+                                    arrayAdapter.add(items.get(i).getThirdname());
+                                    BaseApplication.log_say("------------>",items.get(i).getThirdname());
+                                }
+                                arrayAdapter.notifyDataSetChanged();
+                            }
+                            BaseApplication.log_say("------------>",mCaseGridResponseResponse.body().getIq().getQuery().getItems().get(0).getFirstname());
+
+                        } else {
+                            showMessage(mCaseGridResponseResponse.message());
+                        }
+                    }
+                });
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         getActivity().unregisterReceiver(receiver);
+        if (popupWindow!=null && popupWindow.isShowing()){
+            popupWindow.dismiss();
+        }
     }
+
+
 }

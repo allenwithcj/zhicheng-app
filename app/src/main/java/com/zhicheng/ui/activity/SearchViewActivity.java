@@ -1,20 +1,16 @@
 package com.zhicheng.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.SparseArray;
 import android.view.Menu;
 
 import com.zhicheng.R;
 import com.zhicheng.ui.fragment.SearchClassifyFragment;
 import com.zhicheng.ui.fragment.SearchFragment;
+import com.zhicheng.ui.fragment.SearchNewFragment;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import rx.Observable;
 
 /**
  * Created by Donson on 2017/1/17.
@@ -22,11 +18,15 @@ import rx.Observable;
 
 public class SearchViewActivity extends BaseActivity {
 
+
     @Override
     protected void initEvents() {
         setContentView(R.layout.z_search_view_activity);
         if (getIntent().getStringExtra("fragment").equals("Search")) {
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction ft = manager.beginTransaction();
             SearchFragment searchFragment;
+            SearchNewFragment searchNewFragment;
             String isClassify = getIntent().getStringExtra("isClassify");
             if (null != isClassify && isClassify.equals("true")) {
                 searchFragment = SearchFragment.newInstance(false, "");
@@ -37,12 +37,20 @@ public class SearchViewActivity extends BaseActivity {
                     });
                     openFragment(fragment, newFragment, type);
                 });
-            } else {
+                ft.add(R.id.searchView, searchFragment);
+            } else if (null != isClassify && isClassify.equals("false")){
+                String parentPoint = getIntent().getStringExtra("parentPoint");
+                if (null != parentPoint && parentPoint.equals("")){
+                    searchNewFragment = SearchNewFragment.newInstance(false,"");
+                    ft.add(R.id.searchView,searchNewFragment);
+                }else{
+                    searchNewFragment = SearchNewFragment.newInstance(false,parentPoint);
+                    ft.add(R.id.searchView,searchNewFragment);
+                }
+            }else {
                 searchFragment = SearchFragment.newInstance(getIntent().getStringExtra("action"));
+                ft.add(R.id.searchView, searchFragment);
             }
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction ft = manager.beginTransaction();
-            ft.add(R.id.searchView, searchFragment);
             ft.commit();
         } else {
             SearchClassifyFragment searchClassifyFragment = SearchClassifyFragment.newInstance();

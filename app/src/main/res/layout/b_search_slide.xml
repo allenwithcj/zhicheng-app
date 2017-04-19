@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:id="@+id/bg_layout"
-        android:orientation="vertical"
-        android:background="@color/red"
-        android:layout_width="match_parent"
-        android:layout_height="170dp" />
+    android:layout_height="match_parent">
 
     <View
         android:id="@+id/line1"
@@ -20,7 +12,7 @@
 
     <View
         android:id="@+id/line2"
-        android:layout_below="@+id/enventtype_layout"
+        android:layout_below="@+id/event_layout"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray_text" />
@@ -193,7 +185,64 @@
             android:layout_marginRight="10dp"
             android:background="@drawable/patrol_next_arrow" />
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/event_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/line1"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/patrol_heading"
+            android:gravity="center"
+            android:drawablePadding="5dp"
+            android:text="事件分类"
+            android:layout_marginBottom="10dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/firstClass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/recycle_touch_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:textColor="@color/radiobutton_textcolor"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="第一类"
+                android:drawableRight="@drawable/patrol_next_arrow" />
+            <TextView
+                android:id="@+id/secondClass"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/recycle_touch_bg"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:textColor="@color/radiobutton_textcolor"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="第二类"
+                android:drawableRight="@drawable/patrol_next_arrow"/>
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -221,44 +270,45 @@
             android:textColor="@color/red" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/enventtype_layout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/line1"
-        android:layout_alignParentStart="true">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:drawableLeft="@drawable/patrol_heading"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:drawablePadding="5dp"
-            android:text="事件分类" />
+    <!--<LinearLayout-->
+        <!--android:id="@+id/enventtype_layout"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/event_layout"-->
+        <!--android:layout_alignParentStart="true">-->
 
-        <TextView
-            android:id="@+id/eventtype"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/textView_padding"
-            android:layout_margin="@dimen/photo_margin"
-            android:layout_gravity="center"
-            android:textSize="@dimen/content_size"
-            android:textStyle="normal"
-            android:hint="请选择事件分类"
-            android:background="@null"
-            android:textColor="@color/black" />
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/patrol_next_arrow" />
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:drawableLeft="@drawable/patrol_heading"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:drawablePadding="5dp"-->
+            <!--android:text="事件分类" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/eventtype"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="2"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:padding="@dimen/textView_padding"-->
+            <!--android:layout_margin="@dimen/photo_margin"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textSize="@dimen/content_size"-->
+            <!--android:textStyle="normal"-->
+            <!--android:hint="请选择事件分类"-->
+            <!--android:background="@null"-->
+            <!--android:textColor="@color/black" />-->
+        <!--<ImageView-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:background="@drawable/patrol_next_arrow" />-->
+    <!--</LinearLayout>-->
 </RelativeLayout>
