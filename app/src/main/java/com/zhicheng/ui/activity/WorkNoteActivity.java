@@ -66,7 +66,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
     private LinearLayoutManager mLLM;
     private ImageView voice;
     private EditText mInput;
-    private ImageView emoji;
+    private TextView actionSend;
     private ImageView more;
 
     private String send_content;
@@ -130,7 +130,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
         voice = (ImageView) findViewById(R.id.voice);
         mInput = (EditText) findViewById(R.id.inputNote);
-        emoji = (ImageView) findViewById(R.id.emoji);
+        actionSend = (TextView) findViewById(R.id.action_send);
         more = (ImageView) findViewById(R.id.more);
         moreTools = (LinearLayout) findViewById(R.id.moreTools);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -145,7 +145,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         filter.showGif(false);
         voice.setOnClickListener(this);
         mInput.setOnClickListener(this);
-        emoji.setOnClickListener(this);
+        actionSend.setOnClickListener(this);
         more.setOnClickListener(this);
         date_layout.setOnClickListener(this);
 
@@ -337,6 +337,27 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                 break;
             case R.id.btn_search:
 
+                break;
+            case R.id.action_send:
+                dialog = new AlertDialog.Builder(this, R.style.dialog)
+                        .setView(R.layout.z_loading_view)
+                        .setCancelable(false)
+                        .create();
+                dialog.show();
+                if (mInput.getText().toString().isEmpty()) {
+                    dialog.dismiss();
+                    Snackbar.make(mToolbar, "工作日志不能为空", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    if (mImagePath.size() != 0) {
+                        GUID = UUID.randomUUID().toString();
+                        send_content = mInput.getText().toString();
+                        sendMessage(mImagePath, GUID, send_content);
+                    } else {
+                        dialog.dismiss();
+                        Toast.makeText(this, "工作日志图片不能为空", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
                 break;
         }
     }

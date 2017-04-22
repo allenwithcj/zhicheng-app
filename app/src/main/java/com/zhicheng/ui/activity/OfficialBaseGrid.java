@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.google.gson.Gson;
+import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.alarm.LocationUpReciver;
 import com.zhicheng.api.common.ServiceFactory;
@@ -112,6 +114,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     };
 
     private void superiorSearch() {
+//        search_count.setVisibility(View.INVISIBLE);
         PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
         PersonQueryRequest.IqBean iq = new PersonQueryRequest.IqBean();
         iq.setNamespace("PersonQueryRequest");
@@ -133,8 +136,8 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         mClearEditText = (ClearEditText)findViewById(R.id.mClearEditText);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         ad_search = (Button)findViewById(R.id.ad_search);
-        mLocationClient = new LocationClient(this);
-        BDLocationInit.getInstance().initLocation(mLocationClient);
+        mLocationClient = new LocationClient(getApplicationContext());
+        BDLocationInit.initLocation(mLocationClient);
         myLocationListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myLocationListener);
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
@@ -187,7 +190,6 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     showMessage(getResources().getString(R.string.hint_search));
                 } else {
                     fuzzySearch();
-
                 }
                 return true;
             }
@@ -216,20 +218,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     private void fuzzySearch() {
         page = 1;
-        PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
-        PersonQueryRequest.IqBean iqb = new PersonQueryRequest.IqBean();
-        PersonQueryRequest.IqBean.QueryBean qb = new PersonQueryRequest.IqBean.QueryBean();
-        iqb.setNamespace("PersonQueryRequest");
-        qb.setPkey(mClearEditText.getText().toString());
-        qb.setBegintime("");
-        qb.setEndtime("");
-        qb.setUserid("");
-        qb.setGrid("");
-        qb.setPagenum(page);
-        iqb.setQuery(qb);
-        mPersonQueryRequest.setIq(iqb);
-        Gson gson = new Gson();
-        mOfficialBaseGridQueryPresenterImpl.queryByCondition(gson.toJson(mPersonQueryRequest));
+        mOfficialBaseGridQueryPresenterImpl.queryByCondition(createObjQuery(page));
         page ++;
     }
 
@@ -308,7 +297,7 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     showMessage(getResources().getString(R.string.no_data));
                 }
             } else {
-                showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
+                showMessage(((PersonQueryResponse) result).getIq().getQuery().getErrorMessage());
             }
         }
     }
@@ -492,8 +481,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
     @Override
     public void onRefresh() {
+//        if (search_count.getVisibility() == View.GONE){
+//            normalSearch();
+//        }else {
+//            fuzzySearch();
+//        }
         normalSearch();
-
     }
 
     private void normalSearch() {
@@ -515,6 +508,23 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         iqb.setQuery(qyb);
         ofq.setIq(iqb);
         return gson.toJson(ofq);
+    }
+
+    private String createObjQuery(int page){
+        PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
+        PersonQueryRequest.IqBean iqb = new PersonQueryRequest.IqBean();
+        PersonQueryRequest.IqBean.QueryBean qb = new PersonQueryRequest.IqBean.QueryBean();
+        iqb.setNamespace("PersonQueryRequest");
+        qb.setPkey(mClearEditText.getText().toString());
+        qb.setBegintime("");
+        qb.setEndtime("");
+        qb.setUserid("");
+        qb.setGrid("");
+        qb.setPagenum(page);
+        iqb.setQuery(qb);
+        mPersonQueryRequest.setIq(iqb);
+        Gson gson = new Gson();
+        return gson.toJson(mPersonQueryRequest);
     }
 
     class OfficialBaseGridAdapter extends RecyclerView.Adapter {
@@ -628,8 +638,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
     }
 
     public void openGps(){
-        mLocationClient.start();
-        mLocationClient.requestLocation();
+        if (mLocationClient != null){
+            mLocationClient.start();
+            mLocationClient.requestLocation();
+        }else {
+            Snackbar.make(mToolbar,"地点出错",Snackbar.LENGTH_SHORT).show();
+        }
     }
 
 

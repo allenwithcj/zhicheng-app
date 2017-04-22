@@ -11,6 +11,8 @@ import com.zhicheng.ui.activity.BaseActivity;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import static java.lang.Character.isLetter;
+
 
 /**
  * Author   :hymanme
@@ -70,5 +72,17 @@ public class UIUtils {
         return s;
     }
 
-
+    public static int length(String s) {
+        if (s == null)
+            return 0;
+        char[] c = s.toCharArray();
+        int len = 0;
+        for (int i = 0; i < c.length; i++) {
+            len++;
+            if (!isLetter(c[i])) {
+                len++;
+            }
+        }
+        return len;
+    }
 }

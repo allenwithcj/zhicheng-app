@@ -1,6 +1,7 @@
 package com.zhicheng.ui.activity;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import cc.dagger.photopicker.PhotoPicker;
@@ -303,7 +305,7 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements Exper
         iqbQB.setPOSTED_BY(mData.getLocalConfig().getUserId());
         iqbQB.setDEPARTMENT(mData.getLocalConfig().getDepartmentID());
         iqbQB.setCONTENT(contentHolder.i_exp_content.getText().toString());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
         iqbQB.setPOSTED_TIME(sdf.format(new Date()));
         //经验交流 201704101440000
         iqbQB.setFormNo("201704101440000");
@@ -314,7 +316,12 @@ public class ExperienceExchangeAddActivity extends BaseActivity implements Exper
 
         Gson gson = new Gson();
         String strEntity = gson.toJson(mExperienceRequest);
-        mExperiencePresenterImpl.UpExperience(5,strEntity);
+        if (iqbQB.getTITLE_NAME().equals("") || iqbQB.getCONTENT().equals("")){
+            Snackbar.make(mToolbar,"标题、内容不可为空",Snackbar.LENGTH_SHORT).show();
+            dialog.dismiss();
+        }else {
+            mExperiencePresenterImpl.UpExperience(5,strEntity);
+        }
     }
 
 }

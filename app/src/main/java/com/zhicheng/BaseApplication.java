@@ -73,6 +73,10 @@ public class BaseApplication extends Application {
         }
     };
 
+    public static void startTimer(){
+        timer.schedule(timerTask,25*30);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -94,8 +98,9 @@ public class BaseApplication extends Application {
         }
         mLoginService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG,LoginService.class);
 //        allLogin();
-        timer.schedule(timerTask,25*60);
     }
+
+
 
     /**
      * 获取Application
@@ -167,6 +172,30 @@ public class BaseApplication extends Application {
             timerTask.cancel();
             timer.cancel();
         }
+    }
+
+    //数据库
+    private static DatabaseHelper mDataBase;
+
+    /**
+     * 获取数据库
+     *
+     * @return databaseHelper
+     */
+    public static DatabaseHelper getDataBase(){
+        if (mDataBase == null){
+            mDataBase = new DatabaseHelper();
+        }
+        return mDataBase;
+    }
+
+    /**
+     * 获取本地配置信息
+     *
+     * @return LocalConfig
+     */
+    public static LocalConfig getLocalConfig(){
+        return getDataBase().getLocalConfig();
     }
 
     public static void allLogin() {

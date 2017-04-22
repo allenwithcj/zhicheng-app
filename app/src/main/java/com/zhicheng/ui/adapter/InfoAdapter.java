@@ -91,6 +91,9 @@ public class InfoAdapter extends RecyclerView.Adapter {
                 ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.news));
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("通知推送");
                 ((InfoHeadViewHolder) holder).mVersion_notice.setText("");
+                ((InfoHeadViewHolder) holder).mTextViewHead.setOnClickListener(v -> {
+                    UIUtils.startActivity(new Intent(UIUtils.getContext(),MyjobActivity.class));
+                });
             }else if(position == 5){
                 ((InfoHeadViewHolder) holder).mImageView.setImageDrawable(holder.itemView.getResources().getDrawable(R.drawable.night));
                 ((InfoHeadViewHolder) holder).mTextViewHead.setText("夜间模式");

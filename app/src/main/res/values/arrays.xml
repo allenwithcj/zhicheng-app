@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="relation">
-        <item>本人</item>
+        <item>本人或户主</item>
         <item>配偶</item>
         <item>父母</item>
         <item>子</item>

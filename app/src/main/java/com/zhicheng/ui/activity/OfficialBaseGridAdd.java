@@ -25,6 +25,7 @@ import com.zhicheng.bean.http.PersonMsgMaResponse;
 import com.zhicheng.common.Constant;
 import com.zhicheng.ui.adapter.OfficialBaseGridAddAdapter;
 import com.zhicheng.utils.BDLocationInit;
+import com.zhicheng.utils.common.AnimationUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -67,7 +68,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
                 String type = intent.getStringExtra("type");
                 String value = intent.getStringExtra("value");
                 if (type.equals(Constant.TYPE_RELATION)) {
-                    if(value.equals("本人")){
+                    if(value.equals("本人或户主")){
                         holder.grid_base_huzu_name.setText("");
                         holder.grid_base_huzu_name.setBackgroundColor(getResources().getColor(R.color.gray_text));
                         holder.grid_base_huzu_name.setClickable(false);
@@ -109,8 +110,8 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     @Override
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid_add);
-        mLocationClient = new LocationClient(this);
-        BDLocationInit.getInstance().initLocation(mLocationClient);
+        mLocationClient = new LocationClient(getApplicationContext());
+        BDLocationInit.initLocation(mLocationClient);
         myLocationListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myLocationListener);
         title_name = (TextView)findViewById(R.id.title_name);
@@ -126,7 +127,7 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
         mFilter.addAction("com.grid.huzu");
         registerReceiver(receiver, mFilter);
         title_name.setText(getResources().getString(R.string.grid_base_add_title));
-
+        mAdapter.setWindow(getWindow());
         setSendLocation(maps -> {
             latitude = maps.get("latitude");
             longitude = maps.get("longitude");
@@ -170,10 +171,8 @@ public class OfficialBaseGridAdd extends BaseActivity implements OfficialBaseGri
     }
 
     private void openGps() {
-        if (!mLocationClient.isStarted()) {
-            mLocationClient.start();
-            mLocationClient.requestLocation();
-        }
+        mLocationClient.start();
+        mLocationClient.requestLocation();
     }
 
     @Override

@@ -26,7 +26,7 @@
     <string name="action_deal">处理</string>
     <string name="i_content">爆料描述:</string>
     <string name="i_content_hint">请输入爆料描述…</string>
-    <string name="i_deal_hint">请输入处理描述…</string>
+    <string name="i_deal_hint">请输入描述内容…</string>
     <string name="i_apply_hint">请输入申请描述…</string>
     <string name="Bao">爆料</string>
     <string name="Accept">受理</string>
@@ -67,7 +67,7 @@
     <string name="grid_base_add_relation">与房主/户主关系:</string>
     <string name="grid_base_huzu_name">房主/户主姓名:</string>
     <string name="grid_base_add_sex">性别:</string>
-    <string name="grid_base_add_age">年龄:</string>
+    <string name="grid_base_add_age">出生日期:</string>
     <string name="grid_base_add_cardid">公民身份号码:</string>
     <string name="grid_base_add_policatial">政治面貌:</string>
     <string name="grid_base_add_degree">学历:</string>

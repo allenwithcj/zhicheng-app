@@ -92,7 +92,7 @@ public class IneedAdapter extends RecyclerView.Adapter {
     public IneedAdapter(Context context) {
         mChoosePhotoAdapter = new ChoosePhotoAdapter();
         mLocationClient = new LocationClient(context);
-        BDLocationInit.getInstance().initLocation(mLocationClient);
+        BDLocationInit.initLocation(mLocationClient);
         mLocation = new mLocationListener();
         mLocationClient.registerLocationListener(mLocation);
     }
@@ -219,13 +219,13 @@ public class IneedAdapter extends RecyclerView.Adapter {
     public class InputChooseEdittTextViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name;
-        public EditText input_choose;
+        public TextView input_choose;
         public ProgressBar mProgressBar;
 
         public InputChooseEdittTextViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.tagName);
-            input_choose = (EditText) itemView.findViewById(R.id.input);
+            input_choose = (TextView) itemView.findViewById(R.id.input);
             mProgressBar = (ProgressBar) itemView.findViewById(R.id.progressBar);
         }
     }

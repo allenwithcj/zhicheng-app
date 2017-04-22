@@ -74,7 +74,7 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
                 String value = intent.getStringExtra("value");
                 String type = intent.getStringExtra("type");
                 if (type.equals(Constant.TYPE_RELATION)) {
-                    if(value.equals("本人")){
+                    if(value.equals("本人或户主")){
                         holder.grid_base_huzu_name.setText("");
                         holder.grid_base_huzu_name.setBackgroundColor(getResources().getColor(R.color.gray_text));
                         holder.grid_base_huzu_name.setClickable(false);
@@ -116,8 +116,8 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     protected void initEvents() {
         setContentView(R.layout.activity_main_official_basegrid_add_detail);
         mData = new DatabaseHelper();
-        mLocationClient = new LocationClient(this);
-        BDLocationInit.getInstance().initLocation(mLocationClient);
+        mLocationClient = new LocationClient(getApplicationContext());
+        BDLocationInit.initLocation(mLocationClient);
         myLocationListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myLocationListener);
         //开启定位

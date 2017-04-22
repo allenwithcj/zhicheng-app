@@ -281,17 +281,23 @@ public class IneedActivity extends BaseActivity implements UpThingsView {
                                     .create();
                             dialog.show();
                             if (isCommon) {
-                                mUpThingsPresenterImpl.UpThings(5, guid, strEntity, jFile, mImagePath);
+                                if (iqbQB.getZC18() == null || iqbQB.getZC18().equals("")){
+                                    showMessage("请选择爆料类型");
+                                }else if (UIUtils.length(iqbQB.getZC04()) < 11){
+                                    showMessage("爆料内容不得少于10个字");
+                                }else {
+                                    mUpThingsPresenterImpl.UpThings(5, guid, strEntity, jFile, mImagePath);
+                                }
                             } else {
                                 mUpThingsPresenterImpl.UpThings(3, guid, strEntity, jFile, mImagePath);
                             }
 
                         } else {
-                            Toast.makeText(this, "请选择上传图片", Toast.LENGTH_SHORT).show();
+                            showMessage("请上传图片");
                         }
                     }
                 } else {
-                    Toast.makeText(this, "请先定位地址", Toast.LENGTH_SHORT).show();
+                    showMessage("请先定位地址");
                 }
             }
         }
@@ -322,7 +328,7 @@ public class IneedActivity extends BaseActivity implements UpThingsView {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(UIUtils.getContext(),msg,Toast.LENGTH_SHORT).show();
     }
 
     @Override

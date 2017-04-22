@@ -11,9 +11,11 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
@@ -43,10 +45,17 @@ public class LoginActivity extends BaseActivity implements LoginView {
     private TextView login;
     private LoginPresenterImpl mLoginPresenterImpl;
     private DatabaseHelper mDataBase;
+    private ImageView imageViewBackground;
 
     @Override
     protected void initEvents() {
         setContentView(R.layout.b_login);
+        imageViewBackground = (ImageView) findViewById(R.id.loginBackground);
+        Glide.with(this)
+                .load(R.drawable.login)
+                .thumbnail(0.3f)
+                .centerCrop()
+                .into(imageViewBackground);
         mLoginPresenterImpl = new LoginPresenterImpl(this);
         mDataBase = new DatabaseHelper();
         login.setOnClickListener(v -> {

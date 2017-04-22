@@ -3,10 +3,12 @@ package com.zhicheng.api.model.impl;
 
 import android.widget.Toast;
 
+import com.baidu.platform.comapi.map.E;
 import com.google.gson.Gson;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.api.ApiCompleteListener;
 import com.zhicheng.api.common.ServiceFactory;
+import com.zhicheng.api.common.database.LocalConfig;
 import com.zhicheng.api.common.service.MainService;
 import com.zhicheng.api.common.service.OfficialService;
 import com.zhicheng.api.model.OfficialModel;
@@ -19,11 +21,13 @@ import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.http.OfficialWorkDynamicList;
 import com.zhicheng.bean.http.PersonalDynamicResponse;
+import com.zhicheng.bean.json.ExperienceRequest;
 import com.zhicheng.bean.json.FormExportRequest;
 import com.zhicheng.bean.json.FormNodeRequest;
 import com.zhicheng.bean.json.FormSendDoRequest;
 import com.zhicheng.bean.json.FormSubnodeRequest;
 import com.zhicheng.bean.json.PersonalDynamicRequest;
+import com.zhicheng.common.Constant;
 import com.zhicheng.common.URL;
 import com.zhicheng.luban.Luban;
 import com.zhicheng.utils.common.UIUtils;
@@ -50,7 +54,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class OfficialModelImpl implements OfficialModel {
-    OfficialService mOfficialService;
+
     private Gson gson = new Gson();
     private String GUID;
     private String suggestion;
@@ -58,9 +62,9 @@ public class OfficialModelImpl implements OfficialModel {
 
     @Override
     public void loadOfficial(String nofinish, ApiCompleteListener listener) {
-        if (mOfficialService == null) {
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
-        }
+
+        OfficialService mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
+
         mOfficialService.getOfficial(nofinish)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -92,9 +96,9 @@ public class OfficialModelImpl implements OfficialModel {
 
     @Override
     public void loadOfficialDetail(String j, ApiCompleteListener listener) {
-        if (mOfficialService == null) {
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
-        }
+
+        OfficialService mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
+
         mOfficialService.getOfficialDetail(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -127,9 +131,9 @@ public class OfficialModelImpl implements OfficialModel {
     //工作动态获取
     @Override
     public void loadOfficialDynamic(String dyn, ApiCompleteListener listener) {
-        if (mOfficialService == null) {
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
-        }
+
+        OfficialService mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
+
         mOfficialService.getOfficialWorkDynamic(dyn)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -162,9 +166,7 @@ public class OfficialModelImpl implements OfficialModel {
     //新增工作动态
     @Override
     public void upOfficialDynamic(String jFile, List<String> imgs, String content, String mLocationSite, String GUID, ApiCompleteListener listener) {
-        if (mOfficialService == null) {
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
-        }
+        OfficialService mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
 
         final MultipartBody.Builder builder = new MultipartBody.Builder();
         //图片压缩
@@ -233,7 +235,6 @@ public class OfficialModelImpl implements OfficialModel {
                                             if (commonResponseResponse.isSuccessful()) {
                                                 if (commonResponseResponse.body().getIq().getQuery().getErrorCode() == 0) {
                                                     personalDynamicRequest(mOfficialService, content, mLocationSite, GUID, listener);
-                                                    BaseApplication.log_say("MainModelImpl", "UpThings");
                                                 } else {
                                                     listener.onComplected(commonResponseResponse.body());
                                                     Toast.makeText(UIUtils.getContext(), commonResponseResponse.body().getIq().getQuery().getErrorMessage(), Toast.LENGTH_LONG).show();
@@ -253,20 +254,27 @@ public class OfficialModelImpl implements OfficialModel {
     }
 
     private void personalDynamicRequest(OfficialService mOfficialService, String content, String mLocationSite, String guid, ApiCompleteListener listener) {
-        PersonalDynamicRequest mPersonalDynamicRequest = new PersonalDynamicRequest();
-        PersonalDynamicRequest.IqBean iqb = new PersonalDynamicRequest.IqBean();
-        PersonalDynamicRequest.IqBean.QueryBean qb = new PersonalDynamicRequest.IqBean.QueryBean();
-        iqb.setNamespace("PersonalDynamicRequest");
-        qb.setType("1");
-        qb.setId(UUID.randomUUID().toString());
-        qb.setCont(content);
-        qb.setAttguid(guid);
-        qb.setLocation(mLocationSite);
-        iqb.setQuery(qb);
-        mPersonalDynamicRequest.setIq(iqb);
+
+        LocalConfig config = BaseApplication.getLocalConfig();
+
+        ExperienceRequest request = new ExperienceRequest();
+        ExperienceRequest.IqBean iq = new ExperienceRequest.IqBean();
+        ExperienceRequest.IqBean.QueryBean query = new ExperienceRequest.IqBean.QueryBean();
+        query.setFormNo(Constant.WORK_ID);
+        query.setUSERNAME(config.getName());
+        query.setCOUNT(content);
+        query.setIMG(guid);
+        query.setDATETIME("");
+        query.setDEPT(config.getDepartment());
+        query.setUSERID(config.getUserId());
+        query.setLOCATION(mLocationSite);
+        query.setTaskTitle("工作动态");
+        iq.setQuery(query);
+        iq.setNamespace("SubmitFormRequest");
+        request.setIq(iq);
         Gson gson = new Gson();
 
-        mOfficialService.upOfficialWorkDynamic(gson.toJson(mPersonalDynamicRequest))
+        mOfficialService.upOfficialWorkDynamic(gson.toJson(request))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Response<CommonResponse>>() {
@@ -287,6 +295,9 @@ public class OfficialModelImpl implements OfficialModel {
                     public void onNext(Response<CommonResponse> mcCommonResponse) {
                         if (mcCommonResponse.isSuccessful()) {
                             listener.onComplected(mcCommonResponse.body());
+                            if (mcCommonResponse.body().getIq().getQuery().getErrorCode() == 0){
+                                formExportRequest(3,"",listener);
+                            }
                         } else {
                             listener.onFailed(new BaseResponse(mcCommonResponse.code(), mcCommonResponse.message()));
                         }
@@ -298,9 +309,9 @@ public class OfficialModelImpl implements OfficialModel {
 
     @Override
     public void upDeal(List<String> imgs, String jFile, String suggest, String GUID, OfficialDetailResponse officialDetailResponse, String type, ApiCompleteListener listener) {
-        if (mOfficialService == null) {
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
-        }
+
+        OfficialService mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
+
         this.OfficialDeatail = officialDetailResponse;
         this.suggestion = suggest;
         this.GUID = GUID;
@@ -401,9 +412,8 @@ public class OfficialModelImpl implements OfficialModel {
     @Override
     public void loadNotice(String n, ApiCompleteListener listener) {
 
-        if (mOfficialService == null) {
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
-        }
+        OfficialService mOfficialService= ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
+
         mOfficialService.getNotice(n)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -436,9 +446,7 @@ public class OfficialModelImpl implements OfficialModel {
 
     @Override
     public void queryNewsDetail(String j, ApiCompleteListener listener) {
-        if (mOfficialService == null) {
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
-        }
+        OfficialService mOfficialService= ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
         mOfficialService.queryNewsDetail(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -471,9 +479,7 @@ public class OfficialModelImpl implements OfficialModel {
 
     @Override
     public void loadDynamicDetail(String j, ApiCompleteListener listener) {
-        if (mOfficialService == null) {
-            mOfficialService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
-        }
+        OfficialService mOfficialService= ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, OfficialService.class);
         mOfficialService.loadDynamicDetail(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -543,7 +549,6 @@ public class OfficialModelImpl implements OfficialModel {
                                 query.setId(OfficialDeatail.getIq().getQuery().getId());
                                 List<IneedResponse.IqBean.QueryBean.ItemsBean> itemsBeens = ineedResponseResponse.body().getIq().getQuery().getItems();
 
-
                                 if (itemsBeens != null) {
                                     if(itemsBeens.size() == 1){
                                         query.setChukouID(itemsBeens.get(0).getKey());
@@ -562,12 +567,12 @@ public class OfficialModelImpl implements OfficialModel {
                                             }
                                         }
                                     }
-
                                 }
+                                BaseApplication.log_say("-----------------Official","iaijsdfasjdfliajsdlifja");
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);
                                 formNode.setIq(iq);
-                                formNodeRequest(mMainService, gson.toJson(formNode), requestType, listener);
+                                formNodeRequest(mMainService, gson.toJson(formNode), ineedResponseResponse, requestType, listener);
                                 BaseApplication.log_say("MainModelImpl", "FormNodeRequest");
                             } else {
                                 listener.onComplected(ineedResponseResponse.body());
@@ -580,7 +585,7 @@ public class OfficialModelImpl implements OfficialModel {
                 });
     }
 
-    public void formNodeRequest(MainService s, String j, int requestType, ApiCompleteListener listener) {
+    public void formNodeRequest(MainService s, String j, Response<IneedResponse> ineedResponseResponse, int requestType, ApiCompleteListener listener) {
         s.FormNodeRequest(j)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

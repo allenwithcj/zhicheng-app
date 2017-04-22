@@ -25,22 +25,39 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
+import com.zhicheng.api.Extend.model.BaseModel;
+import com.zhicheng.api.Extend.model.BaseModelImpl;
+import com.zhicheng.api.common.database.LocalConfig;
 import com.zhicheng.api.presenter.impl.OfficialPresenterImpl;
 import com.zhicheng.api.view.OfficialView;
+import com.zhicheng.bean.Extend.request.FormExportQuery;
+import com.zhicheng.bean.Extend.request.FormNodeQuery;
+import com.zhicheng.bean.Extend.request.FormSendDoQuery;
+import com.zhicheng.bean.Extend.request.FormSubnodeQuery;
+import com.zhicheng.bean.Extend.request.SubmitFormQuery;
+import com.zhicheng.bean.Extend.response.FormExportResponse;
+import com.zhicheng.bean.Extend.response.FormNodeResponse;
+import com.zhicheng.bean.Extend.response.FormSubnodeResponse;
 import com.zhicheng.bean.http.CommonResponse;
 import com.zhicheng.bean.http.OfficialWorkDynamicList;
+import com.zhicheng.bean.json.FormSendDoRequest;
 import com.zhicheng.bean.json.PersonalDynamicRequest;
 import com.zhicheng.bean.json.UpFileRequest;
+import com.zhicheng.common.Constant;
 import com.zhicheng.module.imageloader.GlideImageLoader;
 import com.zhicheng.ui.adapter.OfficialDynamicAdapter;
 import com.zhicheng.utils.BDLocationInit;
 import com.zhicheng.utils.common.AnimationUtils;
 import com.zhicheng.utils.common.PermissionUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
@@ -51,7 +68,7 @@ import cc.dagger.photopicker.picker.PhotoFilter;
  * Created by Donson on 2017/1/15.
  */
 
-public class OfficialWorkDynamic extends BaseActivity implements OfficialView, SwipeRefreshLayout.OnRefreshListener {
+public class OfficialWorkDynamic extends BaseActivity implements OfficialView, SwipeRefreshLayout.OnRefreshListener,BaseModelImpl.onResponseListener {
 
     private int start;
 
@@ -73,6 +90,9 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView, S
     private LocationClient mLocationClient = null;
     private mLocationListener mLocation;
     private String mLocationSite;
+    //BaseModel
+    private BaseModelImpl mBaseModelImpl;
+    private EditText mEdit;
 
     @Override
     protected void initEvents() {
@@ -95,6 +115,9 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView, S
         PhotoPicker.init(new GlideImageLoader(), null);
         filter = PhotoFilter.build();
         filter.showGif(false);
+        //BaseModel
+        mBaseModelImpl = BaseModelImpl.getBaseModelImpl();
+        mBaseModelImpl.setOnResponseListener(this);
     }
 
     @Override
@@ -138,7 +161,7 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView, S
                 }
                 fresh();
             } else {
-                mBtn.setText("处理");
+                mBtn.setText("发送");
                 mBtn.setClickable(true);
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
             }
@@ -179,13 +202,13 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView, S
         mToolbar.setTitle("工作动态");
         return super.onCreateOptionsMenu(menu);
     }
-
+    private String GUID = "";
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_span) {
             //开始定位
             mLocationClient = new LocationClient(this);
-            BDLocationInit.getInstance().initLocation(mLocationClient);
+            BDLocationInit.initLocation(mLocationClient);
             mLocation = new mLocationListener();
             mLocationClient.registerLocationListener(mLocation);
             if (!mLocationClient.isStarted()) {
@@ -196,27 +219,33 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView, S
             //发送动态，弹出POPView形式
             View pop_view = getLayoutInflater().inflate(R.layout.c_deal, parentView, false);
             mBtn = (TextView) pop_view.findViewById(R.id.btnDeal);
-            EditText mEdit = (EditText) pop_view.findViewById(R.id.suggestion);
+            mEdit = (EditText) pop_view.findViewById(R.id.suggestion);
             String guid = UUID.randomUUID().toString();
+            GUID = guid;
             mBtn.setOnClickListener(view -> {
                 dialog = new AlertDialog.Builder(this, R.style.dialog)
                         .setView(R.layout.z_loading_view)
                         .setCancelable(false)
                         .create();
                 dialog.show();
-                Gson gson = new Gson();
-                UpFileRequest uf = new UpFileRequest();
-                UpFileRequest.IqBean ufIB = new UpFileRequest.IqBean();
-                UpFileRequest.IqBean.QueryBean ufIBQB = new UpFileRequest.IqBean.QueryBean();
-                ufIBQB.setAttachmentGUID(guid);
-                ufIB.setQuery(ufIBQB);
-                ufIB.setNamespace("AttachmentUpdateRequest");
-                uf.setIq(ufIB);
-                String jFile = gson.toJson(uf);
+                //新增---------------------------------
+
+                //-------------------------------------
+//                Gson gson = new Gson();
+//                UpFileRequest uf = new UpFileRequest();
+//                UpFileRequest.IqBean ufIB = new UpFileRequest.IqBean();
+//                UpFileRequest.IqBean.QueryBean ufIBQB = new UpFileRequest.IqBean.QueryBean();
+//                ufIBQB.setAttachmentGUID(guid);
+//                ufIB.setQuery(ufIBQB);
+//                ufIB.setNamespace("AttachmentUpdateRequest");
+//                uf.setIq(ufIB);
+//                String jFile = gson.toJson(uf);
                 if (null != mImagePath) {
                     if (mImagePath.size() != 0) {
-                        mOfficialPresenterImpl.upDynamic(jFile, mImagePath, mEdit.getText().toString(), mLocationSite, guid);
-                        mBtn.setText("处理中...");
+                        mBaseModelImpl.ServiceImage(mImagePath,guid);
+
+//                        mOfficialPresenterImpl.upDynamic(jFile, mImagePath, mEdit.getText().toString(), mLocationSite, guid);
+                        mBtn.setText("上传中...");
                         mBtn.setClickable(false);
                     } else {
                         dialog.dismiss();
@@ -264,6 +293,89 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView, S
         mPersonalDynamicRequest.setIq(iqb);
         Gson gson = new Gson();
         return gson.toJson(mPersonalDynamicRequest);
+    }
+
+    private void submitFormRequest(String guid){
+        LocalConfig config = BaseApplication.getLocalConfig();
+        SubmitFormQuery query = new SubmitFormQuery();
+        query.setFormNo(Constant.WORK_ID);
+        query.setUSERNAME(config.getName());
+        query.setCOUNT(mEdit.getText().toString());
+        query.setIMG(guid);
+        SimpleDateFormat time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+        query.setDATETIME(time.format(new Date()));
+        query.setDEPT(config.getDepartment());
+        query.setUSERID(config.getUserId());
+        query.setLOCATION(mLocationSite);
+        query.setTaskTitle("工作动态");
+        mBaseModelImpl.ServiceConnect(BaseModelImpl.parseRequest("SubmitFormRequest",query));
+    }
+    private int submitFormType = 0;
+    @Override
+    public void onResponse(String str,String guid) {
+        if (BaseModelImpl.isContainNameSpace(str,"CommonResponse")){
+            if (submitFormType == 0){
+                submitFormRequest(guid);
+                submitFormType = 1;
+            }else if (submitFormType == 1){
+                FormExportQuery query = new FormExportQuery();
+                query.setId(Constant.WORKSID);
+                query.setRequestType(3);
+                BaseApplication.log_say("------------->",BaseModelImpl.parseRequest("FormExportRequest",query));
+                mBaseModelImpl.ServiceConnect(BaseModelImpl.parseRequest("FormExportRequest",query));
+                submitFormType = 2;
+            }else if (submitFormType == 2){
+                showMessage("工作动态提交成功");
+                submitFormType = 0;
+                if (mPopupWindow != null && mPopupWindow.isShowing()) {
+                    mPopupWindow.dismiss();
+                    mPopupWindow = null;
+                }
+                fresh();
+            }else {
+                showMessage("流程错误");
+            }
+
+        }else if (BaseModelImpl.isContainNameSpace(str,"FormExportResponse")){
+            BaseApplication.log_say("------------->","22222");
+            FormExportResponse response = BaseModelImpl.JsonToJava(str,FormExportResponse.class);
+            FormNodeQuery query = new FormNodeQuery();
+            query.setChukouID(response.getIq().getQuery().getItems().get(0).getKey());
+            query.setId(response.getIq().getQuery().getId());
+            query.setRequestType("0");
+            mBaseModelImpl.ServiceConnect(BaseModelImpl.parseRequest("FormNodeRequest",query));
+        }else if (BaseModelImpl.isContainNameSpace(str,"FormNodeResponse")){
+            BaseApplication.log_say("------------->","33333");
+            FormNodeResponse response = BaseModelImpl.JsonToJava(str,FormNodeResponse.class);
+            FormSubnodeQuery query = new FormSubnodeQuery();
+            query.setId(response.getIq().getQuery().getNodes().get(0).getId());
+            query.setRequestType(0);
+            query.setType(3);
+            query.setWfInfoID(response.getIq().getQuery().getId());
+            mBaseModelImpl.ServiceConnect(BaseModelImpl.parseRequest("FormSubnodeRequest",query));
+        }else if (BaseModelImpl.isContainNameSpace(str,"FormSubnodeResponse")){
+            BaseApplication.log_say("------------->","444444");
+            FormSubnodeResponse response = BaseModelImpl.JsonToJava(str,FormSubnodeResponse.class);
+            FormSendDoQuery query = new FormSendDoQuery();
+            FormSendDoQuery.NodesBean node = new FormSendDoQuery.NodesBean();
+            query.setDealType(0);
+            query.setId("36C9CF7D-390C-9F4F-BCA3-21F3EE377566");
+            query.setIsReturnCurrentNode(0);
+            query.setIsTrace(0);
+            query.setIsWait(0);
+            query.setRequestType(5);
+            query.setSuggestion("Android");
+            query.setType(0);
+            node.setId(response.getIq().getQuery().getId());
+            node.setIsDefaultNode(false);
+            node.setType(0);
+            node.setGUID(GUID);
+            node.setValue("Y"+response.getIq().getQuery().getItems().get(0).getKey());
+            List<FormSendDoQuery.NodesBean> nodes = new ArrayList<>();
+            nodes.add(node);
+            query.setNodes(nodes);
+            mBaseModelImpl.ServiceConnect(BaseModelImpl.parseRequest("FormSendDoRequest",query));
+        }
     }
 
     class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {

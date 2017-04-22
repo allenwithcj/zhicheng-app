@@ -1,17 +1,27 @@
 package com.zhicheng.ui.adapter;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.Gson;
+import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.api.common.database.DatabaseHelper;
 import com.zhicheng.api.presenter.OfficialBaseGridAddPresenter;
@@ -21,8 +31,14 @@ import com.zhicheng.ui.activity.BaseGridAddSelectType;
 import com.zhicheng.ui.activity.BaseGridAddSelectTypeMultipleChoice;
 import com.zhicheng.ui.activity.HuZuSearchActivity;
 import com.zhicheng.utils.CodeUtils;
+import com.zhicheng.utils.common.AnimationUtils;
 import com.zhicheng.utils.common.UIUtils;
 
+import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -40,6 +56,12 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
     private ItemViewHolder holder;
     private String[] mList;
     private String type;
+
+    private Window window;
+
+    public void setWindow(Window window){
+        this.window = window;
+    }
 
     public OfficialBaseGridAddAdapter(OfficialBaseGridAddPresenter mOfficialBaseGridAddPresenter) {
         mDataBase = new DatabaseHelper();
@@ -120,9 +142,9 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         }else if(RELATION.equals("")|| RELATION == null){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_relation),dialog);
         }else if(REMARK1.equals("")){
-            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_lessor_remark),dialog);
-        }else if(REMARK2.equals("")){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_remark),dialog);
+        }else if(REMARK2.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_lessor_remark),dialog);
         }else if(HUZU.equals("")){
             if(!RELATION.equals("0")){
                 showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_huzu_name),dialog);
@@ -168,19 +190,25 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         mFormobj.setREMARK1(REMARK1);
         mFormobj.setOUTADDRESS(OUTADDRESS);
         mFormobj.setSORT(SORT);
-        mFormobj.setBADDRESS(address);
+        if (address != null){
+            mFormobj.setBADDRESS(address);
+        }else {
+            mFormobj.setBADDRESS("未知地理位置");
+        }
         mFormobj.setBLONGITUDE(longitude);
         mFormobj.setBLATITUDE(latitude);
         mFormobj.setFLAG("1");
         mFormobj.setHZNAME(HUZU);
         mFormobj.setUSERNAME(mDataBase.getLocalConfig().getUserName());
-
         irIqQB.setFormobj(mFormobj);
         lrIq.setNamespace("PersonMsgMaRequest");
         lrIq.setQuery(irIqQB);
         mSf.setIq(lrIq);
         Gson gson = new Gson();
         String json = gson.toJson(mSf);
+
+
+
         mOfficialBaseGridAddPresenter.addDate(json);
     }
 
@@ -211,7 +239,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
         public TextView grid_base_add_remark1;
         public EditText grid_base_add_outaddress;
         public TextView grid_base_add_rkfl;
-        private EditText grid_base_add_age;
+        public TextView grid_base_add_age;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -236,7 +264,7 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
             grid_base_add_remark2 = (TextView) itemView.findViewById(R.id.grid_base_add_remark2);
             grid_base_add_outaddress = (EditText) itemView.findViewById(R.id.grid_base_add_outaddress);
             grid_base_add_rkfl = (TextView) itemView.findViewById(R.id.input_rkfl);
-            grid_base_add_age = (EditText)itemView.findViewById(R.id.grid_base_add_age);
+            grid_base_add_age = (TextView)itemView.findViewById(R.id.grid_base_add_age);
             grid_base_huzu_name.setVisibility(View.VISIBLE);
 
 
@@ -296,6 +324,23 @@ public class OfficialBaseGridAddAdapter extends RecyclerView.Adapter {
 
             grid_base_huzu_name.setOnClickListener(view -> {
                 UIUtils.startActivity(new Intent(UIUtils.getContext(), HuZuSearchActivity.class));
+            });
+
+            grid_base_add_age.setOnClickListener(v -> {
+                TimePickerView pvTime = new TimePickerView.Builder(itemView.getContext(), new TimePickerView.OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
+                        grid_base_add_age.setText(sdf.format(date));
+                    }
+                }).setType(TimePickerView.Type.YEAR_MONTH_DAY)
+                        .setSubmitText("确认")
+                        .setCancelText("取消")
+                        .setRange(1899,2100)
+                        .isDialog(true)
+                        .build();
+                pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+                pvTime.show();
             });
         }
     }

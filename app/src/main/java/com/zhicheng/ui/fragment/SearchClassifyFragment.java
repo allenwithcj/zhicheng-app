@@ -71,6 +71,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -386,11 +387,14 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 TimePickerView pvTime = new TimePickerView.Builder(getContext(), new TimePickerView.OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {//选中事件回调
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
                         date_txt.setText(sdf.format(date));
                         mCaseTime = date_txt.getText().toString();
                     }
-                }).build();
+                }).setType(TimePickerView.Type.YEAR_MONTH_DAY)
+                        .setSubmitText("确认")
+                        .setCancelText("取消")
+                        .build();
                 pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
                 pvTime.show();
                 break;
@@ -444,6 +448,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             arrayAdapter = new ArrayAdapter<String>(getContext(),R.layout.text_view);
             grid_listView.setAdapter(arrayAdapter);
             getGridData(0);
+            Type = 0;
             grid_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -511,7 +516,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
 
     private class SearchClassifyAdapter extends RecyclerView.Adapter {
         private List<CaseQueryResponse.IqBean.QueryBean.CaselistconBean.CasesBean> caseList;
-        private String[] tag = {"编号:", "办理时间:", "地址:"};
+        private String[] tag = {"编号:", "办理时间:", "事件详情:"};
 
         public SearchClassifyAdapter() {
 
@@ -599,6 +604,14 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         }
     }
 
+    //去重
+    public void removeDuplicate(List<String> list)   {
+        HashSet h  =   new  HashSet(list);
+        list.clear();
+        list.addAll(h);
+        System.out.println(list);
+    }
+
     private void getGridData(int type){
 
         CaseGridRequest mCaseGridRequest = new CaseGridRequest();
@@ -634,31 +647,33 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                         if (mCaseGridResponseResponse.isSuccessful()) {
                             arrayAdapter.clear();
                             if (type == 0){
-                                BaseApplication.log_say("------------>","sdfs");
                                 List<CaseGridResponse.IqBean.QueryBean.ItemsBean> items = (List<CaseGridResponse.IqBean.QueryBean.ItemsBean>) mCaseGridResponseResponse.body().getIq().getQuery().getItems();
-                                BaseApplication.log_say("-------------->",items.get(1).getFirstname()+" "+items.size());
-                                for (int i=0;i<items.size();i++){
-                                    BaseApplication.log_say("------------>","sdfdgfhgfs");
-                                    arrayAdapter.add(items.get(i).getFirstname());
+                                List<String> data = new ArrayList<String>();
+                                for (CaseGridResponse.IqBean.QueryBean.ItemsBean str : items){
+                                    data.add(str.getFirstname());
                                 }
+                                removeDuplicate(data);
+                                arrayAdapter.addAll(data);
                                 arrayAdapter.notifyDataSetChanged();
                             }else if (type==1){
                                 List<CaseGridResponse.IqBean.QueryBean.ItemsBean> items=mCaseGridResponseResponse.body().getIq().getQuery().getItems();
-                                for (int i=0;i<items.size();i++){
-                                    arrayAdapter.add(items.get(i).getSecondname());
-                                    BaseApplication.log_say("------------>",items.get(i).getSecondname());
+                                List<String> data = new ArrayList<String>();
+                                for (CaseGridResponse.IqBean.QueryBean.ItemsBean str : items){
+                                    data.add(str.getSecondname());
                                 }
+                                removeDuplicate(data);
+                                arrayAdapter.addAll(data);
                                 arrayAdapter.notifyDataSetChanged();
                             }else  if (type==2){
                                 List<CaseGridResponse.IqBean.QueryBean.ItemsBean> items=mCaseGridResponseResponse.body().getIq().getQuery().getItems();
-                                for (int i=0;i<items.size();i++){
-                                    arrayAdapter.add(items.get(i).getThirdname());
-                                    BaseApplication.log_say("------------>",items.get(i).getThirdname());
+                                List<String> data = new ArrayList<String>();
+                                for (CaseGridResponse.IqBean.QueryBean.ItemsBean str : items){
+                                    data.add(str.getThirdname());
                                 }
+                                removeDuplicate(data);
+                                arrayAdapter.addAll(data);
                                 arrayAdapter.notifyDataSetChanged();
                             }
-                            BaseApplication.log_say("------------>",mCaseGridResponseResponse.body().getIq().getQuery().getItems().get(0).getFirstname());
-
                         } else {
                             showMessage(mCaseGridResponseResponse.message());
                         }

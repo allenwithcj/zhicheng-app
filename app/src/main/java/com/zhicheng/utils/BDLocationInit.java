@@ -15,7 +15,7 @@ public class BDLocationInit {
         return instance;
     }
 
-    public void initLocation(LocationClient mLocationClient) {
+    public static void initLocation(LocationClient mLocationClient) {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备

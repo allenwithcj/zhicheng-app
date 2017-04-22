@@ -22,6 +22,7 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ServiceFactory {
     private volatile static OkHttpClient okHttpClient;
@@ -134,6 +135,7 @@ public class ServiceFactory {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(getOkHttpClient())
                 .baseUrl(baseUrl)
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 

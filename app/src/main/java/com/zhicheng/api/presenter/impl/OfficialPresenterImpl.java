@@ -15,7 +15,6 @@ import com.zhicheng.bean.http.OfficialDetailResponse;
 import com.zhicheng.bean.http.OfficialResponse;
 import com.zhicheng.bean.http.OfficialWorkDynamicList;
 import com.zhicheng.bean.http.PersonalDynamicResponse;
-import com.zhicheng.bean.json.PersonalDynamicRequest;
 import com.zhicheng.utils.common.NetworkUtils;
 import com.zhicheng.utils.common.UIUtils;
 
@@ -72,6 +71,7 @@ public class OfficialPresenterImpl implements OfficialPresenter, ApiCompleteList
             mOfficialView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
         }
         mOfficialModelImpl.upOfficialDynamic(dyn, imgs, jFile, mLocationSite, GUID, this);
+
     }
 
     @Override

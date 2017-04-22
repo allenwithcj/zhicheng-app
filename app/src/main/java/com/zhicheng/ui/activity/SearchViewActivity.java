@@ -91,7 +91,7 @@ public class SearchViewActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        mToolbar.setTitle("搜索");
+        mToolbar.setTitle("事件查询");
         return super.onCreateOptionsMenu(menu);
     }
 

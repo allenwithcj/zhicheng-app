@@ -64,6 +64,9 @@ public class Main extends BaseActivity implements OfficialView, BottomNavigation
                 .initialise();
         setDefaultFragment();
         mBottomNavigation.setTabSelectedListener(this);
+//        BaseApplication.startTimer();
+        //登录
+        BaseApplication.allLogin();
     }
 
     @Override

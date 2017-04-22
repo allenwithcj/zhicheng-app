@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.TimePickerView;
 import com.google.gson.Gson;
 import com.zhicheng.R;
 import com.zhicheng.api.common.database.DatabaseHelper;
@@ -28,8 +29,14 @@ import com.zhicheng.ui.activity.HuZuSearchActivity;
 import com.zhicheng.utils.CodeUtils;
 import com.zhicheng.utils.common.UIUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by hp on 2017/3/2.
+ *
  */
 
 public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implements HuZuView {
@@ -91,7 +98,11 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
                 ((ItemViewHolder) holder).grid_base_add_remark2.setText(mData.getIq().getQuery().getPreMsg().getREMARK2());
                 ((ItemViewHolder) holder).grid_base_add_outaddress.setText(mData.getIq().getQuery().getPreMsg().getOUTADDRESS());
                 ((ItemViewHolder) holder).grid_base_add_rkfl.setText(mData.getIq().getQuery().getPreMsg().getSORT());
-                ((ItemViewHolder) holder).grid_base_add_age.setText(mData.getIq().getQuery().getPreMsg().getPERSONAGE());
+                if (mData.getIq().getQuery().getPreMsg().getPERSONAGE() != null){
+                    ((ItemViewHolder) holder).grid_base_add_age.setText(mData.getIq().getQuery().getPreMsg().getPERSONAGE().substring(0,10));
+                }else {
+                    ((ItemViewHolder) holder).grid_base_add_age.setText("未知年龄");
+                }
 
                 HUZUID = mData.getIq().getQuery().getPreMsg().getHUZU();
                 getHuzuNAme(HUZUID);
@@ -151,9 +162,9 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
         }else if(RELATION.equals("")|| RELATION == null){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_relation),dialog);
         }else if(REMARK1.equals("")){
-            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_lessor_remark),dialog);
-        }else if(REMARK2.equals("")){
             showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_remark),dialog);
+        }else if(REMARK2.equals("")){
+            showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_add_lessor_remark),dialog);
         }else if(HUZUID.equals("")){
             if(!RELATION.equals("0")){
                 showMessage(UIUtils.getContext().getResources().getString(R.string.grid_base_huzu_name),dialog);
@@ -202,7 +213,11 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
         mFormobj.setREMARK1(REMARK1);
         mFormobj.setOUTADDRESS(OUTADDRESS);
         mFormobj.setSORT(SORT);
-        mFormobj.setBADDRESS(address);
+        if (address != null){
+            mFormobj.setBADDRESS(address);
+        }else {
+            mFormobj.setBADDRESS("");
+        }
         mFormobj.setBLONGITUDE(longitude);
         mFormobj.setBLATITUDE(latitude);
         mFormobj.setFLAG("1");
@@ -275,7 +290,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
         public TextView grid_base_add_remark1;
         public EditText grid_base_add_outaddress;
         public TextView grid_base_add_rkfl;
-        private EditText grid_base_add_age;
+        public TextView grid_base_add_age;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -299,7 +314,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
             grid_base_add_remark2 = (TextView) itemView.findViewById(R.id.grid_base_add_remark2);
             grid_base_add_outaddress = (EditText) itemView.findViewById(R.id.grid_base_add_outaddress);
             grid_base_add_rkfl = (TextView) itemView.findViewById(R.id.input_rkfl);
-            grid_base_add_age = (EditText)itemView.findViewById(R.id.grid_base_add_age);
+            grid_base_add_age = (TextView) itemView.findViewById(R.id.grid_base_add_age);
 
             grid_base_add_relation.setOnClickListener(view -> {
                 mList = UIUtils.getContext().getResources().getStringArray(R.array.relation);
@@ -357,6 +372,23 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
 
             grid_base_huzu_name.setOnClickListener(view -> {
                 UIUtils.startActivity(new Intent(UIUtils.getContext(), HuZuSearchActivity.class));
+            });
+
+            grid_base_add_age.setOnClickListener(v -> {
+                TimePickerView pvTime = new TimePickerView.Builder(itemView.getContext(), new TimePickerView.OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINESE);
+                        grid_base_add_age.setText(sdf.format(date));
+                    }
+                }).setType(TimePickerView.Type.YEAR_MONTH_DAY)
+                        .setSubmitText("确认")
+                        .setCancelText("取消")
+                        .setRange(1899,2100)
+                        .isDialog(true)
+                        .build();
+                pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+                pvTime.show();
             });
 
         }
