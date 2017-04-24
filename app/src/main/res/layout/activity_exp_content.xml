@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/textView_padding"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="4dp">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:padding="@dimen/textView_padding"
+    android:focusableInTouchMode="true">
+
+    <EditText
+        android:id="@+id/i_exp_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|start"
+        android:textSize="@dimen/content_size"
+        android:background="@null"
+        android:minLines="5"
+        android:hint="@string/exp_hint_content"
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:paddingTop="@dimen/textView_padding"
+        android:background="@color/bao_location_bg" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btn"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/photo"
+            android:layout_margin="@dimen/photo_margin"
+            android:background="@drawable/recycle_touch_bg"
+            android:src="@mipmap/icon_addpic_focused"
+            android:scaleType="fitCenter" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:clipToPadding="false"
+            android:scrollbars="none"
+            android:overScrollMode="never"/>
+        </LinearLayout>
+    </LinearLayout>
+    </android.support.v7.widget.CardView>

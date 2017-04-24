@@ -44,7 +44,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
     private String ZZ_RESIDENCE, GRIDNAME;
     private String REMARK2;
     private String CARD_NUM, NAME, RELATION, GENDER, MARITAL_STATUS, POLITICAL_STATUS, EDUCATION,
-            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT,HUZU,AGE;
+            HOBBY, REMARK1, DOMICILE, OUTADDRESS, PHONE, WORK, SORT,HUZUNAME,AGE;
     private String HUZUID;
     private OfficialBaseGridUpdatePresenter mOfficialBaseGridUpdatePresenter;
     private ItemViewHolder holder;
@@ -81,10 +81,18 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
 
                 ((ItemViewHolder) holder).grid_base_add_residence.setText(mData.getIq().getQuery().getPreMsg().getZZ_RESIDENCE());
                 ((ItemViewHolder) holder).grid_base_add_grid_no.setText(mData.getIq().getQuery().getPreMsg().getGRIDNAME());
-                ((ItemViewHolder) holder).grid_base_huzu_name.setText(mData.getIq().getQuery().getPreMsg().getHUZU());
 
                 ((ItemViewHolder) holder).grid_base_add_name.setText(mData.getIq().getQuery().getPreMsg().getNAME());
                 ((ItemViewHolder) holder).grid_base_add_relation.setText(CodeUtils.getRelationString(mData.getIq().getQuery().getPreMsg().getRELATION()));
+                //本人或户主置灰
+                if(((ItemViewHolder) holder).grid_base_add_relation.getText().toString().equals("本人或户主")){
+                    ((ItemViewHolder) holder).grid_base_huzu_name.setText(mData.getIq().getQuery().getPreMsg().getHUZU());
+                    ((ItemViewHolder) holder).grid_base_huzu_name.setBackgroundColor(UIUtils.getContext().getResources().getColor(R.color.gray_text));
+                    ((ItemViewHolder) holder).grid_base_huzu_name.setClickable(false);
+                }else{
+                    ((ItemViewHolder) holder).grid_base_huzu_name.setBackgroundColor(UIUtils.getContext().getResources().getColor(R.color.white));
+                    ((ItemViewHolder) holder).grid_base_huzu_name.setClickable(true);
+                }
                 ((ItemViewHolder) holder).grid_base_add_sex.setText(CodeUtils.getSexString(mData.getIq().getQuery().getPreMsg().getGENDER()));
                 ((ItemViewHolder) holder).grid_base_add_cardid.setText(mData.getIq().getQuery().getPreMsg().getCARD_NUM());
                 ((ItemViewHolder) holder).grid_base_add_policatial.setText(mData.getIq().getQuery().getPreMsg().getPOLITICAL_STATUS());
@@ -101,7 +109,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
                 if (mData.getIq().getQuery().getPreMsg().getPERSONAGE() != null){
                     ((ItemViewHolder) holder).grid_base_add_age.setText(mData.getIq().getQuery().getPreMsg().getPERSONAGE().substring(0,10));
                 }else {
-                    ((ItemViewHolder) holder).grid_base_add_age.setText("未知年龄");
+                    ((ItemViewHolder) holder).grid_base_add_age.setText("");
                 }
 
                 HUZUID = mData.getIq().getQuery().getPreMsg().getHUZU();
@@ -135,7 +143,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
         OUTADDRESS = holder.grid_base_add_outaddress.getText().toString();
         SORT = holder.grid_base_add_rkfl.getText().toString();
         AGE = holder.grid_base_add_age.getText().toString();
-        HUZU = holder.grid_base_huzu_name.getText().toString();
+        HUZUNAME = holder.grid_base_huzu_name.getText().toString();
 
         REMARK2 = holder.grid_base_add_remark2.getText().toString();
 
@@ -221,7 +229,7 @@ public class OfficialBaseGridDeatilAdapter extends RecyclerView.Adapter implemen
         mFormobj.setBLONGITUDE(longitude);
         mFormobj.setBLATITUDE(latitude);
         mFormobj.setFLAG("1");
-        mFormobj.setHZNAME(HUZU);
+        mFormobj.setHZNAME(HUZUNAME);
         mFormobj.setUSERNAME(mDatabaseHelper.getLocalConfig().getUserName());
 
         irIqQB.setFormobj(mFormobj);

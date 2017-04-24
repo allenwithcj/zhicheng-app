@@ -1,6 +1,7 @@
 package com.zhicheng.ui.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -8,14 +9,11 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -26,6 +24,7 @@ import android.widget.Toast;
 import com.bigkoo.pickerview.TimePickerView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.api.ApiCompleteListener;
 import com.zhicheng.api.presenter.impl.WorkNodePresenterImpl;
@@ -160,41 +159,49 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 
     @Override
     protected void initData() {
-        mInput.setImeOptions(EditorInfo.IME_ACTION_SEND);
-        mInput.setImeActionLabel("发送", EditorInfo.IME_ACTION_SEND);
-        mInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        mInput.setSingleLine(false);
-        mInput.setMaxLines(5);
-        mInput.setHorizontallyScrolling(false);
-        mInput.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEND
-                    || actionId == EditorInfo.IME_ACTION_DONE
-                    || (event != null
-                    && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
-                    && event.getAction() == KeyEvent.ACTION_DOWN)) {
-                dialog = new AlertDialog.Builder(this, R.style.dialog)
-                        .setView(R.layout.z_loading_view)
-                        .setCancelable(false)
-                        .create();
-                dialog.show();
-                if (mInput.getText().toString().isEmpty()) {
-                    dialog.dismiss();
-                    Snackbar.make(mToolbar, "工作日志不能为空", Snackbar.LENGTH_SHORT).show();
-                } else {
-                    if (mImagePath.size() != 0) {
-                        GUID = UUID.randomUUID().toString();
-                        send_content = mInput.getText().toString();
-                        sendMessage(mImagePath, GUID, send_content);
-                    } else {
-                        dialog.dismiss();
-                        Toast.makeText(this, "工作日志图片不能为空", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-                return true;
-            }
-            return false;
-        });
+        //去掉键盘发送按钮功能
+//        mInput.setImeOptions(EditorInfo.IME_ACTION_SEND);
+//        mInput.setImeActionLabel("发送", EditorInfo.IME_ACTION_SEND);
+//        mInput.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+//        mInput.setSingleLine(false);
+//        mInput.setMaxLines(5);
+//        mInput.setHorizontallyScrolling(false);
+//        mInput.setOnEditorActionListener((v, actionId, event) -> {
+//            if (actionId == EditorInfo.IME_ACTION_SEND
+//                    || actionId == EditorInfo.IME_ACTION_DONE
+//                    || (event != null
+//                    && event.getKeyCode() == KeyEvent.KEYCODE_ENTER
+//                    && event.getAction() == KeyEvent.ACTION_DOWN)) {
+//                dialog = new AlertDialog.Builder(this, R.style.dialog)
+//                        .setView(R.layout.z_loading_view)
+//                        .setCancelable(false)
+//                        .create();
+//                dialog.show();
+//                if (mInput.getText().toString().isEmpty()) {
+//                    dialog.dismiss();
+//                    Snackbar.make(mToolbar, "工作日志不能为空", Snackbar.LENGTH_SHORT).show();
+//                } else {
+//                    SharedPreferences sp = getSharedPreferences("workSendTime",MODE_PRIVATE);
+//                    String sendTime = sp.getString("WokeNodeTime","");
+//                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd",Locale.CHINESE);
+//                    if (sendTime.equals(dateFormat.format(new Date()))){
+//                        BaseApplication.log_say("-------------->3",dateFormat.toString());
+//                        showMessage("您今天已经提交过日志了");
+//                    }else {
+//                        if (mImagePath.size() != 0) {
+//                            GUID = UUID.randomUUID().toString();
+//                            send_content = mInput.getText().toString();
+//                            sendMessage(mImagePath, GUID, send_content);
+//                        } else {
+//                            dialog.dismiss();
+//                            Toast.makeText(this, "工作日志图片不能为空", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                }
+//                return true;
+//            }
+//            return false;
+//        });
     }
 
 
@@ -225,7 +232,6 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
         uf.setIq(ufIB);
         String jFile = gson.toJson(uf);
         mWorkNodePresenter.sendWorkNodes(jFile, mImagePath, content, attGUID, GUID, this);
-
     }
 
     @Override
@@ -282,6 +288,11 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
             //发送工作日志返回
         } else if (result instanceof CommonResponse) {
             if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
+                SharedPreferences sp = getSharedPreferences("workSendTime",MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd",Locale.CHINESE);
+                editor.putString("WokeNodeTime",dateFormat.format(new Date()));
+                editor.commit();
                 mInput.setText("");
                 mImagePath.clear();
                 onLoadWorkNodes();
@@ -292,6 +303,7 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
                 if (moreTools.getVisibility() == View.VISIBLE) {
                     moreTools.setVisibility(View.GONE);
                 }
+
             } else {
                 showMessage("发送日志失败");
             }
@@ -339,24 +351,31 @@ public class WorkNoteActivity extends BaseActivity implements WorkNodeView,
 
                 break;
             case R.id.action_send:
-                dialog = new AlertDialog.Builder(this, R.style.dialog)
-                        .setView(R.layout.z_loading_view)
-                        .setCancelable(false)
-                        .create();
-                dialog.show();
-                if (mInput.getText().toString().isEmpty()) {
-                    dialog.dismiss();
-                    Snackbar.make(mToolbar, "工作日志不能为空", Snackbar.LENGTH_SHORT).show();
-                } else {
-                    if (mImagePath.size() != 0) {
-                        GUID = UUID.randomUUID().toString();
-                        send_content = mInput.getText().toString();
-                        sendMessage(mImagePath, GUID, send_content);
-                    } else {
+                SharedPreferences sp = getSharedPreferences("workSendTime",MODE_PRIVATE);
+                String sendTime = sp.getString("WokeNodeTime","");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd",Locale.CHINESE);
+                if (!sendTime.equals("") && sendTime.equals(dateFormat.format(new Date()))){
+                    showMessage("您今天已经提交过日志了");
+                }else {
+                    dialog = new AlertDialog.Builder(this, R.style.dialog)
+                            .setView(R.layout.z_loading_view)
+                            .setCancelable(false)
+                            .create();
+                    dialog.show();
+                    if (mInput.getText().toString().isEmpty()) {
                         dialog.dismiss();
-                        Toast.makeText(this, "工作日志图片不能为空", Toast.LENGTH_SHORT).show();
-                    }
+                        Snackbar.make(mToolbar, "工作日志不能为空", Snackbar.LENGTH_SHORT).show();
+                    } else {
+                        if (mImagePath.size() != 0) {
+                            GUID = UUID.randomUUID().toString();
+                            send_content = mInput.getText().toString();
+                            sendMessage(mImagePath, GUID, send_content);
+                        } else {
+                            dialog.dismiss();
+                            Toast.makeText(this, "工作日志图片不能为空", Toast.LENGTH_SHORT).show();
+                        }
 
+                    }
                 }
                 break;
         }

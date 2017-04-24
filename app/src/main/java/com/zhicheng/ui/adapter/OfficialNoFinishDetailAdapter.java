@@ -105,14 +105,14 @@ public class OfficialNoFinishDetailAdapter extends RecyclerView.Adapter {
 
                     case 2:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position - 1]);
-                        if (mData.getIq().getQuery().getMap().getType() == 1) {
-                            ((ShowBoxViewHolder) holder).tagContent.setText("立案核实");
-                        } else if (mData.getIq().getQuery().getMap().getType() == 2) {
-                            ((ShowBoxViewHolder) holder).tagContent.setText("事件处置");
-                        } else if (mData.getIq().getQuery().getMap().getType() == 3) {
-                            ((ShowBoxViewHolder) holder).tagContent.setText("结案核实");
-                        }
-
+                        ((ShowBoxViewHolder) holder).tagContent.setText(mData.getIq().getQuery().getMap().getItemClass());
+//                        if (mData.getIq().getQuery().getMap().getType() == 1) {
+//                            ((ShowBoxViewHolder) holder).tagContent.setText("立案核实");
+//                        } else if (mData.getIq().getQuery().getMap().getType() == 2) {
+//                            ((ShowBoxViewHolder) holder).tagContent.setText("事件处置");
+//                        } else if (mData.getIq().getQuery().getMap().getType() == 3) {
+//                            ((ShowBoxViewHolder) holder).tagContent.setText("结案核实");
+//                        }
                         break;
                     case 3:
                         ((ShowBoxViewHolder) holder).tagName.setText(tags[position - 1]);

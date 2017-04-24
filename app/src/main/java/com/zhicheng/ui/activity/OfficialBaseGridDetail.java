@@ -168,9 +168,11 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     @Override
     protected int getMenuID() {
         USERID = getIntent().getStringExtra("USERID");
-        if (mData.getLocalConfig().getUserPost().equals("镇街受理员")) {
-            return R.menu.official_grid_update;
-        } else if (mData.getLocalConfig().getUserPost().equals("镇街单位业务员") ||
+        //增加村委书记
+        if (mData.getLocalConfig().getUserPost().equals("镇街受理员") ) {
+            return R.menu.official_grid_save;
+        } else if (mData.getLocalConfig().getUserPost().equals("村委书记") ||
+                mData.getLocalConfig().getUserPost().equals("镇街单位业务员") ||
                 mData.getLocalConfig().getUserPost().equals("镇街值班长")
                 || mData.getLocalConfig().getUserPost().equals("镇街指挥长")
                 || mData.getLocalConfig().getUserPost().equals("镇街领导")
@@ -180,7 +182,7 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
         } else if (mData.getLocalConfig().getUserPost().equals("网格长")
                 || mData.getLocalConfig().getUserPost().equals("网格员")) {
             if (mData.getLocalConfig().getUserId().equals(USERID)) {
-                return R.menu.official_grid_update;
+                return R.menu.official_grid_save;
             } else {
                 return super.getMenuID();
             }
@@ -197,7 +199,7 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_update) {
+        if (item.getItemId() == R.id.action_save) {
             dialog = new AlertDialog.Builder(this, R.style.dialog)
                     .setView(R.layout.z_loading_view)
                     .setCancelable(false)
@@ -222,7 +224,7 @@ public class OfficialBaseGridDetail extends BaseActivity implements OfficialBase
     public void updateDateResponse(Object result) {
         if (result instanceof CommonResponse) {
             if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
-                showMessage("修改成功");
+                showMessage("保存成功");
                 this.finish();
             } else {
                 showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());

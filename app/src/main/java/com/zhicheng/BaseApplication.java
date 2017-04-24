@@ -3,6 +3,7 @@ package com.zhicheng;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Process;
 import android.os.StrictMode;
@@ -26,6 +27,7 @@ import com.zhicheng.utils.common.FileUtils;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.net.UnknownHostException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -158,20 +160,22 @@ public class BaseApplication extends Application {
 
     public static void quiteApplication() {
         clearAllActivity();
-        if (timer != null){
-            timerTask.cancel();
-            timer.cancel();
-        }
+        clearCookies();
         System.exit(0);
+    }
+
+    public static void clearCookies(){
+        HashSet<String> cookie = new HashSet<>();
+        cookie.add("");
+        SharedPreferences sp = UIUtils.getContext().getSharedPreferences("cookies", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putStringSet("cookie", cookie);
+        editor.commit();
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        if (timer != null){
-            timerTask.cancel();
-            timer.cancel();
-        }
     }
 
     //数据库

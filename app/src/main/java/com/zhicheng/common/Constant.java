@@ -10,9 +10,9 @@ public class Constant {
     public static final String SID = "36C9CF7D-390C-9F4F-BCA3-21F3EE377566";
     //经验交流 测试环境：4DEBC22E-4A2C-B745-B62F-AF7DF15B2DDC
     //         正式环境：05D02FE3-3BE8-1641-9234-A1716D4BF32B
-    public static final String EXPSID = "4DEBC22E-4A2C-B745-B62F-AF7DF15B2DDC";
+    public static final String EXPSID = "05D02FE3-3BE8-1641-9234-A1716D4BF32B";
     //工作动态表单id
-    public static final String WORKSID = "4DEBC22E-4A2C-B745-B62F-AF7DF15B2DDC";
+    public static final String WORKSID = "CA299D04-2105-2240-B56E-169E86E20614";
     //工作动态流程id
     public static final String WORK_ID = "201704191118030";
 

@@ -179,6 +179,8 @@
 -keep class com.google.gson.stream.** { *; }
 -keep class com.zhicheng.bean.http.** { *; }
 -keep class com.zhicheng.bean.json.** { *; }
+-keep class com.zhicheng.bean.Extend.request.** { *; }
+-keep class com.zhicheng.bean.Extend.response.** { *; }
 
 # OkHttp3
 -dontwarn com.squareup.okhttp3.**

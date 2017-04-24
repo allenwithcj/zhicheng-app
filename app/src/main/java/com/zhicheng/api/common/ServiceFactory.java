@@ -76,8 +76,9 @@ public class ServiceFactory {
                 .build();
         request.cacheControl(tempCacheControl);
         for (String cookie : preferences) {
-            request.addHeader("Cookie", cookie);
-            BaseApplication.log_say("OkHttp", "Adding Header: " + cookie);
+            if (!cookie.equals("")){
+                request.addHeader("Cookie", cookie);
+            }
         }
         return chain.proceed(request.build());
     };

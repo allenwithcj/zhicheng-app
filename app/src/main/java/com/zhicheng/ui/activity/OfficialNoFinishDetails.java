@@ -194,6 +194,9 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         mToolbar.setTitle("事项详情");
+        if (BaseApplication.getLocalConfig().getUserPost().equals("镇街受理员")){
+            menu.removeItem(R.id.action_apply);
+        }
         return true;
     }
 
@@ -204,6 +207,13 @@ public class OfficialNoFinishDetails extends BaseActivity implements OfficialVie
 
     @Override
     public void showMessage(String msg) {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        if (mPopupWindow != null && mPopupWindow.isShowing()) {
+            mPopupWindow.dismiss();
+            mPopupWindow = null;
+        }
         Toast.makeText(UIUtils.getContext(), msg, Toast.LENGTH_SHORT).show();
     }
 

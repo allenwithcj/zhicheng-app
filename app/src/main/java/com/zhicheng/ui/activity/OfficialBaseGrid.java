@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,7 +20,6 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,63 +33,63 @@ import android.widget.Toast;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
-import com.google.gson.Gson;
 import com.zhicheng.BaseApplication;
 import com.zhicheng.R;
 import com.zhicheng.alarm.LocationUpReciver;
-import com.zhicheng.api.common.ServiceFactory;
-import com.zhicheng.api.common.database.DatabaseHelper;
-import com.zhicheng.api.common.service.HuZuService;
+import com.zhicheng.api.ApiCompleteListener;
+import com.zhicheng.api.Extend.model.BaseModelImpl;
+import com.zhicheng.api.common.database.LocalConfig;
 import com.zhicheng.api.presenter.impl.OfficialBaseGridQueryPresenterImpl;
-import com.zhicheng.api.view.OfficialBaseGridQueryView;
-import com.zhicheng.bean.http.OfficialQueyResponse;
-import com.zhicheng.bean.http.PersonMsgMaResponse;
-import com.zhicheng.bean.http.PersonQueryResponse;
-import com.zhicheng.bean.json.OfficialQueryRequest;
-import com.zhicheng.bean.json.PersonMsgMaRequest;
+import com.zhicheng.bean.http.BaseResponse;
+import com.zhicheng.bean.Extend.response.PersonMsgMaResponse;
 import com.zhicheng.bean.json.PersonQueryRequest;
 import com.zhicheng.common.Constant;
-import com.zhicheng.common.URL;
 import com.zhicheng.utils.BDLocationInit;
 import com.zhicheng.utils.ClearEditText;
 import com.zhicheng.utils.common.NotificationUtils;
 import com.zhicheng.utils.common.PermissionUtils;
 import com.zhicheng.utils.common.UIUtils;
 
-import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import retrofit2.Response;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import java.util.Map;
 
 
 /**
  * Created by Donson on 2017/1/5.
+ *
  */
 
-public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQueryView, SwipeRefreshLayout.OnRefreshListener {
-    private int start;
+public class OfficialBaseGrid extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
+
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private OfficialBaseGridQueryPresenterImpl mOfficialBaseGridQueryPresenterImpl;
+    //网络请求主导-------------------------------------
+//    private OfficialBaseGridQueryPresenterImpl mOfficialBaseGridQueryPresenterImpl;
+    private BaseModelImpl mBaseModelImpl;
+    //网络请求主导-------------------------------------
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLinearLayoutManager;
     private OfficialBaseGridAdapter mAdapter;
     private LocationClient mLocationClient;
     private MyLocationListener myLocationListener;
-    private DatabaseHelper mData;
+    //本地配置
+    private LocalConfig mLocalConfig;
+    //Toolbar标题栏
     private TextView title_name;
     public static OfficialBaseGrid instance;
     private Button ad_search;
     private ClearEditText mClearEditText;
-    private AlertDialog dialog;
+//    private AlertDialog dialog;
     private PersonQueryRequest.IqBean.QueryBean mQb;
     private TextView search_count;
-    private int page;
+    //搜索页数
+    private int page = 1;
+    //网格页数
+    private int start = 1;
+    private boolean isTopsearch = false;
+    //没有数据时候的view
+    private TextView mNoDataSearchView;
 
 
     public static OfficialBaseGrid getInstance(){
@@ -105,24 +103,18 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("com.grid.search")) {
+                isTopsearch = true;
+                page = 1;
                 mQb = (PersonQueryRequest.IqBean.QueryBean) intent.getSerializableExtra("value");
-                superiorSearch();
+                mAdapter.clearData();
+//              personQueryRequest(page,mQb,false);
             }
         }
 
 
     };
 
-    private void superiorSearch() {
-//        search_count.setVisibility(View.INVISIBLE);
-        PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
-        PersonQueryRequest.IqBean iq = new PersonQueryRequest.IqBean();
-        iq.setNamespace("PersonQueryRequest");
-        iq.setQuery(mQb);
-        mPersonQueryRequest.setIq(iq);
-        Gson gson = new Gson();
-        mOfficialBaseGridQueryPresenterImpl.queryByCondition(gson.toJson(mPersonQueryRequest));
-    }
+
 
     @Override
     protected void initEvents() {
@@ -131,26 +123,37 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         intentFilter.addAction("com.grid.search");
         registerReceiver(receiver, intentFilter);
         instance = this;
-        mData = new DatabaseHelper();
+        //本地配置
+        mLocalConfig = BaseApplication.getLocalConfig();
+        //Toolbar标题栏
         title_name = (TextView) findViewById(R.id.title_name);
+        title_name.setText(getResources().getString(R.string.grid_base_title));
+        //搜索栏
         mClearEditText = (ClearEditText)findViewById(R.id.mClearEditText);
+        //刷新布局
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         ad_search = (Button)findViewById(R.id.ad_search);
+        //百度地图-----------------------
         mLocationClient = new LocationClient(getApplicationContext());
         BDLocationInit.initLocation(mLocationClient);
         myLocationListener = new MyLocationListener();
         mLocationClient.registerLocationListener(myLocationListener);
+        //百度地图-----------------------
         mRecyclerView = (RecyclerView) findViewById(R.id.mRecycleView);
+        //顶部搜索记录SearchViewCount
         search_count = (TextView)findViewById(R.id.search_count);
-        mOfficialBaseGridQueryPresenterImpl = new OfficialBaseGridQueryPresenterImpl(this);
+        //网络请求Presenter
+//        mOfficialBaseGridQueryPresenterImpl = new OfficialBaseGridQueryPresenterImpl(this);
+        mBaseModelImpl = BaseModelImpl.getBaseModelImpl();
+        //本页网格适配器------------------------------------------
         mAdapter = new OfficialBaseGridAdapter();
         mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerViewScrollDetector());
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        title_name.setText(getResources().getString(R.string.grid_base_title));
-
+        //列表----------------------------------------------------
+        mNoDataSearchView = (TextView) findViewById(R.id.noData);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,12 +164,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                 }
             }
         });
-
+        //右上角新增按钮
         ad_search.setOnClickListener(view -> {
+            mNoDataSearchView.setVisibility(View.GONE);
             UIUtils.startActivity(new Intent(this,BaseGridSearchActivity.class));
         });
-
-
+        //搜索框
         mClearEditText.setImeOptions(EditorInfo.IME_ACTION_SEND);
         mClearEditText.setImeActionLabel(getResources().getString(R.string.search), EditorInfo.IME_ACTION_SEND);
         mClearEditText.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
@@ -180,16 +183,18 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                     && event.getAction() == KeyEvent.ACTION_DOWN)) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mClearEditText.getWindowToken(), 0);
-                dialog = new AlertDialog.Builder(this, R.style.dialog)
-                        .setView(R.layout.z_loading_view)
-                        .setCancelable(false)
-                        .create();
-                dialog.show();
+//                dialog = new AlertDialog.Builder(this, R.style.dialog)
+//                        .setView(R.layout.z_loading_view)
+//                        .setCancelable(false)
+//                        .create();
+//                dialog.show();
 
                 if (mClearEditText.getText().toString().isEmpty()) {
                     showMessage(getResources().getString(R.string.hint_search));
                 } else {
-                    fuzzySearch();
+                    mNoDataSearchView.setVisibility(View.GONE);
+                    queryGrid(page,false);
+                    page ++;
                 }
                 return true;
             }
@@ -210,24 +215,35 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             @Override
             public void afterTextChanged(Editable editable) {
                 if(editable.toString().isEmpty()){
+                    search_count.setVisibility(View.GONE);
+                    mNoDataSearchView.setVisibility(View.GONE);
+                    isQuery = false;
                     onRefresh();
                 }
             }
         });
     }
 
-    private void fuzzySearch() {
-        page = 1;
-        mOfficialBaseGridQueryPresenterImpl.queryByCondition(createObjQuery(page));
-        page ++;
+    private void queryGrid(int page,boolean isAdd) {
+        isQuery=true;
+        PersonQueryRequest.IqBean.QueryBean query = new PersonQueryRequest.IqBean.QueryBean();
+        query.setPkey(mClearEditText.getText().toString());
+        query.setBegintime("");
+        query.setEndtime("");
+        query.setGrid("");
+        query.setType("");
+        query.setUserid("");
+        query.setPmastkey("");
+        BaseApplication.log_say("------------------------1111",isQuery+"");
+        personQueryRequest(page,query,isAdd);
     }
 
     @Override
     protected void initData() {
         PermissionUtils.requestLocationPermission(this);
-        if (mData.getLocalConfig() != null) {
-            if (mData.getLocalConfig().getUserPost().equals("网格长")
-                    || mData.getLocalConfig().getUserPost().equals("网格员")) {
+        if (mLocalConfig != null) {
+            if (mLocalConfig.getUserPost().equals("网格长")
+                    || mLocalConfig.getUserPost().equals("网格员")) {
                 mLocationDialog();
             }
         }
@@ -239,159 +255,48 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         onRefresh();
     }
 
-    @Override
     public void showMessage(String msg) {
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-        }
+//        if (dialog != null && dialog.isShowing()) {
+//            dialog.dismiss();
+//        }
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showProgress() {
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
-    }
-
-    @Override
-    public void hideProgress() {
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
-    }
-
-    @Override
-    public void refreshData(Object result) {
-        if (result instanceof OfficialQueyResponse) {
-            if (((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
-                int num = ((OfficialQueyResponse) result).getIq().getQuery().getPreMsgcon().getAllnum();
-                if(num != 0){
-                    title_name.setText(getResources().getString(R.string.grid_base_title)+"(" + num + ")");
-                    getHuzus("1",((OfficialQueyResponse) result).getIq().getQuery().getPreMsgcon().getPreMsgs());
-                }else{
-                    title_name.setText(getResources().getString(R.string.grid_base_title)+"(0)");
-                }
-            } else {
-                showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
+    public void onRefresh() {
+        page = 1;
+        start = 1;
+        if(isTopsearch){
+            personQueryRequest(page,mQb,false);
+            page++;
+        }else{
+            if (search_count.getVisibility() == View.GONE){
+                personMsgMaRequest("3",start,"","",false);
+                start++;
+            }else{
+                queryGrid(page,false);
+                page++;
             }
-        }else if(result instanceof PersonQueryResponse){
-            if (((PersonQueryResponse) result).getIq().getQuery().getErrorCode() == 0) {
-                if (dialog != null && dialog.isShowing()) {
-                    dialog.dismiss();
-                }
-                int num = ((PersonQueryResponse) result).getIq().getQuery().getPersonlistcon().getAllnum();
-                if(num != 0){
-                    String str = "共搜索网格基础数据<font color=#af3428>"+ num + "条</font>";
-                    search_count.setVisibility(View.VISIBLE);
-                    search_count.setText(Html.fromHtml(str));
-                    List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> pbList = new ArrayList<>();
-                    for(PersonQueryResponse.IqBean.QueryBean.PersonlistconBean.PrelogsBean mpb
-                            :((PersonQueryResponse) result).getIq().getQuery().getPersonlistcon().getPrelogs()){
-                        OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean mPreMsgsBean =
-                                new OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean();
-                        mPreMsgsBean.setHUZU(mpb.getHUZU());
-                        mPreMsgsBean.setNAME(mpb.getNAME());
-                        mPreMsgsBean.setDOMICILE(mpb.getDOMICILE());
-                        mPreMsgsBean.setID(mpb.getID());
-                        pbList.add(mPreMsgsBean);
-                    }
-                    getHuzus("1",pbList);
-                }else{
-                    showMessage(getResources().getString(R.string.no_data));
-                }
-            } else {
-                showMessage(((PersonQueryResponse) result).getIq().getQuery().getErrorMessage());
-            }
+
         }
     }
 
-    private void getHuzus(String s, List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> preMsgs) {
-        Gson gson = new Gson();
-        PersonMsgMaRequest mPersonMsgMaRequest = new PersonMsgMaRequest();
-        PersonMsgMaRequest.IqBean iqb = new PersonMsgMaRequest.IqBean();
-        iqb.setNamespace("PersonMsgMaRequest");
-        PersonMsgMaRequest.IqBean.QueryBean qyb = new PersonMsgMaRequest.IqBean.QueryBean();
-        qyb.setType("6");
-        qyb.setRow("1000");
-        qyb.setPage("1");
-        iqb.setQuery(qyb);
-        mPersonMsgMaRequest.setIq(iqb);
-        Observable.just(gson.toJson(mPersonMsgMaRequest))
-                .flatMap(new Func1<String, Observable<Response<PersonMsgMaResponse>>>() {
-                    @Override
-                    public Observable<Response<PersonMsgMaResponse>> call(String s) {
-                        HuZuService mHuZuService = ServiceFactory.createService(URL.HOST_URL_SERVER_ZHICHENG, HuZuService.class);
-
-                        return mHuZuService.queryHuzu(s);
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<PersonMsgMaResponse>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (e instanceof UnknownHostException) {
-                            Toast.makeText(getApplication(), "", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNext(Response<PersonMsgMaResponse> mPersonMsgMaResponse) {
-                        if (mPersonMsgMaResponse.isSuccessful()) {
-                            if (mPersonMsgMaResponse.body() != null) {
-                                List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> ps = new ArrayList<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean>();
-                                for (OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean mp:preMsgs){
-                                    OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean mPreMsgsBean = new OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean();
-                                    mPreMsgsBean.setNAME(mp.getNAME());
-                                    mPreMsgsBean.setID(mp.getID());
-                                    mPreMsgsBean.setDOMICILE(mp.getDOMICILE());
-                                    mPreMsgsBean.setREPORTUSER(mp.getREPORTUSER());
-                                    mPreMsgsBean.setHUZU(mp.getHUZU());
-                                    for(PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean plg : mPersonMsgMaResponse.body().getIq().getQuery().getPrelogcon().getPrelogs()){
-                                        if(plg.getID().equals(mp.getHUZU())){
-                                            mPreMsgsBean.setHUZU(plg.getNAME());
-                                        }
-                                    }
-                                    ps.add(mPreMsgsBean);
-                                }
-                                if(s.equals("1")){
-                                    mAdapter.setDataList(ps);
-                                }else{
-                                    mAdapter.addDataList(ps);
-                                }
-                            }
-                        } else {
-                            Toast.makeText(getApplication(), mPersonMsgMaResponse.message(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    @Override
-    public void addData(Object result) {
-        if (result instanceof OfficialQueyResponse) {
-            if (((OfficialQueyResponse) result).getIq().getQuery().getErrorCode().equals("0")) {
-                getHuzus("2",((OfficialQueyResponse) result).getIq().getQuery()
-                        .getPreMsgcon().getPreMsgs());
-            } else {
-                showMessage(((OfficialQueyResponse) result).getIq().getQuery().getErrorMessage());
+    public void onLoadMore() {
+//        String strEntity = createObj(start);
+//        mOfficialBaseGridQueryPresenterImpl.query(strEntity, start);
+        if(isTopsearch){
+            personQueryRequest(page,mQb,true);
+            page++;
+        }else{
+            if (search_count.getVisibility() == View.GONE){
+                personMsgMaRequest("3",start,"","",true);
+                start++;
+            }else{
+                queryGrid(page,true);
+                page++;
             }
-        }
-    }
 
-    @Override
-    protected int getMenuID() {
-        if (mData.getLocalConfig() != null) {
-            if (mData.getLocalConfig().getUserPost().equals("网格长")
-                    || mData.getLocalConfig().getUserPost().equals("网格员")) {
-                return R.menu.official_grid;
-            }
         }
-        return super.getMenuID();
     }
 
     @Override
@@ -408,11 +313,264 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
                 intent.setClass(this, OfficialBaseGridAdd.class);
                 startActivity(intent);
             }else{
-                Toast.makeText(OfficialBaseGrid.this,getResources().getString(R.string.grid_base_location_alert),Toast.LENGTH_SHORT).show();
+                Toast.makeText(UIUtils.getContext(),getResources().getString(R.string.grid_base_location_alert),Toast.LENGTH_SHORT).show();
             }
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected int getMenuID() {
+        if (mLocalConfig != null) {
+            if (mLocalConfig.getUserPost().equals("网格长")
+                    || mLocalConfig.getUserPost().equals("网格员")) {
+                return R.menu.official_grid;
+            }
+        }
+        return super.getMenuID();
+    }
+
+    /**
+     *  请求创建函数
+     *
+     *  CreateObj PersonMsgMaRequest
+     *  CreateObjQuery PersonQueryRequest
+     *  superiorSearch PersonQueryRequest
+     *
+     *
+     *
+     *
+     *  Gson gson = new Gson();
+     *  OfficialQueryRequest ofq = new OfficialQueryRequest();
+     *  OfficialQueryRequest.IqBean iqb = new OfficialQueryRequest.IqBean();
+     *  iqb.setNamespace("PersonMsgMaRequest");
+     *  OfficialQueryRequest.IqBean.QueryBean qyb = new OfficialQueryRequest.IqBean.QueryBean();
+     *  qyb.setType("3");
+     *  qyb.setPage(String.valueOf(page));
+     *  iqb.setQuery(qyb);
+     *  ofq.setIq(iqb);
+     *
+     *
+     *
+     *  PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
+     *  PersonQueryRequest.IqBean iqb = new PersonQueryRequest.IqBean();
+     *  PersonQueryRequest.IqBean.QueryBean qb = new PersonQueryRequest.IqBean.QueryBean();
+     *  iqb.setNamespace("PersonQueryRequest");
+     *  qb.setPkey(mClearEditText.getText().toString());
+     *  qb.setBegintime("");
+     *  qb.setEndtime("");
+     *  qb.setUserid("");
+     *  qb.setGrid("");
+     *  qb.setPagenum(page);
+     *  iqb.setQuery(qb);
+     *  mPersonQueryRequest.setIq(iqb);
+     *  Gson gson = new Gson();
+     *
+     *
+     */
+    private boolean isHuZhu = true;
+    private boolean isQuery = false;
+    private PersonMsgMaResponse mPersonMsgMaResponse;
+    private void personMsgMaRequest(String type,int page,String row,String ID,boolean isAdd) {
+        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+        Map<String,String> query = new HashMap<>();
+        query.put("type",type);
+        query.put("page",String.valueOf(page));
+        query.put("row",row);
+        query.put("ID",ID);
+        mBaseModelImpl.ServiceConnect(BaseModelImpl.parseRequest("PersonMsgMaRequest", query), PersonMsgMaResponse.class, new ApiCompleteListener() {
+            @Override
+            public void onComplected(Object result) {
+                mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                if (result instanceof PersonMsgMaResponse){
+                    if (!isAdd){
+                        if (isHuZhu){
+                            isHuZhu = false;
+                            mPersonMsgMaResponse = (PersonMsgMaResponse) result;
+                            personMsgMaRequest("6",1,"1000","",isAdd);
+                        }else {
+                            BaseApplication.log_say("-------------->","11111111");
+                            isHuZhu = true;
+                            if (!isQuery){
+                                BaseApplication.log_say("-------------->","22222222");
+                                //遍历
+                                for (PersonMsgMaResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean p : mPersonMsgMaResponse.getIq().getQuery().getPreMsgcon().getPreMsgs()){
+                                    for (PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean m : ((PersonMsgMaResponse) result).getIq().getQuery().getPrelogcon().getPrelogs()){
+                                        if (p.getHUZU().equals(m.getID())){
+                                            p.setHUZU(m.getNAME());
+                                        }
+                                    }
+                                }
+                                //标题栏显示总体条数
+                                int num = mPersonMsgMaResponse.getIq().getQuery().getPreMsgcon().getAllnum();
+                                if(isTopsearch){
+                                    if(num != 0){
+                                        title_name.setText(getResources().getString(R.string.grid_base_title)+"(" + num + ")");
+                                        String str = "共搜索网格基础数据<font color=#af3428>" + num + "条</font>";
+                                        search_count.setVisibility(View.VISIBLE);
+                                        search_count.setText(Html.fromHtml(str));
+                                    }else{
+                                        title_name.setText(getResources().getString(R.string.grid_base_title)+"(0)");
+                                        showMessage("未搜索到数据");
+                                    }
+                                }else{
+                                    if(num != 0){
+                                        title_name.setText(getResources().getString(R.string.grid_base_title)+"(" + num + ")");
+                                    }else{
+                                        title_name.setText(getResources().getString(R.string.grid_base_title)+"(0)");
+                                    }
+                                }
+
+                                //----------------------
+                                mAdapter.setDataList(mPersonMsgMaResponse.getIq().getQuery().getPreMsgcon().getPreMsgs());
+                            }else {
+                                BaseApplication.log_say("-------------->","33333333");
+                                //query 遍历
+                                for (PersonMsgMaResponse.IqBean.QueryBean.PersonlistconBean.PrelogsBean p : mPersonMsgMaResponse.getIq().getQuery().getPersonlistcon().getPrelogs()){
+                                    for (PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean m : ((PersonMsgMaResponse) result).getIq().getQuery().getPrelogcon().getPrelogs()){
+                                        if (p.getHUZU().equals(m.getID())){
+                                            p.setHUZU(m.getNAME());
+                                        }
+                                    }
+                                }
+                                //----------------------
+//                                if (dialog != null && dialog.isShowing()) {
+//                                    dialog.dismiss();
+//                                }
+                                int num1 = mPersonMsgMaResponse.getIq().getQuery().getPersonlistcon().getAllnum();
+                                if(num1 != 0) {
+                                    title_name.setText(getResources().getString(R.string.grid_base_title)+"(" + num1 + ")");
+                                    String str = "共搜索网格基础数据<font color=#af3428>" + num1 + "条</font>";
+                                    search_count.setVisibility(View.VISIBLE);
+                                    search_count.setText(Html.fromHtml(str));
+                                }else {
+                                    title_name.setText(getResources().getString(R.string.grid_base_title)+"(0)");
+                                    showMessage("未搜索到数据");
+                                }
+                                mAdapter.setDataListType2(mPersonMsgMaResponse.getIq().getQuery().getPersonlistcon().getPrelogs());
+                            }
+                        }
+                    }else {
+                        if (isHuZhu){
+                            isHuZhu = false;
+                            mPersonMsgMaResponse = (PersonMsgMaResponse) result;
+                            personMsgMaRequest("6",1,"1000","",true);
+                        }else {
+                            isHuZhu = true;
+                            BaseApplication.log_say("-------------->","444444");
+                            if (!isQuery){
+                                BaseApplication.log_say("-------------->","5555555");
+                                    for (PersonMsgMaResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean p : mPersonMsgMaResponse.getIq().getQuery().getPreMsgcon().getPreMsgs()){
+                                        for (PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean m : ((PersonMsgMaResponse) result).getIq().getQuery().getPrelogcon().getPrelogs()){
+                                            if (p.getHUZU().equals(m.getID())){
+                                                p.setHUZU(m.getNAME());
+                                            }
+                                        }
+                                    }
+
+                                mAdapter.addDataList(mPersonMsgMaResponse.getIq().getQuery().getPreMsgcon().getPreMsgs());
+                            }else {
+                                BaseApplication.log_say("-------------->","666666");
+                                for (PersonMsgMaResponse.IqBean.QueryBean.PersonlistconBean.PrelogsBean p : mPersonMsgMaResponse.getIq().getQuery().getPersonlistcon().getPrelogs()){
+                                    for (PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean m : ((PersonMsgMaResponse) result).getIq().getQuery().getPrelogcon().getPrelogs()){
+                                        if (p.getHUZU().equals(m.getID())){
+                                            p.setHUZU(m.getNAME());
+                                        }
+                                    }
+                                }
+                                mAdapter.addDataListType2(mPersonMsgMaResponse.getIq().getQuery().getPersonlistcon().getPrelogs());
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailed(BaseResponse msg) {
+                mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                showMessage("返回数据出错");
+            }
+        });
+    }
+
+    private void personQueryRequest(int page,Object obj,boolean isAdd){
+
+        /**
+         * pkey : xxxx
+         * userid : 宋莹
+         * grid : 皇家湾社区第一网格
+         * begintime : 2017-3-30 14:44:50
+         * endtime : 2017-4-5 10:13:26
+         * pageNum : 1
+         */
+
+        if (obj instanceof PersonQueryRequest.IqBean.QueryBean){
+            mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+            Map<String,Object> query = new HashMap<>();
+            query.put("pkey",((PersonQueryRequest.IqBean.QueryBean) obj).getPkey());
+            query.put("userid",((PersonQueryRequest.IqBean.QueryBean) obj).getUserid());
+            query.put("grid",((PersonQueryRequest.IqBean.QueryBean) obj).getGrid());
+            query.put("begintime",((PersonQueryRequest.IqBean.QueryBean) obj).getBegintime());
+            query.put("endtime",((PersonQueryRequest.IqBean.QueryBean) obj).getEndtime());
+            query.put("pageNum",page);
+            query.put("type",((PersonQueryRequest.IqBean.QueryBean) obj).getType());
+            query.put("pmastkey",((PersonQueryRequest.IqBean.QueryBean) obj).getPmastkey());
+
+            mBaseModelImpl.ServiceConnect(BaseModelImpl.parseRequest("PersonQueryRequest", query), PersonMsgMaResponse.class, new ApiCompleteListener() {
+                @Override
+                public void onComplected(Object result) {
+                    mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                    if (result instanceof PersonMsgMaResponse){
+                        if(((PersonMsgMaResponse) result).getIq().getQuery().getErrorCode().equals("0")){
+                            if (((PersonMsgMaResponse) result).getIq().getQuery().getPersonlistcon().getPrelogs().size() != 0){
+                                int num2 = ((PersonMsgMaResponse) result).getIq().getQuery().getPersonlistcon().getAllnum();
+                                isHuZhu = false;
+                                mPersonMsgMaResponse = (PersonMsgMaResponse) result;
+                                isQuery = true;
+                                personMsgMaRequest("6",1,"1000","",isAdd);
+                                if(num2 != 0) {
+                                    title_name.setText(getResources().getString(R.string.grid_base_title)+"(" + num2 + ")");
+                                    String str = "共搜索网格基础数据<font color=#af3428>" + num2 + "条</font>";
+                                    search_count.setVisibility(View.VISIBLE);
+                                    search_count.setText(Html.fromHtml(str));
+                                }else {
+                                    title_name.setText(getResources().getString(R.string.grid_base_title)+"(0)");
+                                    showMessage("未搜索到数据");
+                                }
+
+                            }else {
+                                if(!isAdd){
+                                    mAdapter.clearData();
+                                    search_count.setVisibility(View.GONE);
+                                    mNoDataSearchView.setVisibility(View.VISIBLE);
+                                }
+                                title_name.setText(getResources().getString(R.string.grid_base_title)+"(0)");
+                                BaseApplication.log_say("---------------->",isQuery+"");
+                                showMessage("没有更多数据");
+                            }
+                        }else{
+                            showMessage(((PersonMsgMaResponse) result).getIq().getQuery().getErrorMessage());
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onFailed(BaseResponse msg) {
+                    mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+                    showMessage("返回数据出错");
+                }
+            });
+        }else {
+            showMessage("数据错误");
+        }
+    }
+
+    /**
+     *
+     * 请求地理位置录入Dialog
+     *
+     */
 
     private void mLocationDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.item_grid_location_switch, null);
@@ -467,84 +625,75 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    public void onLoadMore() {
-        String strEntity = createObj(start);
-        mOfficialBaseGridQueryPresenterImpl.query(strEntity, start);
-        start++;
-    }
-
-    @Override
-    public void onRefresh() {
-//        if (search_count.getVisibility() == View.GONE){
-//            normalSearch();
-//        }else {
-//            fuzzySearch();
-//        }
-        normalSearch();
-    }
-
-    private void normalSearch() {
-        search_count.setVisibility(View.GONE);
-        start = 1;
-        String strEntity = createObj(start);
-        mOfficialBaseGridQueryPresenterImpl.query(strEntity, start);
-        start++;
-    }
-
-    private String createObj(int page) {
-        Gson gson = new Gson();
-        OfficialQueryRequest ofq = new OfficialQueryRequest();
-        OfficialQueryRequest.IqBean iqb = new OfficialQueryRequest.IqBean();
-        iqb.setNamespace("PersonMsgMaRequest");
-        OfficialQueryRequest.IqBean.QueryBean qyb = new OfficialQueryRequest.IqBean.QueryBean();
-        qyb.setType("3");
-        qyb.setPage(String.valueOf(page));
-        iqb.setQuery(qyb);
-        ofq.setIq(iqb);
-        return gson.toJson(ofq);
-    }
-
-    private String createObjQuery(int page){
-        PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
-        PersonQueryRequest.IqBean iqb = new PersonQueryRequest.IqBean();
-        PersonQueryRequest.IqBean.QueryBean qb = new PersonQueryRequest.IqBean.QueryBean();
-        iqb.setNamespace("PersonQueryRequest");
-        qb.setPkey(mClearEditText.getText().toString());
-        qb.setBegintime("");
-        qb.setEndtime("");
-        qb.setUserid("");
-        qb.setGrid("");
-        qb.setPagenum(page);
-        iqb.setQuery(qb);
-        mPersonQueryRequest.setIq(iqb);
-        Gson gson = new Gson();
-        return gson.toJson(mPersonQueryRequest);
-    }
+    /**
+     * Adapter
+     *
+     * 表格列表适配器
+     *
+     */
 
     class OfficialBaseGridAdapter extends RecyclerView.Adapter {
 
-        private List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data;
+        /**
+         * private List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data;
+         *
+         *  public void addDataList(List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
+         *  int page = data.size();
+         *  this.data.addAll(data);
+         *  this.notifyItemRangeInserted(page, data.size());
+         *  }
+         *
+         *
+         *  public void setDataList(List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
+         *  this.data = data;
+         *  this.notifyDataSetChanged();
+         *  }
+         *
+         *
+         */
+
+        private boolean isSearch = false;
+        private List<PersonMsgMaResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data;
+        private List<PersonMsgMaResponse.IqBean.QueryBean.PersonlistconBean.PrelogsBean> dataType2;
         private String[] tag = {"姓名:", "户主:", "户籍地址:"};
-        private ItemViewHolder itemHolder;
 
         public OfficialBaseGridAdapter() {
-
+            data = new ArrayList<>();
+            dataType2 = new ArrayList<>();
         }
 
-        public void addDataList(List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
-            int page = data.size();
+        public void addDataList(List<PersonMsgMaResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
+            isSearch = false;
+            int page = this.data.size();
+//            BaseApplication.log_say("----------->","page:"+page);
             this.data.addAll(data);
+            this.notifyItemRangeInserted(page, data.size());
+//            this.notifyDataSetChanged();
+        }
+
+        public void setDataList(List<PersonMsgMaResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
+            isSearch = false;
+//            BaseApplication.log_say("----------->","page:"+page);
+            this.data = data;
+            this.notifyDataSetChanged();
+        }
+
+        public void clearData(){
+            this.data.clear();
+            this.dataType2.clear();
+            this.notifyDataSetChanged();
+        }
+
+        public void addDataListType2(List<PersonMsgMaResponse.IqBean.QueryBean.PersonlistconBean.PrelogsBean> data) {
+            isSearch = true;
+            int page = dataType2.size();
+            this.dataType2.addAll(data);
             this.notifyItemRangeInserted(page, data.size());
         }
 
-        public void setDataList(List<OfficialQueyResponse.IqBean.QueryBean.PreMsgconBean.PreMsgsBean> data) {
-            this.data = data;
+        public void setDataListType2(List<PersonMsgMaResponse.IqBean.QueryBean.PersonlistconBean.PrelogsBean> data) {
+            isSearch = true;
+            this.dataType2 = data;
             this.notifyDataSetChanged();
         }
 
@@ -556,28 +705,47 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            this.itemHolder = (ItemViewHolder) holder;
             if (holder instanceof ItemViewHolder) {
-                ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0] + data.get(position).getNAME());
-                ((ItemViewHolder) holder).grid_base_add_huzu.setText(tag[1] + data.get(position).getHUZU());
-                ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[2] + data.get(position).getDOMICILE());
+                if (!isSearch){
+                    ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0] + data.get(position).getNAME());
+                    ((ItemViewHolder) holder).grid_base_add_huzu.setText(tag[1] + data.get(position).getHUZU());
+                    ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[2] + data.get(position).getDOMICILE());
 
-                ((ItemViewHolder) holder).Suc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(UIUtils.getContext(), OfficialBaseGridDetail.class);
-                        intent.putExtra("ID", data.get(position).getID());
-                        intent.putExtra("USERID", data.get(position).getREPORTUSER());
-                        UIUtils.startActivity(intent);
-                    }
-                });
+                    ((ItemViewHolder) holder).Suc.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(UIUtils.getContext(), OfficialBaseGridDetail.class);
+                            intent.putExtra("ID", data.get(position).getID());
+                            intent.putExtra("USERID", data.get(position).getREPORTUSER());
+                            UIUtils.startActivity(intent);
+                        }
+                    });
+                }else {
+                    ((ItemViewHolder) holder).grid_base_add_name.setText(tag[0] + dataType2.get(position).getNAME());
+                    ((ItemViewHolder) holder).grid_base_add_huzu.setText(tag[1] + dataType2.get(position).getHUZU());
+                    ((ItemViewHolder) holder).grid_base_add_brithplace.setText(tag[2] + dataType2.get(position).getDOMICILE());
+
+                    ((ItemViewHolder) holder).Suc.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(UIUtils.getContext(), OfficialBaseGridDetail.class);
+                            intent.putExtra("ID", dataType2.get(position).getID());
+                            intent.putExtra("USERID", dataType2.get(position).getREPORTUSER());
+                            UIUtils.startActivity(intent);
+                        }
+                    });
+                }
 
             }
         }
 
         @Override
         public int getItemCount() {
-            return data == null ? 0:data.size();
+            if (!isSearch){
+                return data == null ? 0:data.size();
+            }else {
+                return dataType2 == null ? 0:dataType2.size();
+            }
         }
 
         private class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -595,14 +763,20 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
             }
         }
     }
-
+    /**
+     *
+     * 上拉加载更多
+     *
+     * RecyclerViewScrollDetector
+     *
+     */
     public class RecyclerViewScrollDetector extends RecyclerView.OnScrollListener {
         private int lastVisibleItem;
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == mAdapter.getItemCount()) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE && !mSwipeRefreshLayout.isRefreshing() && lastVisibleItem + 1 == mAdapter.getItemCount()) {
                 onLoadMore();
             }
         }
@@ -615,6 +789,13 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
     }
 
+    /**
+     * 地点监听
+     *
+     * 地点位置监听
+     *
+     */
+
     class MyLocationListener implements BDLocationListener {
 
         @Override
@@ -625,6 +806,13 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
     }
 
+    /**
+     * 点击事件拦截
+     *
+     * @param keyCode keyCode
+     * @param event event
+     * @return boolean
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -636,6 +824,12 @@ public class OfficialBaseGrid extends BaseActivity implements OfficialBaseGridQu
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    /**
+     * 百度地图
+     *
+     * 开启监听，请地理位置
+     */
 
     public void openGps(){
         if (mLocationClient != null){

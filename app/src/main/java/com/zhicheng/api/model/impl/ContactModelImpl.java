@@ -18,6 +18,7 @@ import rx.schedulers.Schedulers;
 
 /**
  * Created by hp on 2017/3/11.
+ *
  */
 
 public class ContactModelImpl implements ContactModel {

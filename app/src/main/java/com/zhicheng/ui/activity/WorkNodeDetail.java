@@ -1,6 +1,7 @@
 package com.zhicheng.ui.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -156,7 +157,7 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         //删除
         if (item.getItemId() == R.id.action_operate) {
             if (b) {
-                item.setTitle("修改");
+                item.setTitle("删除");
                 btn_layout.setVisibility(View.GONE);
                 b = false;
             } else {
@@ -206,16 +207,21 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         if (result instanceof CommonResponse) {
             if (((CommonResponse) result).getIq().getQuery().getErrorCode() == 0) {
                 if (Constant.LOG_OPERATE_TYPE.equals("update")) {
-                    showMessage("修改成功");
+                    //showMessage("修改成功");
                 } else if (Constant.LOG_OPERATE_TYPE.equals("delete")) {
                     showMessage("删除成功");
+                    //清空本地存储时间
+                    SharedPreferences sp = getSharedPreferences("workSendTime",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("WokeNodeTime","");
+                    editor.apply();
                 }else{
                     showMessage("作废成功");
                 }
                 finish();
             } else {
                 if (Constant.LOG_OPERATE_TYPE.equals("update")) {
-                    showMessage("修改失败");
+                    //showMessage("修改失败");
                 } else if (Constant.LOG_OPERATE_TYPE.equals("delete")) {
                     showMessage(((CommonResponse) result).getIq().getQuery().getErrorMessage());
                 }else{
@@ -240,7 +246,7 @@ public class WorkNodeDetail extends BaseActivity implements WorkNodeView {
         }
 
         @Override
-        public ImageAdapter.ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.z_image_view, parent, false);
             return new ImageViewHolder(view);
         }

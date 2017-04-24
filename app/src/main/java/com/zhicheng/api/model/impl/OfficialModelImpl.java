@@ -553,22 +553,32 @@ public class OfficialModelImpl implements OfficialModel {
                                     if(itemsBeens.size() == 1){
                                         query.setChukouID(itemsBeens.get(0).getKey());
                                     }else{
-                                        for (IneedResponse.IqBean.QueryBean.ItemsBean itemsBean : itemsBeens) {
-                                            if (type.equals("0")) {
-                                                if (itemsBean.getValue().equals("提交处置结果")) {
-                                                    query.setChukouID(itemsBean.getKey());
-                                                }else if(itemsBean.getValue().equals("事件办结")){
-                                                    query.setChukouID(itemsBean.getKey());
-                                                }
-                                            } else if (type.equals("4")) {
+                                        if (type.equals("0")){
+                                            query.setChukouID(itemsBeens.get(0).getKey());
+                                        }else if (type.equals("4")){
+                                            for (IneedResponse.IqBean.QueryBean.ItemsBean itemsBean : itemsBeens){
                                                 if (itemsBean.getValue().equals("申请重新分配")) {
                                                     query.setChukouID(itemsBean.getKey());
                                                 }
                                             }
                                         }
+//                                        for (IneedResponse.IqBean.QueryBean.ItemsBean itemsBean : itemsBeens) {
+//                                            if (type.equals("0")) {
+//                                                if (itemsBean.getValue().equals("提交处置结果")) {
+//                                                    query.setChukouID(itemsBean.getKey());
+//                                                }else if(itemsBean.getValue().equals("事件办结")){
+//                                                    query.setChukouID(itemsBean.getKey());
+//                                                }else {
+//                                                    query.setChukouID(itemsBean.getKey());
+//                                                }
+//                                            } else if (type.equals("4")) {
+//                                                if (itemsBean.getValue().equals("申请重新分配")) {
+//                                                    query.setChukouID(itemsBean.getKey());
+//                                                }
+//                                            }
+//                                        }
                                     }
                                 }
-                                BaseApplication.log_say("-----------------Official","iaijsdfasjdfliajsdlifja");
                                 iq.setNamespace("FormNodeRequest");
                                 iq.setQuery(query);
                                 formNode.setIq(iq);

@@ -331,6 +331,7 @@ public class OfficialWorkDynamic extends BaseActivity implements OfficialView, S
                     mPopupWindow.dismiss();
                     mPopupWindow = null;
                 }
+                mImagePath.clear();
                 fresh();
             }else {
                 showMessage("流程错误");

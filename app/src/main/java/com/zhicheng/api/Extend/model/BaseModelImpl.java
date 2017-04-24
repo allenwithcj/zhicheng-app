@@ -3,16 +3,26 @@ package com.zhicheng.api.Extend.model;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.TypeAdapter;
+import com.google.gson.TypeAdapterFactory;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
+import com.google.gson.stream.JsonWriter;
 import com.zhicheng.BaseApplication;
+import com.zhicheng.api.ApiCompleteListener;
 import com.zhicheng.api.common.ServiceFactory;
 import com.zhicheng.api.Extend.service.BaseService;
 import com.zhicheng.api.Extend.model.BaseModel;
+import com.zhicheng.bean.http.BaseResponse;
 import com.zhicheng.bean.json.UpFileRequest;
 import com.zhicheng.common.URL;
 import com.zhicheng.luban.Luban;
 import com.zhicheng.utils.common.UIUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +49,7 @@ public class BaseModelImpl implements BaseModel {
 
     private static BaseService mBaseService;
 
-    private static Gson gson = new Gson();
+    private static Gson gson = new GsonBuilder().registerTypeAdapterFactory(new NullStringToEmptyAdapterFactory()).create();
 
     private BaseModelImpl(){}
 
@@ -187,6 +197,42 @@ public class BaseModelImpl implements BaseModel {
 
     }
 
+    public void ServiceConnect(String json, Class type,ApiCompleteListener listener){
+        mBaseService.connect(json)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<String>>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e instanceof UnknownHostException){
+                            showMessage("未知接口");
+                            return;
+                        }
+                        showMessage("未知错误");
+                    }
+
+                    @Override
+                    public void onNext(Response<String> stringResponse) {
+                        if (stringResponse.isSuccessful()){
+                            Object obj = JsonToJava(stringResponse.body(),type);
+                            if (stringResponse.body().contains("\"errorCode\":\"0\"") || stringResponse.body().contains("\"errorCode\":0")){
+                                listener.onComplected(obj);
+                            }else {
+                                listener.onFailed(new BaseResponse(404,"数据出错"));
+                            }
+                        }else {
+                            showMessage("访问失败");
+                        }
+                    }
+                });
+
+    }
+
     public static <T> T JsonToJava(String json,Class<T> type){
         return gson.fromJson(json,type);
     }
@@ -221,6 +267,41 @@ public class BaseModelImpl implements BaseModel {
         iq.setNamespace("AttachmentUpdateRequest");
         request.setIq(iq);
         return gson.toJson(request);
+    }
+
+
+
+    private static class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
+        @SuppressWarnings("unchecked")
+        public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+            Class<T> rawType = (Class<T>) type.getRawType();
+            if (rawType != String.class) {
+                return null;
+            }
+            return (TypeAdapter<T>) new StringNullAdapter();
+        }
+    }
+
+
+    private static class StringNullAdapter extends TypeAdapter<String> {
+        @Override
+        public String read(JsonReader reader) throws IOException {
+            // TODO Auto-generated method stub
+            if (reader.peek() == JsonToken.NULL) {
+                reader.nextNull();
+                return "";
+            }
+            return reader.nextString();
+        }
+        @Override
+        public void write(JsonWriter writer, String value) throws IOException {
+            // TODO Auto-generated method stub
+            if (value == null) {
+                writer.nullValue();
+                return;
+            }
+            writer.value(value);
+        }
     }
 
 }

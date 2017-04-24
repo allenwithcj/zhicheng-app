@@ -21,8 +21,9 @@ public class URL {
     public static final String PGYURL = "http://www.pgyer.com";
 
 //    public static final String HOST_URL_SERVER_ZHICHENG = "http://219.131.197.178:9909";
-    //主    http://zhangxin.vicp.io:28373
+    //主    http://cxcig.ddns.net:10009
     //feiqi  http://zhangxin.vicp.io:28373   http://feljj520.oicp.io/
-    public static final String HOST_URL_SERVER_ZHICHENG = "http://zhangxin.vicp.io:28373";
+//    public static final String HOST_URL_SERVER_ZHICHENG = "http://cxcig.ddns.net:10009";
+    public static final String HOST_URL_SERVER_ZHICHENG = "http://feljj520.oicp.io";
 
 }
