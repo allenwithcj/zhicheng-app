@@ -125,6 +125,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     private FloatingActionButton mFab;
     private ImageButton mEvent_close;
     private RecyclerView mEvent_cyc;
+    private MyEventAdapter mEventAdapter;
 
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -270,7 +271,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     }
 
 
-    //事件统计弹出框
+    //事件分类统计弹出框
     private void showEventPopupWindow(View view) {
         if (popupWindow!=null && popupWindow.isShowing()){
             popupWindow.dismiss();
@@ -283,6 +284,9 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             AnimationUtils.darkBackgroundColor(getActivity().getWindow(),0.5f);
             mEvent_close = (ImageButton)contentView.findViewById(R.id.event_close);
             mEvent_cyc = (RecyclerView)contentView.findViewById(R.id.mEvent_cyc);
+            mEventAdapter = new MyEventAdapter();
+            mEvent_cyc.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mEvent_cyc.setAdapter(mEventAdapter);
 
             mEvent_close.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -304,6 +308,24 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 }
             });
             popupWindow.showAtLocation(mRootView, Gravity.CENTER,0,0);
+        }
+    }
+
+    class MyEventAdapter extends RecyclerView.Adapter{
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return null;
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
         }
     }
 
