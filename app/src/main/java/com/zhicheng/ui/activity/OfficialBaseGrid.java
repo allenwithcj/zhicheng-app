@@ -193,6 +193,7 @@ public class OfficialBaseGrid extends BaseActivity implements SwipeRefreshLayout
                     showMessage(getResources().getString(R.string.hint_search));
                 } else {
                     mNoDataSearchView.setVisibility(View.GONE);
+                    page = 1;
                     queryGrid(page,false);
                     page ++;
                 }
