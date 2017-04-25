@@ -277,7 +277,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             popupWindow.dismiss();
             popupWindow=null;
         }else {
-            View contentView=LayoutInflater.from(getContext()).inflate(R.layout.activity_event_pop,null);
+            View contentView=LayoutInflater.from(getActivity()).inflate(R.layout.activity_event_pop,null);
             int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
             int height  = getActivity().getWindowManager().getDefaultDisplay().getHeight();
             popupWindow = new PopupWindow(contentView,width - width/4,height - height/4);
