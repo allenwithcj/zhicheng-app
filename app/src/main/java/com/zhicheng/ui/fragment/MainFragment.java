@@ -46,7 +46,7 @@ import java.util.Map;
  * Created by Donson on 2017/1/2.
  */
 
-public class MainFragment extends BaseFragment implements CheckVerisonView {
+public class MainFragment extends BaseFragment implements CheckVerisonView{
 
     private CircleImageView mCircleImageView;
     private RecyclerView mRecyclerView;
