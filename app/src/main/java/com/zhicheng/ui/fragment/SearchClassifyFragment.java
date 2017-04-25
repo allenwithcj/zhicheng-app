@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -31,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -118,6 +120,12 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
     private TextView notice_tv;
     private ArrayAdapter<String> arrayAdapter;
     private int Sin=1;
+
+    //事件统计
+    private FloatingActionButton mFab;
+    private ImageButton mEvent_close;
+    private RecyclerView mEvent_cyc;
+
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -220,11 +228,11 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         date_txt = (TextView) mRootView.findViewById(R.id.Date);
         grid_name = (TextView)mRootView.findViewById(R.id.grid_name);
 
-
-
-
         firstClass= (TextView) mRootView.findViewById(R.id.firstClass);
         secondClass= (TextView) mRootView.findViewById(R.id.secondClass);
+
+        mFab = (FloatingActionButton)mRootView.findViewById(R.id.mFab);
+
 
 
         btn_cancel.setOnClickListener(this);
@@ -251,6 +259,52 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
         };
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        //事件类型统计点击事件
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showEventPopupWindow(view);
+            }
+        });
+    }
+
+
+    //事件统计弹出框
+    private void showEventPopupWindow(View view) {
+        if (popupWindow!=null && popupWindow.isShowing()){
+            popupWindow.dismiss();
+            popupWindow=null;
+        }else {
+            View contentView=LayoutInflater.from(getContext()).inflate(R.layout.activity_event_pop,null);
+            int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
+            int height  = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+            popupWindow = new PopupWindow(contentView,width - width/4,height - height/4);
+            AnimationUtils.darkBackgroundColor(getActivity().getWindow(),0.5f);
+            mEvent_close = (ImageButton)contentView.findViewById(R.id.event_close);
+            mEvent_cyc = (RecyclerView)contentView.findViewById(R.id.mEvent_cyc);
+
+            mEvent_close.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (popupWindow!=null && popupWindow.isShowing()){
+                        popupWindow.dismiss();
+                        popupWindow=null;
+                    }
+                }
+            });
+
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setBackgroundDrawable(new BitmapDrawable());
+            popupWindow.setAnimationStyle(R.style.popwin_anim_style);
+            popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    AnimationUtils.darkBackgroundColor(getActivity().getWindow(),1.0f);
+                }
+            });
+            popupWindow.showAtLocation(mRootView, Gravity.CENTER,0,0);
+        }
     }
 
     @Override

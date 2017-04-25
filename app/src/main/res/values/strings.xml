@@ -149,6 +149,7 @@
     <string name="hz_search">房主/户主姓名搜索</string>
     <string name="no_data">未查询到数据</string>
     <string name="grid_base_add_title">新增网格基础数据</string>
+    <string name="event_type_statistics">事件类型统计</string>
 
     <string-array name="detail">
         <item>编号:</item>
