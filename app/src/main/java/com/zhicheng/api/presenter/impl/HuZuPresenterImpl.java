@@ -73,7 +73,9 @@ public class HuZuPresenterImpl implements HuZuPresenter,ApiCompleteListener {
         this.start = start;
         if (!NetworkUtils.isConnected(UIUtils.getContext())) {
             mHuZuView.showMessage(UIUtils.getContext().getString(R.string.poor_network));
+            mHuZuView.hideProgress();
         }
+        mHuZuView.showProgress();
         mHuZuModelImpl.queryHuZu(s, this);
     }
 

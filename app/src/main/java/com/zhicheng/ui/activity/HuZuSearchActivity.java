@@ -42,7 +42,8 @@ public class HuZuSearchActivity extends BaseActivity implements HuZuView,SwipeRe
     private MyHuzuAdapter mAdapter;
     private AlertDialog dialog;
     private HuZuPresenterImpl mHuZuPresenterImpl;
-    private int start;
+    private int start = 1;
+    private int page = 1;
     private boolean isSearch = false;
 
     @Override
@@ -84,19 +85,10 @@ public class HuZuSearchActivity extends BaseActivity implements HuZuView,SwipeRe
                 if (mClearEditText.getText().toString().isEmpty()) {
                     showMessage(getResources().getString(R.string.hint_hz_search));
                 } else {
-                    start = 1;
                     isSearch = true;
-                    PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
-                    PersonQueryRequest.IqBean iqb = new PersonQueryRequest.IqBean();
-                    PersonQueryRequest.IqBean.QueryBean qb = new PersonQueryRequest.IqBean.QueryBean();
-                    iqb.setNamespace("PersonMsgMaRequest");
-                    qb.setType("7");
-                    qb.setPagenum(start);
-                    qb.setPmastkey(mClearEditText.getText().toString());
-                    iqb.setQuery(qb);
-                    mPersonQueryRequest.setIq(iqb);
-                    Gson gson = new Gson();
-                    mHuZuPresenterImpl.fuzzyQueryHuZuName(gson.toJson(mPersonQueryRequest),start);
+                    page = 1;
+                    queryHuzu(page);
+                    page ++;
 
                 }
                 return true;
@@ -125,6 +117,20 @@ public class HuZuSearchActivity extends BaseActivity implements HuZuView,SwipeRe
         });
     }
 
+    private void queryHuzu(int page) {
+        PersonQueryRequest mPersonQueryRequest = new PersonQueryRequest();
+        PersonQueryRequest.IqBean iqb = new PersonQueryRequest.IqBean();
+        PersonQueryRequest.IqBean.QueryBean qb = new PersonQueryRequest.IqBean.QueryBean();
+        iqb.setNamespace("PersonMsgMaRequest");
+        qb.setType("7");
+        qb.setPagenum(page);
+        qb.setPmastkey(mClearEditText.getText().toString());
+        iqb.setQuery(qb);
+        mPersonQueryRequest.setIq(iqb);
+        Gson gson = new Gson();
+        mHuZuPresenterImpl.fuzzyQueryHuZuName(gson.toJson(mPersonQueryRequest),page);
+    }
+
     @Override
     protected void initData() {
         onRefresh();
@@ -132,15 +138,20 @@ public class HuZuSearchActivity extends BaseActivity implements HuZuView,SwipeRe
 
     @Override
     public void onRefresh() {
-        isSearch = false;
-        search_count.setVisibility(View.GONE);
         start = 1;
-        String strEntity = createObj(start);
-        mHuZuPresenterImpl.queryHuZu(strEntity, start);
-        start++;
+        page = 1;
+        if(isSearch){
+            queryHuzu(page);
+            page ++;
+        }else{
+            search_count.setVisibility(View.GONE);
+            String strEntity = createObj(start);
+            mHuZuPresenterImpl.queryHuZu(strEntity, start);
+            start++;
+        }
     }
 
-    private String createObj(int page) {
+    private String createObj(int start) {
         Gson gson = new Gson();
         PersonMsgMaRequest mPersonMsgMaRequest = new PersonMsgMaRequest();
         PersonMsgMaRequest.IqBean iqb = new PersonMsgMaRequest.IqBean();
@@ -148,7 +159,7 @@ public class HuZuSearchActivity extends BaseActivity implements HuZuView,SwipeRe
         PersonMsgMaRequest.IqBean.QueryBean qyb = new PersonMsgMaRequest.IqBean.QueryBean();
         qyb.setType("6");
         qyb.setRow("10");
-        qyb.setPage(String.valueOf(page));
+        qyb.setPage(String.valueOf(start));
         iqb.setQuery(qyb);
         mPersonMsgMaRequest.setIq(iqb);
         return gson.toJson(mPersonMsgMaRequest);
@@ -232,7 +243,7 @@ public class HuZuSearchActivity extends BaseActivity implements HuZuView,SwipeRe
         }
 
         public void addDataList(List<PersonMsgMaResponse.IqBean.QueryBean.PrelogconBean.PrelogsBean> prelogs) {
-            int page = prelogs.size();
+            int page = this.prelogs.size();
             this.prelogs.addAll(prelogs);
             this.notifyItemRangeInserted(page, prelogs.size());
         }
@@ -307,9 +318,15 @@ public class HuZuSearchActivity extends BaseActivity implements HuZuView,SwipeRe
     }
 
     private void onLoadMore() {
-        String strEntity = createObj(start);
-        mHuZuPresenterImpl.queryHuZu(strEntity, start);
-        start++;
+        if(isSearch){
+           queryHuzu(page);
+            page ++;
+        }else{
+            String strEntity = createObj(start);
+            mHuZuPresenterImpl.queryHuZu(strEntity, start);
+            start++;
+        }
+
     }
 
 }
