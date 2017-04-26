@@ -280,7 +280,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
             View contentView=LayoutInflater.from(getActivity()).inflate(R.layout.activity_event_pop,null);
             int width = getActivity().getWindowManager().getDefaultDisplay().getWidth();
             int height  = getActivity().getWindowManager().getDefaultDisplay().getHeight();
-            popupWindow = new PopupWindow(contentView,width - width/4,height - height/4);
+            popupWindow = new PopupWindow(contentView,width - width/4 , height - height/6);
             AnimationUtils.darkBackgroundColor(getActivity().getWindow(),0.5f);
             mEvent_close = (ImageButton)contentView.findViewById(R.id.event_close);
             mEvent_cyc = (RecyclerView)contentView.findViewById(R.id.mEvent_cyc);
@@ -298,7 +298,7 @@ public class SearchClassifyFragment extends BaseFragment implements CaseQueryVie
                 }
             });
 
-            popupWindow.setOutsideTouchable(true);
+            popupWindow.setOutsideTouchable(false);
             popupWindow.setBackgroundDrawable(new BitmapDrawable());
             popupWindow.setAnimationStyle(R.style.popwin_anim_style);
             popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {

@@ -43,10 +43,12 @@
             android:id="@+id/mFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_insert_comment_white_24dp"
             android:backgroundTint="@color/red"
             app:layout_anchor="@+id/linearLayout"
-            app:layout_anchorGravity="bottom|right"/>
+            app:layout_anchorGravity="bottom|right"
+            app:borderWidth="0dp"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <!--筛选侧滑栏-->
@@ -61,7 +63,4 @@
         <include layout="@layout/b_search_slide" />
 
     </LinearLayout>
-
-
-
 </android.support.v4.widget.DrawerLayout>
